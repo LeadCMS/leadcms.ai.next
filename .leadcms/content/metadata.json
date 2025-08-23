@@ -1,0 +1,86 @@
+{
+  "siteMetadata": {
+    "baseUrl": "https://leadcms.ai",
+    "title": {
+      "template": "LeadCMS - %s",
+      "default": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS"
+    },
+    "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+    "icons": {
+      "icon": [
+        {
+          "url": "/images/favicon.png",
+          "sizes": "32x32"
+        },
+        {
+          "url": "/logo.svg",
+          "sizes": "16x16",
+          "type": "image/svg+xml"
+        },
+        {
+          "url": "/logo.svg",
+          "sizes": "32x32",
+          "type": "image/svg+xml"
+        },
+        {
+          "url": "/logo.svg",
+          "sizes": "48x48",
+          "type": "image/svg+xml"
+        }
+      ],
+      "apple": [
+        {
+          "url": "/logo.svg",
+          "sizes": "180x180",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    "formatDetection": {
+      "telephone": false
+    },
+    "openGraph": {
+      "type": "website",
+      "siteName": "LeadCMS.ai",
+      "title": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS",
+      "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+      "images": [
+        {
+          "url": "/logo.svg",
+          "width": 512,
+          "height": 512,
+          "alt": "LeadCMS Logo"
+        }
+      ]
+    },
+    "twitter": {
+      "card": "summary",
+      "title": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS",
+      "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+      "images": [
+        "/logo.svg"
+      ]
+    },
+    "robots": {
+      "index": true,
+      "follow": true
+    }
+  },
+  "id": 10,
+  "createdAt": "2025-08-23T08:23:02.26159Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Metadata",
+  "description": "This file controls all the SEO and social sharing metadata for the LeadCMS.ai website. By editing this file, you can update the site’s title, description, icons, Open Graph, Twitter card information, and search engine indexing settings.\n\nFor more details on each field and how metadata works in Next.js, see the official documentation: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "metadata",
+  "type": "metadata",
+  "author": "Peter Liapin",
+  "language": "en",
+  "category": "Metadata",
+  "tags": [],
+  "allowComments": false,
+  "source": null,
+  "publishedAt": "2025-08-22T18:30:00Z"
+}

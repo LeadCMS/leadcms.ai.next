@@ -212,12 +212,17 @@ async function main() {
 
   // Remove deleted content files
   for (const id of deleted) {
+    const idStr = String(id)
     const files = await fs.readdir(CONTENT_DIR)
     for (const file of files) {
       const filePath = path.join(CONTENT_DIR, file)
       try {
         const content = await fs.readFile(filePath, "utf8")
-        if (content.includes(`id: ${id}`) || content.includes(`\"id\": ${id}`)) {
+        // Exact-match YAML frontmatter: lines like `id: 10` or `id: '10'`
+        const yamlRegex = new RegExp(`(^|\\n)id:\\s*['\"]?${idStr}['\"]?(\\n|$)`)
+        // Exact-match JSON: "id": 10 or "id": "10"
+        const jsonRegex = new RegExp(`\\"id\\"\\s*:\\s*['\"]?${idStr}['\"]?\\s*(,|\\}|\\n|$)`)
+        if (yamlRegex.test(content) || jsonRegex.test(content)) {
           await fs.unlink(filePath)
           console.log(`Deleted: ${filePath}`)
         }

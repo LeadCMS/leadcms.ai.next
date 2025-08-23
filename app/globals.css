@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Added body font family and mobile overflow prevention */
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -79,7 +78,6 @@ body {
     text-wrap: balance;
   }
 
-  /* Added mobile-safe utilities and sticky positioning */
   /* Mobile overflow prevention utility */
   .mobile-safe {
     max-width: 100%;
@@ -141,7 +139,7 @@ body {
     --input: 0 0% 89.8%;
     --ring: 217 100% 61%;
 
-    /* Added new color variables */
+    /* New color variables */
     --primary400: 217 100% 61%;
     --secondary500: 216 40% 8%;
     --tertiary100: 228 100% 99%;
@@ -194,7 +192,7 @@ body {
     --input: 0 0% 14.9%;
     --ring: 217 100% 61%;
 
-    /* Added new color variables */
+    /* New color variables */
     --primary400: 217 100% 61%;
     --secondary500: 216 40% 8%;
     --tertiary100: 228 100% 99%;
@@ -214,14 +212,5 @@ body {
     --sidebar-accent-foreground: 240 4.8% 95.9%;
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-  body {
-    @apply bg-background text-foreground;
   }
 }

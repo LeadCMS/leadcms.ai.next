@@ -1,0 +1,44 @@
+# Node modules and build output
+node_modules
+.next
+
+# Logs
+npm-debug.log
+yarn-debug.log
+yarn-error.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Test and coverage
+coverage
+
+# Env files
+.env.*
+
+# Misc
+*.pem
+*.key
+*.crt
+
+# Editor directories and files
+.vscode
+.idea
+*.swp
+
+# Ignore local SSL certs
+localhost.pem
+localhost-key.pem
+
+# Ignore Docker output
+*.tar
+
+# Ignore system files
+*.sublime*
+*.bak
+*.tmp
+
+# Ignore public assets cache
+public/**/*.tmp
+public/**/*.bak

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AlertCircle, CheckCircle } from "lucide-react";
+import { getEnvVar } from "@/lib/env";
 
 interface FormData {
   firstName: string;
@@ -71,7 +72,7 @@ export function ContactUs() {
     });
 
     try {
-      const apiUrl = process.env.GATSBY_LEADCMS_API_URL;
+      const apiUrl = getEnvVar("NEXT_PUBLIC_LEADCMS_URL");
 
       if (!apiUrl) {
         throw new Error(

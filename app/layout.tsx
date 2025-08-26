@@ -1,9 +1,17 @@
+// Declare window.__env for TypeScript
+declare global {
+  interface Window {
+    __env?: Record<string, string>
+  }
+}
+
 import type React from "react";
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { Layout } from "@/components/layout";
+import Script from "next/script"
 
 import metadataJson from "@/.leadcms/content/metadata.json"
 
@@ -20,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <Script src="/__env.js" strategy="beforeInteractive" />
         <style>{`
 html {
   font-family: ${GeistSans.style.fontFamily};

@@ -41,7 +41,11 @@ export async function generateStaticParams() {
     "service",
     "pricing",
     "blog",
+    "not-found",
   ])
   console.log("Generating static params for slugs:", slugs)
   return slugs.map((slug: string) => ({ slug: slug.split("/") }))
 }
+
+// For static export, we need to disable dynamic params
+export const dynamicParams = false

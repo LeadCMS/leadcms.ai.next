@@ -8,8 +8,9 @@ import { WhySection } from "./mdx/why-section";
 import { DeploySection } from "./mdx/deploy-section";
 import { HelpSection } from "./mdx/help-section";
 import { ContactSection } from "./mdx/contact-section";
-import { LegalSection, LegalList, ContactInfo, DisclaimerBox, PrivacyGrid, SecurityPractices, RightsGrid } from "./mdx/legal-section";
+import { LegalSection, LegalList, ContactInfo, DisclaimerBox, PrivacyGrid, SecurityPractices, RightsGrid } from "./mdx/legal-components";
 import { ContactHero, ContactHeroWithOptions, ContactFormSection as ContactFormSectionNew, ContactLocationAndSocial, ContactCTA } from "./mdx/contact-components";
+import { NotFoundSection } from "./mdx/error-components";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -36,6 +37,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ContactFormSectionNew,
     ContactLocationAndSocial,
     ContactCTA,
+    // Error components
+    NotFoundSection,
     ...components,
   }
 }

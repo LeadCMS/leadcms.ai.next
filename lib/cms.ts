@@ -1,4 +1,4 @@
-import fs from "fs/promises"
+import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 
@@ -18,16 +18,16 @@ export interface CMSContent {
   body: string
 }
 
-export async function getAllContentSlugs(
+export function getAllContentSlugs(
   contentDir: string, 
   contentTypes?: string[]
-): Promise<string[]> {
-  async function walk(dir: string, prefix = ""): Promise<string[]> {
-    const entries = await fs.readdir(dir, { withFileTypes: true })
+): string[] {
+  function walk(dir: string, prefix = ""): string[] {
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
     const slugs: string[] = []
     for (const entry of entries) {
       if (entry.isDirectory()) {
-        const subSlugs = await walk(path.join(dir, entry.name), prefix ? `${prefix}/${entry.name}` : entry.name)
+        const subSlugs = walk(path.join(dir, entry.name), prefix ? `${prefix}/${entry.name}` : entry.name)
         slugs.push(...subSlugs)
       }
       else if (entry.isFile() && (entry.name.endsWith(".mdx") || entry.name.endsWith(".json"))) {
@@ -39,7 +39,7 @@ export async function getAllContentSlugs(
         if (contentTypes && contentTypes.length > 0) {
           const filePath = path.join(dir, entry.name)
           try {
-            const fileType = await getFileTypeOptimized(filePath, ext)
+            const fileType = getFileTypeOptimized(filePath, ext)
             // Only include if the type matches the filter
             if (fileType && contentTypes.includes(fileType)) {
               slugs.push(slug)
@@ -57,13 +57,13 @@ export async function getAllContentSlugs(
     }
     return slugs
   }
-  return await walk(contentDir)
+  return walk(contentDir)
 }
 
-export async function getCMSContentBySlug(
+export function getCMSContentBySlug(
   slug: string,
   contentDir: string
-): Promise<CMSContent | null> {
+): CMSContent | null {
   // Try both .mdx and .json extensions
   const mdxPath = path.join(contentDir, `${slug}.mdx`)
   const jsonPath = path.join(contentDir, `${slug}.json`)
@@ -71,7 +71,7 @@ export async function getCMSContentBySlug(
   try {
     // Try MDX first - combine existence check with read operation
     try {
-      const file = await fs.readFile(mdxPath, "utf8")
+      const file = fs.readFileSync(mdxPath, "utf8")
       const { data, content } = matter(file)
       return {
         ...data,
@@ -88,7 +88,7 @@ export async function getCMSContentBySlug(
     
     // Try JSON
     try {
-      const file = await fs.readFile(jsonPath, "utf8")
+      const file = fs.readFileSync(jsonPath, "utf8")
       const data = JSON.parse(file)
       return {
         ...data,
@@ -113,12 +113,12 @@ export async function getCMSContentBySlug(
  * For MDX files, it reads only the frontmatter section.
  * For JSON files, it attempts to read just enough to find the type field.
  */
-async function getFileTypeOptimized(filePath: string, ext: string): Promise<string | undefined> {
+function getFileTypeOptimized(filePath: string, ext: string): string | undefined {
   if (ext === ".mdx") {
-    return await extractTypeFromMDXFrontmatter(filePath)
+    return extractTypeFromMDXFrontmatter(filePath)
   }
   else if (ext === ".json") {
-    return await extractTypeFromJSON(filePath)
+    return extractTypeFromJSON(filePath)
   }
   return undefined
 }
@@ -127,9 +127,9 @@ async function getFileTypeOptimized(filePath: string, ext: string): Promise<stri
  * Reads only the frontmatter section of an MDX file to extract the type.
  * This is much more efficient than parsing the entire file.
  */
-async function extractTypeFromMDXFrontmatter(filePath: string): Promise<string | undefined> {
+function extractTypeFromMDXFrontmatter(filePath: string): string | undefined {
   try {
-    const file = await fs.readFile(filePath, "utf8")
+    const file = fs.readFileSync(filePath, "utf8")
     // Quick check if file starts with frontmatter
     if (!file.startsWith('---\n') && !file.startsWith('---\r\n')) {
       return undefined
@@ -159,9 +159,9 @@ async function extractTypeFromMDXFrontmatter(filePath: string): Promise<string |
  * Attempts to extract the type field from a JSON file without parsing the entire content.
  * Uses streaming approach for large files.
  */
-async function extractTypeFromJSON(filePath: string): Promise<string | undefined> {
+function extractTypeFromJSON(filePath: string): string | undefined {
   try {
-    const file = await fs.readFile(filePath, "utf8")
+    const file = fs.readFileSync(filePath, "utf8")
     
     // For small files, just parse normally
     if (file.length < 100) {

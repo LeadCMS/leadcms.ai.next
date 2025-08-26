@@ -12,7 +12,7 @@ interface PageProps {
 export default async function CatchAllPage({ params }: PageProps) {
   const awaitedParams = await params
   const slug = awaitedParams.slug.join("/")
-  const content = await getCMSContentBySlug(slug, CMS_CONTENT_PATH)
+  const content = getCMSContentBySlug(slug, CMS_CONTENT_PATH)
   if (!content) notFound()
   const TemplateComponent = getTemplate(content.type)
   if (!TemplateComponent) {
@@ -25,7 +25,7 @@ export default async function CatchAllPage({ params }: PageProps) {
 export async function generateMetadata({ params }: PageProps) {
   const awaitedParams = await params
   const slug = awaitedParams.slug.join("/")
-  const content = await getCMSContentBySlug(slug, CMS_CONTENT_PATH)
+  const content = getCMSContentBySlug(slug, CMS_CONTENT_PATH)
   if (!content) notFound()
   return {
     title: content.title,
@@ -34,14 +34,12 @@ export async function generateMetadata({ params }: PageProps) {
 }
 
 export async function generateStaticParams() {
-  const slugs: string[] = await getAllContentSlugs(CMS_CONTENT_PATH, [
+  const slugs: string[] = getAllContentSlugs(CMS_CONTENT_PATH, [
     "legal",
     "contact",    
     "not-found",
+    "home",
   ])
   console.log("Generating static params for slugs:", slugs)
   return slugs.map((slug: string) => ({ slug: slug.split("/") }))
 }
-
-// For static export, we need to disable dynamic params
-export const dynamicParams = false

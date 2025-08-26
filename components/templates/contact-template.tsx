@@ -1,6 +1,6 @@
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import type { CMSContentTemplateProps } from "@/lib/cms"
-import mdxComponents from "@/components/mdx";
+import { useMDXComponents } from "@/components/mdx-components";
 
 export default function ContactTemplate({ content }: CMSContentTemplateProps) {
   const options: MDXRemoteOptions = {
@@ -10,16 +10,14 @@ export default function ContactTemplate({ content }: CMSContentTemplateProps) {
     },
   }
 
-  // Format lastUpdated from content.updatedAt or content.createdAt
-  const lastUpdatedRaw = content.updatedAt || content.createdAt
-  const lastUpdated = lastUpdatedRaw ? new Date(lastUpdatedRaw).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' }) : undefined
-
-  // Legal pages might use different components than about pages
-  const components = {
-    ...mdxComponents
-  }
+  // Contact pages need components that include contact components
+  const components = useMDXComponents({});
 
   // For static builds, let errors bubble up to fail the build
   // No need for Suspense or error handling since everything is resolved at build time
-  return <MDXRemote source={content.body} options={options} components={components} />
+  return (
+    <main className="flex-1">
+      <MDXRemote source={content.body} options={options} components={components} />
+    </main>
+  )
 }

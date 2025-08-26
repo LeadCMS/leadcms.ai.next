@@ -2,7 +2,7 @@ import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import type { CMSContentTemplateProps } from "@/lib/cms"
 import mdxComponents from "@/components/mdx";
 
-export default function LegalTemplate({ content }: CMSContentTemplateProps) {
+export default function DefaultTemplate({ content }: CMSContentTemplateProps) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
     scope: {

@@ -40,6 +40,7 @@ export async function generateStaticParams() {
     "legal",
     "service",
     "pricing",
+    "blog",
   ])
   console.log("Generating static params for slugs:", slugs)
   return slugs.map((slug: string) => ({ slug: slug.split("/") }))

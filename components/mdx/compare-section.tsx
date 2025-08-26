@@ -1,3 +1,5 @@
+"use client"
+
 import type React from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { CheckCircle } from "lucide-react"

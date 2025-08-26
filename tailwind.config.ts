@@ -6,10 +6,6 @@ const config: Config = {
     "./app/**/*.{ts,tsx,mdx}",
     "./components/**/*.{ts,tsx,mdx}",
     "./lib/**/*.{ts,tsx}",
-    "./src/components/**/*.{ts,tsx,mdx}",
-    "./src/templates/**/*.{ts,tsx,mdx}",
-    // Content from public media directory
-    "./public/media/**/*.mdx",
   ],
   theme: {
     extend: {

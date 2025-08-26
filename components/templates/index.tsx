@@ -1,6 +1,7 @@
 import type { CMSContent } from "@/lib/cms"
 import LegalTemplate from "./legal-template"
 import ContactTemplate from "./contact-template"
+import DefaultTemplate from "./default-template"
 
 export interface TemplateProps {
   content: CMSContent
@@ -14,5 +15,5 @@ export const templateRegistry: Record<string, TemplateComponent> = {
 }
 
 export function getTemplate(type: string): TemplateComponent | null {
-  return templateRegistry[type] || null
+  return templateRegistry[type] || DefaultTemplate
 }

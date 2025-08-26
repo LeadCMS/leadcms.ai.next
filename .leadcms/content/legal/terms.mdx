@@ -23,153 +23,108 @@ source: ''
 publishedAt: '2025-05-26T12:51:37.194Z'
 ---
 
-<section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-  <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="text-center mb-16">
-      <Badge className="mb-4" variant="outline">Legal</Badge>
-      <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">Terms of Service</h1>
-      <p className="mt-4 text-lg text-muted-foreground">Last Updated: October 25, 2023</p>
-    </div>
+<LegalSection title="1. Introduction">
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>1. Introduction</CardTitle></CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">
-          Welcome to LeadCMS ("we," "our," or "us"). By accessing or using our platform and services, you agree to be bound by these Terms of Service ("Terms").
-        </p>
-      </CardContent>
-    </Card>
+Welcome to LeadCMS ("we," "our," or "us"). By accessing or using our platform and services, you agree to be bound by these Terms of Service ("Terms").
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>2. Definitions</CardTitle></CardHeader>
-      <CardContent>
-        <ul className="space-y-3 text-muted-foreground">
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span><strong>Platform</strong>: The LeadCMS software, including all its components, documentation, and updates.</span></li>
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span><strong>Services</strong>: Professional support, custom development, and other offerings provided by LeadCMS.</span></li>
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span><strong>User</strong>: Any individual or entity that downloads, installs, or uses the Platform.</span></li>
-        </ul>
-      </CardContent>
-    </Card>
+</LegalSection>
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>3. License and Use Rights</CardTitle></CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-xl font-bold mb-2">3.1 Open Source License</h3>
-            <p className="text-muted-foreground">The LeadCMS Platform is licensed under the MIT License. You may:</p>
-            <ul className="mt-2 space-y-2 text-muted-foreground">
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Use, copy, modify, and distribute the Platform</span></li>
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Use the Platform for commercial purposes</span></li>
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Sublicense and sell copies of the Platform</span></li>
-            </ul>
-            <p className="mt-4 text-muted-foreground">This license is subject to the following conditions:</p>
-            <ul className="mt-2 space-y-2 text-muted-foreground">
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>The copyright notice and permission notice shall be included in all copies or substantial portions of the Platform.</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold mb-2">3.2 Professional Services</h3>
-            <p className="text-muted-foreground">
-              Our professional services are provided under separate agreements that complement these Terms.
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+<LegalSection title="2. Definitions">
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>4. User Obligations</CardTitle></CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">You agree to:</p>
-        <ul className="mt-4 space-y-3 text-muted-foreground">
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span>Comply with all applicable laws and regulations</span></li>
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span>Maintain the security of your implementation</span></li>
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span>Not use the Platform for any illegal or harmful purposes</span></li>
-          <li className="flex items-start"><CheckCircle className="mr-3 h-5 w-5 text-primary mt-1 flex-shrink-0" /><span>Not attempt to bypass any access restrictions or security measures</span></li>
-        </ul>
-      </CardContent>
-    </Card>
+<LegalList items={[
+  "<strong>Platform</strong>: The LeadCMS software, including all its components, documentation, and updates.",
+  "<strong>Services</strong>: Professional support, custom development, and other offerings provided by LeadCMS.",
+  "<strong>User</strong>: Any individual or entity that downloads, installs, or uses the Platform."
+]} />
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>5. Privacy and Data</CardTitle></CardHeader>
-      <CardContent>
-        <div className="space-y-6">
-          <div>
-            <h3 className="text-xl font-bold mb-2">5.1 Self-Hosted Data</h3>
-            <p className="text-muted-foreground">When you self-host LeadCMS, you are solely responsible for:</p>
-            <ul className="mt-2 space-y-2 text-muted-foreground">
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Compliance with data protection laws</span></li>
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Security of the data</span></li>
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Backup and recovery procedures</span></li>
-              <li className="flex items-start"><CheckCircle className="mr-2 h-4 w-4 text-primary mt-1 flex-shrink-0" /><span>Customer data management</span></li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-xl font-bold mb-2">5.2 Service Data</h3>
-            <p className="text-muted-foreground">
-              If you use our professional services, we may collect limited information as described in our Privacy Policy.
-            </p>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
+</LegalSection>
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>6. Warranty Disclaimer</CardTitle></CardHeader>
-      <CardContent>
-        <div className="bg-muted rounded-xl p-6">
-          <p className="text-muted-foreground font-medium">
-            THE PLATFORM IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+<LegalSection title="3. License and Use Rights">
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>7. Limitation of Liability</CardTitle></CardHeader>
-      <CardContent>
-        <div className="bg-muted rounded-xl p-6">
-          <p className="text-muted-foreground font-medium">
-            IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE PLATFORM OR THE USE OR OTHER DEALINGS IN THE PLATFORM.
-          </p>
-        </div>
-      </CardContent>
-    </Card>
+### 3.1 Open Source License
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>8. Modifications to Terms</CardTitle></CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">
-          We reserve the right to modify these Terms at any time. Your continued use of the Platform constitutes acceptance of the modified Terms.
-        </p>
-      </CardContent>
-    </Card>
+The LeadCMS Platform is licensed under the MIT License. You may:
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>9. Governing Law</CardTitle></CardHeader>
-      <CardContent>
-        <p className="text-muted-foreground">
-          These Terms shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions.
-        </p>
-      </CardContent>
-    </Card>
+<LegalList items={[
+  "Use, copy, modify, and distribute the Platform",
+  "Use the Platform for commercial purposes",
+  "Sublicense and sell copies of the Platform"
+]} />
 
-    <Card className="mb-8">
-      <CardHeader><CardTitle>10. Contact</CardTitle></CardHeader>
-      <CardContent>
-        <div className="bg-background rounded-xl p-6 shadow-sm border">
-          <div className="flex items-center gap-4">
-            <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-              <Mail className="h-6 w-6 text-primary" />
-            </div>
-            <div>
-              <h3 className="text-lg font-bold">Email</h3>
-              <p className="text-muted-foreground">legal@leadcms.ai</p>
-            </div>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  </div>
-</section>
+This license is subject to the following conditions:
+
+<LegalList items={[
+  "The copyright notice and permission notice shall be included in all copies or substantial portions of the Platform."
+]} />
+
+### 3.2 Professional Services
+
+Our professional services are provided under separate agreements that complement these Terms.
+
+</LegalSection>
+
+<LegalSection title="4. User Obligations">
+
+You agree to:
+
+<LegalList items={[
+  "Comply with all applicable laws and regulations",
+  "Maintain the security of your implementation",
+  "Not use the Platform for any illegal or harmful purposes",
+  "Not attempt to bypass any access restrictions or security measures"
+]} />
+
+</LegalSection>
+
+<LegalSection title="5. Privacy and Data">
+
+### 5.1 Self-Hosted Data
+
+When you self-host LeadCMS, you are solely responsible for:
+
+<LegalList items={[
+  "Compliance with data protection laws",
+  "Security of the data",
+  "Backup and recovery procedures",
+  "Customer data management"
+]} />
+
+### 5.2 Service Data
+
+If you use our professional services, we may collect limited information as described in our Privacy Policy.
+
+</LegalSection>
+
+<LegalSection title="6. Warranty Disclaimer">
+
+<DisclaimerBox>
+THE PLATFORM IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+</DisclaimerBox>
+
+</LegalSection>
+
+<LegalSection title="7. Limitation of Liability">
+
+<DisclaimerBox>
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE PLATFORM OR THE USE OR OTHER DEALINGS IN THE PLATFORM.
+</DisclaimerBox>
+
+</LegalSection>
+
+<LegalSection title="8. Modifications to Terms">
+
+We reserve the right to modify these Terms at any time. Your continued use of the Platform constitutes acceptance of the modified Terms.
+
+</LegalSection>
+
+<LegalSection title="9. Governing Law">
+
+These Terms shall be governed by and construed in accordance with the laws of the State of California, without regard to its conflict of law provisions.
+
+</LegalSection>
+
+<LegalSection title="10. Contact">
+
+<ContactInfo type="email" value="legal@leadcms.ai" label="Email" />
+
+</LegalSection>

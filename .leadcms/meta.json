@@ -1,14 +1,6 @@
 {
-  "public/media/index/leadcms-preview.png": {
-    "etag": "\"54567-638854106309537550\"",
-    "lastModified": "Fri, 13 Jun 2025 11:23:50 GMT"
-  },
-  "public/media/blog/remote-mdx-content-in-gatsby/img-2025-05-14-18-45-32.png": {
-    "etag": "\"129038-638854278829954100\"",
-    "lastModified": "Fri, 13 Jun 2025 16:11:22 GMT"
-  },
-  "public/media/blog/test-blog-post/leadcms-preview.png": {
-    "etag": "\"54567-638854214059600890\"",
-    "lastModified": "Fri, 13 Jun 2025 14:23:25 GMT"
+  "public/media/home/leadcms-preview.png": {
+    "etag": "\"54567-638918049439770290\"",
+    "lastModified": "Tue, 26 Aug 2025 11:35:43 GMT"
   }
 }

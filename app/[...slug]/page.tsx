@@ -35,12 +35,8 @@ export async function generateMetadata({ params }: PageProps) {
 
 export async function generateStaticParams() {
   const slugs: string[] = await getAllContentSlugs(CMS_CONTENT_PATH, [
-    "about-us",
-    "contact",
     "legal",
-    "service",
-    "pricing",
-    "blog",
+    "contact",    
     "not-found",
   ])
   console.log("Generating static params for slugs:", slugs)

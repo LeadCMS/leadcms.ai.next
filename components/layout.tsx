@@ -27,9 +27,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <Link href="/#compare" className="text-sm font-medium hover:underline underline-offset-4">
                 Compare
               </Link>
-              <Link href="/blog" className="text-sm font-medium hover:underline underline-offset-4">
-                Blog
-              </Link>
               <Link href="/contact-us" className="text-sm font-medium hover:underline underline-offset-4">
                 Contact Us
               </Link>
@@ -63,12 +60,6 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 </p>
               </div>
               <nav className="flex gap-6">
-                <Link
-                  href="/blog"
-                  className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
-                >
-                  Blog
-                </Link>
                 <Link
                   href="/legal/terms"
                   className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"

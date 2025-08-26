@@ -36,7 +36,13 @@ export const NotFoundSection: React.FC<NotFoundSectionProps> = ({
           </h1>
           <p className="text-lg text-muted-foreground mb-8" dangerouslySetInnerHTML={{ __html: description }} />
           <Button asChild size="lg">
-            <Link href={buttonHref}>{buttonText}</Link>
+            <Link 
+              href={buttonHref}
+              target={buttonHref.startsWith("http") ? "_blank" : undefined}
+              rel={buttonHref.startsWith("http") ? "noopener noreferrer" : undefined}
+            >
+              {buttonText}
+            </Link>
           </Button>
         </div>
       </div>

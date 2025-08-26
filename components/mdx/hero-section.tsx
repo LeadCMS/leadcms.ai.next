@@ -34,7 +34,13 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
           <p className="mt-6 text-lg text-muted-foreground">{description}</p>
           <div className="flex flex-wrap gap-4 mt-8">
             <Button asChild size="lg">
-              <Link href={primaryButton.href}>{primaryButton.label}</Link>
+              <Link 
+                href={primaryButton.href}
+                target={primaryButton.href.startsWith("http") ? "_blank" : undefined}
+                rel={primaryButton.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              >
+                {primaryButton.label}
+              </Link>
             </Button>
             <Button asChild variant="outline" size="lg">
               <a href={secondaryButton.href} target="_blank" rel="noopener noreferrer">

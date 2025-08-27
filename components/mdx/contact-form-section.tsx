@@ -37,7 +37,9 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
           </div>
           <div>
             {formComponent || (
-              <div className="bg-muted rounded-xl p-8 shadow-sm border text-center">[Contact Form Placeholder]</div>
+              <div className="bg-muted rounded-xl p-8 shadow-sm border text-center">
+                [Contact Form Placeholder]
+              </div>
             )}
           </div>
         </div>

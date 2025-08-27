@@ -1,32 +1,26 @@
 "use client"
 
-import * as React from "react";
-import { useState } from "react";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-} from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { AlertCircle, CheckCircle } from "lucide-react";
-import { getEnvVar } from "@/lib/env";
+import * as React from "react"
+import { useState } from "react"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { AlertCircle, CheckCircle } from "lucide-react"
+import { getEnvVar } from "@/lib/env"
 
 interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  company: string;
-  subject: string;
-  message: string;
+  firstName: string
+  lastName: string
+  email: string
+  company: string
+  subject: string
+  message: string
 }
 
 interface FormState {
-  isSubmitting: boolean;
-  isSuccess: boolean;
-  isError: boolean;
-  errorMessage: string;
+  isSubmitting: boolean
+  isSuccess: boolean
+  isError: boolean
+  errorMessage: string
 }
 
 export function ContactUs() {
@@ -37,69 +31,60 @@ export function ContactUs() {
     company: "",
     subject: "",
     message: "",
-  });
+  })
 
   const [formState, setFormState] = useState<FormState>({
     isSubmitting: false,
     isSuccess: false,
     isError: false,
     errorMessage: "",
-  });
+  })
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const { id, value } = e.target;
+    const { id, value } = e.target
 
     setFormData((prev) => ({
       ...prev,
-      [id === "first-name"
-        ? "firstName"
-        : id === "last-name"
-        ? "lastName"
-        : id]: value,
-    }));
-  };
+      [id === "first-name" ? "firstName" : id === "last-name" ? "lastName" : id]: value,
+    }))
+  }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+    e.preventDefault()
 
     setFormState({
       isSubmitting: true,
       isSuccess: false,
       isError: false,
       errorMessage: "",
-    });
+    })
 
     try {
-      const apiUrl = getEnvVar("NEXT_PUBLIC_LEADCMS_URL");
+      const apiUrl = getEnvVar("NEXT_PUBLIC_LEADCMS_URL")
 
       if (!apiUrl) {
-        throw new Error(
-          "API URL not configured. Please check environment variables."
-        );
+        throw new Error("API URL not configured. Please check environment variables.")
       }
 
-      const formDataToSubmit = new FormData();
-      formDataToSubmit.append("file", "");
-      formDataToSubmit.append("firstName", formData.firstName);
-      formDataToSubmit.append("lastName", formData.lastName);
-      formDataToSubmit.append("company", formData.company);
-      formDataToSubmit.append(
-        "subject",
-        formData.subject || "Contact Form Submission"
-      );
-      formDataToSubmit.append("message", formData.message);
-      formDataToSubmit.append("email", formData.email);
-      formDataToSubmit.append("language", navigator.language || "en");
+      const formDataToSubmit = new FormData()
+      formDataToSubmit.append("file", "")
+      formDataToSubmit.append("firstName", formData.firstName)
+      formDataToSubmit.append("lastName", formData.lastName)
+      formDataToSubmit.append("company", formData.company)
+      formDataToSubmit.append("subject", formData.subject || "Contact Form Submission")
+      formDataToSubmit.append("message", formData.message)
+      formDataToSubmit.append("email", formData.email)
+      formDataToSubmit.append("language", navigator.language || "en")
 
       const response = await fetch(`${apiUrl}/api/contact-us`, {
         method: "POST",
         body: formDataToSubmit,
-      });
+      })
 
       if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`);
+        throw new Error(`Server responded with ${response.status}`)
       }
 
       setFormState({
@@ -107,7 +92,7 @@ export function ContactUs() {
         isSuccess: true,
         isError: false,
         errorMessage: "",
-      });
+      })
 
       // Reset form after successful submission
       setFormData({
@@ -117,19 +102,16 @@ export function ContactUs() {
         company: "",
         subject: "",
         message: "",
-      });
+      })
     } catch (error) {
       setFormState({
         isSubmitting: false,
         isSuccess: false,
         isError: true,
-        errorMessage:
-          error instanceof Error
-            ? error.message
-            : "An unknown error occurred",
-      });
+        errorMessage: error instanceof Error ? error.message : "An unknown error occurred",
+      })
     }
-  };
+  }
 
   return (
     <Card className="w-full max-w-full">
@@ -144,14 +126,9 @@ export function ContactUs() {
           <div className="flex flex-col items-center justify-center space-y-3 text-center p-6">
             <CheckCircle className="h-12 w-12 text-green-500" />
             <h3 className="text-xl font-semibold">Thank You!</h3>
-            <p>
-              Your message has been sent successfully. We'll get back to you
-              soon.
-            </p>
+            <p>Your message has been sent successfully. We'll get back to you soon.</p>
             <Button
-              onClick={() =>
-                setFormState((prev) => ({ ...prev, isSuccess: false }))
-              }
+              onClick={() => setFormState((prev) => ({ ...prev, isSuccess: false }))}
               className="mt-4"
             >
               Send Another Message
@@ -171,10 +148,7 @@ export function ContactUs() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <label
-                  htmlFor="first-name"
-                  className="text-sm font-medium leading-none"
-                >
+                <label htmlFor="first-name" className="text-sm font-medium leading-none">
                   First name
                 </label>
                 <input
@@ -187,10 +161,7 @@ export function ContactUs() {
                 />
               </div>
               <div className="space-y-2">
-                <label
-                  htmlFor="last-name"
-                  className="text-sm font-medium leading-none"
-                >
+                <label htmlFor="last-name" className="text-sm font-medium leading-none">
                   Last name
                 </label>
                 <input
@@ -218,10 +189,7 @@ export function ContactUs() {
               />
             </div>
             <div className="space-y-2">
-              <label
-                htmlFor="company"
-                className="text-sm font-medium leading-none"
-              >
+              <label htmlFor="company" className="text-sm font-medium leading-none">
                 Company
               </label>
               <input
@@ -233,10 +201,7 @@ export function ContactUs() {
               />
             </div>
             <div className="space-y-2">
-              <label
-                htmlFor="subject"
-                className="text-sm font-medium leading-none"
-              >
+              <label htmlFor="subject" className="text-sm font-medium leading-none">
                 Subject
               </label>
               <select
@@ -254,10 +219,7 @@ export function ContactUs() {
               </select>
             </div>
             <div className="space-y-2">
-              <label
-                htmlFor="message"
-                className="text-sm font-medium leading-none"
-              >
+              <label htmlFor="message" className="text-sm font-medium leading-none">
                 Message
               </label>
               <textarea
@@ -276,5 +238,5 @@ export function ContactUs() {
         )}
       </CardContent>
     </Card>
-  );
+  )
 }

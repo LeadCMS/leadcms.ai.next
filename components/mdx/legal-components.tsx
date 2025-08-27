@@ -1,25 +1,25 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CheckCircle, Mail, Phone, MapPin } from "lucide-react";
-import * as LucideIcons from "lucide-react";
+import React from "react"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { CheckCircle, Mail, Phone, MapPin } from "lucide-react"
+import * as LucideIcons from "lucide-react"
 
 interface LegalSectionProps {
-  title: string;
-  children: React.ReactNode;
+  title: string
+  children: React.ReactNode
 }
 
 export const LegalSection: React.FC<LegalSectionProps> = ({ title, children }) => (
   <Card className="mb-8">
-    <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
-    <CardContent>
-      {children}
-    </CardContent>
+    <CardHeader>
+      <CardTitle>{title}</CardTitle>
+    </CardHeader>
+    <CardContent>{children}</CardContent>
   </Card>
-);
+)
 
 interface LegalListProps {
-  items: string[];
-  showChecks?: boolean;
+  items: string[]
+  showChecks?: boolean
 }
 
 export const LegalList: React.FC<LegalListProps> = ({ items, showChecks = true }) => (
@@ -31,12 +31,12 @@ export const LegalList: React.FC<LegalListProps> = ({ items, showChecks = true }
       </li>
     ))}
   </ul>
-);
+)
 
 interface ContactInfoProps {
-  type: "email" | "phone" | "address";
-  value: string;
-  label?: string;
+  type: "email" | "phone" | "address"
+  value: string
+  label?: string
 }
 
 export const ContactInfo: React.FC<ContactInfoProps> = ({ type, value, label }) => {
@@ -44,10 +44,10 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ type, value, label }) 
     email: Mail,
     phone: Phone,
     address: MapPin,
-  };
-  
-  const Icon = iconMap[type];
-  
+  }
+
+  const Icon = iconMap[type]
+
   return (
     <div className="bg-background rounded-xl p-6 shadow-sm border">
       <div className="flex items-center gap-4">
@@ -55,39 +55,39 @@ export const ContactInfo: React.FC<ContactInfoProps> = ({ type, value, label }) 
           <Icon className="h-6 w-6 text-primary" />
         </div>
         <div>
-          <h3 className="text-lg font-bold">{label || type.charAt(0).toUpperCase() + type.slice(1)}</h3>
+          <h3 className="text-lg font-bold">
+            {label || type.charAt(0).toUpperCase() + type.slice(1)}
+          </h3>
           <p className="text-muted-foreground">{value}</p>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 interface DisclaimerBoxProps {
-  children: React.ReactNode;
+  children: React.ReactNode
 }
 
 export const DisclaimerBox: React.FC<DisclaimerBoxProps> = ({ children }) => (
   <div className="bg-muted rounded-xl p-6">
-    <p className="text-muted-foreground font-medium">
-      {children}
-    </p>
+    <p className="text-muted-foreground font-medium">{children}</p>
   </div>
-);
+)
 
 interface PrivacyGridProps {
   items: Array<{
-    icon: keyof typeof LucideIcons;
-    title: string;
-    description: string;
-    bullets: string[];
-  }>;
+    icon: keyof typeof LucideIcons
+    title: string
+    description: string
+    bullets: string[]
+  }>
 }
 
 export const PrivacyGrid: React.FC<PrivacyGridProps> = ({ items }) => (
   <div className="grid gap-6 mt-4 md:grid-cols-2">
     {items.map((item, index) => {
-      const Icon = LucideIcons[item.icon] as React.ComponentType<any>;
+      const Icon = LucideIcons[item.icon] as React.ComponentType<any>
       return (
         <div key={index} className="bg-background rounded-xl p-6 shadow-sm border">
           <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
@@ -100,19 +100,19 @@ export const PrivacyGrid: React.FC<PrivacyGridProps> = ({ items }) => (
             ))}
           </ul>
         </div>
-      );
+      )
     })}
   </div>
-);
+)
 
 interface SecurityPracticesProps {
-  title?: string;
-  practices: string[];
+  title?: string
+  practices: string[]
 }
 
-export const SecurityPractices: React.FC<SecurityPracticesProps> = ({ 
-  title = "Our Security Practices Include:", 
-  practices 
+export const SecurityPractices: React.FC<SecurityPracticesProps> = ({
+  title = "Our Security Practices Include:",
+  practices,
 }) => (
   <div className="bg-muted rounded-xl p-6 mt-4">
     <h3 className="text-lg font-bold mb-4">{title}</h3>
@@ -125,13 +125,13 @@ export const SecurityPractices: React.FC<SecurityPracticesProps> = ({
       ))}
     </ul>
   </div>
-);
+)
 
 interface RightsGridProps {
   rights: Array<{
-    title: string;
-    description: string;
-  }>;
+    title: string
+    description: string
+  }>
 }
 
 export const RightsGrid: React.FC<RightsGridProps> = ({ rights }) => (
@@ -143,4 +143,4 @@ export const RightsGrid: React.FC<RightsGridProps> = ({ rights }) => (
       </div>
     ))}
   </div>
-);
+)

@@ -16,7 +16,7 @@ export default function NotFound() {
       </div>
     )
   }
-  
+
   const TemplateComponent = getTemplate(content.type)
   if (!TemplateComponent) {
     throw new Error(`No template found for content type: ${content.type}`)

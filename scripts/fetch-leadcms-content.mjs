@@ -27,7 +27,7 @@ axios.interceptors.request.use(
         maskedHeaders.Authorization = `Bearer ${authParts[1].substring(0, 8)}...`
       }
     }
-    
+
     return config
   },
   (error) => {
@@ -154,7 +154,6 @@ async function fetchContentSync(syncToken) {
   }
 }
 
-
 async function main() {
   // Log environment configuration for debugging
   console.log(`[ENV] LeadCMS URL: ${leadCMSUrl}`)
@@ -193,7 +192,6 @@ async function main() {
   }
 
   console.log(`Fetched ${items.length} content items, ${deleted.length} deleted.`)
-
 
   // Save content files and collect all media URLs from content
   const allMediaUrls = new Set()

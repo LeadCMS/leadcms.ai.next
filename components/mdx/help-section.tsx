@@ -62,7 +62,7 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
             ))}
           </ul>
           <Button asChild className="w-full mt-8">
-            <Link 
+            <Link
               href={contactButton.href}
               target={contactButton.href.startsWith("http") ? "_blank" : undefined}
               rel={contactButton.href.startsWith("http") ? "noopener noreferrer" : undefined}

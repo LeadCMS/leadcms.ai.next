@@ -18,16 +18,25 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
               <span className="text-xl font-bold">LeadCMS</span>
             </Link>
             <nav className="hidden md:flex gap-6">
-              <Link href="/#features" className="text-sm font-medium hover:underline underline-offset-4">
+              <Link
+                href="/#features"
+                className="text-sm font-medium hover:underline underline-offset-4"
+              >
                 Features
               </Link>
               <Link href="/#why" className="text-sm font-medium hover:underline underline-offset-4">
                 Why LeadCMS
               </Link>
-              <Link href="/#compare" className="text-sm font-medium hover:underline underline-offset-4">
+              <Link
+                href="/#compare"
+                className="text-sm font-medium hover:underline underline-offset-4"
+              >
                 Compare
               </Link>
-              <Link href="/contact-us" className="text-sm font-medium hover:underline underline-offset-4">
+              <Link
+                href="/contact-us"
+                className="text-sm font-medium hover:underline underline-offset-4"
+              >
                 Contact Us
               </Link>
             </nav>

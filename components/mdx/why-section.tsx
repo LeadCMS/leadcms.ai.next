@@ -1,4 +1,4 @@
-import React from "react";
+import React from "react"
 import {
   Code,
   Server,
@@ -10,11 +10,11 @@ import {
   Database,
   Settings,
   ShieldCheck,
-} from "lucide-react";
+} from "lucide-react"
 
 export interface WhySectionProps {
-  title: string;
-  description: string;
+  title: string
+  description: string
   reasons: {
     icon:
       | "Code"
@@ -26,10 +26,10 @@ export interface WhySectionProps {
       | "Zap"
       | "Database"
       | "Settings"
-      | "ShieldCheck";
-    title: string;
-    description: string;
-  }[];
+      | "ShieldCheck"
+    title: string
+    description: string
+  }[]
 }
 
 const iconMap = {
@@ -43,26 +43,18 @@ const iconMap = {
   Database,
   Settings,
   ShieldCheck,
-};
+}
 
-export const WhySection: React.FC<WhySectionProps> = ({
-  title,
-  description,
-  reasons,
-}) => (
+export const WhySection: React.FC<WhySectionProps> = ({ title, description, reasons }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-muted" id="why">
     <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-          {title}
-        </h2>
-        <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">
-          {description}
-        </p>
+        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{title}</h2>
+        <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
       </div>
       <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
         {reasons.map((reason, idx) => {
-          const Icon = iconMap[reason.icon] ?? Code; // fallback to Code icon
+          const Icon = iconMap[reason.icon] ?? Code // fallback to Code icon
           return (
             <div
               className="bg-background rounded-xl p-6 shadow-sm border flex flex-col items-center text-center"
@@ -74,9 +66,9 @@ export const WhySection: React.FC<WhySectionProps> = ({
               <h3 className="text-xl font-bold mb-2">{reason.title}</h3>
               <p className="text-muted-foreground">{reason.description}</p>
             </div>
-          );
+          )
         })}
       </div>
     </div>
   </section>
-);
+)

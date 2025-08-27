@@ -5,12 +5,12 @@ declare global {
   }
 }
 
-import type React from "react";
-import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import "./globals.css";
-import { Layout } from "@/components/layout";
+import type React from "react"
+import type { Metadata } from "next"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import "./globals.css"
+import { Layout } from "@/components/layout"
 import Script from "next/script"
 
 import metadataJson from "@/.leadcms/content/metadata.json"
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: React.ReactNode
 }>) {
   return (
     <html lang="en">
@@ -41,5 +41,5 @@ html {
         <Layout>{children}</Layout>
       </body>
     </html>
-  );
+  )
 }

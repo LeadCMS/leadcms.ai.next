@@ -46,7 +46,11 @@ export const CompareSection: React.FC<CompareSectionProps> = ({
               ))}
             </TabsList>
             {tabs.map((tab) => (
-              <TabsContent value={tab.value} className="p-6 border rounded-lg bg-background" key={tab.value}>
+              <TabsContent
+                value={tab.value}
+                className="p-6 border rounded-lg bg-background"
+                key={tab.value}
+              >
                 <div className="grid gap-4">
                   <div className="grid grid-cols-4 gap-4 font-medium">
                     <div></div>
@@ -61,7 +65,9 @@ export const CompareSection: React.FC<CompareSectionProps> = ({
                       <div>{row.label}</div>
                       {row.values.map((v, j) => (
                         <div className="text-center" key={j}>
-                          {typeof v === "string" ? v : iconMap[v.icon as keyof typeof iconMap] || v.icon}
+                          {typeof v === "string"
+                            ? v
+                            : iconMap[v.icon as keyof typeof iconMap] || v.icon}
                         </div>
                       ))}
                     </div>

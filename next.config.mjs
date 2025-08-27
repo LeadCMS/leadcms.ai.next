@@ -1,11 +1,11 @@
-import createMDX from '@next/mdx'
-import remarkFrontmatter from 'remark-frontmatter'
-import remarkMdxFrontmatter from 'remark-mdx-frontmatter'
+import createMDX from "@next/mdx"
+import remarkFrontmatter from "remark-frontmatter"
+import remarkMdxFrontmatter from "remark-mdx-frontmatter"
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  pageExtensions: ['js', 'jsx', 'mdx', 'ts', 'tsx'],
+  output: "export",
+  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
   trailingSlash: true,
   eslint: {
     ignoreDuringBuilds: true,
@@ -16,9 +16,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  distDir: 'out',
-  basePath: '',
-  assetPrefix: '',
+  distDir: "out",
+  basePath: "",
+  assetPrefix: "",
 }
 
 const withMDX = createMDX({
@@ -29,4 +29,3 @@ const withMDX = createMDX({
 })
 
 export default withMDX(nextConfig)
-

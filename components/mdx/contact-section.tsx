@@ -14,7 +14,10 @@ const iconMap = {
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ title, description, buttons }) => (
-  <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground" id="contact">
+  <section
+    className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground"
+    id="contact"
+  >
     <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
       <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{title}</h2>
       <p className="mt-6 text-xl max-w-2xl mx-auto">{description}</p>

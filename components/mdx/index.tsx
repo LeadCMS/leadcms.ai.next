@@ -1,24 +1,13 @@
-import React, { ComponentPropsWithoutRef } from 'react';
+import React, { ComponentPropsWithoutRef } from "react"
 
-import { Button } from "@/components/ui/button";
-import { Link } from "@/components/ui/link";
-import { 
-  Card, 
-  CardContent, 
-  CardDescription, 
-  CardHeader, 
-  CardTitle 
-} from "@/components/ui/card";
-import { 
-  Tabs, 
-  TabsContent, 
-  TabsList, 
-  TabsTrigger 
-} from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
-import * as LucideIcons from "lucide-react";
-import { ContactUs } from "@/components/contact-us";
-import { MDXComponents } from 'next-mdx-remote-client/rsc';
+import { Button } from "@/components/ui/button"
+import { Link } from "@/components/ui/link"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Badge } from "@/components/ui/badge"
+import * as LucideIcons from "lucide-react"
+import { ContactUs } from "@/components/contact-us"
+import { MDXComponents } from "next-mdx-remote-client/rsc"
 
 // UI components and icons for MDX use
 const uiComponents = {
@@ -34,29 +23,29 @@ const uiComponents = {
   TabsList,
   TabsTrigger,
   Badge,
-  ContactUs
-};
+  ContactUs,
+}
 
 // Use React's built-in HTML element prop types instead of custom interfaces
-type HeadingProps = ComponentPropsWithoutRef<'h1'>;
-type ParagraphProps = ComponentPropsWithoutRef<'p'>;
-type AnchorProps = ComponentPropsWithoutRef<'a'>;
-type ListProps = ComponentPropsWithoutRef<'ul'>;
-type ListItemProps = ComponentPropsWithoutRef<'li'>;
-type BlockquoteProps = ComponentPropsWithoutRef<'blockquote'>;
-type CodeProps = ComponentPropsWithoutRef<'code'>;
-type PreProps = ComponentPropsWithoutRef<'pre'>;
-type ImageProps = ComponentPropsWithoutRef<'img'>;
-type TableProps = ComponentPropsWithoutRef<'table'>;
-type TableCellProps = ComponentPropsWithoutRef<'td'>;
-type TableHeadProps = ComponentPropsWithoutRef<'th'>;
-type DivProps = ComponentPropsWithoutRef<'div'>;
-type SectionProps = ComponentPropsWithoutRef<'section'>;
-type InputProps = ComponentPropsWithoutRef<'input'>;
-type TextareaProps = ComponentPropsWithoutRef<'textarea'>;
-type LabelProps = ComponentPropsWithoutRef<'label'>;
-type FormProps = ComponentPropsWithoutRef<'form'>;
-type SpanProps = ComponentPropsWithoutRef<'span'>;
+type HeadingProps = ComponentPropsWithoutRef<"h1">
+type ParagraphProps = ComponentPropsWithoutRef<"p">
+type AnchorProps = ComponentPropsWithoutRef<"a">
+type ListProps = ComponentPropsWithoutRef<"ul">
+type ListItemProps = ComponentPropsWithoutRef<"li">
+type BlockquoteProps = ComponentPropsWithoutRef<"blockquote">
+type CodeProps = ComponentPropsWithoutRef<"code">
+type PreProps = ComponentPropsWithoutRef<"pre">
+type ImageProps = ComponentPropsWithoutRef<"img">
+type TableProps = ComponentPropsWithoutRef<"table">
+type TableCellProps = ComponentPropsWithoutRef<"td">
+type TableHeadProps = ComponentPropsWithoutRef<"th">
+type DivProps = ComponentPropsWithoutRef<"div">
+type SectionProps = ComponentPropsWithoutRef<"section">
+type InputProps = ComponentPropsWithoutRef<"input">
+type TextareaProps = ComponentPropsWithoutRef<"textarea">
+type LabelProps = ComponentPropsWithoutRef<"label">
+type FormProps = ComponentPropsWithoutRef<"form">
+type SpanProps = ComponentPropsWithoutRef<"span">
 
 // Define components using proper React types
 const baseComponents = {
@@ -93,7 +82,10 @@ const baseComponents = {
     </h4>
   ),
   p: ({ children, ...props }: ParagraphProps) => (
-    <p className="leading-7 [&:not(:first-child)]:mt-6 text-base text-foreground mb-4 break-words hyphens-auto text-justify" {...props}>
+    <p
+      className="leading-7 [&:not(:first-child)]:mt-6 text-base text-foreground mb-4 break-words hyphens-auto text-justify"
+      {...props}
+    >
       {children}
     </p>
   ),
@@ -112,7 +104,10 @@ const baseComponents = {
     <ol className="my-8 ml-7 list-decimal space-y-3 text-foreground" {...props} />
   ),
   li: (props: ListItemProps) => (
-    <li className="mt-3 text-base leading-relaxed break-words hyphens-auto text-justify" {...props} />
+    <li
+      className="mt-3 text-base leading-relaxed break-words hyphens-auto text-justify"
+      {...props}
+    />
   ),
   blockquote: ({ children, ...props }: BlockquoteProps) => (
     <blockquote
@@ -123,13 +118,23 @@ const baseComponents = {
     </blockquote>
   ),
   pre: (props: PreProps) => (
-    <pre className="rounded-lg bg-black text-green-400 p-6 overflow-x-auto my-8 text-sm whitespace-pre-wrap break-words max-w-full" {...props} />
+    <pre
+      className="rounded-lg bg-black text-green-400 p-6 overflow-x-auto my-8 text-sm whitespace-pre-wrap break-words max-w-full"
+      {...props}
+    />
   ),
   code: (props: CodeProps) => (
-    <code className="relative rounded bg-muted px-[0.4em] py-[0.3em] font-mono text-base text-primary break-all whitespace-pre-wrap max-w-full inline-block" {...props} />
+    <code
+      className="relative rounded bg-muted px-[0.4em] py-[0.3em] font-mono text-base text-primary break-all whitespace-pre-wrap max-w-full inline-block"
+      {...props}
+    />
   ),
   img: (props: ImageProps) => (
-    <img className="rounded-lg border shadow-md my-8 mx-auto max-w-full w-full h-auto object-contain" {...props} alt={props.alt || ''} />
+    <img
+      className="rounded-lg border shadow-md my-8 mx-auto max-w-full w-full h-auto object-contain"
+      {...props}
+      alt={props.alt || ""}
+    />
   ),
   table: (props: TableProps) => (
     <div className="w-full overflow-x-auto my-8 -mx-4 sm:mx-0">
@@ -139,20 +144,23 @@ const baseComponents = {
     </div>
   ),
   th: (props: TableHeadProps) => (
-    <th className="border-b px-5 py-3 font-semibold bg-muted text-foreground text-sm break-words" {...props} />
+    <th
+      className="border-b px-5 py-3 font-semibold bg-muted text-foreground text-sm break-words"
+      {...props}
+    />
   ),
   td: (props: TableCellProps) => (
     <td className="border-b px-5 py-3 text-sm break-words" {...props} />
   ),
-  hr: () => <hr className="my-12 border-muted" />, 
-  div: (props: DivProps) => <div {...props} />, 
-  section: (props: SectionProps) => <section {...props} />, 
-  input: (props: InputProps) => <input {...props} />, 
-  textarea: (props: TextareaProps) => <textarea {...props} />, 
-  label: (props: LabelProps) => <label {...props} />, 
-  form: (props: FormProps) => <form {...props} />, 
-  span: (props: SpanProps) => <span {...props} />, 
-};
+  hr: () => <hr className="my-12 border-muted" />,
+  div: (props: DivProps) => <div {...props} />,
+  section: (props: SectionProps) => <section {...props} />,
+  input: (props: InputProps) => <input {...props} />,
+  textarea: (props: TextareaProps) => <textarea {...props} />,
+  label: (props: LabelProps) => <label {...props} />,
+  form: (props: FormProps) => <form {...props} />,
+  span: (props: SpanProps) => <span {...props} />,
+}
 
 // Combined components object for MDXProvider
 
@@ -160,4 +168,4 @@ export default {
   ...LucideIcons,
   ...baseComponents,
   ...uiComponents,
-} as unknown as MDXComponents;
+} as unknown as MDXComponents

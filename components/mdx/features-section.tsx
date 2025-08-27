@@ -1,23 +1,23 @@
-import React from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
-import { Database, Globe, Zap, CheckCircle } from "lucide-react";
+import React from "react"
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
+import { Database, Globe, Zap, CheckCircle } from "lucide-react"
 
 export interface FeaturesSectionProps {
-  title: string;
-  description: string;
+  title: string
+  description: string
   features: {
-    icon: "Database" | "Globe" | "Zap";
-    title: string;
-    description: string;
-    bullets: string[];
-  }[];
+    icon: "Database" | "Globe" | "Zap"
+    title: string
+    description: string
+    bullets: string[]
+  }[]
 }
 
 const iconMap = {
   Database: Database,
   Globe: Globe,
   Zap: Zap,
-};
+}
 
 export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
   title,
@@ -32,9 +32,12 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
       </div>
       <div className="grid gap-8 md:grid-cols-3">
         {features.map((feature, idx) => {
-          const Icon = iconMap[feature.icon];
+          const Icon = iconMap[feature.icon]
           return (
-            <Card className="relative overflow-hidden border-2 border-primary/20" key={feature.title + idx}>
+            <Card
+              className="relative overflow-hidden border-2 border-primary/20"
+              key={feature.title + idx}
+            >
               <div className="absolute top-0 right-0 p-2 bg-primary/10 rounded-bl-lg">
                 <Icon className="h-6 w-6 text-primary" />
               </div>
@@ -53,9 +56,9 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                 </ul>
               </CardContent>
             </Card>
-          );
+          )
         })}
       </div>
     </div>
   </section>
-);
+)

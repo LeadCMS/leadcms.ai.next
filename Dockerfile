@@ -9,7 +9,7 @@ COPY nginx.conf /etc/nginx/conf.d/default.conf
 COPY scripts/inject-runtime-env.sh /app/scripts/inject-runtime-env.sh
 RUN chmod -R 755 /usr/share/nginx/html && chmod +x /app/scripts/inject-runtime-env.sh
 
-EXPOSE 80 8080
+EXPOSE 80
 
 CMD ["/bin/sh", "-c", "/app/scripts/inject-runtime-env.sh && nginx -g 'daemon off;'"]
 

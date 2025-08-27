@@ -1,0 +1,27 @@
+{
+    "version": "0.2.0",
+    "configurations": [        
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug npm run dev",
+            "runtimeExecutable": "npm",
+            "runtimeArgs": [
+                "run-script", "dev"
+            ],
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "outFiles": [
+                "${workspaceFolder}/**/*.js"
+            ]
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Debug SSE Watcher",
+            "program": "${workspaceFolder}/scripts/sse-watcher.mjs",
+            "console": "integratedTerminal",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

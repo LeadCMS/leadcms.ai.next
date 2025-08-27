@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: PageProps) {
   }
 }
 
-export async function generateStaticParams() {
+export async function generateStaticParams() {  
   const slugs: string[] = getAllContentSlugs(CMS_CONTENT_PATH, [
     "legal",
     "contact",    

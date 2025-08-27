@@ -3,10 +3,7 @@ import remarkFrontmatter from "remark-frontmatter"
 import remarkMdxFrontmatter from "remark-mdx-frontmatter"
 
 /** @type {import('next').NextConfig} */
-const nextConfig = {
-  output: "export",
-  pageExtensions: ["js", "jsx", "mdx", "ts", "tsx"],
-  trailingSlash: true,
+const nextConfig = {  
   eslint: {
     ignoreDuringBuilds: true,
   },
@@ -16,9 +13,9 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
-  distDir: "out",
-  basePath: "",
-  assetPrefix: "",
+  output: "export",
+  trailingSlash: true,
+  pageExtensions: ["js", "jsx", "md", "mdx", "ts", "tsx"],
 }
 
 const withMDX = createMDX({

@@ -25,6 +25,7 @@ import {
   ContactCTA,
 } from "./mdx/contact-components"
 import { NotFoundSection } from "./mdx/error-components"
+import { ContactUs } from "./contact-us"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -53,6 +54,8 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     ContactCTA,
     // Error components
     NotFoundSection,
+    // Contact form
+    ContactUs,
     ...components,
   }
 }

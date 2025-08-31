@@ -1,0 +1,50 @@
+{
+  "id": 202,
+  "createdAt": "2025-09-01T10:00:00.000Z",
+  "updatedAt": "2025-09-01T10:00:00.000Z",
+  "title": "Contact Form Text Configuration (Danish)",
+  "description": "Tekstindhold til kontaktformular-komponenten, inklusive etiketter, pladsholdere, knapper og beskeder.",
+  "slug": "contact-us-form",
+  "type": "contact-form",
+  "language": "da",
+  "translationKey": "contact-form-text",
+  "publishedAt": "2025-09-01T10:00:00.000Z",
+  "contactFormText": {
+    "title": "Kontakt os",
+    "description": "Udfyld formularen nedenfor, og vi vender tilbage til dig så hurtigt som muligt.",
+    "labels": {
+      "firstName": "Fornavn",
+      "lastName": "Efternavn",
+      "email": "E-mail",
+      "company": "Virksomhed",
+      "subject": "Emne",
+      "message": "Besked"
+    },
+    "placeholders": {
+      "firstName": "Indtast dit fornavn",
+      "lastName": "Indtast dit efternavn",
+      "email": "Indtast din e-mail",
+      "company": "Indtast dit firmanavn",
+      "message": "Indtast din besked"
+    },
+    "subjectOptions": {
+      "placeholder": "Vælg et emne",
+      "support": "Teknisk support",
+      "sales": "Salgsforespørgsel",
+      "partnership": "Partnerskab",
+      "other": "Andet"
+    },
+    "buttons": {
+      "send": "Send besked",
+      "sending": "Sender...",
+      "sendAnother": "Send en ny besked"
+    },
+    "success": {
+      "title": "Tak!",
+      "message": "Din besked er sendt succesfuldt. Vi vender tilbage til dig snart."
+    },
+    "error": {
+      "title": "Fejl ved afsendelse af besked"
+    }
+  }
+}

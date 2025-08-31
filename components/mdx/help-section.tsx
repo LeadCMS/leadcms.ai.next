@@ -12,6 +12,7 @@ export interface HelpSectionProps {
     description: string
   }[]
   serviceList: string[]
+  servicesTitle: string
   contactButton: { label: string; href: string }
 }
 
@@ -26,6 +27,7 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
   description,
   services = [], // Added default empty array to prevent map error
   serviceList = [], // Added default empty array to prevent map error
+  servicesTitle,
   contactButton = { label: "Contact Us", href: "#" }, // Added default contactButton to prevent href error
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32" id="help">
@@ -52,7 +54,7 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
           </div>
         </div>
         <div className="bg-muted rounded-xl p-8 shadow-sm border">
-          <h3 className="text-2xl font-bold mb-6 text-center">Our Services Include:</h3>
+          <h3 className="text-2xl font-bold mb-6 text-center">{servicesTitle}</h3>
           <ul className="space-y-4">
             {serviceList.map((item, i) => (
               <li className="flex items-center" key={i}>

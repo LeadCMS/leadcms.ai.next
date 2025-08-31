@@ -4,6 +4,7 @@ import { GitBranch } from "lucide-react"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 import { getLayoutConfig, type HeaderConfig, type FooterConfig } from "@/lib/layout-config"
 import { DEFAULT_LANGUAGE } from "@/lib/locale-utils"
+import { LocaleProvider } from "@/lib/locale-context"
 
 interface LocaleAwareLayoutProps {
   children: React.ReactNode
@@ -15,7 +16,8 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
   const { header: headerConfig, footer: footerConfig } = getLayoutConfig(locale)
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <LocaleProvider locale={locale}>
+      <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-16 items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <LocaleAwareLink href={headerConfig.headerData.logo.href} locale={locale} className="flex items-center gap-2">
@@ -109,5 +111,6 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
         </div>
       </footer>
     </div>
+    </LocaleProvider>
   )
 }

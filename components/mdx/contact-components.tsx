@@ -176,7 +176,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
 )
 
 interface OfficeLocationProps {
-  title?: string
+  title: string
   address: {
     company: string
     street: string
@@ -192,7 +192,7 @@ interface OfficeLocationProps {
 }
 
 export const OfficeLocation: React.FC<OfficeLocationProps> = ({
-  title = "Office Location",
+  title,
   address,
   businessHours,
 }) => (
@@ -238,14 +238,14 @@ interface SocialLink {
 }
 
 interface SocialLinksProps {
-  title?: string
-  description?: string
+  title: string
+  description: string
   links: SocialLink[]
 }
 
 export const SocialLinks: React.FC<SocialLinksProps> = ({
-  title = "Connect With Us",
-  description = "Follow us on social media to stay updated with the latest news, features, and community events.",
+  title,
+  description,
   links,
 }) => (
   <div>

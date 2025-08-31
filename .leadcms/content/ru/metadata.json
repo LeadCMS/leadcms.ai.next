@@ -1,0 +1,87 @@
+{
+  "siteMetadata": {
+    "baseUrl": "https://leadcms.ai",
+    "title": {
+      "template": "LeadCMS - %s",
+      "default": "LeadCMS - CMS и CRM для SaaS на базе ИИ, ориентированные на разработчиков"
+    },
+    "description": "Ускорьте рост вашего SaaS с платформой, ориентированной на разработчиков. Автоматизируйте каждый этап жизненного цикла продаж продукта.",
+    "icons": {
+      "icon": [
+        {
+          "url": "/images/favicon.png",
+          "sizes": "32x32"
+        },
+        {
+          "url": "/logo.svg",
+          "sizes": "16x16",
+          "type": "image/svg+xml"
+        },
+        {
+          "url": "/logo.svg",
+          "sizes": "32x32",
+          "type": "image/svg+xml"
+        },
+        {
+          "url": "/logo.svg",
+          "sizes": "48x48",
+          "type": "image/svg+xml"
+        }
+      ],
+      "apple": [
+        {
+          "url": "/logo.svg",
+          "sizes": "180x180",
+          "type": "image/svg+xml"
+        }
+      ]
+    },
+    "formatDetection": {
+      "telephone": false
+    },
+    "openGraph": {
+      "type": "website",
+      "siteName": "LeadCMS.ai",
+      "title": "LeadCMS - CMS и CRM для SaaS на базе ИИ, ориентированные на разработчиков",
+      "description": "Ускорьте рост вашего SaaS с платформой, ориентированной на разработчиков. Автоматизируйте каждый этап жизненного цикла продаж продукта.",
+      "images": [
+        {
+          "url": "/logo.svg",
+          "width": 512,
+          "height": 512,
+          "alt": "Логотип LeadCMS"
+        }
+      ]
+    },
+    "twitter": {
+      "card": "summary",
+      "title": "LeadCMS - CMS и CRM для SaaS на базе ИИ, ориентированные на разработчиков",
+      "description": "Ускорьте рост вашего SaaS с платформой, ориентированной на разработчиков. Автоматизируйте каждый этап жизненного цикла продаж продукта.",
+      "images": [
+        "/logo.svg"
+      ]
+    },
+    "robots": {
+      "index": true,
+      "follow": true
+    }
+  },
+  "id": 21,
+  "createdAt": "2025-08-31T14:35:38.251051Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Метаданные",
+  "description": "Этот файл управляет всеми метаданными для SEO и обмена в социальных сетях для сайта LeadCMS.ai. Редактируя этот файл, вы можете обновить заголовок сайта, описание, значки, данные Open Graph, информацию для Twitter Card и настройки индексации поисковыми системами.\n\nПодробнее о каждом поле и о том, как работают метаданные в Next.js, смотрите официальную документацию: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "metadata",
+  "type": "metadata",
+  "author": "Питер Ляпин",
+  "language": "ru",
+  "translationKey": "c1c34cd2-844b-4f75-8ebb-619b046ffc92",
+  "category": "Метаданные",
+  "tags": [],
+  "allowComments": false,
+  "source": "AI translated from 10",
+  "publishedAt": "2025-08-22T18:30:00Z"
+}

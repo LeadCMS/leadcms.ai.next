@@ -2,6 +2,9 @@ import fs from "fs"
 import path from "path"
 import matter from "gray-matter"
 
+// Default language from environment or fallback to 'en'
+export const DEFAULT_LANGUAGE = process.env.NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE || "en"
+
 export interface CMSContentTemplateProps {
   content: CMSContent
 }
@@ -14,8 +17,195 @@ export interface CMSContent {
   description?: string
   coverImageUrl?: string
   coverImageAlt?: string
+  language?: string
+  translationKey?: string
   [key: string]: any
   body: string
+}
+
+/**
+ * Get all available languages from the content directory structure
+ */
+export function getAvailableLanguages(contentDir: string): string[] {
+  try {
+    const entries = fs.readdirSync(contentDir, { withFileTypes: true })
+    const languages = [DEFAULT_LANGUAGE] // Always include default language
+
+    for (const entry of entries) {
+      if (entry.isDirectory() && entry.name.length === 2) {
+        // Assume 2-character directory names are language codes
+        if (!languages.includes(entry.name)) {
+          languages.push(entry.name)
+        }
+      }
+    }
+
+    return languages.sort()
+  } catch (e) {
+    return [DEFAULT_LANGUAGE]
+  }
+}
+
+/**
+ * Get content directory for a specific locale
+ */
+export function getContentDirForLocale(contentDir: string, locale: string): string {
+  if (locale === DEFAULT_LANGUAGE) {
+    return contentDir
+  }
+  return path.join(contentDir, locale)
+}
+
+/**
+ * Get all content slugs for a specific locale
+ */
+export function getAllContentSlugsForLocale(
+  contentDir: string,
+  locale: string,
+  contentTypes?: string[]
+): string[] {
+  const localeContentDir = getContentDirForLocale(contentDir, locale)
+
+  if (locale === DEFAULT_LANGUAGE) {
+    // For default language, we need to exclude language subdirectories
+    return getAllContentSlugsExcludingLanguageDirs(localeContentDir, contentTypes, contentDir)
+  } else {
+    // For other languages, just get all content from their directory
+    return getAllContentSlugs(localeContentDir, contentTypes)
+  }
+}
+
+/**
+ * Get all content slugs excluding language subdirectories (for default language)
+ */
+function getAllContentSlugsExcludingLanguageDirs(
+  contentDir: string,
+  contentTypes?: string[],
+  rootContentDir?: string
+): string[] {
+  // Get available languages from the root content directory to know which directories to exclude
+  const availableLanguages = rootContentDir ? getAvailableLanguages(rootContentDir) : [DEFAULT_LANGUAGE]
+
+  function walk(dir: string, prefix = ""): string[] {
+    const entries = fs.readdirSync(dir, { withFileTypes: true })
+    const slugs: string[] = []
+    for (const entry of entries) {
+      if (entry.isDirectory()) {
+        // Skip language directories when we're in the root content directory
+        if (prefix === "" && availableLanguages.includes(entry.name) && entry.name !== DEFAULT_LANGUAGE) {
+          continue
+        }
+
+        const subSlugs = walk(
+          path.join(dir, entry.name),
+          prefix ? `${prefix}/${entry.name}` : entry.name
+        )
+        slugs.push(...subSlugs)
+      } else if (entry.isFile() && (entry.name.endsWith(".mdx") || entry.name.endsWith(".json"))) {
+        const ext = entry.name.endsWith(".mdx") ? ".mdx" : ".json"
+        const slug = (prefix ? `${prefix}/` : "") + entry.name.replace(new RegExp(`\\${ext}$`), "")
+
+        // If content types filter is provided, check the file's type
+        if (contentTypes && contentTypes.length > 0) {
+          const filePath = path.join(dir, entry.name)
+          try {
+            const fileType = getFileTypeOptimized(filePath, ext)
+            // Only include if the type matches the filter
+            if (fileType && contentTypes.includes(fileType)) {
+              slugs.push(slug)
+            }
+          } catch (e) {
+            // Skip files that can't be parsed
+            continue
+          }
+        } else {
+          // No filter, include all files
+          slugs.push(slug)
+        }
+      }
+    }
+    return slugs
+  }
+  return walk(contentDir)
+}
+
+/**
+ * Get content by slug for a specific locale
+ */
+export function getCMSContentBySlugForLocale(
+  slug: string,
+  contentDir: string,
+  locale: string
+): CMSContent | null {
+  const localeContentDir = getContentDirForLocale(contentDir, locale)
+  const content = getCMSContentBySlug(slug, localeContentDir)
+
+  if (content) {
+    // Ensure the locale is set on the content object
+    content.language = content.language || locale
+  }
+
+  return content
+}
+
+/**
+ * Get all translations of a content item by translationKey
+ */
+export function getContentTranslations(
+  translationKey: string,
+  contentDir: string
+): { locale: string; content: CMSContent }[] {
+  const languages = getAvailableLanguages(contentDir)
+  const translations: { locale: string; content: CMSContent }[] = []
+
+  for (const locale of languages) {
+    const localeContentDir = getContentDirForLocale(contentDir, locale)
+
+    // Search for content with matching translationKey
+    try {
+      const slugs = getAllContentSlugs(localeContentDir)
+      for (const slug of slugs) {
+        const content = getCMSContentBySlug(slug, localeContentDir)
+        if (content && content.translationKey === translationKey) {
+          content.language = content.language || locale
+          translations.push({ locale, content })
+          break // Found the translation for this locale
+        }
+      }
+    } catch (e) {
+      // Skip if locale directory doesn't exist or can't be read
+      continue
+    }
+  }
+
+  return translations
+}
+
+/**
+ * Generate static params for all locales and content
+ */
+export function generateStaticParamsForAllLocales(
+  contentDir: string,
+  contentTypes?: string[]
+): { locale?: string; slug: string[] }[] {
+  const languages = getAvailableLanguages(contentDir)
+  const allParams: { locale?: string; slug: string[] }[] = []
+
+  for (const locale of languages) {
+    const slugs = getAllContentSlugsForLocale(contentDir, locale, contentTypes)
+
+    for (const slug of slugs) {
+      if (locale === DEFAULT_LANGUAGE) {
+        // Default language doesn't need locale prefix
+        allParams.push({ slug: slug.split("/") })
+      } else {
+        // Non-default languages get locale prefix
+        allParams.push({ locale, slug: slug.split("/") })
+      }
+    }
+  }
+
+  return allParams
 }
 
 export function getAllContentSlugs(contentDir: string, contentTypes?: string[]): string[] {

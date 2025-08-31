@@ -1,11 +1,10 @@
 import { createLocaleContentPage } from '@/lib/locale-page-factory';
-import { DEFAULT_LANGUAGE } from '@/lib/cms';
 
 const {
-  default: CatchAllPage,
+  default: DanishContentPage,
   generateMetadata,
   generateStaticParams
-} = createLocaleContentPage(DEFAULT_LANGUAGE);
+} = createLocaleContentPage('da');
 
 export { generateMetadata, generateStaticParams };
-export default CatchAllPage;
+export default DanishContentPage;

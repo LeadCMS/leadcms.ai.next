@@ -3,9 +3,9 @@
     "baseUrl": "https://leadcms.ai",
     "title": {
       "template": "LeadCMS - %s",
-      "default": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS"
+      "default": "LeadCMS - AI-drevet, udvikler-først CMS & CRM til SaaS"
     },
-    "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+    "description": "Styrk din SaaS-vækst med en udvikler-først platform. Automatiser hvert trin i produktets salgslivscyklus.",
     "icons": {
       "icon": [
         {
@@ -42,21 +42,21 @@
     "openGraph": {
       "type": "website",
       "siteName": "LeadCMS.ai",
-      "title": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS",
-      "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+      "title": "LeadCMS - AI-drevet, udvikler-først CMS & CRM til SaaS",
+      "description": "Styrk din SaaS-vækst med en udvikler-først platform. Automatiser hvert trin i produktets salgslivscyklus.",
       "images": [
         {
           "url": "/logo.svg",
           "width": 512,
           "height": 512,
-          "alt": "LeadCMS Logo"
+          "alt": "LeadCMS-logo"
         }
       ]
     },
     "twitter": {
       "card": "summary",
-      "title": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS",
-      "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+      "title": "LeadCMS - AI-drevet, udvikler-først CMS & CRM til SaaS",
+      "description": "Styrk din SaaS-vækst med en udvikler-først platform. Automatiser hvert trin i produktets salgslivscyklus.",
       "images": [
         "/logo.svg"
       ]
@@ -66,22 +66,22 @@
       "follow": true
     }
   },
-  "id": 10,
-  "createdAt": "2025-08-23T08:23:02.26159Z",
-  "updatedAt": "2025-08-29T20:05:13.521976Z",
+  "id": 22,
+  "createdAt": "2025-08-31T14:36:34.11805Z",
+  "updatedAt": null,
   "comments": null,
   "title": "Metadata",
-  "description": "This file controls all the SEO and social sharing metadata for the LeadCMS.ai website. By editing this file, you can update the site’s title, description, icons, Open Graph, Twitter card information, and search engine indexing settings.\n\nFor more details on each field and how metadata works in Next.js, see the official documentation: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
+  "description": "Denne fil styrer al SEO og metadata til deling på sociale medier for LeadCMS.ai-webstedet. Ved at redigere denne fil kan du opdatere webstedets titel, beskrivelse, ikoner, Open Graph, Twitter-kortoplysninger og indstillinger for søgemaskineindeksering.\n\nFor flere detaljer om hvert felt, og hvordan metadata fungerer i Next.js, se den officielle dokumentation: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
   "coverImageUrl": "",
   "coverImageAlt": "",
   "slug": "metadata",
   "type": "metadata",
   "author": "Peter Liapin",
-  "language": "en",
+  "language": "da",
   "translationKey": "c1c34cd2-844b-4f75-8ebb-619b046ffc92",
   "category": "Metadata",
   "tags": [],
   "allowComments": false,
-  "source": null,
+  "source": "AI translated from 10",
   "publishedAt": "2025-08-22T18:30:00Z"
 }

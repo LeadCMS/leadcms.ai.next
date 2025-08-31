@@ -5,7 +5,7 @@ import axios from "axios"
 
 export const leadCMSUrl = process.env.NEXT_PUBLIC_LEADCMS_URL
 export const leadCMSApiKey = process.env.LEADCMS_API_KEY
-export const language = process.env.NEXT_PUBLIC_LEADCMS_LANGUAGE
+export const defaultLanguage = process.env.NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE || "en"
 export const CONTENT_DIR = path.resolve(".leadcms/content")
 export const MEDIA_DIR = path.resolve("public/media")
 
@@ -151,8 +151,17 @@ export async function saveContentFile({ content, typeMap, contentDir, previewSlu
     : content.format || (content.body ? "MDX" : "JSON")
   const cleanedContent = replaceApiMediaPaths(content)
 
+  // Determine the target directory based on language
+  let targetContentDir = contentDir
+  const contentLanguage = content.language || defaultLanguage
+
+  if (contentLanguage !== defaultLanguage) {
+    // Save non-default language content in language-specific folder
+    targetContentDir = path.join(contentDir, contentLanguage)
+  }
+
   if (contentType === "MDX") {
-    const filePath = path.join(contentDir, `${slug}.mdx`)
+    const filePath = path.join(targetContentDir, `${slug}.mdx`)
     let body = cleanedContent.body || ""
     let bodyFrontmatter = {}
     let bodyContent = body
@@ -183,7 +192,7 @@ export async function saveContentFile({ content, typeMap, contentDir, previewSlu
     for (const [k, v] of Object.entries(cleanedContent)) {
       if (k !== "body") merged[k] = v
     }
-    const filePath = path.join(contentDir, `${slug}.json`)
+    const filePath = path.join(targetContentDir, `${slug}.json`)
     const jsonStr = JSON.stringify(merged, null, 2)
     await fs.mkdir(path.dirname(filePath), { recursive: true })
     await fs.writeFile(filePath, jsonStr, "utf8")

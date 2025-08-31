@@ -1,11 +1,10 @@
 import { createLocaleContentPage } from '@/lib/locale-page-factory';
-import { DEFAULT_LANGUAGE } from '@/lib/cms';
 
 const {
-  default: CatchAllPage,
+  default: RussianContentPage,
   generateMetadata,
   generateStaticParams
-} = createLocaleContentPage(DEFAULT_LANGUAGE);
+} = createLocaleContentPage('ru');
 
 export { generateMetadata, generateStaticParams };
-export default CatchAllPage;
+export default RussianContentPage;

@@ -7,7 +7,7 @@ import {
   saveContentFile,
   leadCMSUrl,
   leadCMSApiKey,
-  language,
+  defaultLanguage,
   CONTENT_DIR,
   MEDIA_DIR,
 } from "./leadcms-helpers.mjs"
@@ -19,7 +19,7 @@ console.log(`[SSE ENV] LeadCMS URL: ${leadCMSUrl}`)
 console.log(
   `[SSE ENV] LeadCMS API Key: ${leadCMSApiKey ? `${leadCMSApiKey.substring(0, 8)}...` : "NOT_SET"}`
 )
-console.log(`[SSE ENV] Language: ${language || "NOT_SET"}`)
+console.log(`[SSE ENV] Default Language: ${defaultLanguage}`)
 console.log(`[SSE ENV] Content Dir: ${CONTENT_DIR}`)
 console.log(`[SSE ENV] Media Dir: ${MEDIA_DIR}`)
 
@@ -29,10 +29,6 @@ function buildSSEUrl() {
   url.searchParams.set("entities", "Content")
   url.searchParams.set("includeContent", "true")
   url.searchParams.set("includeLiveDrafts", "true")
-  if (language) {
-    url.searchParams.set("language", language)
-    console.log(`[SSE URL] Added language parameter: ${language}`)
-  }
   const finalUrl = url.toString()
   console.log(`[SSE URL] Final SSE URL: ${finalUrl}`)
   return finalUrl

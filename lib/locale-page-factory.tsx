@@ -11,7 +11,7 @@ import { getTemplate } from '@/components/templates';
 const CMS_CONTENT_PATH = path.resolve('.leadcms/content');
 
 interface PageProps {
-  params: Promise<{ slug: string[] }>;
+  params: Promise<{ slug?: string[] }>;
 }
 
 /**
@@ -21,8 +21,21 @@ export function createLocaleHomePage(locale: string) {
   async function generateMetadata(): Promise<Metadata> {
     const content = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, locale);
     if (!content) {
+      // Try fallback to default language
+      const fallbackContent = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, DEFAULT_LANGUAGE);
+      if (!fallbackContent) {
+        return {
+          title: 'Page Not Found',
+        };
+      }
+
       return {
-        title: 'Page Not Found',
+        title: fallbackContent.title,
+        description: fallbackContent.description,
+        openGraph: {
+          title: fallbackContent.title,
+          description: fallbackContent.description,
+        },
       };
     }
 
@@ -40,7 +53,18 @@ export function createLocaleHomePage(locale: string) {
     const content = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, locale);
 
     if (!content) {
-      notFound();
+      // Try to fallback to default language content
+      const fallbackContent = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, DEFAULT_LANGUAGE);
+      if (!fallbackContent) {
+        notFound();
+      }
+
+      const TemplateComponent = getTemplate(fallbackContent.type);
+      if (!TemplateComponent) {
+        throw new Error(`No template found for content type: ${fallbackContent.type}`);
+      }
+
+      return <TemplateComponent content={fallbackContent} />;
     }
 
     const TemplateComponent = getTemplate(content.type);
@@ -63,7 +87,7 @@ export function createLocaleHomePage(locale: string) {
 export function createLocaleContentPage(locale: string) {
   async function LocaleContentPage({ params }: PageProps) {
     const awaitedParams = await params;
-    const slug = awaitedParams.slug.join('/');
+    const slug = awaitedParams.slug?.join('/') || '';
 
     const content = getCMSContentBySlugForLocale(slug, CMS_CONTENT_PATH, locale);
     if (!content) notFound();
@@ -77,7 +101,7 @@ export function createLocaleContentPage(locale: string) {
 
   async function generateMetadata({ params }: PageProps) {
     const awaitedParams = await params;
-    const slug = awaitedParams.slug.join('/');
+    const slug = awaitedParams.slug?.join('/') || '';
     const content = getCMSContentBySlugForLocale(slug, CMS_CONTENT_PATH, locale);
     if (!content) notFound();
     return {

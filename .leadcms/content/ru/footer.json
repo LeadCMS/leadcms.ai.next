@@ -1,0 +1,44 @@
+{
+  "id": 103,
+  "createdAt": "2025-08-31T22:00:00.000Z",
+  "updatedAt": "2025-08-31T22:00:00.000Z",
+  "title": "Footer Configuration (Russian)",
+  "description": "Конфигурация подвала сайта включая логотип, текст авторских прав и навигационные ссылки.",
+  "slug": "footer",
+  "type": "footer",
+  "language": "ru",
+  "translationKey": "footer-config",
+  "publishedAt": "2025-08-31T22:00:00.000Z",
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "Логотип LeadCMS"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. Все права защищены.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "Условия",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Конфиденциальность",
+        "href": "/legal/privacy"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "Документация",
+        "href": "https://github.com/LeadCMS/leadcms.core",
+        "external": true
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ]
+  }
+}

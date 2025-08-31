@@ -1,0 +1,50 @@
+{
+  "id": 100,
+  "createdAt": "2025-08-31T22:00:00.000Z",
+  "updatedAt": "2025-08-31T22:00:00.000Z",
+  "title": "Header Configuration",
+  "description": "Configuration for the website header including logo, navigation links, and call-to-action buttons. This controls the main navigation structure of the site.",
+  "slug": "header",
+  "type": "header",
+  "language": "en",
+  "translationKey": "header-config",
+  "publishedAt": "2025-08-31T22:00:00.000Z",
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "Features",
+        "href": "/#features"
+      },
+      {
+        "label": "Why LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "Compare",
+        "href": "/#compare"
+      },
+      {
+        "label": "Contact Us",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "Get Started",
+      "href": "#contact"
+    }
+  }
+}

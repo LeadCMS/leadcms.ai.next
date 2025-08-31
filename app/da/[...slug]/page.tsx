@@ -1,10 +1,7 @@
 import { createLocaleContentPage } from '@/lib/locale-page-factory';
 
-const {
-  default: DanishContentPage,
-  generateMetadata,
-  generateStaticParams
-} = createLocaleContentPage('da');
+const pageFactory = createLocaleContentPage('da');
 
-export { generateMetadata, generateStaticParams };
-export default DanishContentPage;
+export const generateMetadata = pageFactory.generateMetadata;
+export const generateStaticParams = pageFactory.generateStaticParams;
+export default pageFactory.default;

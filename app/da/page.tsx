@@ -1,6 +1,6 @@
 import { createLocaleHomePage } from '@/lib/locale-page-factory';
 
-const { generateMetadata, default: DanishHomePage } = createLocaleHomePage('da');
+const pageFactory = createLocaleHomePage('da');
 
-export { generateMetadata };
-export default DanishHomePage;
+export const generateMetadata = pageFactory.generateMetadata;
+export default pageFactory.default;

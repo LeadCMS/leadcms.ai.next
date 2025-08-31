@@ -1,0 +1,44 @@
+{
+  "id": 101,
+  "createdAt": "2025-08-31T22:00:00.000Z",
+  "updatedAt": "2025-08-31T22:00:00.000Z",
+  "title": "Footer Configuration",
+  "description": "Configuration for the website footer including logo, copyright text, and footer navigation links.",
+  "slug": "footer",
+  "type": "footer",
+  "language": "en",
+  "translationKey": "footer-config",
+  "publishedAt": "2025-08-31T22:00:00.000Z",
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. All rights reserved.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "Terms",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Privacy",
+        "href": "/legal/privacy"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "Docs",
+        "href": "https://github.com/LeadCMS/leadcms.core",
+        "external": true
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ]
+  }
+}

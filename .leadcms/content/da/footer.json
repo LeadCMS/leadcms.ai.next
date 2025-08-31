@@ -1,0 +1,44 @@
+{
+  "id": 105,
+  "createdAt": "2025-08-31T22:00:00.000Z",
+  "updatedAt": "2025-08-31T22:00:00.000Z",
+  "title": "Footer Configuration (Danish)",
+  "description": "Konfiguration af webstedets footer inklusive logo, copyright tekst og navigationslinks.",
+  "slug": "footer",
+  "type": "footer",
+  "language": "da",
+  "translationKey": "footer-config",
+  "publishedAt": "2025-08-31T22:00:00.000Z",
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. Alle rettigheder forbeholdes.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "Vilkår",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Privatliv",
+        "href": "/legal/privacy"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "Dokumentation",
+        "href": "https://github.com/LeadCMS/leadcms.core",
+        "external": true
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ]
+  }
+}

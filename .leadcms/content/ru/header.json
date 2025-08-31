@@ -1,0 +1,50 @@
+{
+  "id": 102,
+  "createdAt": "2025-08-31T22:00:00.000Z",
+  "updatedAt": "2025-08-31T22:00:00.000Z",
+  "title": "Header Configuration (Russian)",
+  "description": "Конфигурация заголовка сайта включая логотип, навигационные ссылки и кнопки призыва к действию.",
+  "slug": "header",
+  "type": "header",
+  "language": "ru",
+  "translationKey": "header-config",
+  "publishedAt": "2025-08-31T22:00:00.000Z",
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "Логотип LeadCMS",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "Возможности",
+        "href": "/#features"
+      },
+      {
+        "label": "Почему LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "Сравнение",
+        "href": "/#compare"
+      },
+      {
+        "label": "Свяжитесь с нами",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "Начать",
+      "href": "#contact"
+    }
+  }
+}

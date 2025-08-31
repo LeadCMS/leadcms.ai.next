@@ -1,0 +1,50 @@
+{
+  "id": 104,
+  "createdAt": "2025-08-31T22:00:00.000Z",
+  "updatedAt": "2025-08-31T22:00:00.000Z",
+  "title": "Header Configuration (Danish)",
+  "description": "Konfiguration af webstedets header inklusive logo, navigationslinks og call-to-action knapper.",
+  "slug": "header",
+  "type": "header",
+  "language": "da",
+  "translationKey": "header-config",
+  "publishedAt": "2025-08-31T22:00:00.000Z",
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "Funktioner",
+        "href": "/#features"
+      },
+      {
+        "label": "Hvorfor LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "Sammenlign",
+        "href": "/#compare"
+      },
+      {
+        "label": "Kontakt os",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "Kom i gang",
+      "href": "#contact"
+    }
+  }
+}

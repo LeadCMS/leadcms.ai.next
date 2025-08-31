@@ -1,10 +1,7 @@
 import { createLocaleContentPage } from '@/lib/locale-page-factory';
 
-const {
-  default: RussianContentPage,
-  generateMetadata,
-  generateStaticParams
-} = createLocaleContentPage('ru');
+const pageFactory = createLocaleContentPage('ru');
 
-export { generateMetadata, generateStaticParams };
-export default RussianContentPage;
+export const generateMetadata = pageFactory.generateMetadata;
+export const generateStaticParams = pageFactory.generateStaticParams;
+export default pageFactory.default;

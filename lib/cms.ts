@@ -364,3 +364,130 @@ function extractTypeFromJSON(filePath: string): string | undefined {
     return undefined
   }
 }
+
+// Header and Footer Configuration Types
+export interface HeaderConfig {
+  headerData: {
+    logo: {
+      src: string
+      alt: string
+      text: string
+      href: string
+    }
+    navigation: Array<{
+      label: string
+      href: string
+    }>
+    externalLinks: Array<{
+      label: string
+      href: string
+      icon?: string
+      external: boolean
+    }>
+    cta: {
+      label: string
+      href: string
+    }
+  }
+}
+
+export interface FooterConfig {
+  footerData: {
+    logo: {
+      src: string
+      alt: string
+    }
+    copyright: {
+      text: string
+      showYear: boolean
+    }
+    navigation: Array<{
+      label: string
+      href: string
+    }>
+    externalLinks: Array<{
+      label: string
+      href: string
+      external: boolean
+    }>
+  }
+}
+
+/**
+ * Load header configuration for a specific locale
+ */
+export function getHeaderConfig(contentDir: string, locale: string): HeaderConfig | null {
+  try {
+    const localeContentDir = getContentDirForLocale(contentDir, locale)
+    const headerPath = path.join(localeContentDir, 'header.json')
+
+    if (!fs.existsSync(headerPath)) {
+      return null
+    }
+
+    const headerContent = fs.readFileSync(headerPath, 'utf-8')
+    return JSON.parse(headerContent) as HeaderConfig
+  } catch (error) {
+    console.error(`Error loading header config for locale ${locale}:`, error)
+    return null
+  }
+}
+
+/**
+ * Load footer configuration for a specific locale
+ */
+export function getFooterConfig(contentDir: string, locale: string): FooterConfig | null {
+  try {
+    const localeContentDir = getContentDirForLocale(contentDir, locale)
+    const footerPath = path.join(localeContentDir, 'footer.json')
+
+    if (!fs.existsSync(footerPath)) {
+      return null
+    }
+
+    const footerContent = fs.readFileSync(footerPath, 'utf-8')
+    return JSON.parse(footerContent) as FooterConfig
+  } catch (error) {
+    console.error(`Error loading footer config for locale ${locale}:`, error)
+    return null
+  }
+}
+
+/**
+ * Get the current locale from a path
+ */
+export function getLocaleFromPath(pathname: string): string {
+  const segments = pathname.split('/').filter(Boolean)
+  if (segments.length > 0) {
+    const firstSegment = segments[0]
+    // Check if the first segment is a known locale
+    const knownLocales = ['ru', 'da'] // Add more locales as needed
+    if (knownLocales.includes(firstSegment)) {
+      return firstSegment
+    }
+  }
+  return DEFAULT_LANGUAGE
+}
+
+/**
+ * Make a link locale-aware by adding the current locale prefix
+ */
+export function makeLocaleAwareLink(href: string, currentLocale: string): string {
+  // Don't modify external links or anchors
+  if (href.startsWith('http') || href.startsWith('#')) {
+    return href
+  }
+
+  // If it's the default language, don't add prefix
+  if (currentLocale === DEFAULT_LANGUAGE) {
+    return href
+  }
+
+  // If the href already starts with the locale, don't double-add it
+  if (href.startsWith(`/${currentLocale}/`)) {
+    return href
+  }
+
+  // Add locale prefix
+  return `/${currentLocale}${href.startsWith('/') ? '' : '/'}${href}`
+}

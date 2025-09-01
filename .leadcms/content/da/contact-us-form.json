@@ -1,14 +1,4 @@
 {
-  "id": 202,
-  "createdAt": "2025-09-01T10:00:00.000Z",
-  "updatedAt": "2025-09-01T10:00:00.000Z",
-  "title": "Contact Form Text Configuration (Danish)",
-  "description": "Tekstindhold til kontaktformular-komponenten, inklusive etiketter, pladsholdere, knapper og beskeder.",
-  "slug": "contact-us-form",
-  "type": "contact-form",
-  "language": "da",
-  "translationKey": "contact-form-text",
-  "publishedAt": "2025-09-01T10:00:00.000Z",
   "contactFormText": {
     "title": "Kontakt os",
     "description": "Udfyld formularen nedenfor, og vi vender tilbage til dig så hurtigt som muligt.",
@@ -46,5 +36,23 @@
     "error": {
       "title": "Fejl ved afsendelse af besked"
     }
-  }
+  },
+  "id": 23,
+  "createdAt": "2025-09-01T18:24:55.165108Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Contact Form Text Configuration",
+  "description": "Tekstindhold til kontaktformular-komponenten, inklusive etiketter, pladsholdere, knapper og beskeder.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "contact-us-form",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "da",
+  "translationKey": "28afb6b9-2d27-4ca2-87b9-c6862fd074b2",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
 }

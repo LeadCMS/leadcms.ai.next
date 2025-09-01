@@ -1,14 +1,4 @@
 {
-  "id": 103,
-  "createdAt": "2025-08-31T22:00:00.000Z",
-  "updatedAt": "2025-08-31T22:00:00.000Z",
-  "title": "Footer Configuration (Russian)",
-  "description": "Конфигурация подвала сайта включая логотип, текст авторских прав и навигационные ссылки.",
-  "slug": "footer",
-  "type": "footer",
-  "language": "ru",
-  "translationKey": "footer-config",
-  "publishedAt": "2025-08-31T22:00:00.000Z",
   "footerData": {
     "logo": {
       "src": "/images/icon-192x192.png",
@@ -60,5 +50,23 @@
         "displayName": "Dansk"
       }
     ]
-  }
+  },
+  "id": 19,
+  "createdAt": "2025-09-01T18:19:00.63383Z",
+  "updatedAt": "2025-09-01T18:19:44.803557Z",
+  "comments": null,
+  "title": "Footer Configuration",
+  "description": "Конфигурация подвала сайта включая логотип, текст авторских прав и навигационные ссылки.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "footer",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "ru",
+  "translationKey": "01cc2f95-dce9-4ef9-942a-c3b9eb33f923",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
 }

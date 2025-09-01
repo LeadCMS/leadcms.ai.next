@@ -1,14 +1,4 @@
 {
-  "id": 201,
-  "createdAt": "2025-09-01T10:00:00.000Z",
-  "updatedAt": "2025-09-01T10:00:00.000Z",
-  "title": "Contact Form Text Configuration (Russian)",
-  "description": "Текстовое содержимое для компонента контактной формы, включая подписи, плейсхолдеры, кнопки и сообщения.",
-  "slug": "contact-us-form",
-  "type": "contact-form",
-  "language": "ru",
-  "translationKey": "contact-form-text",
-  "publishedAt": "2025-09-01T10:00:00.000Z",
   "contactFormText": {
     "title": "Связаться с нами",
     "description": "Заполните форму ниже, и мы свяжемся с вами как можно скорее.",
@@ -46,5 +36,23 @@
     "error": {
       "title": "Ошибка отправки сообщения"
     }
-  }
+  },
+  "id": 21,
+  "createdAt": "2025-09-01T18:22:15.900187Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Contact Form Text Configuration",
+  "description": "Текстовое содержимое для компонента контактной формы, включая подписи, плейсхолдеры, кнопки и сообщения.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "contact-us-form",
+  "type": "component",
+  "author": "Пётр Ляпин",
+  "language": "ru",
+  "translationKey": "28afb6b9-2d27-4ca2-87b9-c6862fd074b2",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": "2025-08-31T18:30:00Z"
 }

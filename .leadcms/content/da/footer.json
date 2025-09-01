@@ -1,14 +1,4 @@
 {
-  "id": 105,
-  "createdAt": "2025-08-31T22:00:00.000Z",
-  "updatedAt": "2025-08-31T22:00:00.000Z",
-  "title": "Footer Configuration (Danish)",
-  "description": "Konfiguration af webstedets footer inklusive logo, copyright tekst og navigationslinks.",
-  "slug": "footer",
-  "type": "footer",
-  "language": "da",
-  "translationKey": "footer-config",
-  "publishedAt": "2025-08-31T22:00:00.000Z",
   "footerData": {
     "logo": {
       "src": "/images/icon-192x192.png",
@@ -60,5 +50,23 @@
         "displayName": "Dansk"
       }
     ]
-  }
+  },
+  "id": 24,
+  "createdAt": "2025-09-01T18:25:26.389452Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Footer Configuration",
+  "description": "Configuration for the website footer including logo, copyright text, and footer navigation links.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "footer",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "da",
+  "translationKey": "01cc2f95-dce9-4ef9-942a-c3b9eb33f923",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
 }

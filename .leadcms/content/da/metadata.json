@@ -66,8 +66,8 @@
       "follow": true
     }
   },
-  "id": 22,
-  "createdAt": "2025-08-31T14:36:34.11805Z",
+  "id": 27,
+  "createdAt": "2025-09-01T18:30:55.99616Z",
   "updatedAt": null,
   "comments": null,
   "title": "Metadata",
@@ -78,10 +78,10 @@
   "type": "metadata",
   "author": "Peter Liapin",
   "language": "da",
-  "translationKey": "c1c34cd2-844b-4f75-8ebb-619b046ffc92",
-  "category": "Metadata",
+  "translationKey": "2b416bb8-4950-4062-8881-f36f1f6f6b79",
+  "category": "support",
   "tags": [],
   "allowComments": false,
-  "source": "AI translated from 10",
-  "publishedAt": "2025-08-22T18:30:00Z"
+  "source": "Translated from 0",
+  "publishedAt": "2025-09-01T18:30:00Z"
 }

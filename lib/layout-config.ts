@@ -48,6 +48,12 @@ export interface FooterConfig {
       href: string
       external: boolean
     }>
+    languages?: Array<{
+      code: string
+      name: string
+      flag: string
+      displayName?: string
+    }>
   }
 }
 

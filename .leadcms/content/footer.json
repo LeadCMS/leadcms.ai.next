@@ -29,11 +29,31 @@
         "href": "https://github.com/LeadCMS",
         "external": true
       }
+    ],
+    "languages": [
+      {
+        "code": "en",
+        "name": "English",
+        "flag": "🇺🇸",
+        "displayName": "English"
+      },
+      {
+        "code": "ru",
+        "name": "Русский",
+        "flag": "🇷🇺",
+        "displayName": "Русский"
+      },
+      {
+        "code": "da",
+        "name": "Dansk",
+        "flag": "🇩🇰",
+        "displayName": "Dansk"
+      }
     ]
   },
   "id": 12,
   "createdAt": "2025-09-01T16:38:44.204226Z",
-  "updatedAt": "2025-09-01T16:39:32.952266Z",
+  "updatedAt": "2025-09-01T18:02:58.83395Z",
   "comments": null,
   "title": "Footer Configuration",
   "description": "Configuration for the website footer including logo, copyright text, and footer navigation links.",

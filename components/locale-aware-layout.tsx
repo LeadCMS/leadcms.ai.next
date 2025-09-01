@@ -44,7 +44,6 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
           </nav>
 
           <div className="flex items-center gap-4">
-            <LanguageSwitcher />
             {headerConfig.headerData.externalLinks.map((link, index) => (
               <LocaleAwareLink
                 key={index}
@@ -85,30 +84,37 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
                 )}
               </p>
             </div>
-            <nav className="flex gap-6">
-              {footerConfig.footerData.navigation.map((item, index) => (
-                <LocaleAwareLink
-                  key={index}
-                  href={item.href}
-                  locale={locale}
-                  className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
-                >
-                  {item.label}
-                </LocaleAwareLink>
-              ))}
-              {footerConfig.footerData.externalLinks.map((link, index) => (
-                <LocaleAwareLink
-                  key={`external-${index}`}
-                  href={link.href}
-                  locale={locale}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
-                >
-                  {link.label}
-                </LocaleAwareLink>
-              ))}
-            </nav>
+            <div className="flex items-center gap-6">
+              <LanguageSwitcher
+                languages={footerConfig.footerData.languages}
+                variant="footer"
+                align="end"
+              />
+              <nav className="flex gap-6">
+                {footerConfig.footerData.navigation.map((item, index) => (
+                  <LocaleAwareLink
+                    key={index}
+                    href={item.href}
+                    locale={locale}
+                    className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
+                  >
+                    {item.label}
+                  </LocaleAwareLink>
+                ))}
+                {footerConfig.footerData.externalLinks.map((link, index) => (
+                  <LocaleAwareLink
+                    key={`external-${index}`}
+                    href={link.href}
+                    locale={locale}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
+                  >
+                    {link.label}
+                  </LocaleAwareLink>
+                ))}
+              </nav>
+            </div>
           </div>
         </div>
       </footer>

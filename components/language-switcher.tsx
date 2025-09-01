@@ -13,27 +13,42 @@ import {
 import { useLocale } from "@/lib/locale-context"
 import { DEFAULT_LANGUAGE } from "@/lib/locale-utils"
 
-// Define available locales with their display names and flags
-const AVAILABLE_LOCALES = [
+// Default available locales (fallback if not provided via props)
+const DEFAULT_LOCALES: LanguageConfig[] = [
   { code: 'en', name: 'English', flag: '🇺🇸' },
   { code: 'ru', name: 'Русский', flag: '🇷🇺' },
   { code: 'da', name: 'Dansk', flag: '🇩🇰' },
-] as const
+]
 
-type LocaleCode = typeof AVAILABLE_LOCALES[number]['code']
+export interface LanguageConfig {
+  code: string
+  name: string
+  flag: string
+  displayName?: string
+}
 
-export function LanguageSwitcher() {
+interface LanguageSwitcherProps {
+  languages?: LanguageConfig[]
+  variant?: 'default' | 'compact' | 'header' | 'footer'
+  align?: 'start' | 'center' | 'end'
+}
+
+export function LanguageSwitcher({
+  languages = DEFAULT_LOCALES,
+  variant = 'default',
+  align = 'end'
+}: LanguageSwitcherProps) {
   const currentLocale = useLocale()
   const pathname = usePathname()
 
   // Find current locale info
-  const currentLocaleInfo = AVAILABLE_LOCALES.find(locale => locale.code === currentLocale) || AVAILABLE_LOCALES[0]
+  const currentLocaleInfo = languages.find(locale => locale.code === currentLocale) || languages[0]
 
   // Function to generate URL for a different locale
-  const getLocalizedUrl = (targetLocale: LocaleCode): string => {
+  const getLocalizedUrl = (targetLocale: string): string => {
     // Remove current locale prefix from pathname if it exists
     let cleanPath = pathname
-    for (const locale of AVAILABLE_LOCALES) {
+    for (const locale of languages) {
       if (pathname.startsWith(`/${locale.code}/`)) {
         cleanPath = pathname.replace(`/${locale.code}`, '')
         break
@@ -49,26 +64,45 @@ export function LanguageSwitcher() {
     return `/${targetLocale}${cleanPath || ''}`
   }
 
-  const handleLocaleChange = (targetLocale: LocaleCode) => {
+  const handleLocaleChange = (targetLocale: string) => {
     const newUrl = getLocalizedUrl(targetLocale)
     window.location.href = newUrl
   }
 
+  // Different variants for different contexts
+  const getButtonStyles = () => {
+    switch (variant) {
+      case 'compact':
+        return "gap-1 text-xs text-muted-foreground hover:text-foreground h-8 px-2"
+      case 'header':
+        return "gap-2 text-sm text-foreground hover:text-muted-foreground h-9 px-3"
+      case 'footer':
+        return "gap-1 text-xs text-muted-foreground hover:text-foreground h-7 px-2"
+      default:
+        return "gap-2 text-muted-foreground hover:text-foreground"
+    }
+  }
+
+  const showFullName = variant !== 'compact' && variant !== 'footer'
+  const showGlobeIcon = variant !== 'header' && variant !== 'footer'
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="gap-2">
-          <Globe className="h-4 w-4" />
-          <span className="hidden sm:inline-flex items-center gap-1">
+        <Button variant="ghost" size="sm" className={getButtonStyles()}>
+          {showGlobeIcon && <Globe className="h-4 w-4" />}
+          <span className={variant === 'compact' ? 'inline-flex items-center gap-1' : 'hidden sm:inline-flex items-center gap-1'}>
             <span>{currentLocaleInfo.flag}</span>
-            <span>{currentLocaleInfo.name}</span>
+            {showFullName && <span>{currentLocaleInfo.displayName || currentLocaleInfo.name}</span>}
           </span>
-          <span className="sm:hidden">{currentLocaleInfo.flag}</span>
+          {variant === 'compact' && (
+            <span className="sm:hidden">{currentLocaleInfo.flag}</span>
+          )}
           <ChevronDown className="h-3 w-3" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-[150px]">
-        {AVAILABLE_LOCALES.map((locale) => (
+      <DropdownMenuContent align={align} className="min-w-[150px]">
+        {languages.map((locale) => (
           <DropdownMenuItem
             key={locale.code}
             onClick={() => handleLocaleChange(locale.code)}
@@ -77,7 +111,7 @@ export function LanguageSwitcher() {
             }`}
           >
             <span>{locale.flag}</span>
-            <span>{locale.name}</span>
+            <span>{locale.displayName || locale.name}</span>
             {locale.code === currentLocale && (
               <span className="ml-auto text-xs text-muted-foreground">✓</span>
             )}

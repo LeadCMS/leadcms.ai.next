@@ -2,6 +2,7 @@ import type * as React from "react"
 import { Button } from "@/components/ui/button"
 import { GitBranch } from "lucide-react"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
+import { LanguageSwitcher } from "@/components/language-switcher"
 import { getLayoutConfig, type HeaderConfig, type FooterConfig } from "@/lib/layout-config"
 import { DEFAULT_LANGUAGE } from "@/lib/locale-utils"
 import { LocaleProvider } from "@/lib/locale-context"
@@ -43,6 +44,7 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
           </nav>
 
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             {headerConfig.headerData.externalLinks.map((link, index) => (
               <LocaleAwareLink
                 key={index}

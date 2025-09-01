@@ -2,6 +2,10 @@
  * Client-side utilities for locale handling
  */
 
+// Available locales in the application
+export const AVAILABLE_LOCALES = ['en', 'ru', 'da'] as const
+export type LocaleCode = typeof AVAILABLE_LOCALES[number]
+
 // Default language from environment or fallback to 'en'
 export const DEFAULT_LANGUAGE = typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE || "en"
 
@@ -13,8 +17,7 @@ export function getLocaleFromPath(pathname: string): string {
   if (segments.length > 0) {
     const firstSegment = segments[0]
     // Check if the first segment is a known locale
-    const knownLocales = ['ru', 'da'] // Add more locales as needed
-    if (knownLocales.includes(firstSegment)) {
+    if (AVAILABLE_LOCALES.includes(firstSegment as LocaleCode)) {
       return firstSegment
     }
   }

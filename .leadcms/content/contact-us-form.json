@@ -1,14 +1,4 @@
 {
-  "id": 200,
-  "createdAt": "2025-09-01T10:00:00.000Z",
-  "updatedAt": "2025-09-01T10:00:00.000Z",
-  "title": "Contact Form Text Configuration (English)",
-  "description": "Text content for the contact form component including labels, placeholders, buttons, and messages.",
-  "slug": "contact-us-form",
-  "type": "contact-form",
-  "language": "en",
-  "translationKey": "contact-form-text",
-  "publishedAt": "2025-09-01T10:00:00.000Z",
   "contactFormText": {
     "title": "Contact Us",
     "description": "Fill out the form below and we'll get back to you as soon as possible.",
@@ -46,5 +36,23 @@
     "error": {
       "title": "Error sending message"
     }
-  }
+  },
+  "id": 11,
+  "createdAt": "2025-09-01T16:34:55.851894Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Contact Form Text Configuration",
+  "description": "Text content for the contact form component including labels, placeholders, buttons, and messages.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "contact-us-form",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "en",
+  "translationKey": null,
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": null,
+  "publishedAt": "2025-08-31T18:30:00Z"
 }

@@ -1,14 +1,4 @@
 {
-  "id": 100,
-  "createdAt": "2025-08-31T22:00:00.000Z",
-  "updatedAt": "2025-08-31T22:00:00.000Z",
-  "title": "Header Configuration",
-  "description": "Configuration for the website header including logo, navigation links, and call-to-action buttons. This controls the main navigation structure of the site.",
-  "slug": "header",
-  "type": "header",
-  "language": "en",
-  "translationKey": "header-config",
-  "publishedAt": "2025-08-31T22:00:00.000Z",
   "headerData": {
     "logo": {
       "src": "/images/icon-192x192.png",
@@ -46,5 +36,23 @@
       "label": "Get Started",
       "href": "#contact"
     }
-  }
+  },
+  "id": 13,
+  "createdAt": "2025-09-01T16:40:40.141439Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "Header Configuration",
+  "description": "Configuration for the website header including logo, navigation links, and call-to-action buttons. This controls the main navigation structure of the site.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "header",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "en",
+  "translationKey": null,
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": null,
+  "publishedAt": "2025-08-31T18:30:00Z"
 }

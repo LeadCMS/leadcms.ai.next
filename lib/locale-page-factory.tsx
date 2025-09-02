@@ -7,6 +7,7 @@ import {
   DEFAULT_LANGUAGE,
 } from '@/lib/cms';
 import { getTemplate } from '@/components/templates';
+import { LocaleAwareLayout } from '@/components/locale-aware-layout';
 
 const CMS_CONTENT_PATH = path.resolve('.leadcms/content');
 
@@ -135,21 +136,36 @@ export function createLocaleNotFoundPage(locale: string) {
   function LocaleNotFoundPage() {
     // Load not-found content for the specific locale
     const content = getCMSContentBySlugForLocale('not-found', CMS_CONTENT_PATH, locale);
-    if (!content) {
-      // Fallback if not-found.mdx doesn't exist for this locale
+
+    const notFoundContent = () => {
+      if (!content) {
+        // Fallback if not-found.mdx doesn't exist for this locale
+        return (
+          <div className="container mx-auto px-4 py-16 text-center">
+            <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
+            <p className="text-gray-600">Sorry, the page you are looking for does not exist.</p>
+          </div>
+        );
+      }
+
+      const TemplateComponent = getTemplate(content.type);
+      if (!TemplateComponent) {
+        throw new Error(`No template found for content type: ${content.type}`);
+      }
+      return <TemplateComponent content={content} />;
+    };
+
+    // Only wrap with LocaleAwareLayout for the default language
+    // Locale-specific not-found pages already get the layout from their locale layout files
+    if (locale === DEFAULT_LANGUAGE) {
       return (
-        <div className="container mx-auto px-4 py-16 text-center">
-          <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
-          <p className="text-gray-600">Sorry, the page you are looking for does not exist.</p>
-        </div>
+        <LocaleAwareLayout locale={locale}>
+          {notFoundContent()}
+        </LocaleAwareLayout>
       );
     }
 
-    const TemplateComponent = getTemplate(content.type);
-    if (!TemplateComponent) {
-      throw new Error(`No template found for content type: ${content.type}`);
-    }
-    return <TemplateComponent content={content} />;
+    return notFoundContent();
   }
 
   return {

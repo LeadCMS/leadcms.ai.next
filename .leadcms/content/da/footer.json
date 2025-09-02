@@ -32,6 +32,12 @@
     ],
     "languages": [
       {
+        "code": "da",
+        "name": "Dansk",
+        "flag": "🇩🇰",
+        "displayName": "Dansk"
+      },
+      {
         "code": "en",
         "name": "English",
         "flag": "🇺🇸",
@@ -44,16 +50,16 @@
         "displayName": "Русский"
       },
       {
-        "code": "da",
-        "name": "Dansk",
-        "flag": "🇩🇰",
-        "displayName": "Dansk"
+        "code": "si",
+        "name": "සිංහල",
+        "flag": "🇱🇰",
+        "displayName": "සිංහල"
       }
     ]
   },
   "id": 24,
   "createdAt": "2025-09-01T18:25:26.389452Z",
-  "updatedAt": null,
+  "updatedAt": "2025-09-02T10:06:53.320052Z",
   "comments": null,
   "title": "Footer Configuration",
   "description": "Configuration for the website footer including logo, copyright text, and footer navigation links.",

@@ -1,0 +1,58 @@
+{
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS ලාංඡනය",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "විශේෂාංග",
+        "href": "/#features"
+      },
+      {
+        "label": "ඇයි LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "සංසන්දනය",
+        "href": "/#compare"
+      },
+      {
+        "label": "අපව සම්බන්ධ වන්න",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "ආරම්භ කරන්න",
+      "href": "#contact"
+    }
+  },
+  "id": 34,
+  "createdAt": "2025-09-02T05:37:07.567339Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "ශීර්ෂ කොටසේ සැකසුම",
+  "description": "වෙබ් අඩවියේ ශීර්ෂ කොටස සඳහා, ලාංඡනය, සංචරණ සබැඳි සහ ක්‍රියාවට කැඳවන බොත්තම් ඇතුළත් සැකසුමකි. මෙය අඩවියේ ප්‍රධාන සංචරණ ව්‍යුහය පාලනය කරයි.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "header",
+  "type": "component",
+  "author": "පීටර් ලියාපින්",
+  "language": "si",
+  "translationKey": "2473a737-3370-4123-97ad-f02dc2542a46",
+  "category": "සංරචකය",
+  "tags": [],
+  "allowComments": false,
+  "source": "AI translated from 13",
+  "publishedAt": null
+}

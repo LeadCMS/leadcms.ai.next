@@ -32,28 +32,34 @@
     ],
     "languages": [
       {
-        "code": "en",
-        "name": "English",
-        "flag": "🇺🇸",
-        "displayName": "English"
-      },
-      {
         "code": "ru",
         "name": "Русский",
         "flag": "🇷🇺",
         "displayName": "Русский"
       },
       {
+        "code": "en",
+        "name": "English",
+        "flag": "🇺🇸",
+        "displayName": "English"
+      },
+      {
         "code": "da",
         "name": "Dansk",
         "flag": "🇩🇰",
         "displayName": "Dansk"
+      },
+      {
+        "code": "si",
+        "name": "සිංහල",
+        "flag": "🇱🇰",
+        "displayName": "සිංහල"
       }
     ]
   },
   "id": 19,
   "createdAt": "2025-09-01T18:19:00.63383Z",
-  "updatedAt": "2025-09-01T18:19:44.803557Z",
+  "updatedAt": "2025-09-02T10:05:43.435851Z",
   "comments": null,
   "title": "Footer Configuration",
   "description": "Конфигурация подвала сайта включая логотип, текст авторских прав и навигационные ссылки.",

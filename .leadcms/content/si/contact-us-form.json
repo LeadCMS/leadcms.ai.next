@@ -1,0 +1,58 @@
+{
+  "contactFormText": {
+    "title": "අප සමග සම්බන්ධ වන්න",
+    "description": "පහත පෝරමය පුරවන්න, අප ඔබව හැකි ඉක්මනින් නැවත සම්බන්ධ කරගන්නෙමු.",
+    "labels": {
+      "firstName": "මුල් නම",
+      "lastName": "අවසන් නම",
+      "email": "ඊමේල්",
+      "company": "සමාගම",
+      "subject": "විෂය",
+      "message": "පණිවිඩය"
+    },
+    "placeholders": {
+      "firstName": "ඔබගේ මුල් නම ඇතුළත් කරන්න",
+      "lastName": "ඔබගේ අවසන් නම ඇතුළත් කරන්න",
+      "email": "ඔබගේ ඊමේල් ලිපිනය ඇතුළත් කරන්න",
+      "company": "ඔබගේ සමාගමේ නාමය ඇතුළත් කරන්න",
+      "message": "ඔබගේ පණිවිඩය ඇතුළත් කරන්න"
+    },
+    "subjectOptions": {
+      "placeholder": "විෂයයක් තෝරන්න",
+      "support": "තාක්ෂණික සහය",
+      "sales": "විකුණුම් විමසුම",
+      "partnership": "හවුල්කාරිත්වය",
+      "other": "වෙනත්"
+    },
+    "buttons": {
+      "send": "පණිවිඩය යවන්න",
+      "sending": "යවමින්...",
+      "sendAnother": "නව පණිවිඩයක් යවන්න"
+    },
+    "success": {
+      "title": "ස්තූතියි!",
+      "message": "ඔබගේ පණිවිඩය සාර්ථකව යවා ඇත. අප ඉක්මනින් ඔබව නැවත සම්බන්ධ කරගන්නෙමු."
+    },
+    "error": {
+      "title": "පණිවිඩය යැවීමේදී දෝෂයක් ඇතිවිය"
+    }
+  },
+  "id": 32,
+  "createdAt": "2025-09-02T05:11:03.81434Z",
+  "updatedAt": null,
+  "comments": null,
+  "title": "සම්බන්ධතා පෝරමයේ පෙළ වින්‍යාසය",
+  "description": "සම්බන්ධතා පෝරම සංරචකය සඳහා පෙළ අන්තර්ගතය, ලේබල්, ප්ලේස්හෝල්ඩර්, බොත්තම් සහ පණිවිඩ ඇතුළුව.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "contact-us-form",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "si",
+  "translationKey": "28afb6b9-2d27-4ca2-87b9-c6862fd074b2",
+  "category": "සංරචකය",
+  "tags": [],
+  "allowComments": false,
+  "source": "AI translated from 23",
+  "publishedAt": null
+}

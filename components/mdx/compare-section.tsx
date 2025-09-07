@@ -30,7 +30,7 @@ export const CompareSection: React.FC<CompareSectionProps> = ({
   tabs = [], // Added default empty array for tabs prop
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32" id="compare">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{title}</h2>
         <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>

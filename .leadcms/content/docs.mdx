@@ -1,0 +1,295 @@
+---
+type: doc
+title: Documentation
+description: Complete guide to building with LeadCMS. Learn how to create, manage, and deliver content with our modern headless CMS.
+group: Overview
+order: 0
+---
+
+# LeadCMS Documentation
+
+Welcome to the complete guide for building with LeadCMS. Whether you're a developer getting started or looking to master advanced features, you'll find everything you need here.
+
+<Callout type="info" title="What's New">
+🚀 **LeadCMS v2.0** is now available with improved performance, new React hooks, and enhanced developer experience. [See what's new →](/docs/whats-new)
+</Callout>
+
+## Quick Start
+
+Get up and running with LeadCMS in minutes:
+
+<Steps>
+  <Step title="Create Account">
+    Sign up for a free LeadCMS account at [leadcms.io](https://leadcms.io/signup)
+  </Step>
+  <Step title="Install CLI">
+    ```bash
+    npm install -g @leadcms/cli
+    ```
+  </Step>
+  <Step title="Create Project">
+    ```bash
+    leadcms init my-project
+    cd my-project
+    npm run dev
+    ```
+  </Step>
+</Steps>
+
+Your site will be running at `http://localhost:3000` with sample content ready to customize.
+
+## Documentation Sections
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Getting Started"
+    description="New to LeadCMS? Start here with our step-by-step guides and tutorials."
+    href="/docs/getting-started"
+  />
+  <FeatureCard
+    title="Installation"
+    description="Detailed setup instructions for different frameworks and environments."
+    href="/docs/installation"
+  />
+  <FeatureCard
+    title="API Reference"
+    description="Complete API documentation with examples for REST and GraphQL APIs."
+    href="/docs/api-reference"
+  />
+  <FeatureCard
+    title="Architecture"
+    description="Deep dive into LeadCMS architecture and technical design decisions."
+    href="/docs/architecture"
+  />
+</FeatureGrid>
+
+## Popular Topics
+
+<FeatureGrid columns={3}>
+  <FeatureCard
+    title="Content Modeling"
+    description="Define custom content types and relationships"
+    href="/docs/content-modeling"
+  />
+  <FeatureCard
+    title="Media Management"
+    description="Upload, transform, and deliver media assets"
+    href="/docs/media"
+  />
+  <FeatureCard
+    title="Deployment"
+    description="Deploy to production with various hosting providers"
+    href="/docs/deployment"
+  />
+  <FeatureCard
+    title="Webhooks"
+    description="Real-time notifications and integrations"
+    href="/docs/webhooks"
+  />
+  <FeatureCard
+    title="Performance"
+    description="Optimize your site for speed and scalability"
+    href="/docs/performance"
+  />
+  <FeatureCard
+    title="Security"
+    description="Best practices for secure implementations"
+    href="/docs/security"
+  />
+</FeatureGrid>
+
+## Framework Guides
+
+LeadCMS works with any frontend framework. Here are guides for popular choices:
+
+<Tabs items={[
+  {
+    label: "Next.js",
+    value: "nextjs",
+    content: (
+      <div>
+        <p>The most popular React framework with excellent LeadCMS integration:</p>
+        <CodeBlock language="bash">
+{`# Create Next.js project with LeadCMS
+npx @leadcms/create-next-app my-app
+cd my-app
+npm run dev`}
+        </CodeBlock>
+        <p><a href="/docs/frameworks/nextjs">View complete Next.js guide →</a></p>
+      </div>
+    )
+  },
+  {
+    label: "React",
+    value: "react",
+    content: (
+      <div>
+        <p>Build modern React applications with LeadCMS hooks and components:</p>
+        <CodeBlock language="bash">
+{`# Add to existing React project
+npm install @leadcms/client @leadcms/react`}
+        </CodeBlock>
+        <p><a href="/docs/frameworks/react">View complete React guide →</a></p>
+      </div>
+    )
+  },
+  {
+    label: "Vue.js",
+    value: "vue",
+    content: (
+      <div>
+        <p>Integrate LeadCMS with Vue.js and Nuxt.js applications:</p>
+        <CodeBlock language="bash">
+{`# Add to Vue project
+npm install @leadcms/client @leadcms/vue`}
+        </CodeBlock>
+        <p><a href="/docs/frameworks/vue">View complete Vue.js guide →</a></p>
+      </div>
+    )
+  }
+]} />
+
+## Code Examples
+
+Here are some common patterns to get you started:
+
+### Fetching Content
+
+```typescript
+import { LeadCMS } from '@leadcms/client'
+
+const cms = new LeadCMS({
+  apiKey: process.env.LEADCMS_API_KEY,
+  projectId: process.env.LEADCMS_PROJECT_ID
+})
+
+// Get a single page
+const page = await cms.content.getBySlug('about-us')
+
+// List articles with pagination
+const articles = await cms.content.list({
+  type: 'article',
+  status: 'published',
+  limit: 10,
+  sort: 'publishedAt:desc'
+})
+```
+
+### React Component
+
+```tsx
+import { useContent } from '@leadcms/react'
+
+function BlogPost({ slug }: { slug: string }) {
+  const { data: post, loading, error } = useContent('article', slug)
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error loading post</div>
+
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <time>{new Date(post.publishedAt).toLocaleDateString()}</time>
+      <div dangerouslySetInnerHTML={{ __html: post.content }} />
+    </article>
+  )
+}
+```
+
+### Static Site Generation
+
+```typescript
+// Next.js static generation
+export async function getStaticProps() {
+  const cms = new LeadCMS({ /* config */ })
+  const page = await cms.content.getBySlug('homepage')
+
+  return {
+    props: { page },
+    revalidate: 3600 // Revalidate every hour
+  }
+}
+
+export async function getStaticPaths() {
+  const cms = new LeadCMS({ /* config */ })
+  const pages = await cms.content.list({ type: 'page' })
+
+  return {
+    paths: pages.map(page => ({ params: { slug: page.slug } })),
+    fallback: 'blocking'
+  }
+}
+```
+
+## Learning Path
+
+New to LeadCMS? Follow this recommended learning path:
+
+<Steps>
+  <Step title="Understand the Basics">
+    Start with [What is LeadCMS?](/docs/what-is-leadcms) to understand the core concepts and architecture.
+  </Step>
+  <Step title="Set Up Your Environment">
+    Follow the [Getting Started](/docs/getting-started) guide to create your first project.
+  </Step>
+  <Step title="Learn Content Management">
+    Explore [Content Modeling](/docs/content-modeling) to understand how to structure your content.
+  </Step>
+  <Step title="Master the APIs">
+    Dive into the [API Reference](/docs/api-reference) to learn how to fetch and manipulate content.
+  </Step>
+  <Step title="Deploy to Production">
+    Use the [Deployment Guide](/docs/deployment) to publish your site.
+  </Step>
+</Steps>
+
+## Community & Support
+
+Join our growing community and get help when you need it:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Discord Community"
+    description="Join 5,000+ developers building with LeadCMS"
+    href="https://discord.gg/leadcms"
+  />
+  <FeatureCard
+    title="GitHub Discussions"
+    description="Ask questions and share knowledge"
+    href="https://github.com/leadcms/leadcms/discussions"
+  />
+  <FeatureCard
+    title="Email Support"
+    description="Get help from our support team"
+    href="mailto:support@leadcms.io"
+  />
+  <FeatureCard
+    title="Office Hours"
+    description="Weekly live Q&A sessions with the team"
+    href="/docs/office-hours"
+  />
+</FeatureGrid>
+
+## Contributing
+
+Help us improve LeadCMS and its documentation:
+
+- **Report bugs** on [GitHub Issues](https://github.com/leadcms/leadcms/issues)
+- **Suggest features** in [GitHub Discussions](https://github.com/leadcms/leadcms/discussions)
+- **Improve docs** by submitting pull requests
+- **Share examples** and tutorials with the community
+
+<Callout type="tip" title="First Contribution">
+Looking to make your first contribution? Check out our [good first issue](https://github.com/leadcms/leadcms/labels/good%20first%20issue) label on GitHub.
+</Callout>
+
+## Stay Updated
+
+- **Follow us** on [Twitter](https://twitter.com/leadcms) for updates
+- **Subscribe** to our [newsletter](https://leadcms.io/newsletter) for monthly updates
+- **Star us** on [GitHub](https://github.com/leadcms/leadcms) to stay notified
+- **Join** our [Discord](https://discord.gg/leadcms) for real-time updates
+
+---
+
+Ready to build something amazing? [Get started with LeadCMS →](/docs/getting-started)

@@ -31,7 +31,7 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
   contactButton = { label: "Contact Us", href: "#" }, // Added default contactButton to prevent href error
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32" id="help">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="grid gap-12 md:grid-cols-2 items-center max-w-5xl mx-auto">
         <div>
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">{title}</h2>

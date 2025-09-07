@@ -1,0 +1,713 @@
+---
+type: doc
+title: API Reference
+description: Complete API documentation for LeadCMS with examples and best practices.
+group: API Reference
+order: 1
+---
+
+# API Reference
+
+LeadCMS provides both REST and GraphQL APIs for accessing and managing content. This reference covers all available endpoints, parameters, and response formats.
+
+## Authentication
+
+All API requests require authentication using API keys:
+
+```bash
+# REST API
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+     -H "Content-Type: application/json" \
+     https://api.leadcms.io/v1/content
+
+# GraphQL API
+curl -H "Authorization: Bearer YOUR_API_KEY" \
+     -H "Content-Type: application/json" \
+     -d '{"query": "{ pages { title slug } }"}' \
+     https://api.leadcms.io/graphql
+```
+
+<Callout type="warning" title="API Key Security">
+Never expose your API keys in client-side code. Use environment variables and server-side requests for sensitive operations.
+</Callout>
+
+## Base URLs
+
+<Tabs items={[
+  {
+    label: "Production",
+    value: "production",
+    content: (
+      <CodeBlock language="bash">
+{`# REST API
+https://api.leadcms.io/v1
+
+# GraphQL API
+https://api.leadcms.io/graphql
+
+# CDN (Media)
+https://cdn.leadcms.io`}
+      </CodeBlock>
+    )
+  },
+  {
+    label: "Staging",
+    value: "staging",
+    content: (
+      <CodeBlock language="bash">
+{`# REST API
+https://staging-api.leadcms.io/v1
+
+# GraphQL API
+https://staging-api.leadcms.io/graphql
+
+# CDN (Media)
+https://staging-cdn.leadcms.io`}
+      </CodeBlock>
+    )
+  }
+]} />
+
+## Content API
+
+### Get Content by ID
+
+Retrieve a specific content item by its unique identifier.
+
+**Endpoint:** `GET /content/{id}`
+
+```typescript
+// TypeScript example
+interface ContentItem {
+  id: string
+  type: string
+  slug: string
+  title: string
+  status: 'draft' | 'published' | 'archived'
+  data: Record<string, any>
+  metadata: {
+    createdAt: string
+    updatedAt: string
+    publishedAt?: string
+    author: string
+  }
+}
+
+// Request
+const response = await fetch(`${API_BASE}/content/${id}`, {
+  headers: {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json'
+  }
+})
+
+const content: ContentItem = await response.json()
+```
+
+**Response Example:**
+
+```json
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "type": "page",
+  "slug": "about-us",
+  "title": "About Us",
+  "status": "published",
+  "data": {
+    "title": "About Us",
+    "content": "<p>We are a leading technology company...</p>",
+    "hero_image": {
+      "url": "https://cdn.leadcms.io/images/hero.jpg",
+      "alt": "Company headquarters"
+    }
+  },
+  "metadata": {
+    "createdAt": "2024-01-15T10:30:00Z",
+    "updatedAt": "2024-01-20T14:45:00Z",
+    "publishedAt": "2024-01-20T15:00:00Z",
+    "author": "john.doe@example.com"
+  }
+}
+```
+
+### List Content
+
+Retrieve multiple content items with filtering and pagination.
+
+**Endpoint:** `GET /content`
+
+**Query Parameters:**
+
+| Parameter | Type | Description | Default |
+|-----------|------|-------------|---------|
+| `type` | string | Filter by content type | - |
+| `status` | string | Filter by status | `published` |
+| `limit` | number | Number of items to return | `20` |
+| `offset` | number | Number of items to skip | `0` |
+| `sort` | string | Sort field and direction | `createdAt:desc` |
+| `search` | string | Search in title and content | - |
+
+```typescript
+// List published pages
+const response = await fetch(`${API_BASE}/content?type=page&status=published&limit=10`, {
+  headers: {
+    'Authorization': `Bearer ${apiKey}`
+  }
+})
+
+interface ContentListResponse {
+  data: ContentItem[]
+  pagination: {
+    total: number
+    limit: number
+    offset: number
+    hasMore: boolean
+  }
+}
+
+const result: ContentListResponse = await response.json()
+```
+
+### Create Content
+
+Create a new content item.
+
+**Endpoint:** `POST /content`
+
+```typescript
+interface CreateContentRequest {
+  type: string
+  slug?: string
+  title: string
+  data: Record<string, any>
+  status?: 'draft' | 'published'
+}
+
+const newContent: CreateContentRequest = {
+  type: 'page',
+  slug: 'new-page',
+  title: 'New Page',
+  data: {
+    content: '<p>Page content here...</p>',
+    meta_description: 'Page description for SEO'
+  },
+  status: 'draft'
+}
+
+const response = await fetch(`${API_BASE}/content`, {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(newContent)
+})
+
+const created: ContentItem = await response.json()
+```
+
+### Update Content
+
+Update an existing content item.
+
+**Endpoint:** `PUT /content/{id}`
+
+```typescript
+interface UpdateContentRequest {
+  title?: string
+  data?: Record<string, any>
+  status?: 'draft' | 'published' | 'archived'
+}
+
+const updates: UpdateContentRequest = {
+  title: 'Updated Page Title',
+  data: {
+    content: '<p>Updated content...</p>'
+  },
+  status: 'published'
+}
+
+const response = await fetch(`${API_BASE}/content/${id}`, {
+  method: 'PUT',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`,
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify(updates)
+})
+```
+
+### Delete Content
+
+Delete a content item.
+
+**Endpoint:** `DELETE /content/{id}`
+
+```typescript
+const response = await fetch(`${API_BASE}/content/${id}`, {
+  method: 'DELETE',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`
+  }
+})
+
+if (response.ok) {
+  console.log('Content deleted successfully')
+}
+```
+
+## Media API
+
+### Upload Media
+
+Upload media files (images, videos, documents).
+
+**Endpoint:** `POST /media/upload`
+
+```typescript
+// Single file upload
+const formData = new FormData()
+formData.append('file', file)
+formData.append('alt', 'Image description')
+formData.append('folder', 'uploads/2024')
+
+const response = await fetch(`${API_BASE}/media/upload`, {
+  method: 'POST',
+  headers: {
+    'Authorization': `Bearer ${apiKey}`
+  },
+  body: formData
+})
+
+interface MediaAsset {
+  id: string
+  filename: string
+  url: string
+  thumbnailUrl?: string
+  mimeType: string
+  size: number
+  dimensions?: {
+    width: number
+    height: number
+  }
+  metadata: {
+    alt?: string
+    caption?: string
+    createdAt: string
+  }
+}
+
+const asset: MediaAsset = await response.json()
+```
+
+### Get Media
+
+Retrieve media asset information.
+
+**Endpoint:** `GET /media/{id}`
+
+```typescript
+const response = await fetch(`${API_BASE}/media/${mediaId}`, {
+  headers: {
+    'Authorization': `Bearer ${apiKey}`
+  }
+})
+
+const asset: MediaAsset = await response.json()
+```
+
+### Transform Media
+
+Generate transformed versions of images.
+
+**Endpoint:** `GET /media/{id}/transform`
+
+**Query Parameters:**
+
+| Parameter | Type | Description |
+|-----------|------|-------------|
+| `width` | number | Maximum width |
+| `height` | number | Maximum height |
+| `quality` | number | JPEG quality (1-100) |
+| `format` | string | Output format (webp, jpg, png) |
+| `fit` | string | Resize mode (cover, contain, fill) |
+
+```typescript
+// Generate 800x600 WebP thumbnail
+const transformUrl = `${API_BASE}/media/${mediaId}/transform?width=800&height=600&format=webp&quality=85`
+
+// Use in HTML
+const img = document.createElement('img')
+img.src = transformUrl
+img.alt = asset.metadata.alt || ''
+```
+
+## GraphQL API
+
+### Schema Overview
+
+<CodeBlock language="graphql" title="GraphQL Schema">
+{`type Query {
+  content(id: ID!): Content
+  contentList(
+    type: String
+    status: ContentStatus
+    limit: Int = 20
+    offset: Int = 0
+    search: String
+  ): ContentConnection
+
+  media(id: ID!): MediaAsset
+  mediaList(limit: Int = 20, offset: Int = 0): MediaConnection
+}
+
+type Mutation {
+  createContent(input: CreateContentInput!): Content
+  updateContent(id: ID!, input: UpdateContentInput!): Content
+  deleteContent(id: ID!): Boolean
+
+  uploadMedia(file: Upload!, alt: String, folder: String): MediaAsset
+  deleteMedia(id: ID!): Boolean
+}
+
+type Content {
+  id: ID!
+  type: String!
+  slug: String!
+  title: String!
+  status: ContentStatus!
+  data: JSON!
+  metadata: ContentMetadata!
+}
+
+enum ContentStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}`}
+</CodeBlock>
+
+### GraphQL Examples
+
+<Tabs items={[
+  {
+    label: "Query",
+    value: "query",
+    content: (
+      <CodeBlock language="graphql">
+{`# Get content with specific fields
+query GetPageContent($slug: String!) {
+  contentList(type: "page", search: $slug, limit: 1) {
+    nodes {
+      id
+      title
+      slug
+      data {
+        content
+        heroImage {
+          url
+          alt
+        }
+        seoTitle
+        seoDescription
+      }
+      metadata {
+        publishedAt
+        updatedAt
+      }
+    }
+  }
+}`}
+      </CodeBlock>
+    )
+  },
+  {
+    label: "Mutation",
+    value: "mutation",
+    content: (
+      <CodeBlock language="graphql">
+{`# Create new content
+mutation CreatePage($input: CreateContentInput!) {
+  createContent(input: $input) {
+    id
+    title
+    slug
+    status
+    metadata {
+      createdAt
+    }
+  }
+}
+
+# Variables
+{
+  "input": {
+    "type": "page",
+    "title": "New Page",
+    "slug": "new-page",
+    "data": {
+      "content": "<p>Page content</p>",
+      "seoTitle": "New Page - My Site"
+    },
+    "status": "DRAFT"
+  }
+}`}
+      </CodeBlock>
+    )
+  }
+]} />
+
+## Error Handling
+
+All APIs return standardized error responses:
+
+```typescript
+interface ErrorResponse {
+  error: {
+    code: string
+    message: string
+    details?: Record<string, any>
+  }
+  requestId: string
+}
+
+// Example error responses
+const errors = {
+  // 400 Bad Request
+  validation: {
+    error: {
+      code: 'VALIDATION_ERROR',
+      message: 'Invalid request parameters',
+      details: {
+        fields: ['title', 'type']
+      }
+    }
+  },
+
+  // 401 Unauthorized
+  auth: {
+    error: {
+      code: 'UNAUTHORIZED',
+      message: 'Invalid or expired API key'
+    }
+  },
+
+  // 404 Not Found
+  notFound: {
+    error: {
+      code: 'NOT_FOUND',
+      message: 'Content item not found'
+    }
+  },
+
+  // 429 Too Many Requests
+  rateLimit: {
+    error: {
+      code: 'RATE_LIMIT_EXCEEDED',
+      message: 'API rate limit exceeded'
+    }
+  }
+}
+```
+
+## Rate Limiting
+
+API requests are rate limited to ensure fair usage:
+
+| Plan | Requests per minute | Burst limit |
+|------|-------------------|-------------|
+| Free | 100 | 150 |
+| Pro | 1,000 | 1,500 |
+| Enterprise | 10,000 | 15,000 |
+
+Rate limit headers are included in all responses:
+
+```http
+X-RateLimit-Limit: 1000
+X-RateLimit-Remaining: 999
+X-RateLimit-Reset: 1640995200
+```
+
+## Webhooks
+
+Configure webhooks to receive real-time notifications when content changes:
+
+### Webhook Configuration
+
+```typescript
+interface WebhookConfig {
+  url: string
+  events: WebhookEvent[]
+  secret?: string
+  active: boolean
+  filters?: {
+    contentTypes?: string[]
+    status?: string[]
+  }
+}
+
+enum WebhookEvent {
+  CONTENT_CREATED = 'content.created',
+  CONTENT_UPDATED = 'content.updated',
+  CONTENT_DELETED = 'content.deleted',
+  CONTENT_PUBLISHED = 'content.published',
+  MEDIA_UPLOADED = 'media.uploaded',
+  MEDIA_DELETED = 'media.deleted'
+}
+```
+
+### Webhook Payload
+
+```typescript
+interface WebhookPayload {
+  event: WebhookEvent
+  data: {
+    content?: ContentItem
+    media?: MediaAsset
+    previous?: ContentItem // For updates
+  }
+  metadata: {
+    timestamp: string
+    signature: string
+    deliveryId: string
+  }
+}
+```
+
+### Webhook Verification
+
+Verify webhook signatures to ensure authenticity:
+
+```typescript
+import crypto from 'crypto'
+
+function verifyWebhookSignature(
+  payload: string,
+  signature: string,
+  secret: string
+): boolean {
+  const expectedSignature = crypto
+    .createHmac('sha256', secret)
+    .update(payload)
+    .digest('hex')
+
+  return crypto.timingSafeEqual(
+    Buffer.from(signature),
+    Buffer.from(expectedSignature)
+  )
+}
+```
+
+## Client Libraries
+
+### JavaScript/TypeScript
+
+```bash
+npm install @leadcms/client
+```
+
+```typescript
+import { LeadCMS } from '@leadcms/client'
+
+const cms = new LeadCMS({
+  apiKey: process.env.LEADCMS_API_KEY,
+  projectId: process.env.LEADCMS_PROJECT_ID,
+  environment: 'production'
+})
+
+// Get content
+const page = await cms.content.get('page-id')
+
+// List content
+const articles = await cms.content.list({
+  type: 'article',
+  status: 'published',
+  limit: 10
+})
+
+// Create content
+const newPage = await cms.content.create({
+  type: 'page',
+  title: 'New Page',
+  data: { content: '<p>Hello world</p>' }
+})
+```
+
+### React Hooks
+
+```bash
+npm install @leadcms/react
+```
+
+```tsx
+import { useContent, useContentList } from '@leadcms/react'
+
+function PageComponent({ slug }: { slug: string }) {
+  const { data: page, loading, error } = useContent('page', slug)
+
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error.message}</div>
+
+  return (
+    <div>
+      <h1>{page.title}</h1>
+      <div dangerouslySetInnerHTML={{ __html: page.data.content }} />
+    </div>
+  )
+}
+
+function ArticleList() {
+  const { data: articles, loading } = useContentList('article', {
+    status: 'published',
+    limit: 10
+  })
+
+  return (
+    <div>
+      {articles.map(article => (
+        <article key={article.id}>
+          <h2>{article.title}</h2>
+          <p>{article.data.excerpt}</p>
+        </article>
+      ))}
+    </div>
+  )
+}
+```
+
+## Best Practices
+
+<Callout type="tip" title="API Best Practices">
+1. **Cache responses** when possible to reduce API calls
+2. **Use pagination** for large datasets
+3. **Handle errors gracefully** with proper fallbacks
+4. **Implement retry logic** for transient failures
+5. **Use webhooks** for real-time updates instead of polling
+6. **Validate data** before sending to the API
+7. **Monitor rate limits** and implement backoff strategies
+</Callout>
+
+## Next Steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="SDKs & Libraries"
+    description="Explore our client libraries for different frameworks"
+    href="/docs/sdks"
+  />
+  <FeatureCard
+    title="Webhooks Guide"
+    description="Learn how to implement and handle webhooks"
+    href="/docs/webhooks"
+  />
+  <FeatureCard
+    title="Authentication"
+    description="Advanced authentication and security practices"
+    href="/docs/authentication"
+  />
+  <FeatureCard
+    title="Performance"
+    description="Optimize your API usage for better performance"
+    href="/docs/performance"
+  />
+</FeatureGrid>

@@ -117,6 +117,7 @@ export function createLocaleContentPage(locale: string) {
       'contact',
       'not-found',
       'home',
+      'doc',
     ]);
     console.log(`Generating static params for ${locale === DEFAULT_LANGUAGE ? 'default language' : locale} slugs:`, slugs);
     return slugs.map((slug: string) => ({ slug: slug.split('/') }));

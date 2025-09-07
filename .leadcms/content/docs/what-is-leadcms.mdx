@@ -1,0 +1,107 @@
+---
+type: doc
+title: What is LeadCMS?
+description: Learn about LeadCMS, the modern content management system designed for developers and content creators.
+group: Getting Started
+order: 1
+---
+
+# What is LeadCMS?
+
+LeadCMS is a modern, developer-friendly content management system that bridges the gap between powerful functionality and ease of use. Built with modern web technologies, it provides a seamless experience for both developers and content creators.
+
+<Callout type="info" title="Why LeadCMS?">
+LeadCMS was created to solve the common problems developers face when working with traditional CMS platforms - complexity, poor developer experience, and limited flexibility.
+</Callout>
+
+## Key Features
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Developer-First"
+    description="Built with modern web technologies and developer experience in mind. TypeScript support, CLI tools, and comprehensive APIs."
+  />
+  <FeatureCard
+    title="Content-First"
+    description="Intuitive content management with powerful editing tools, media management, and collaboration features."
+  />
+  <FeatureCard
+    title="Performance Optimized"
+    description="Static site generation, edge caching, and optimized content delivery for lightning-fast websites."
+  />
+  <FeatureCard
+    title="Highly Extensible"
+    description="Plugin architecture, custom fields, workflows, and integrations with your favorite tools."
+  />
+</FeatureGrid>
+
+## How It Works
+
+LeadCMS follows a modern JAMstack architecture that separates content management from content presentation:
+
+<Steps>
+  <Step title="Create Content">
+    Use our intuitive admin interface to create and manage your content. Support for rich text, media, custom fields, and more.
+  </Step>
+  <Step title="Deliver via API">
+    Content is delivered through our powerful REST and GraphQL APIs, making it accessible to any frontend technology.
+  </Step>
+  <Step title="Build Your Site">
+    Use your favorite frontend framework (React, Vue, Angular, etc.) to build fast, dynamic websites.
+  </Step>
+</Steps>
+
+## Architecture Overview
+
+```typescript
+// Example: Fetching content from LeadCMS API
+import { LeadCMS } from '@leadcms/client'
+
+const cms = new LeadCMS({
+  apiKey: process.env.LEADCMS_API_KEY,
+  projectId: process.env.LEADCMS_PROJECT_ID
+})
+
+// Fetch a single page
+const page = await cms.pages.get('homepage')
+
+// Fetch multiple articles
+const articles = await cms.articles.list({
+  limit: 10,
+  filter: { status: 'published' }
+})
+```
+
+<Callout type="tip" title="Getting Started">
+Ready to start building with LeadCMS? Check out our [Getting Started guide](/docs/getting-started) for step-by-step instructions.
+</Callout>
+
+## Use Cases
+
+LeadCMS is perfect for a wide variety of projects:
+
+- **Marketing Websites** - Build fast, SEO-optimized marketing sites with easy content management
+- **Blogs & Publications** - Powerful editorial tools with multi-author support and publishing workflows
+- **E-commerce** - Product catalogs, dynamic pricing, and inventory management
+- **Documentation Sites** - Version-controlled docs with powerful search and navigation
+- **Mobile Apps** - Headless content delivery for iOS, Android, and React Native apps
+
+## Next Steps
+
+<FeatureGrid columns={1}>
+  <FeatureCard
+    title="Getting Started"
+    description="Set up your first LeadCMS project in minutes"
+    href="/docs/getting-started"
+  />
+  <FeatureCard
+    title="Installation Guide"
+    description="Detailed installation instructions for different environments"
+    href="/docs/installation"
+  />
+  <FeatureCard
+    title="API Reference"
+    description="Complete API documentation with examples"
+    href="/docs/api-reference"
+  />
+</FeatureGrid>

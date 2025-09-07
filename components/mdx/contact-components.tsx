@@ -32,7 +32,7 @@ export const ContactHeroWithOptions: React.FC<ContactHeroWithOptionsProps> = ({
   options,
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
         <Badge className="mb-4" variant="outline">
           {badge}
@@ -97,7 +97,7 @@ export const ContactHero: React.FC<ContactHeroProps> = ({
   description,
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="text-center mb-16">
         <Badge className="mb-4" variant="outline">
           {badge}
@@ -131,7 +131,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
   partnershipSection,
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32" id="contact-form">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         <div className="grid gap-12 md:grid-cols-2">
           <div>
@@ -288,7 +288,7 @@ export const ContactLocationAndSocial: React.FC<ContactLocationAndSocialProps> =
   social,
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="grid gap-12 md:grid-cols-2">
         <OfficeLocation {...office} />
         <SocialLinks {...social} />
@@ -310,7 +310,7 @@ interface ContactCTAProps {
 
 export const ContactCTA: React.FC<ContactCTAProps> = ({ title, description, buttons }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div className="w-full px-4 sm:px-6 lg:px-8 text-center">
       <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{title}</h2>
       <p className="mt-6 text-xl max-w-2xl mx-auto">{description}</p>
       <div className="flex flex-wrap gap-4 justify-center mt-10">

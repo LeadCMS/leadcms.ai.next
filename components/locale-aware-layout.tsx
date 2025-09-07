@@ -20,7 +20,7 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
     <LocaleProvider locale={locale}>
       <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between w-full px-4 sm:px-6 lg:px-8">
           <LocaleAwareLink href={headerConfig.headerData.logo.href} locale={locale} className="flex items-center gap-2">
             <img
               src={headerConfig.headerData.logo.src}
@@ -69,52 +69,50 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
       {children}
 
       <footer className="w-full border-t py-8">
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <img
-                src={footerConfig.footerData.logo.src}
-                alt={footerConfig.footerData.logo.alt}
-                className="h-12 w-12"
-              />
-              <p className="text-sm text-muted-foreground">
-                {footerConfig.footerData.copyright.text.replace(
-                  '{year}',
-                  footerConfig.footerData.copyright.showYear ? new Date().getFullYear().toString() : ''
-                )}
-              </p>
-            </div>
-            <div className="flex items-center gap-6">
-              <LanguageSwitcher
-                languages={footerConfig.footerData.languages}
-                variant="footer"
-                align="end"
-              />
-              <nav className="flex gap-6">
-                {footerConfig.footerData.navigation.map((item, index) => (
-                  <LocaleAwareLink
-                    key={index}
-                    href={item.href}
-                    locale={locale}
-                    className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
-                  >
-                    {item.label}
-                  </LocaleAwareLink>
-                ))}
-                {footerConfig.footerData.externalLinks.map((link, index) => (
-                  <LocaleAwareLink
-                    key={`external-${index}`}
-                    href={link.href}
-                    locale={locale}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
-                  >
-                    {link.label}
-                  </LocaleAwareLink>
-                ))}
-              </nav>
-            </div>
+        <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center gap-2">
+            <img
+              src={footerConfig.footerData.logo.src}
+              alt={footerConfig.footerData.logo.alt}
+              className="h-12 w-12"
+            />
+            <p className="text-sm text-muted-foreground">
+              {footerConfig.footerData.copyright.text.replace(
+                '{year}',
+                footerConfig.footerData.copyright.showYear ? new Date().getFullYear().toString() : ''
+              )}
+            </p>
+          </div>
+          <div className="flex items-center gap-6">
+            <LanguageSwitcher
+              languages={footerConfig.footerData.languages}
+              variant="footer"
+              align="end"
+            />
+            <nav className="flex gap-6">
+              {footerConfig.footerData.navigation.map((item, index) => (
+                <LocaleAwareLink
+                  key={index}
+                  href={item.href}
+                  locale={locale}
+                  className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
+                >
+                  {item.label}
+                </LocaleAwareLink>
+              ))}
+              {footerConfig.footerData.externalLinks.map((link, index) => (
+                <LocaleAwareLink
+                  key={`external-${index}`}
+                  href={link.href}
+                  locale={locale}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-muted-foreground hover:underline underline-offset-4"
+                >
+                  {link.label}
+                </LocaleAwareLink>
+              ))}
+            </nav>
           </div>
         </div>
       </footer>

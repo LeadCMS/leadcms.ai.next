@@ -17,7 +17,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
   formComponent,
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32" id="contact-form">
-    <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         <div className="grid gap-12 md:grid-cols-2">
           <div>

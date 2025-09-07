@@ -20,6 +20,10 @@
         "href": "/#compare"
       },
       {
+        "label": "Docs",
+        "href": "/docs"
+      },
+      {
         "label": "Contact Us",
         "href": "/contact-us"
       }

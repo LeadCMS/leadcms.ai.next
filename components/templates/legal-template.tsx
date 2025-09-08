@@ -29,7 +29,7 @@ export default function LegalTemplate({ content }: CMSContentTemplateProps) {
   return (
     <main className="flex-1">
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-        <div className="w-full px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1750px] mx-auto">
           <div className="text-center mb-16">
             <Badge className="mb-4" variant="outline">
               Legal

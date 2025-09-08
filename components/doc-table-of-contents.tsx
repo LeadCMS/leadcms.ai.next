@@ -21,10 +21,33 @@ export function DocTableOfContents({ content }: DocTableOfContentsProps) {
   useEffect(() => {
     // Extract headings from the actual DOM after MDX renders
     const extractHeadingsFromDOM = () => {
-      const headings = document.querySelectorAll('h1, h2, h3, h4, h5, h6')
-      const tocItems: TocItem[] = []
+      // First try to find headings in the main content area specifically
+      let headings: Element[] = Array.from(document.querySelectorAll('main h1, main h2, main h3, main h4, main h5, main h6'))
 
-      headings.forEach((heading) => {
+      // If no main element, try other content containers
+      if (headings.length === 0) {
+        headings = Array.from(document.querySelectorAll('.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6'))
+      }
+
+      // If still no headings, try article or role="main"
+      if (headings.length === 0) {
+        headings = Array.from(document.querySelectorAll('article h1, article h2, article h3, article h4, article h5, article h6, [role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4, [role="main"] h5, [role="main"] h6'))
+      }
+
+      // Last resort: all headings but exclude navigation areas
+      if (headings.length === 0) {
+        const allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+        headings = allHeadings.filter(heading => {
+          // Exclude headings that are inside navigation, sidebar, header, footer, or aside elements
+          const excludeParent = heading.closest('nav, aside, header, footer, [role="navigation"], [role="banner"], [role="complementary"], .sidebar, .navigation')
+          return !excludeParent
+        })
+      }
+
+      const tocItems: TocItem[] = []
+      const usedIds = new Set<string>()
+
+      headings.forEach((heading, index) => {
         if (heading.textContent) {
           const level = parseInt(heading.tagName.charAt(1))
           const text = heading.textContent.trim()
@@ -32,13 +55,25 @@ export function DocTableOfContents({ content }: DocTableOfContentsProps) {
 
           // If the heading doesn't have an ID, create one
           if (!id) {
-            id = text
+            let baseId = text
               .toLowerCase()
               .replace(/[^a-zA-Z0-9\s]/g, "")
               .replace(/\s+/g, "-")
               .trim()
+
+            // Ensure the ID is unique by appending a number if needed
+            id = baseId
+            let counter = 1
+            while (usedIds.has(id)) {
+              id = `${baseId}-${counter}`
+              counter++
+            }
+
             heading.id = id
           }
+
+          // Track used IDs to prevent duplicates
+          usedIds.add(id)
 
           tocItems.push({
             id,
@@ -64,7 +99,10 @@ export function DocTableOfContents({ content }: DocTableOfContentsProps) {
     const handleScroll = () => {
       if (toc.length === 0) return
 
-      const headings = toc.map(item => document.getElementById(item.id)).filter(Boolean)
+      // Only look for headings that are actually in our table of contents
+      const headings = toc
+        .map(item => document.getElementById(item.id))
+        .filter((element): element is HTMLElement => element !== null)
 
       // Find the heading that's currently in view
       let currentHeading = null
@@ -119,8 +157,8 @@ export function DocTableOfContents({ content }: DocTableOfContentsProps) {
         </div>
 
         <ul className="space-y-1">
-          {toc.map((item) => (
-            <li key={item.id}>
+          {toc.map((item, index) => (
+            <li key={`${item.id}-${index}`}>
               <button
                 onClick={() => handleClick(item.id)}
                 className={cn(

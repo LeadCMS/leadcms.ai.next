@@ -9,6 +9,33 @@ import * as LucideIcons from "lucide-react"
 import { ContactUs } from "@/components/contact-us"
 import { MDXComponents } from "next-mdx-remote-client/rsc"
 
+// Modern animated components
+import { AnimatedButton } from "@/components/ui/animated-button"
+import { AnimatedCard } from "@/components/ui/animated-card"
+import { AnimatedProgress, CircularProgress } from "@/components/ui/animated-progress"
+import { LoadingSpinner, Skeleton, LoadingOverlay } from "@/components/ui/loading"
+import { Toast, ToastContainer, NotificationBanner } from "@/components/ui/notifications"
+import {
+  FadeIn,
+  ScaleIn,
+  StaggerContainer,
+  StaggerItem,
+  FloatingElement,
+  HoverLift,
+  Pulse,
+  TypeWriter
+} from "@/components/ui/animated-elements"
+import { Parallax, ScrollReveal, BackgroundParallax } from "@/components/ui/parallax"
+import { ModernShowcase } from "@/components/mdx/modern-showcase"
+import { FloatingActionButton } from "@/components/ui/floating-action-button"
+import { ScrollProgress, CircularScrollProgress } from "@/components/ui/scroll-progress"
+import { ModernLayoutWrapper } from "@/components/ui/modern-layout-wrapper"
+import {
+  MicroInteractionButton,
+  InteractiveLink,
+  FloatingLabelInput
+} from "@/components/ui/micro-interactions"
+
 // UI components and icons for MDX use
 const uiComponents = {
   Button,
@@ -24,6 +51,36 @@ const uiComponents = {
   TabsTrigger,
   Badge,
   ContactUs,
+  // Modern animated components
+  AnimatedButton,
+  AnimatedCard,
+  AnimatedProgress,
+  CircularProgress,
+  LoadingSpinner,
+  Skeleton,
+  LoadingOverlay,
+  Toast,
+  ToastContainer,
+  NotificationBanner,
+  FadeIn,
+  ScaleIn,
+  StaggerContainer,
+  StaggerItem,
+  FloatingElement,
+  HoverLift,
+  Pulse,
+  TypeWriter,
+  Parallax,
+  ScrollReveal,
+  BackgroundParallax,
+  ModernShowcase,
+  FloatingActionButton,
+  ScrollProgress,
+  CircularScrollProgress,
+  ModernLayoutWrapper,
+  MicroInteractionButton,
+  InteractiveLink,
+  FloatingLabelInput,
 }
 
 // Use React's built-in HTML element prop types instead of custom interfaces

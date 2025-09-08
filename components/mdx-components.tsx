@@ -20,7 +20,7 @@ import {
 import {
   ContactHero,
   ContactHeroWithOptions,
-  ContactFormSection as ContactFormSectionNew,
+  ContactFormSectionNew,
   ContactLocationAndSocial,
   ContactCTA,
 } from "./mdx/contact-components"

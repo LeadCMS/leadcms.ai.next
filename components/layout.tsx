@@ -2,6 +2,8 @@ import type * as React from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { GitBranch } from "lucide-react"
+import { ScrollProgress } from "@/components/ui/scroll-progress"
+import { FloatingActionButton } from "@/components/ui/floating-action-button"
 
 interface LayoutProps {
   children: React.ReactNode
@@ -10,9 +12,13 @@ interface LayoutProps {
 export const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
     <>
+      {/* Scroll Progress */}
+      <ScrollProgress showPercentage={false} height={3} />
+
       <div className="flex min-h-screen flex-col">
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <div className="flex h-16 items-center justify-between w-full px-4 sm:px-6 lg:px-8">
+          <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="flex h-16 items-center justify-between max-w-[1750px] mx-auto">
             <Link href="/" className="flex items-center gap-2">
               <img src="/images/icon-192x192.png" alt="LeadCMS Logo" className="h-12 w-12" />
               <span className="text-xl font-bold">LeadCMS</span>
@@ -54,13 +60,15 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 <Link href="#contact">Get Started</Link>
               </Button>
             </div>
+            </div>
           </div>
         </header>
 
         {children}
 
         <footer className="w-full border-t py-8">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8">
+          <div className="w-full px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-[1750px] mx-auto">
             <div className="flex items-center gap-2">
               <img src="/images/icon-192x192.png" alt="LeadCMS Logo" className="h-12 w-12" />
               <p className="text-sm text-muted-foreground">
@@ -97,9 +105,16 @@ export const Layout: React.FC<LayoutProps> = ({ children }) => {
                 GitHub
               </a>
             </nav>
+            </div>
           </div>
         </footer>
       </div>
+
+      {/* Floating Action Button */}
+      <FloatingActionButton
+        contactHref="/contact-us"
+        showScrollToTop={true}
+      />
     </>
   )
 }

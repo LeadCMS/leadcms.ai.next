@@ -20,7 +20,8 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
     <LocaleProvider locale={locale}>
       <div className="flex min-h-screen flex-col">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="flex h-16 items-center justify-between w-full px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex h-16 items-center justify-between max-w-[1750px] mx-auto">
           <LocaleAwareLink href={headerConfig.headerData.logo.href} locale={locale} className="flex items-center gap-2">
             <img
               src={headerConfig.headerData.logo.src}
@@ -63,13 +64,15 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
               </LocaleAwareLink>
             </Button>
           </div>
+          </div>
         </div>
       </header>
 
       {children}
 
       <footer className="w-full border-t py-8">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4 w-full px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 max-w-[1750px] mx-auto">
           <div className="flex items-center gap-2">
             <img
               src={footerConfig.footerData.logo.src}
@@ -113,6 +116,7 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
                 </LocaleAwareLink>
               ))}
             </nav>
+          </div>
           </div>
         </div>
       </footer>

@@ -11,6 +11,7 @@ import { GeistSans } from "geist/font/sans"
 import { GeistMono } from "geist/font/mono"
 import "./globals.css"
 import Script from "next/script"
+import { ScrollProgress } from "@/components/ui/parallax"
 
 import metadataJson from "@/.leadcms/content/metadata.json"
 
@@ -37,6 +38,7 @@ html {
         `}</style>
       </head>
       <body>
+        <ScrollProgress />
         {children}
       </body>
     </html>

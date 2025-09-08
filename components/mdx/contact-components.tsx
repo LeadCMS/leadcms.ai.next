@@ -5,6 +5,7 @@ import { Link } from "@/components/ui/link"
 import { Badge } from "@/components/ui/badge"
 import * as LucideIcons from "lucide-react"
 import { ContactUs } from "@/components/contact-us"
+import { FadeIn, StaggerContainer, StaggerItem, ScaleIn, HoverLift } from "@/components/ui/animated-elements"
 
 interface ContactOption {
   icon: keyof typeof LucideIcons
@@ -33,54 +34,62 @@ export const ContactHeroWithOptions: React.FC<ContactHeroWithOptionsProps> = ({
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
     <div className="w-full px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-16">
-        <Badge className="mb-4" variant="outline">
-          {badge}
-        </Badge>
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
-      </div>
+      <FadeIn>
+        <div className="text-center mb-16">
+          <Badge className="mb-4" variant="outline">
+            {badge}
+          </Badge>
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">{title}</h1>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
+        </div>
+      </FadeIn>
 
-      <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-5xl mx-auto">
-        {options.map((option, index) => {
-          const Icon = LucideIcons[option.icon] as React.ComponentType<any>
-          return (
-            <Card key={index} className="relative overflow-hidden border-2 border-primary/20">
-              <div className="absolute top-0 right-0 p-2 bg-primary/10 rounded-bl-lg">
-                <Icon className="h-6 w-6 text-primary" />
-              </div>
-              <CardHeader className="pt-12">
-                <CardTitle>{option.title}</CardTitle>
-                <CardDescription>{option.description}</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="space-y-2 text-sm">
-                  {option.links.map((link, linkIndex) => {
-                    const LinkIcon = LucideIcons[link.icon] as React.ComponentType<any>
-                    return (
-                      <li key={linkIndex} className="flex items-center">
-                        <LinkIcon className="mr-2 h-4 w-4 text-primary" />
-                        {link.href ? (
-                          <Link
-                            href={link.href}
-                            className="hover:underline"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            {link.label}
-                          </Link>
-                        ) : (
-                          <span>{link.text || link.label}</span>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </CardContent>
-            </Card>
-          )
-        })}
-      </div>
+      <StaggerContainer>
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 max-w-[1750px] mx-auto">
+          {options.map((option, index) => {
+            const Icon = LucideIcons[option.icon] as React.ComponentType<any>
+            return (
+              <StaggerItem key={index}>
+                <HoverLift className="h-full">
+                  <Card className="relative overflow-hidden border-2 border-primary/20 h-full hover:border-primary/40 transition-colors duration-300">
+                    <div className="absolute top-0 right-0 p-2 bg-primary/10 rounded-bl-lg">
+                      <Icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardHeader className="pt-12">
+                      <CardTitle>{option.title}</CardTitle>
+                      <CardDescription>{option.description}</CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <ul className="space-y-2 text-sm">
+                        {option.links.map((link, linkIndex) => {
+                          const LinkIcon = LucideIcons[link.icon] as React.ComponentType<any>
+                          return (
+                            <li key={linkIndex} className="flex items-center">
+                              <LinkIcon className="mr-2 h-4 w-4 text-primary" />
+                              {link.href ? (
+                                <Link
+                                  href={link.href}
+                                  className="hover:underline"
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {link.label}
+                                </Link>
+                              ) : (
+                                <span>{link.text || link.label}</span>
+                              )}
+                            </li>
+                          )
+                        })}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </HoverLift>
+              </StaggerItem>
+            )
+          })}
+        </div>
+      </StaggerContainer>
     </div>
   </section>
 )
@@ -98,12 +107,14 @@ export const ContactHero: React.FC<ContactHeroProps> = ({
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
     <div className="w-full px-4 sm:px-6 lg:px-8">
-      <div className="text-center mb-16">
-        <Badge className="mb-4" variant="outline">
-          {badge}
-        </Badge>
-        <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">{title}</h1>
-        <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
+      <div className="max-w-[1750px] mx-auto">
+        <div className="text-center mb-16">
+          <Badge className="mb-4" variant="outline">
+            {badge}
+          </Badge>
+          <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl">{title}</h1>
+          <p className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto">{description}</p>
+        </div>
       </div>
     </div>
   </section>
@@ -124,7 +135,7 @@ interface ContactFormSectionProps {
   }
 }
 
-export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
+export const ContactFormSectionNew: React.FC<ContactFormSectionProps> = ({
   title,
   description,
   features,
@@ -132,43 +143,53 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32" id="contact-form">
     <div className="w-full px-4 sm:px-6 lg:px-8">
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-[1750px] mx-auto">
         <div className="grid gap-12 md:grid-cols-2">
-          <div>
-            <h2 className="text-3xl font-bold tracking-tighter">{title}</h2>
-            <p className="mt-4 text-lg text-muted-foreground">{description}</p>
+          <FadeIn direction="left">
+            <div>
+              <h2 className="text-3xl font-bold tracking-tighter">{title}</h2>
+              <p className="mt-4 text-lg text-muted-foreground">{description}</p>
 
-            <div className="mt-8 space-y-6">
-              {features.map((feature, index) => {
-                const Icon = LucideIcons[feature.icon] as React.ComponentType<any>
-                return (
-                  <div key={index} className="flex items-start gap-4">
-                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                      <Icon className="h-5 w-5 text-primary" />
-                    </div>
-                    <div>
-                      <h3 className="text-lg font-semibold mb-1">{feature.title}</h3>
-                      <p className="text-muted-foreground">{feature.description}</p>
+              <StaggerContainer delay={0.3}>
+                <div className="mt-8 space-y-6">
+                  {features.map((feature, index) => {
+                    const Icon = LucideIcons[feature.icon] as React.ComponentType<any>
+                    return (
+                      <StaggerItem key={index}>
+                        <div className="flex items-start gap-4 group">
+                          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                            <Icon className="h-5 w-5 text-primary" />
+                          </div>
+                          <div>
+                            <h3 className="text-lg font-semibold mb-1">{feature.title}</h3>
+                            <p className="text-muted-foreground">{feature.description}</p>
+                          </div>
+                        </div>
+                      </StaggerItem>
+                    )
+                  })}
+                </div>
+              </StaggerContainer>
+
+              {partnershipSection && (
+                <FadeIn delay={0.8}>
+                  <div className="mt-10" id="partnership">
+                    <h3 className="text-xl font-bold mb-4">{partnershipSection.title}</h3>
+                    <p className="text-muted-foreground mb-4">{partnershipSection.description}</p>
+                    <div className="flex items-center">
+                      <LucideIcons.Mail className="mr-2 h-5 w-5 text-primary" />
+                      <span>
+                        Email us at <strong>{partnershipSection.email}</strong>
+                      </span>
                     </div>
                   </div>
-                )
-              })}
+                </FadeIn>
+              )}
             </div>
-
-            {partnershipSection && (
-              <div className="mt-10" id="partnership">
-                <h3 className="text-xl font-bold mb-4">{partnershipSection.title}</h3>
-                <p className="text-muted-foreground mb-4">{partnershipSection.description}</p>
-                <div className="flex items-center">
-                  <LucideIcons.Mail className="mr-2 h-5 w-5 text-primary" />
-                  <span>
-                    Email us at <strong>{partnershipSection.email}</strong>
-                  </span>
-                </div>
-              </div>
-            )}
-          </div>
-          <ContactUs />
+          </FadeIn>
+          <ScaleIn direction="right" delay={0.4}>
+            <ContactUs />
+          </ScaleIn>
         </div>
       </div>
     </div>
@@ -289,9 +310,15 @@ export const ContactLocationAndSocial: React.FC<ContactLocationAndSocialProps> =
 }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-muted">
     <div className="w-full px-4 sm:px-6 lg:px-8">
-      <div className="grid gap-12 md:grid-cols-2">
-        <OfficeLocation {...office} />
-        <SocialLinks {...social} />
+      <div className="max-w-[1750px] mx-auto">
+        <div className="grid gap-12 md:grid-cols-2">
+          <FadeIn direction="left">
+            <OfficeLocation {...office} />
+          </FadeIn>
+          <FadeIn direction="right" delay={0.3}>
+            <SocialLinks {...social} />
+          </FadeIn>
+        </div>
       </div>
     </div>
   </section>
@@ -311,20 +338,28 @@ interface ContactCTAProps {
 export const ContactCTA: React.FC<ContactCTAProps> = ({ title, description, buttons }) => (
   <section className="w-full py-12 md:py-24 lg:py-32 bg-primary text-primary-foreground">
     <div className="w-full px-4 sm:px-6 lg:px-8 text-center">
-      <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{title}</h2>
-      <p className="mt-6 text-xl max-w-2xl mx-auto">{description}</p>
-      <div className="flex flex-wrap gap-4 justify-center mt-10">
-        {buttons.map((button, index) => {
-          const Icon = button.icon ? (LucideIcons[button.icon] as React.ComponentType<any>) : null
-          return (
-            <Button key={index} asChild size="lg" variant={button.variant || "secondary"}>
-              <Link href={button.href} target="_blank" rel="noopener noreferrer">
-                {Icon && <Icon className="mr-2 h-4 w-4" />}
-                {button.label}
-              </Link>
-            </Button>
-          )
-        })}
+      <div className="max-w-[1750px] mx-auto">
+        <FadeIn>
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">{title}</h2>
+          <p className="mt-6 text-xl max-w-2xl mx-auto">{description}</p>
+        </FadeIn>
+      <StaggerContainer delay={0.4}>
+        <div className="flex flex-wrap gap-4 justify-center mt-10">
+          {buttons.map((button, index) => {
+            const Icon = button.icon ? (LucideIcons[button.icon] as React.ComponentType<any>) : null
+            return (
+              <StaggerItem key={index}>
+                <Button asChild size="lg" variant={button.variant || "secondary"} className="transition-transform duration-200 hover:scale-105">
+                  <Link href={button.href} target="_blank" rel="noopener noreferrer">
+                    {Icon && <Icon className="mr-2 h-4 w-4" />}
+                    {button.label}
+                  </Link>
+                </Button>
+              </StaggerItem>
+            )
+          })}
+        </div>
+      </StaggerContainer>
       </div>
     </div>
   </section>

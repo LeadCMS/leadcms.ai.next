@@ -54,9 +54,8 @@ export function getDocsData(): DocGroup[] {
         // Default group orders
         const defaultOrder =
           item.group === 'Getting Started' ? 1 :
-          item.group === 'Guides' ? 2 :
+          item.group === 'Plugins' ? 2 :
           item.group === 'Architecture' ? 3 :
-          item.group === 'API Reference' ? 4 :
           item.group === 'Advanced' ? 5 : 10
         groupOrders.set(item.group, defaultOrder)
       }

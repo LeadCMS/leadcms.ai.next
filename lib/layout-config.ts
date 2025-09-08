@@ -124,10 +124,10 @@ export function getLayoutConfig(locale: string = DEFAULT_LANGUAGE): LayoutConfig
           },
           navigation: [
             { label: "Terms", href: "/legal/terms" },
-            { label: "Privacy", href: "/legal/privacy" }
+            { label: "Privacy", href: "/legal/privacy" },
+            { label: "Docs", href: "/docs" }
           ],
           externalLinks: [
-            { label: "Docs", href: "https://github.com/LeadCMS/leadcms.core", external: true },
             { label: "GitHub", href: "https://github.com/LeadCMS", external: true }
           ]
         }

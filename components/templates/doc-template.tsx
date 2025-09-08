@@ -3,8 +3,8 @@ import type { CMSContentTemplateProps } from "@/lib/cms"
 import { useMDXComponents } from "@/components/mdx-components"
 import { DocNavigation, getDocsData } from "@/components/doc-navigation"
 import { DocTableOfContents } from "@/components/doc-table-of-contents"
-import { Badge } from "@/components/ui/badge"
-import { Clock, Calendar } from "lucide-react"
+// import { Badge } from "@/components/ui/badge"
+// import { Clock, Calendar } from "lucide-react"
 import { DocMobileNavProvider } from "@/components/doc-mobile-nav-provider"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 
@@ -65,7 +65,7 @@ export default function DocTemplate({ content }: CMSContentTemplateProps) {
                   </span>
                 </nav>
 
-                <h1 className="text-4xl font-bold tracking-tight mb-4">{content.title}</h1>
+                {/* <h1 className="text-4xl font-bold tracking-tight mb-4">{content.title}</h1>
 
                 {content.description && (
                   <p className="text-xl text-muted-foreground mb-6">{content.description}</p>
@@ -78,7 +78,7 @@ export default function DocTemplate({ content }: CMSContentTemplateProps) {
                       <span>Last updated: {lastUpdated}</span>
                     </div>
                   </div>
-                )}
+                )} */}
               </div>
 
               {/* Content */}

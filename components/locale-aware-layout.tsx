@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import { GitBranch } from "lucide-react"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 import { LanguageSwitcher } from "@/components/language-switcher"
+import { LocaleAwareMobileNav } from "@/components/locale-aware-mobile-nav"
 import { getLayoutConfig, type HeaderConfig, type FooterConfig } from "@/lib/layout-config"
 import { DEFAULT_LANGUAGE } from "@/lib/locale-utils"
 import { LocaleProvider } from "@/lib/locale-context"
@@ -58,11 +59,16 @@ export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, 
                 {link.label}
               </LocaleAwareLink>
             ))}
-            <Button asChild>
+            <Button asChild className="hidden md:inline-flex">
               <LocaleAwareLink href={headerConfig.headerData.cta.href} locale={locale}>
                 {headerConfig.headerData.cta.label}
               </LocaleAwareLink>
             </Button>
+            <LocaleAwareMobileNav
+              locale={locale}
+              headerConfig={headerConfig}
+              footerConfig={footerConfig}
+            />
           </div>
           </div>
         </div>

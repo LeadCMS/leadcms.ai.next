@@ -95,9 +95,6 @@ export function LanguageSwitcher({
             <span>{currentLocaleInfo.flag}</span>
             {showFullName && <span>{currentLocaleInfo.displayName || currentLocaleInfo.name}</span>}
           </span>
-          {variant === 'compact' && (
-            <span className="sm:hidden">{currentLocaleInfo.flag}</span>
-          )}
           <ChevronDown className="h-3 w-3" />
         </Button>
       </DropdownMenuTrigger>

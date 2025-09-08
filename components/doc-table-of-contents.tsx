@@ -21,22 +21,22 @@ export function DocTableOfContents({ content }: DocTableOfContentsProps) {
   useEffect(() => {
     // Extract headings from the actual DOM after MDX renders
     const extractHeadingsFromDOM = () => {
-      // First try to find headings in the main content area specifically
-      let headings: Element[] = Array.from(document.querySelectorAll('main h1, main h2, main h3, main h4, main h5, main h6'))
+      // First try to find headings in the main content area specifically (only h1 and h2)
+      let headings: Element[] = Array.from(document.querySelectorAll('main h1, main h2'))
 
-      // If no main element, try other content containers
+      // If no main element, try other content containers (only h1 and h2)
       if (headings.length === 0) {
-        headings = Array.from(document.querySelectorAll('.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6'))
+        headings = Array.from(document.querySelectorAll('.prose h1, .prose h2'))
       }
 
-      // If still no headings, try article or role="main"
+      // If still no headings, try article or role="main" (only h1 and h2)
       if (headings.length === 0) {
-        headings = Array.from(document.querySelectorAll('article h1, article h2, article h3, article h4, article h5, article h6, [role="main"] h1, [role="main"] h2, [role="main"] h3, [role="main"] h4, [role="main"] h5, [role="main"] h6'))
+        headings = Array.from(document.querySelectorAll('article h1, article h2, [role="main"] h1, [role="main"] h2'))
       }
 
-      // Last resort: all headings but exclude navigation areas
+      // Last resort: all h1 and h2 headings but exclude navigation areas
       if (headings.length === 0) {
-        const allHeadings = Array.from(document.querySelectorAll('h1, h2, h3, h4, h5, h6'))
+        const allHeadings = Array.from(document.querySelectorAll('h1, h2'))
         headings = allHeadings.filter(heading => {
           // Exclude headings that are inside navigation, sidebar, header, footer, or aside elements
           const excludeParent = heading.closest('nav, aside, header, footer, [role="navigation"], [role="banner"], [role="complementary"], .sidebar, .navigation')
@@ -165,11 +165,7 @@ export function DocTableOfContents({ content }: DocTableOfContentsProps) {
                   "block w-full text-left text-sm text-muted-foreground hover:text-foreground transition-colors py-1 px-2 rounded border-l-2 border-transparent hover:border-muted-foreground/30",
                   activeId === item.id && "text-foreground font-medium border-l-primary",
                   item.level === 1 && "font-medium",
-                  item.level === 2 && "ml-2",
-                  item.level === 3 && "ml-4",
-                  item.level === 4 && "ml-6",
-                  item.level === 5 && "ml-8",
-                  item.level === 6 && "ml-10"
+                  item.level === 2 && "ml-2"
                 )}
               >
                 {item.text}

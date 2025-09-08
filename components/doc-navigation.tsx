@@ -30,12 +30,12 @@ export function getDocsData(): DocGroup[] {
     for (const slug of slugs) {
       try {
         const content = getCMSContentBySlugForLocale(slug, CMS_CONTENT_PATH, DEFAULT_LANGUAGE)
-        if (content && content.type === 'doc') {
+        if (content && content.type === 'doc' && content.group && content.order !== undefined) {
           docItems.push({
             slug,
             title: content.title || slug,
-            group: content.group || 'Documentation',
-            order: content.order || 0,
+            group: content.group,
+            order: content.order,
             description: content.description,
           })
         }

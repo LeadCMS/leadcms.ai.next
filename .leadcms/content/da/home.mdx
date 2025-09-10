@@ -1,6 +1,7 @@
 ---
 id: 16
 createdAt: '2025-09-01T18:11:49.878267Z'
+updatedAt: '2025-09-10T09:02:57.169115Z'
 title: AI-drevet, udvikler-først CMS & CRM til SaaS
 description: >-
   LeadCMS er et AI-drevet, udvikler-først CMS og CRM, der gør det muligt for
@@ -33,7 +34,7 @@ source: AI translated from 4
   image="/media/home/leadcms-preview.png"
   primaryButton={{ label: "Kom i gang", href: "#contact" }}
   secondaryButton={{ label: "Se på GitHub", href: "https://github.com/LeadCMS" }}
-  dashboardLabel="LeadCMS.AI Admin"  
+  dashboardLabel="LeadCMS.AI Admin"
 />
 
 <FeaturesSection
@@ -98,9 +99,9 @@ source: AI translated from 4
       description: "Vælg kun de funktioner, du har brug for. Tilføj nye plugins for skræddersyet funktionalitet eller integrationer når som helst."
     },
     {
-      icon: "Lock",
-      title: "Indbygget licensering",
-      description: "Klargør automatisk gratis prøveperioder og håndtér tilbagevendende abonnementer. Generér og validér licensnøgler uden besvær."
+      icon: "Zap",
+      title: "Lynhurtige hjemmesider",
+      description: "Perfekt headless CMS til at bygge ultra‑hurtige hjemmesider med Next.js, Gatsby og moderne frameworks. Opnå høje Lighthouse‑performancescores."
     },
     {
       icon: "Globe",
@@ -114,25 +115,24 @@ source: AI translated from 4
   title="Udrul på få sekunder"
   description="Kom op at køre med én kommando. Ingen kompleks opsætning påkrævet."
   commands={[
-    "git clone https://github.com/LeadCMS/leadcms.core.git",
-    "cd leadcms.core/docker-compose",
-    "docker compose -f docker-compose.develop.yml up -d",
-    "cd ..",
-    "dotnet run"
+    "git clone https://github.com/LeadCMS/leadcms.deploy.git",
+    "cd leadcms.deploy",
+    "./generate-env.sh",
+    "docker compose up -d"
   ]}
   specs={[
-    "Bygget på .NET 8 for høj ydeevne",
-    "Containeriseret med Docker for ensartet udrulning",
-    "PostgreSQL‑database for pålidelig datalagring",
-    "RESTful API med OpenAPI‑dokumentation"
+    "Bygget på .NET for høj ydeevne",
+    "Containeriseret med Docker for konsistent deployment",
+    "PostgreSQL database for pålidelig datalagring",
+    "RESTful API med OpenAPI dokumentation"
   ]}
   devExperience={[
     "Omfattende API til tilpassede integrationer",
-    "Plugin‑system til at udvide funktionalitet",
-    "Webhooks til realtids‑hændelsesmeddelelser",
+    "Plugin-system til udvidelse af funktionalitet",
+    "Webhooks til realtids event notifikationer",
     "Detaljeret dokumentation og eksempler"
   ]}
-  docButton={{ label: "Se dokumentation", href: "https://github.com/LeadCMS/leadcms.core" }}
+  docButton={{ label: "Se dokumentation", href: "/docs" }}
 />
 
 <HelpSection
@@ -197,7 +197,7 @@ source: AI translated from 4
     {
       icon: "Server",
       title: "Hurtigt. Fleksibelt. Skalerbart.",
-      description: "Drevet af .NET 8 for høj ydeevne og robust værktøj til enterprise‑workloads. Containeriseret udrulning."
+      description: "Drevet af .NET for høj ydeevne og robust værktøj til enterprise‑workloads. Containeriseret udrulning."
     }
   ]}
 />
@@ -213,7 +213,6 @@ source: AI translated from 4
       rows: [
         { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
         { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-        { label: "Licensering", values: [{ icon: "check" }, "Begrænset", "Begrænset"] },
         { label: "Selvhostet", values: [{ icon: "check" }, "Nej", "Nej"] },
         { label: "Open source", values: [{ icon: "check" }, "Nej", "Nej"] }
       ]

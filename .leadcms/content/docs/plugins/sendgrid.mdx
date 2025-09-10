@@ -1,0 +1,181 @@
+---
+id: 53
+createdAt: '2025-09-10T09:35:28.238547Z'
+title: SendGrid Plugin
+description: Email delivery automation and validation through SendGrid's cloud platform.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/plugins/sendgrid
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Plugins
+order: 4
+---
+
+# 📧 SendGrid Plugin
+
+## Overview
+
+The SendGrid Plugin integrates SendGrid's email delivery service with LeadCMS, providing tracking, analytics, and suppression management. This plugin is designed for high-volume email operations.
+
+## Purpose
+
+- **Stats Synchronization**: Sync unsubscribes, suppressions, bounces, and other stats from SendGrid to LeadCMS
+- **Suppression Management**: Prevent sending emails to unsubscribed or bounced addresses
+- **Email Analytics**: Track email delivery, opens, clicks, and other engagement metrics
+- **Webhook Integration**: Real-time email event processing via SendGrid webhooks
+- **High Volume Support**: Handle large-scale email campaigns and notifications
+
+**Note:** This plugin does not send emails. Use LeadCMS core SMTP settings for email delivery, which supports any SMTP-compatible provider, including SendGrid.
+
+## Key Features
+
+### Suppression and Event Sync
+- Automatic synchronization of unsubscribes, suppressions, bounces, and spam reports from SendGrid
+- Prevents sending emails to suppressed or bounced addresses by updating local suppression lists
+- Real-time event processing via SendGrid webhooks (bounces, unsubscribes, spam reports, etc.)
+
+### Analytics and Tracking
+- Real-time delivery status and event tracking (bounces, unsubscribes, spam reports)
+- Comprehensive email activity logging for suppression and compliance
+- Performance analytics and reporting on suppression and event trends
+
+### Background Processing
+- **SyncSuppressionsTask**: Automatically synchronize suppression lists from SendGrid
+- **SyncActivityLogTask**: Import email activity data for analytics and reporting
+- Configurable batch processing for efficient data synchronization
+
+## Configuration
+
+### Environment Variables
+
+```bash
+# Primary SendGrid API Key (Required)
+SENDGRIDAPI__PRIMARYAPIKEY=your-primary-sendgrid-api-key
+
+# Optional: Secondary API Keys for Load Balancing
+SENDGRIDAPI__SECONDARYAPIKEYS__0=backup-api-key-1
+SENDGRIDAPI__SECONDARYAPIKEYS__1=backup-api-key-2
+
+# Optional: Webhook Public Keys for Verification
+SENDGRIDAPI__WEBHOOKPUBLICKEYS__0=webhook-verification-key-1
+SENDGRIDAPI__WEBHOOKPUBLICKEYS__1=webhook-verification-key-2
+```
+
+### Plugin Settings
+
+The plugin configuration includes API settings and background task configuration:
+
+```json
+{
+  "SendGridApi": {
+    "PrimaryApiKey": "$SENDGRIDAPI__PRIMARYAPIKEY",
+    "SecondaryApiKeys": [],
+    "WebhookPublicKeys": []
+  },
+  "Tasks": {
+    "SyncSuppressionsTask": {
+      "Enable": false,
+      "CronSchedule": "0/30 * * * * ?",
+      "RetryCount": "2",
+      "RetryInterval": "1"
+    },
+    "SyncActivityLogTask": {
+      "Enable": false,
+      "CronSchedule": "0/30 * * * * ? *",
+      "RetryCount": "2",
+      "RetryInterval": "5",
+      "BatchSize": "5000"
+    }
+  }
+}
+```
+
+## Background Tasks
+
+### SyncSuppressionsTask
+
+Automatically synchronizes email suppression lists from SendGrid to maintain up-to-date bounce and unsubscribe information.
+
+**Configuration Options:**
+- **Enable**: Enable/disable the task (default: false)
+- **CronSchedule**: When to run the task (default: every 30 seconds)
+- **RetryCount**: Number of retry attempts on failure (default: 2)
+- **RetryInterval**: Minutes between retries (default: 1)
+
+**What it does:**
+- Downloads latest suppression lists from SendGrid
+- Updates local database with bounced and unsubscribed emails
+- Prevents sending to suppressed email addresses
+- Maintains compliance with anti-spam regulations
+
+### SyncActivityLogTask
+
+Imports email activity data from SendGrid for comprehensive email analytics and reporting.
+
+**Configuration Options:**
+- **Enable**: Enable/disable the task (default: false)
+- **CronSchedule**: When to run the task (default: every 30 seconds)
+- **RetryCount**: Number of retry attempts on failure (default: 2)
+- **RetryInterval**: Minutes between retries (default: 5)
+- **BatchSize**: Number of records to process per batch (default: 5000)
+
+**What it does:**
+- Retrieves email activity events from SendGrid
+- Imports delivery, bounce, open, click, and other events
+- Updates email metrics and analytics
+- Provides data for performance reporting
+
+## API Endpoints
+
+### SendGrid Integration
+
+- **POST `/api/sendgrid/webhook`** - Receive SendGrid webhook events
+  - Input: SendGrid webhook payload
+  - Output: Acknowledgment of event processing
+  - Used for real-time email event processing
+
+- **GET `/api/sendgrid/stats`** - Retrieve email statistics
+  - Input: Date range, filters
+  - Output: Email delivery and engagement statistics
+
+## SendGrid Setup Requirements
+
+### SendGrid Account Configuration
+
+1. **Create SendGrid Account**: Register at [sendgrid.com](https://sendgrid.com)
+2. **Generate API Key**: Create an API key with appropriate permissions
+3. **Configure Webhooks**: Set up webhooks for real-time event processing
+
+## Use Cases
+
+### Suppression and Compliance
+- Keep LeadCMS suppression lists up-to-date with SendGrid (unsubscribes, bounces, spam reports)
+- Prevent accidental sending to suppressed or bounced addresses
+- Maintain compliance with anti-spam regulations and best practices
+
+### Analytics and Monitoring
+- Track suppression and bounce trends for deliverability and compliance
+- Monitor real-time events from SendGrid for improved list hygiene
+
+### Integration and Automation
+- Automate suppression sync and event processing for reliable email hygiene
+
+### Suppression and Compliance Features
+- Automatic suppression list management (bounces, unsubscribes, spam reports)
+- Compliance with CAN-SPAM, GDPR, and other regulations by preventing emails to suppressed addresses
+- Real-time event sync for improved list hygiene and deliverability
+
+### Suppression Analytics
+- Track bounce, unsubscribe, and spam report trends
+- Monitor suppression list changes and compliance status
+- Analyze event data for improved deliverability and list hygiene
+
+<Callout type="warning" title="Email Sending Configuration">
+This plugin does not send emails directly. Configure LeadCMS core SMTP settings to use SendGrid's SMTP service (smtp.sendgrid.net) or any other SMTP provider for actual email delivery.
+</Callout>

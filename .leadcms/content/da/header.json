@@ -41,6 +41,7 @@
   "createdAt": "2025-09-01T18:28:29.815397Z",
   "updatedAt": "2025-09-01T18:29:07.941971Z",
   "comments": null,
+  "translations": null,
   "title": "Header Configuration",
   "description": "Konfiguration af webstedets header inklusive logo, navigationslinks og call-to-action knapper.",
   "coverImageUrl": "",

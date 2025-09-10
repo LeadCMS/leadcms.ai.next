@@ -1,0 +1,131 @@
+---
+id: 50
+createdAt: '2025-09-10T09:27:42.684053Z'
+title: AI Plugin
+description: >-
+  OpenAI integration for content generation, translation, and image creation
+  with GPT models and DALL-E.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/plugins/ai
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Plugins
+order: 1
+---
+
+# 🤖 AI Plugin
+
+## Overview
+
+The AI Plugin integrates OpenAI services into LeadCMS, providing artificial intelligence capabilities for content generation, translation, and image creation. This plugin enables automated content creation workflows and AI-powered features throughout the CMS.
+
+## Purpose
+
+- **Content Generation**: Automatically create content drafts using AI based on prompts and existing content samples
+- **Content Translation**: Translate content between multiple languages using AI
+- **Content Editing**: Generate AI-powered content improvements and edits
+- **Image Generation**: Create cover images for blog posts, graphics for landing pages and articles, newsletters, and other visual content using DALL-E based on text descriptions
+- **Text Generation**: Generate various types of text content using GPT models
+
+## Key Features
+
+### Content Generation
+- Generate new content drafts based on prompts and content type
+- Use existing content as samples to match style and format
+- Support for multiple content types and languages
+- AI-powered content editing and improvement suggestions
+
+### Translation Services
+- Translate content between supported languages
+- Maintain context and formatting during translation
+
+### Image Generation
+- Create images from text descriptions using DALL-E
+- Generate marketing visuals and content illustrations
+- Support for various image styles and formats
+
+### Text Generation
+- Generate various types of text content
+- Support for different writing styles and tones
+- Customizable prompts and parameters
+
+## Configuration
+
+### Environment Variables
+
+```bash
+# OpenAI API Configuration (Required)
+OPENAI__APIKEY=your-openai-api-key-here
+```
+
+**Note**: The API key should be provided through environment variables, not hardcoded in configuration files.
+
+## API Endpoints
+
+### Content Generation
+
+- **POST `/api/content/ai-draft`** - Generate new content from a prompt
+  - Input: Content type, language, prompt, and optional context
+  - Output: Generated content draft with metadata
+
+- **POST `/api/content/ai-edit`** - Generate content edits and improvements
+  - Input: Existing content and edit instructions
+  - Output: Improved content with suggested changes
+
+### Translation
+
+- **POST `/api/content/translate`** - Translate content between languages
+  - Input: Content, source language, target language
+  - Output: Translated content with quality metrics
+
+## Prerequisites
+
+### OpenAI Account Setup
+1. **Create OpenAI Account**: Register at [platform.openai.com](https://platform.openai.com)
+2. **Generate API Key**: Create an API key in your OpenAI dashboard
+3. **Set Usage Limits**: Configure appropriate usage limits and billing
+4. **Review Pricing**: Understand OpenAI's pricing model for API usage
+
+## Security Considerations
+
+### API Key Management
+- **Never commit API keys** to version control
+- Use environment variables for sensitive configuration
+- Regularly rotate API keys for security
+- Monitor API usage and set appropriate limits
+
+### Content Filtering
+- Review generated content before publication
+- Implement content moderation workflows
+- Be aware of potential bias in AI-generated content
+- Establish guidelines for AI content usage
+
+### Privacy and Compliance
+- Review OpenAI's data usage policies
+- Ensure compliance with data protection regulations
+- Consider data residency requirements
+- Implement appropriate content retention policies
+
+## Troubleshooting
+
+### Common Issues
+
+**API Key Errors**
+- Verify the API key is correctly set in environment variables
+- Check that the API key has sufficient credits
+- Ensure the API key has appropriate permissions
+
+**Rate Limiting**
+- Monitor API usage to avoid rate limits
+- Implement proper retry logic with exponential backoff
+- Consider upgrading OpenAI plan for higher limits
+
+<Callout type="info" title="Enhanced Capabilities">
+This plugin significantly enhances LeadCMS capabilities by bringing AI-powered content generation directly into the content management workflow, enabling faster content creation and improved productivity while maintaining quality and brand consistency.
+</Callout>

@@ -169,12 +169,15 @@ export async function saveContentFile({ content, typeMap, contentDir, previewSlu
     const fmMatch = body.match(/^---\n([\s\S]*?)\n---\n?/)
     if (fmMatch) {
       try {
-        bodyFrontmatter = require("js-yaml").load(fmMatch[1]) || {}
-      } catch {}
+        bodyFrontmatter = yaml.load(fmMatch[1]) || {}
+      } catch (error) {
+        console.warn(`[LeadCMS] Failed to parse frontmatter in body for ${slug}:`, error.message)
+      }
       bodyContent = body.slice(fmMatch[0].length)
     }
-    // Merge frontmatters, content metadata takes precedence
-    const mergedFrontmatter = { ...bodyFrontmatter, ...cleanedContent }
+
+    // Merge frontmatters, body frontmatter takes precedence over content metadata
+    const mergedFrontmatter = { ...cleanedContent, ...bodyFrontmatter }
     delete mergedFrontmatter.body
     const frontmatterStr = buildFrontmatter(mergedFrontmatter)
     const mdx = `${frontmatterStr}\n\n${bodyContent.replace(/\/api\/media\//g, "/media/").trim()}\n`

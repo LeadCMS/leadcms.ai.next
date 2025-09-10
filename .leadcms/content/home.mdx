@@ -1,7 +1,7 @@
 ---
 id: 4
 createdAt: '2025-05-24T15:58:50.058603Z'
-updatedAt: '2025-09-04T13:18:21.459652Z'
+updatedAt: '2025-09-10T09:01:50.755702Z'
 title: AI-Driven, Developer-First CMS & CRM for SaaS
 description: >-
   LeadCMS is an AI-driven, developer-first CMS and CRM that enables SaaS teams
@@ -92,9 +92,9 @@ title: "Modular Architecture",
 description: "Pick only the features you need. Add new plugins for custom functionality or integrations anytime."
 },
 {
-icon: "Lock",
-title: "Built‑In Licensing",
-description: "Automatically provision free trials and manage recurring subscriptions. Generate and validate license keys with zero friction."
+icon: "Zap",
+title: "Lightning‑Fast Websites",
+description: "Perfect headless CMS for building ultra‑fast websites with Next.js, Gatsby, and modern frameworks. Achieve high Lighthouse performance scores."
 },
 {
 icon: "Globe",
@@ -108,14 +108,13 @@ description: "Comprehensive API endpoints for seamless integration with your exi
   title="Deploy in Seconds"
   description="Get up and running with a single command. No complex setup required."
   commands={[
-"git clone https://github.com/LeadCMS/leadcms.core.git",
-"cd leadcms.core/docker-compose",
-"docker compose -f docker-compose.develop.yml up -d",
-"cd ..",
-"dotnet run"
+"git clone https://github.com/LeadCMS/leadcms.deploy.git",
+"cd leadcms.deploy",
+"./generate-env.sh",
+"docker compose up -d"
 ]}
   specs={[
-"Built on .NET 8 for high performance",
+"Built on .NET for high performance",
 "Containerized with Docker for consistent deployment",
 "PostgreSQL database for reliable data storage",
 "RESTful API with OpenAPI documentation"
@@ -126,7 +125,7 @@ description: "Comprehensive API endpoints for seamless integration with your exi
 "Webhooks for real-time event notifications",
 "Detailed documentation and examples"
 ]}
-  docButton={{ label: "View Documentation", href: "https://github.com/LeadCMS/leadcms.core" }}
+  docButton={{ label: "View Documentation", href: "/docs" }}
 />
 
 <HelpSection
@@ -192,7 +191,7 @@ description: "Deploy it behind your firewall. Your data, your rules — ensuring
 {
 icon: "Server",
 title: "Fast. Flexible. Scalable.",
-description: "Powered by .NET 8 for high-performance and robust tooling for enterprise workloads. Containerized deployment."
+description: "Powered by .NET for high-performance and robust tooling for enterprise workloads. Containerized deployment."
 }
 ]}
 />
@@ -208,7 +207,6 @@ headers: ["LeadCMS", "HubSpot", "Salesforce"],
 rows: [
 { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
 { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-{ label: "Licensing", values: [{ icon: "check" }, "Limited", "Limited"] },
 { label: "Self-Hosted", values: [{ icon: "check" }, "No", "No"] },
 { label: "Open Source", values: [{ icon: "check" }, "No", "No"] }
 ]

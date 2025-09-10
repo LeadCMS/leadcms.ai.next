@@ -41,6 +41,7 @@
   "createdAt": "2025-09-01T18:22:15.900187Z",
   "updatedAt": null,
   "comments": null,
+  "translations": null,
   "title": "Contact Form Text Configuration",
   "description": "Текстовое содержимое для компонента контактной формы, включая подписи, плейсхолдеры, кнопки и сообщения.",
   "coverImageUrl": "",

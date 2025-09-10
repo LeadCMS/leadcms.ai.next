@@ -16,14 +16,13 @@
       {
         "label": "Privacy",
         "href": "/legal/privacy"
+      },
+      {
+        "label": "Docs",
+        "href": "/docs"
       }
     ],
     "externalLinks": [
-      {
-        "label": "Docs",
-        "href": "https://github.com/LeadCMS/leadcms.core",
-        "external": true
-      },
       {
         "label": "GitHub",
         "href": "https://github.com/LeadCMS",
@@ -59,8 +58,9 @@
   },
   "id": 12,
   "createdAt": "2025-09-01T16:38:44.204226Z",
-  "updatedAt": "2025-09-02T10:01:36.719271Z",
+  "updatedAt": "2025-09-10T09:01:12.162447Z",
   "comments": null,
+  "translations": null,
   "title": "Footer Configuration",
   "description": "Konfiguration af webstedets footer inklusive logo, copyright tekst og navigationslinks.",
   "coverImageUrl": "",

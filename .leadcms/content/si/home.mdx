@@ -1,6 +1,7 @@
 ---
 id: 33
 createdAt: '2025-09-02T05:36:22.839938Z'
+updatedAt: '2025-09-10T09:40:22.572073Z'
 title: SaaS සඳහා AI මඟින් චාලිත, සංවර්ධක-පළමු CMS සහ CRM
 description: >-
   LeadCMS යනු AI මඟින් චාලිත, සංවර්ධක-පළමු CMS සහ CRM එකක් වන අතර, SaaS
@@ -98,9 +99,9 @@ source: AI translated from 4
       description: "ඔබට අවශ්‍ය විශේෂාංග පමණක් තෝරන්න. රිසිකරණ කාර්යක්ෂමතා හෝ ඒකාබද්ධකරණ සඳහා නව plugins ඕනෑම වේලාවක එකතු කරන්න."
     },
     {
-      icon: "Lock",
-      title: "අභ්‍යන්තර බලපත්‍රකරණය",
-      description: "අත්හදා බැලීම් නොමිලේ ස්වයංක්‍රීයව සපයන්න සහ නැවත නැවත පවතින දායකත්වයන් කළමනාකරණය කරන්න. බාධක රහිතව බලපත්‍ර යතුරු ජනනය කර තහවුරු කරන්න."
+      icon: "Zap",
+      title: "අකුණු වේගයෙන් වෙබ් අඩවි",
+      description: "Next.js, Gatsby සහ නවීන frameworks සමඟ අතිශයින් වේගවත් වෙබ් අඩවි ගොඩනඟන සඳහා පරිපූර්ණ headless CMS. ඉහළ Lighthouse කාර්ය සාධන ප්‍රතිඵල ලබා ගන්න."
     },
     {
       icon: "Globe",
@@ -110,29 +111,25 @@ source: AI translated from 4
   ]}
 />
 
-<DeploySection
-  title="තත්පර කිහිපයකින් දියත් කරන්න"
-  description="එක්ම විධානයකින් ආරම්භ කර ධාවනය කරන්න. සංකීර්ණ සැකසුම් අවශ්‍ය නොවේ."
   commands={[
-    "git clone https://github.com/LeadCMS/leadcms.core.git",
-    "cd leadcms.core/docker-compose",
-    "docker compose -f docker-compose.develop.yml up -d",
-    "cd ..",
-    "dotnet run"
+    "git clone https://github.com/LeadCMS/leadcms.deploy.git",
+    "cd leadcms.deploy",
+    "./generate-env.sh",
+    "docker compose up -d"
   ]}
   specs={[
-    "ඉහළ කාර්ය සාධනය සඳහා .NET 8 මත ගොඩනඟා ඇත",
-    "ඒකමතික දියත් කිරීම සඳහා Docker සමඟ containerized කර ඇත",
-    "විශ්වාසදායක දත්ත ගබඩාව සඳහා PostgreSQL දත්ත සමුදාය",
-    "OpenAPI ලේඛන සමඟ RESTful API"
+    ".NET මත ගොඩනගා ඇති අධික කාර්යක්ෂමතාවය සඳහා",
+    "ස්ථාවර deployment සඳහා Docker සමඟ containerized",
+    "විශ්වසනීය data storage සඳහා PostgreSQL දත්ත ගබඩාව",
+    "OpenAPI ප්‍රලේඛනය සමඟ RESTful API"
   ]}
   devExperience={[
-    "රිසිකරණ ඒකාබද්ධකරණ සඳහා සම්පූර්ණ API",
-    "කාර්යක්ෂමතාව දිගහැරවීමට plugin පද්ධතිය",
-    "සජීවී සිදුවීම් දැනුම්දීම් සඳහා Webhooks",
-    "විස්තරාත්මක ලේඛන සහ උදාහරණ"
+    "අභිරුචි ඒකාබද්ධකිරීම් සඳහා සම්පූර්ණ API",
+    "functionality වර්ධනය සඳහා Plugin පද්ධතිය",
+    "සත්‍ය කාලීන event නිවේදන සඳහා Webhooks",
+    "විස්තරාත්මක ප්‍රලේඛනය සහ උදාහරණ"
   ]}
-  docButton={{ label: "ලේඛන බලන්න", href: "https://github.com/LeadCMS/leadcms.core" }}
+  docButton={{ label: "ලේඛන බලන්න", href: "/docs" }}
 />
 
 <HelpSection
@@ -198,7 +195,7 @@ source: AI translated from 4
     {
       icon: "Server",
       title: "වේගවත්. ඉවහල්. පරිමාණගත.",
-      description: "ඉහළ කාර්ය සාධනය සහ කර්මාන්ත මට්ටමේ වැඩබර සඳහා තරබාරු මෙවලම් සමඟ .NET 8 මඟින් බලගන්වන. කන්ටේනරයිස් කළ දියත් කිරීම."
+      description: "ඉහළ කාර්ය සාධනය සහ කර්මාන්ත මට්ටමේ වැඩබර සඳහා තරබාරු මෙවලම් සමඟ .NET මඟින් බලගන්වන. කන්ටේනරයිස් කළ දියත් කිරීම."
     }
   ]}
 />
@@ -214,7 +211,6 @@ source: AI translated from 4
       rows: [
         { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
         { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-        { label: "බලපත්‍රකරණය", values: [{ icon: "check" }, "සීමිත", "සීමිත"] },
         { label: "ස්වයං-භාරගත", values: [{ icon: "check" }, "නැහැ", "නැහැ"] },
         { label: "විවෘත මූලාශ්‍ර", values: [{ icon: "check" }, "නැහැ", "නැහැ"] }
       ]

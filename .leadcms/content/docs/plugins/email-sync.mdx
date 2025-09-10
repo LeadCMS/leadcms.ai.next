@@ -1,0 +1,196 @@
+---
+id: 51
+createdAt: '2025-09-10T09:32:54.223364Z'
+title: Email Sync Plugin
+description: >-
+  Bidirectional email synchronization with IMAP/POP3 servers for automated email
+  management.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/plugins/email-sync
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Plugins
+order: 2
+---
+
+# 📧 Email Sync Plugin
+
+## Overview
+
+The Email Sync Plugin enables LeadCMS to synchronize emails from IMAP accounts, providing comprehensive email tracking and lead management capabilities. This plugin automatically imports emails for lead correspondence tracking, customer communication history, and email-based lead scoring.
+
+## Purpose
+
+- **Email Synchronization**: Automatically import emails from IMAP accounts
+- **Lead Correspondence Tracking**: Track all email communications with leads and customers
+- **Customer History**: Maintain comprehensive communication history
+- **Email Classification**: Automatically classify internal vs external communications
+- **Lead Management**: Enhance lead profiles with email interaction data
+
+## Key Features
+
+### IMAP Integration
+- Support for multiple IMAP email accounts
+- Automatic email synchronization on scheduled intervals
+- Secure credential storage with encryption
+- Support for various IMAP providers (Gmail, Outlook, etc.)
+- Configurable sync frequency and batch sizes
+
+### Email Classification
+- **Internal Domains**: Automatically identify internal company emails
+- **External Communications**: Track customer and lead communications
+- **Ignored Emails**: Filter out automated emails and notifications
+- **Email Threading**: Maintain conversation threads for better context
+
+### Lead Enhancement
+- Automatic lead creation from email addresses
+- Email interaction tracking and scoring
+- Communication history integration
+- Contact information enrichment from email signatures
+- Lead source attribution from email interactions
+
+## Configuration
+
+### Environment Variables
+
+```bash
+# Email Sync Configuration
+EMAILSYNC__INTERNALDOMAINS__0=yourcompany.com
+EMAILSYNC__INTERNALDOMAINS__1=subsidiary.com
+EMAILSYNC__INTERNALDOMAINS__2=partner.com
+
+# Emails to ignore during synchronization
+EMAILSYNC__IGNOREDEMAILS__0=noreply@example.com
+EMAILSYNC__IGNOREDEMAILS__1=automated@service.com
+EMAILSYNC__IGNOREDEMAILS__2=do-not-reply@system.com
+
+# Encryption key for stored IMAP credentials (32 characters)
+EMAILSYNC__ENCRYPTIONKEY=your-32-character-encryption-key-here
+```
+
+## Background Tasks
+
+### EmailSyncTask
+
+Automatically synchronizes emails from configured IMAP accounts at regular intervals.
+
+**Configuration Options:**
+- **Enable**: Enable/disable the task (default: false)
+- **CronSchedule**: When to run the task (default: every 30 seconds)
+- **RetryCount**: Number of retry attempts on failure (default: 2)
+- **RetryInterval**: Minutes between retries (default: 1)
+- **BatchSize**: Number of emails to process per batch (default: 20)
+
+**What it does:**
+- Connects to configured IMAP accounts
+- Downloads new emails since last synchronization
+- Classifies emails as internal or external
+- Creates or updates lead records based on email addresses
+- Stores email content and metadata in the database
+- Updates lead interaction history and scoring
+
+## IMAP Account Management
+
+### Adding IMAP Accounts
+
+IMAP accounts are managed through the LeadCMS interface via the IMAP Accounts controller:
+
+- **POST `/api/imap-accounts`** - Add new IMAP account
+- **GET `/api/imap-accounts`** - List configured IMAP accounts
+- **PUT `/api/imap-accounts/{id}`** - Update IMAP account settings
+- **DELETE `/api/imap-accounts/{id}`** - Remove IMAP account
+
+### IMAP Account Configuration
+
+Each IMAP account requires the following configuration:
+
+**Basic Settings:**
+- **Host**: IMAP server hostname (e.g., imap.gmail.com)
+- **Port**: IMAP server port (typically 993 for SSL)
+- **Username**: Email account username
+- **Password**: Email account password (encrypted when stored)
+- **Use SSL**: Enable SSL/TLS encryption (recommended)
+
+**Sync Settings:**
+- **Enabled**: Enable/disable synchronization for this account
+- **Folders**: Specific folders to synchronize (default: INBOX)
+- **Since Date**: Start date for email synchronization
+- **Max Messages**: Maximum number of messages to sync per session
+
+### Supported Email Providers
+
+The plugin works with any IMAP-compatible email provider:
+
+**Gmail:**
+- Host: `imap.gmail.com`
+- Port: `993`
+- SSL: `true`
+- Note: Requires app passwords if 2FA is enabled
+
+**Microsoft Outlook/Office 365:**
+- Host: `outlook.office365.com`
+- Port: `993`
+- SSL: `true`
+- Note: May require OAuth authentication for some accounts
+
+**Yahoo Mail:**
+- Host: `imap.mail.yahoo.com`
+- Port: `993`
+- SSL: `true`
+
+**Custom IMAP Servers:**
+- Configure host, port, and SSL settings as provided by your email provider
+
+## Email Classification Logic
+
+### Internal Domain Detection
+
+Emails are classified as internal when:
+- Sender domain matches configured internal domains
+- Recipient domain matches configured internal domains
+- Email originates from company email addresses
+
+### External Communication Detection
+
+Emails are classified as external when:
+- At least one participant is from an external domain
+- Communication involves leads or customers
+- Email represents customer service or sales communication
+
+### Ignored Email Filtering
+
+Emails are excluded from synchronization when:
+- Sender address matches ignored email patterns
+- Email contains automated/system-generated markers
+- Email is identified as spam or promotional content
+- Email is from known automated systems (notifications, alerts, etc.)
+
+## Use Cases
+
+### Sales Team Communication Tracking
+- **Lead Nurturing**: Track all email communications with prospects
+- **Sales Pipeline**: Enhance lead scoring with email interaction data
+- **Follow-up Management**: Identify leads requiring follow-up based on email history
+- **Response Time Analysis**: Monitor sales team response times
+
+### Customer Service Management
+- **Support History**: Maintain complete customer communication history
+- **Issue Tracking**: Track customer issues and resolutions via email
+- **Escalation Management**: Identify unresponded customer emails
+- **Service Quality**: Analyze response times and customer satisfaction
+
+### Marketing Campaign Analysis
+- **Email Campaign Tracking**: Track responses to marketing emails
+- **Lead Source Attribution**: Identify lead sources from email interactions
+- **Engagement Analysis**: Analyze email engagement patterns
+- **Content Performance**: Evaluate email content effectiveness
+
+<Callout type="info" title="Enhanced Lead Management">
+This plugin significantly enhances LeadCMS capabilities by providing comprehensive email tracking and integration, enabling better lead management and customer communication tracking while maintaining security and privacy standards.
+</Callout>

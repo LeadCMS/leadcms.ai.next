@@ -1,0 +1,340 @@
+---
+id: 46
+createdAt: '2025-09-10T09:07:03.114442Z'
+updatedAt: '2025-09-10T09:20:57.581673Z'
+title: Deploying
+description: >-
+  Quick deployment guide for getting LeadCMS running using Docker Compose -
+  perfect for evaluation, development, and on-premises installations.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/getting-started/deploying
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Getting Started
+order: 4
+---
+
+# Deploying LeadCMS with Docker Compose
+
+This guide provides a sample deployment approach for LeadCMS using Docker Compose. It's designed to help you quickly get LeadCMS running on your premises for evaluation, development, or as a starting point for your own deployment strategy.
+
+<Callout type="info" title="Sample Configuration Notice">
+The provided `docker-compose.yml` is a sample that demonstrates how to run LeadCMS with its dependencies (PostgreSQL) for convenience. In production environments, you may want to use managed services for PostgreSQL, implement proper backup strategies, and add monitoring solutions.
+</Callout>
+
+## Prerequisites
+
+- [Docker](https://www.docker.com/products/docker-desktop) installed and running
+- [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+- (Optional) [PowerShell](https://docs.microsoft.com/en-us/powershell/) for Windows users
+
+## 1. Clone the Deployment Repository
+
+```bash
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+```
+
+## 2. Generate Environment Variables
+
+LeadCMS uses a `.env` file for configuration. You **must** generate this file before starting the containers.
+
+### On Linux/macOS
+
+Run the provided shell script:
+
+```bash
+chmod +x generate-env.sh
+./generate-env.sh
+```
+
+### On Windows
+
+Run the PowerShell script:
+
+```powershell
+.\generate-env.ps1
+```
+
+The script will:
+- Read `.env.sample`
+- Generate secure random secrets and passwords
+- Write a new `.env` file
+
+<Callout type="warning" title="Environment File Security">
+If a `.env` file already exists, you will be prompted before overwriting. Never commit the `.env` file to version control as it contains secrets and credentials.
+</Callout>
+
+## 3. Review and Customize Environment
+
+Open the generated `.env` file in your editor and configure the following essential settings:
+
+### Email Configuration (Required)
+
+```bash
+EMAIL__USERNAME=your-smtp-username
+EMAIL__PASSWORD=your-smtp-password
+EMAIL__SERVER=smtp.your-provider.com
+EMAIL__PORT=587
+EMAIL__USESSL=true
+```
+
+### CORS Origins
+
+```bash
+CORS__ALLOWEDORIGINS__0=https://yourdomain.com
+CORS__ALLOWEDORIGINS__1=https://admin.yourdomain.com
+```
+
+### Supported Languages
+
+```bash
+SUPPORTEDLANGUAGES__0=en
+SUPPORTEDLANGUAGES__1=de
+# Add more languages by incrementing the index
+```
+
+### Plugin Configuration
+
+```bash
+PLUGINS__0=LeadCMS.Plugin.Site
+# Add more plugins as needed
+```
+
+## 4. Start the Sample Stack
+
+From the repository root, run:
+
+```bash
+docker compose up -d
+```
+
+This will start:
+- **PostgreSQL** (sample, local container)
+- **LeadCMS core application**
+
+## 5. Access the Services
+
+Once all containers are running, you can access:
+
+- **LeadCMS API:** [http://localhost:8080](http://localhost:8080)
+- **API Documentation (Swagger):** [http://localhost:8080/swagger](http://localhost:8080/swagger)
+
+## 6. Default Admin User
+
+Use these credentials to access the system:
+
+- **Username:** As set in `.env` (`DEFAULTUSERS__0__USERNAME`)
+- **Password:** As generated in `.env` (`DEFAULTUSERS__0__PASSWORD`)
+- **Email:** As set in `.env` (`DEFAULTUSERS__0__EMAIL`)
+
+## 7. Stopping and Cleaning Up
+
+To stop the stack:
+
+```bash
+docker compose down
+```
+
+To remove all data (PostgreSQL volumes):
+
+```bash
+docker compose down -v
+```
+
+<Callout type="warning" title="Data Loss Warning">
+Using `docker compose down -v` will permanently delete all data in PostgreSQL. Only use this if you want to start completely fresh.
+</Callout>
+
+## Troubleshooting
+
+### PostgreSQL Authentication Issues
+
+If you encounter authentication errors when connecting to PostgreSQL, it may be due to an existing Docker volume containing an old database with different credentials:
+
+1. Stop all running containers:
+   ```bash
+   docker compose down
+   ```
+
+2. Remove all persistent data volumes (this will delete all data):
+   ```bash
+   docker compose down -v
+   ```
+
+3. Start the stack again:
+   ```bash
+   docker compose up -d
+   ```
+
+This will recreate the databases with the current credentials from your `.env` file.
+
+### Container Health Issues
+
+Check container status and logs:
+
+```bash
+# View running containers
+docker compose ps
+
+# Check specific service logs
+docker compose logs leadcms
+docker compose logs postgres
+```
+
+## Plugin Configuration
+
+LeadCMS supports two types of plugins: default plugins that come with LeadCMS Core and custom plugins that you develop or obtain from third parties.
+
+### Default Plugins
+
+All default plugins that come with LeadCMS Core can be enabled simply by adding them to your `.env` file:
+
+```bash
+PLUGINS__0=LeadCMS.Plugin.Site
+PLUGINS__1=LeadCMS.Plugin.AI
+PLUGINS__2=LeadCMS.Plugin.EmailSync
+PLUGINS__3=LeadCMS.Plugin.SendGrid
+PLUGINS__4=LeadCMS.Plugin.Sms
+PLUGINS__5=LeadCMS.Plugin.ReverseProxy
+PLUGINS__6=LeadCMS.Plugin.Vsto
+```
+
+These plugins are already included in the LeadCMS Core container image and only need to be listed in the configuration to be loaded.
+
+### Custom Plugins
+
+Custom plugins require the plugin code to be published into the `/app/plugins/LeadCMS.Plugin.CustomPlugin` folder within the container. This can be achieved in two different ways:
+
+#### Method 1: Dynamic Plugin Loading (Runtime)
+
+Mount external plugin directories into the container using Docker volumes. This approach is ideal for development and allows you to update plugins without rebuilding the container image.
+
+**Plugin Configuration in `.env`:**
+```bash
+PLUGINS__0=LeadCMS.Plugin.Site
+PLUGINS__1=LeadCMS.Plugin.CustomPlugin
+```
+
+**Volume Mapping in Docker Compose:**
+```yaml
+services:
+  leadcms:
+    volumes:
+      - ./plugins/LeadCMS.Plugin.CustomPlugin:/app/plugins/LeadCMS.Plugin.CustomPlugin
+```
+
+#### Method 2: Static Plugin Inclusion (Build Time)
+
+Create a custom Docker image based on the standard `leadcms/core:latest` image. This approach is better for production deployments as it creates a self-contained image.
+
+**Sample Dockerfile for Custom Plugin:**
+```dockerfile
+# Dockerfile for LeadCMS Core with Custom Plugin
+# This extends the base LeadCMS Core image with a custom plugin
+
+# Use the official LeadCMS Core image as base
+FROM leadcms/core:latest AS base
+
+# Build stage for the plugin
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copy the plugin project files
+COPY ["LeadCMS.Plugin.CustomPlugin.csproj", "./"]
+COPY ["LeadCMS.Plugin.CustomPlugin.sln", "./"]
+
+# Restore dependencies for the plugin
+RUN dotnet restore "LeadCMS.Plugin.CustomPlugin.csproj"
+
+# Copy the entire plugin source code
+COPY . .
+
+# Build the plugin
+RUN dotnet build "LeadCMS.Plugin.CustomPlugin.csproj" -c Release -o /app/build
+
+# Publish the plugin
+FROM build AS publish
+RUN dotnet publish "LeadCMS.Plugin.CustomPlugin.csproj" -c Release -o /app/publish/plugins/LeadCMS.Plugin.CustomPlugin /p:UseAppHost=false
+
+# Final stage - extend the base LeadCMS image
+FROM base AS final
+
+# Copy the published plugin to the plugins directory
+COPY --from=publish /app/publish/plugins/LeadCMS.Plugin.CustomPlugin /app/plugins/LeadCMS.Plugin.CustomPlugin
+```
+
+**Build and use the custom image:**
+```bash
+# Build the custom image
+docker build -t leadcms-with-custom-plugin:latest .
+
+# Update docker-compose.yml to use your custom image
+# Replace: image: leadcms/core:latest
+# With: image: leadcms-with-custom-plugin:latest
+```
+
+<Callout type="tip" title="Plugin Development">
+The dynamic approach (Method 1) is ideal for development and testing, while the static approach (Method 2) is recommended for production deployments as it creates immutable, self-contained images.
+</Callout>
+
+## HTTPS and SSL/TLS Configuration
+
+Depending on your environment, SSL/HTTPS handling may be managed by your hosting provider or load balancer. However, if you need to implement SSL termination yourself, we have a tested solution that works well with Let's Encrypt and sites built with different technologies like Next.js or Gatsby.
+
+For comprehensive SSL/TLS setup using Let's Encrypt, static site hosting, and preview server configurations, see our companion repository:
+
+**[LeadCMS Nginx Configuration](https://github.com/LeadCMS/leadcms.nginx)**
+
+This repository provides:
+- Sample Nginx configurations for SSL termination
+- Let's Encrypt automation scripts
+- Static site hosting setup
+- Preview server configurations
+
+## Deployment Considerations
+
+### Sample Setup Limitations
+
+This Docker Compose setup is ideal for:
+- **Local development and testing**
+- **Evaluation and proof-of-concept deployments**
+- **Small-scale on-premises installations**
+
+### Production Considerations
+
+For production deployments, consider these enhancements:
+
+- **Managed Services:** Use managed PostgreSQL services (AWS RDS, Azure Database, etc.) instead of containerized versions
+- **High Availability:** Implement load balancing and failover mechanisms
+- **Security:** Add proper firewall rules, VPN access, and security hardening
+- **Monitoring:** Implement logging, metrics, and alerting systems
+- **Backups:** Set up automated backup and disaster recovery procedures
+- **Scaling:** Plan for horizontal scaling and resource optimization
+
+<Callout type="info" title="DevOps Responsibility">
+The sample Docker Compose configuration does not include production-grade features such as automated backups, high availability, monitoring, or scaling. These must be implemented by your DevOps team according to your organization's requirements.
+</Callout>
+
+## Next Steps
+
+After successfully deploying LeadCMS, you may want to explore:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Plugin Configuration"
+    description="Learn how to configure and extend LeadCMS with plugins"
+    href="/docs/getting-started/plugins"
+  />
+  <FeatureCard
+    title="Content Management"
+    description="Start creating and managing content with the CMS"
+    href="/docs/getting-started/content-management"
+  />
+</FeatureGrid>

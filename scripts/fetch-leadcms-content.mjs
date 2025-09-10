@@ -8,7 +8,7 @@ import {
   saveContentFile,
   leadCMSUrl,
   leadCMSApiKey,
-  language,
+  defaultLanguage,
   CONTENT_DIR,
   MEDIA_DIR,
   fetchContentTypes,
@@ -99,10 +99,6 @@ async function fetchContentSync(syncToken) {
     url.searchParams.set("filter[limit]", "100")
     url.searchParams.set("syncToken", token)
 
-    if (language) {
-      url.searchParams.set("filter[where][language][like]", language)
-    }
-
     console.log(`[FETCH_CONTENT_SYNC] Page ${page}, URL: ${url.toString()}`)
 
     try {
@@ -160,7 +156,7 @@ async function main() {
   console.log(
     `[ENV] LeadCMS API Key: ${leadCMSApiKey ? `${leadCMSApiKey.substring(0, 8)}...` : "NOT_SET"}`
   )
-  console.log(`[ENV] Language: ${language || "NOT_SET"}`)
+  console.log(`[ENV] Default Language: ${defaultLanguage}`)
   console.log(`[ENV] Content Dir: ${CONTENT_DIR}`)
   console.log(`[ENV] Media Dir: ${MEDIA_DIR}`)
 
@@ -208,24 +204,42 @@ async function main() {
     }
   }
 
-  // Remove deleted content files
+  // Remove deleted content files from all language directories
   for (const id of deleted) {
     const idStr = String(id)
-    const files = await fs.readdir(CONTENT_DIR)
-    for (const file of files) {
-      const filePath = path.join(CONTENT_DIR, file)
+
+    // Function to recursively search for files in a directory
+    async function findAndDeleteContentFile(dir) {
       try {
-        const content = await fs.readFile(filePath, "utf8")
-        // Exact-match YAML frontmatter: lines like `id: 10` or `id: '10'`
-        const yamlRegex = new RegExp(`(^|\\n)id:\\s*['\"]?${idStr}['\"]?(\\n|$)`)
-        // Exact-match JSON: "id": 10 or "id": "10"
-        const jsonRegex = new RegExp(`\\"id\\"\\s*:\\s*['\"]?${idStr}['\"]?\\s*(,|\\}|\\n|$)`)
-        if (yamlRegex.test(content) || jsonRegex.test(content)) {
-          await fs.unlink(filePath)
-          console.log(`Deleted: ${filePath}`)
+        const entries = await fs.readdir(dir, { withFileTypes: true })
+        for (const entry of entries) {
+          const fullPath = path.join(dir, entry.name)
+          if (entry.isDirectory()) {
+            // Recursively search subdirectories
+            await findAndDeleteContentFile(fullPath)
+          } else if (entry.isFile()) {
+            try {
+              const content = await fs.readFile(fullPath, "utf8")
+              // Exact-match YAML frontmatter: lines like `id: 10` or `id: '10'`
+              const yamlRegex = new RegExp(`(^|\\n)id:\\s*['\"]?${idStr}['\"]?(\\n|$)`)
+              // Exact-match JSON: "id": 10 or "id": "10"
+              const jsonRegex = new RegExp(`\\"id\\"\\s*:\\s*['\"]?${idStr}['\"]?\\s*(,|\\}|\\n|$)`)
+              if (yamlRegex.test(content) || jsonRegex.test(content)) {
+                await fs.unlink(fullPath)
+                console.log(`Deleted: ${fullPath}`)
+              }
+            } catch {}
+          }
         }
-      } catch {}
+      } catch (err) {
+        // Directory might not exist, that's okay
+        if (err.code !== 'ENOENT') {
+          console.warn(`Warning: Could not read directory ${dir}:`, err.message)
+        }
+      }
     }
+
+    await findAndDeleteContentFile(CONTENT_DIR)
   }
 
   // Always revalidate all media files in MEDIA_DIR, merging with found URLs

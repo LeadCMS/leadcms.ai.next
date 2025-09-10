@@ -1,0 +1,79 @@
+{
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "Логотип LeadCMS"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. Все права защищены.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "Условия",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Конфиденциальность",
+        "href": "/legal/privacy"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "Документация",
+        "href": "https://leadcms.ai/docs",
+        "external": true
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ],
+    "languages": [
+      {
+        "code": "ru",
+        "name": "Русский",
+        "flag": "🇷🇺",
+        "displayName": "Русский"
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "flag": "🇺🇸",
+        "displayName": "English"
+      },
+      {
+        "code": "da",
+        "name": "Dansk",
+        "flag": "🇩🇰",
+        "displayName": "Dansk"
+      },
+      {
+        "code": "si",
+        "name": "සිංහල",
+        "flag": "🇱🇰",
+        "displayName": "සිංහල"
+      }
+    ]
+  },
+  "id": 19,
+  "createdAt": "2025-09-01T18:19:00.63383Z",
+  "updatedAt": "2025-09-10T09:39:14.064237Z",
+  "comments": null,
+  "translations": null,
+  "title": "Footer Configuration",
+  "description": "Конфигурация подвала сайта включая логотип, текст авторских прав и навигационные ссылки.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "footer",
+  "type": "component",
+  "author": "Пётр Ляпин",
+  "language": "ru",
+  "translationKey": "01cc2f95-dce9-4ef9-942a-c3b9eb33f923",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
+}

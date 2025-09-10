@@ -1,0 +1,59 @@
+{
+  "contactFormText": {
+    "title": "Kontakt os",
+    "description": "Udfyld formularen nedenfor, og vi vender tilbage til dig så hurtigt som muligt.",
+    "labels": {
+      "firstName": "Fornavn",
+      "lastName": "Efternavn",
+      "email": "E-mail",
+      "company": "Virksomhed",
+      "subject": "Emne",
+      "message": "Besked"
+    },
+    "placeholders": {
+      "firstName": "Indtast dit fornavn",
+      "lastName": "Indtast dit efternavn",
+      "email": "Indtast din e-mail",
+      "company": "Indtast dit firmanavn",
+      "message": "Indtast din besked"
+    },
+    "subjectOptions": {
+      "placeholder": "Vælg et emne",
+      "support": "Teknisk support",
+      "sales": "Salgsforespørgsel",
+      "partnership": "Partnerskab",
+      "other": "Andet"
+    },
+    "buttons": {
+      "send": "Send besked",
+      "sending": "Sender...",
+      "sendAnother": "Send en ny besked"
+    },
+    "success": {
+      "title": "Tak!",
+      "message": "Din besked er sendt succesfuldt. Vi vender tilbage til dig snart."
+    },
+    "error": {
+      "title": "Fejl ved afsendelse af besked"
+    }
+  },
+  "id": 23,
+  "createdAt": "2025-09-01T18:24:55.165108Z",
+  "updatedAt": null,
+  "comments": null,
+  "translations": null,
+  "title": "Contact Form Text Configuration",
+  "description": "Tekstindhold til kontaktformular-komponenten, inklusive etiketter, pladsholdere, knapper og beskeder.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "contact-us-form",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "da",
+  "translationKey": "28afb6b9-2d27-4ca2-87b9-c6862fd074b2",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
+}

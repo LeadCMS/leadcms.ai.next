@@ -1,0 +1,187 @@
+---
+id: 47
+createdAt: '2025-09-10T09:22:29.628635Z'
+title: Installation
+description: >-
+  Get LeadCMS running in minutes with Docker. Complete installation guide with
+  system requirements and quick start instructions.
+
+  group: Getting Started
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/getting-started/installation
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Getting Started
+order: 1
+---
+
+# Installation
+
+This guide covers how to install and set up LeadCMS using Docker. Follow these steps to get your LeadCMS instance running quickly.
+
+## System Requirements
+
+Before installing LeadCMS, ensure your system meets these requirements:
+
+### Minimum Requirements
+- **Docker**: Version 20.10 or higher
+- **Docker Compose**: Version 2.10 or higher
+- **RAM**: 4GB minimum (8GB recommended for production)
+- **Storage**: 10GB free disk space (for development)
+- **CPU**: 2 cores minimum
+- **OS**: Linux, macOS, or Windows
+
+## Quick Start
+
+Get LeadCMS running in minutes with Docker:
+
+<Steps>
+  <Step title="Clone Repository">
+    ```bash
+    git clone https://github.com/LeadCMS/leadcms.deploy.git
+    cd leadcms.deploy
+    ```
+  </Step>
+  <Step title="Generate Environment">
+    ```bash
+    # Linux/macOS
+    chmod +x generate-env.sh && ./generate-env.sh
+
+    # Windows PowerShell
+    .\generate-env.ps1
+    ```
+  </Step>
+  <Step title="Start it with Docker Compose">
+    ```bash
+    docker compose up -d
+    ```
+  </Step>
+</Steps>
+
+Your LeadCMS instance will be running at `http://localhost:8080` with PostgreSQL included.
+
+## Environment Configuration
+
+The `generate-env.sh` script creates a `.env` file with secure defaults. Review and customize these key settings:
+
+### Email Configuration
+```bash
+# Email settings for notifications
+EMAIL__USERNAME=your-smtp-username
+EMAIL__PASSWORD=your-smtp-password
+EMAIL__SERVER=smtp.your-provider.com
+EMAIL__PORT=587
+EMAIL__USESSL=true
+```
+
+### Supported Languages
+```bash
+# Configure supported languages
+SUPPORTEDLANGUAGES__0=en
+SUPPORTEDLANGUAGES__1=de
+SUPPORTEDLANGUAGES__2=fr
+```
+
+### CORS Settings
+```bash
+# CORS settings for frontend integration
+CORS__ALLOWEDORIGINS__0=http://localhost:3000
+CORS__ALLOWEDORIGINS__1=https://yourdomain.com
+```
+
+### Default Admin User
+```bash
+# Default admin credentials (CHANGE THESE IMMEDIATELY!)
+DEFAULTUSERS__0__USERNAME=admin
+DEFAULTUSERS__0__EMAIL=admin@yourcompany.com
+DEFAULTUSERS__0__PASSWORD=SecurePassword123
+```
+
+<Callout type="danger" title="Security Alert">
+Never use the default admin username and password in production environments. While credentials are stored securely in the `.env` file, always set strong, unique values before deploying to production.
+</Callout>
+
+## Services Included
+
+The Docker Compose stack includes:
+
+- **LeadCMS Core**: Main .NET application with REST API (Port: 8080)
+- **PostgreSQL**: Primary database for content and user data (Port: 5432)
+
+## Verification
+
+After startup, verify your installation:
+
+### Check Services
+```bash
+# Check running containers
+docker compose ps
+
+# View logs
+docker compose logs leadcms
+```
+
+### Access LeadCMS
+1. **Admin Interface**: Open `http://localhost:8080` in your browser
+   - You should see the LeadCMS Admin UI
+   - Login using the default admin credentials (see "Default Admin User" above)
+2. **API Documentation**: Visit `http://localhost:8080/swagger` for Swagger UI
+
+### Test API
+```bash
+# Test API endpoint
+curl http://localhost:8080/api/version
+```
+
+## Troubleshooting
+
+### Common Issues
+
+**Port Already in Use**
+```bash
+# Check what's using port 8080
+lsof -i :8080
+
+# Use different ports by modifying docker-compose.yml
+ports:
+  - "8081:8080"  # Change external port
+```
+
+**Database Connection Issues**
+```bash
+# Check PostgreSQL container logs
+docker compose logs postgres
+
+# Reset database (WARNING: destroys all data)
+docker compose down -v
+docker compose up -d
+```
+
+## Production Considerations
+
+<Callout type="warning" title="Development Only">
+The Docker Compose setup is designed for development, evaluation and local use. For production deployments, see our [Deploying guide](/docs/getting-started/deploying) for:
+
+- Using managed PostgreSQL services
+- Implementing proper SSL/TLS certificates
+- Setting up automated backups and monitoring
+- Load balancing and high availability setup
+</Callout>
+
+## Next Steps
+
+Now that LeadCMS is installed:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Plugins"
+    description="Understand the plugin system and how to extend LeadCMS functionality"
+    href="/docs/getting-started/plugins"
+  />
+</FeatureGrid>

@@ -7,7 +7,7 @@ import {
   saveContentFile,
   leadCMSUrl,
   leadCMSApiKey,
-  language,
+  defaultLanguage,
   CONTENT_DIR,
   MEDIA_DIR,
 } from "./leadcms-helpers.mjs"
@@ -19,7 +19,7 @@ console.log(`[SSE ENV] LeadCMS URL: ${leadCMSUrl}`)
 console.log(
   `[SSE ENV] LeadCMS API Key: ${leadCMSApiKey ? `${leadCMSApiKey.substring(0, 8)}...` : "NOT_SET"}`
 )
-console.log(`[SSE ENV] Language: ${language || "NOT_SET"}`)
+console.log(`[SSE ENV] Default Language: ${defaultLanguage}`)
 console.log(`[SSE ENV] Content Dir: ${CONTENT_DIR}`)
 console.log(`[SSE ENV] Media Dir: ${MEDIA_DIR}`)
 
@@ -29,10 +29,6 @@ function buildSSEUrl() {
   url.searchParams.set("entities", "Content")
   url.searchParams.set("includeContent", "true")
   url.searchParams.set("includeLiveDrafts", "true")
-  if (language) {
-    url.searchParams.set("language", language)
-    console.log(`[SSE URL] Added language parameter: ${language}`)
-  }
   const finalUrl = url.toString()
   console.log(`[SSE URL] Final SSE URL: ${finalUrl}`)
   return finalUrl
@@ -103,68 +99,17 @@ async function startSSEWatcher() {
 
       if (data.entityType === "Content") {
         console.log(`[SSE] Content message - Operation: ${data.operation}`)
-
-        if (data.operation === "DraftModified" && data.createdById && data.data) {
-          console.log(`[SSE] Processing draft modification for user: ${data.createdById}`)
-          let contentData
-          try {
-            contentData = typeof data.data === "string" ? JSON.parse(data.data) : data.data
-            console.log(`[SSE] Draft content data:`, JSON.stringify(contentData, null, 2))
-          } catch (e) {
-            console.warn("[SSE] Failed to parse draft content data:", e.message)
-            console.warn("[SSE] Raw data:", data.data)
+        console.log(`[SSE] Content change detected - triggering full fetch`)
+        exec("npm run fetch:leadcms", (err, stdout, stderr) => {
+          if (err) {
+            console.error("[SSE] fetch:leadcms failed:", err.message)
+            console.error("[SSE] fetch:leadcms stderr:", stderr)
             return
           }
-          // Determine if this draft is MDX type only
-          let contentType = undefined
-          if (contentData && contentData.type && typeMap && typeMap[contentData.type]) {
-            contentType = typeMap[contentData.type]
-          }
-
-          if (contentType === "MDX") {
-            const allMediaUrls = extractMediaUrlsFromContent(contentData)
-            console.log(`[SSE] Found ${allMediaUrls.length} media URLs to download`)
-
-            Promise.all(
-              allMediaUrls.map(async (mediaUrl) => {
-                const relPath = mediaUrl.replace(/^\/api\/media\//, "")
-                const destPath = path.join(MEDIA_DIR, relPath)
-                console.log(`[SSE] Downloading media: ${mediaUrl} -> ${destPath}`)
-                await downloadMediaFile(mediaUrl, destPath, leadCMSUrl, leadCMSApiKey)
-              })
-            )
-              .then(async () => {
-                if (contentData && typeof contentData === "object") {
-                  const previewSlug = `${contentData.slug}-${data.createdById}`
-                  console.log(`[SSE] Saving MDX draft content file for preview: ${previewSlug}`)
-                  await saveContentFile({
-                    content: contentData,
-                    typeMap,
-                    contentDir: CONTENT_DIR,
-                    previewSlug: previewSlug,
-                  })
-                  console.log(`[SSE] Saved MDX draft preview for ${previewSlug}`)
-                }
-              })
-              .catch((error) => {
-                console.error(`[SSE] Error processing draft modification:`, error.message)
-              })
-          } else {
-            console.log(`[SSE] Draft is not MDX (type: ${contentType}), skipping file save.`)
-          }
-        } else {
-          console.log(`[SSE] Non-draft content change - triggering full fetch`)
-          exec("npm run fetch:leadcms", (err, stdout, stderr) => {
-            if (err) {
-              console.error("[SSE] fetch:leadcms failed:", err.message)
-              console.error("[SSE] fetch:leadcms stderr:", stderr)
-              return
-            }
-            console.log("[SSE] fetch:leadcms completed successfully")
-            console.log("[SSE] fetch:leadcms output:\n", stdout)
-            if (stderr) console.warn("[SSE] fetch:leadcms stderr:", stderr)
-          })
-        }
+          console.log("[SSE] fetch:leadcms completed successfully")
+          console.log("[SSE] fetch:leadcms output:\n", stdout)
+          if (stderr) console.warn("[SSE] fetch:leadcms stderr:", stderr)
+        })
       } else {
         console.log(`[SSE] Non-content message - Entity type: ${data.entityType}`)
       }
@@ -195,6 +140,152 @@ async function startSSEWatcher() {
     } catch (e) {
       console.warn("[SSE] Failed to parse heartbeat event:", e.message)
       console.warn("[SSE] Raw heartbeat event data:", event.data)
+    }
+  })
+
+  es.addEventListener("draft-updated", (event) => {
+    console.log(`[SSE] Received 'draft-updated' event:`, event.data)
+    try {
+      const data = JSON.parse(event.data)
+      console.log(`[SSE] Draft updated data:`, JSON.stringify(data, null, 2))
+
+      if (data.createdById && data.data) {
+        console.log(`[SSE] Processing draft update for user: ${data.createdById}`)
+        let contentData
+        try {
+          contentData = typeof data.data === "string" ? JSON.parse(data.data) : data.data
+          console.log(`[SSE] Draft content data:`, JSON.stringify(contentData, null, 2))
+        } catch (e) {
+          console.warn("[SSE] Failed to parse draft content data:", e.message)
+          console.warn("[SSE] Raw data:", data.data)
+          return
+        }
+
+        // Determine if this draft is MDX type only
+        let contentType = undefined
+        if (contentData && contentData.type && typeMap && typeMap[contentData.type]) {
+          contentType = typeMap[contentData.type]
+        }
+
+        if (contentType === "MDX") {
+          const allMediaUrls = extractMediaUrlsFromContent(contentData)
+          console.log(`[SSE] Found ${allMediaUrls.length} media URLs to download`)
+
+          Promise.all(
+            allMediaUrls.map(async (mediaUrl) => {
+              const relPath = mediaUrl.replace(/^\/api\/media\//, "")
+              const destPath = path.join(MEDIA_DIR, relPath)
+              console.log(`[SSE] Downloading media: ${mediaUrl} -> ${destPath}`)
+              await downloadMediaFile(mediaUrl, destPath, leadCMSUrl, leadCMSApiKey)
+            })
+          )
+            .then(async () => {
+              if (contentData && typeof contentData === "object") {
+                const previewSlug = `${contentData.slug}-${data.createdById}`
+                console.log(`[SSE] Saving MDX draft content file for preview: ${previewSlug}`)
+                await saveContentFile({
+                  content: contentData,
+                  typeMap,
+                  contentDir: CONTENT_DIR,
+                  previewSlug: previewSlug,
+                })
+                console.log(`[SSE] Saved MDX draft preview for ${previewSlug}`)
+              }
+            })
+            .catch((error) => {
+              console.error(`[SSE] Error processing draft update:`, error.message)
+            })
+        } else {
+          console.log(`[SSE] Draft is not MDX (type: ${contentType}), skipping file save.`)
+        }
+      }
+    } catch (e) {
+      console.warn("[SSE] Failed to parse draft-updated event:", e.message)
+      console.warn("[SSE] Raw draft-updated event data:", event.data)
+    }
+  })
+
+  // Handle legacy DraftModified messages for backward compatibility
+  es.addEventListener("message", (event) => {
+    try {
+      const data = JSON.parse(event.data)
+
+      // Only handle DraftModified operations here for backward compatibility
+      if (data.entityType === "Content" && data.operation === "DraftModified" && data.createdById && data.data) {
+        console.log(`[SSE] Received legacy 'DraftModified' message for user: ${data.createdById}`)
+        let contentData
+        try {
+          contentData = typeof data.data === "string" ? JSON.parse(data.data) : data.data
+          console.log(`[SSE] Legacy draft content data:`, JSON.stringify(contentData, null, 2))
+        } catch (e) {
+          console.warn("[SSE] Failed to parse legacy draft content data:", e.message)
+          console.warn("[SSE] Raw data:", data.data)
+          return
+        }
+
+        // Determine if this draft is MDX type only
+        let contentType = undefined
+        if (contentData && contentData.type && typeMap && typeMap[contentData.type]) {
+          contentType = typeMap[contentData.type]
+        }
+
+        if (contentType === "MDX") {
+          const allMediaUrls = extractMediaUrlsFromContent(contentData)
+          console.log(`[SSE] Found ${allMediaUrls.length} media URLs to download`)
+
+          Promise.all(
+            allMediaUrls.map(async (mediaUrl) => {
+              const relPath = mediaUrl.replace(/^\/api\/media\//, "")
+              const destPath = path.join(MEDIA_DIR, relPath)
+              console.log(`[SSE] Downloading media: ${mediaUrl} -> ${destPath}`)
+              await downloadMediaFile(mediaUrl, destPath, leadCMSUrl, leadCMSApiKey)
+            })
+          )
+            .then(async () => {
+              if (contentData && typeof contentData === "object") {
+                const previewSlug = `${contentData.slug}-${data.createdById}`
+                console.log(`[SSE] Saving legacy MDX draft content file for preview: ${previewSlug}`)
+                await saveContentFile({
+                  content: contentData,
+                  typeMap,
+                  contentDir: CONTENT_DIR,
+                  previewSlug: previewSlug,
+                })
+                console.log(`[SSE] Saved legacy MDX draft preview for ${previewSlug}`)
+              }
+            })
+            .catch((error) => {
+              console.error(`[SSE] Error processing legacy draft modification:`, error.message)
+            })
+        } else {
+          console.log(`[SSE] Legacy draft is not MDX (type: ${contentType}), skipping file save.`)
+        }
+      }
+    } catch (e) {
+      // Silently ignore parse errors for non-JSON messages
+    }
+  })
+
+  es.addEventListener("content-updated", (event) => {
+    console.log(`[SSE] Received 'content-updated' event:`, event.data)
+    try {
+      const data = JSON.parse(event.data)
+      console.log(`[SSE] Content updated data:`, JSON.stringify(data, null, 2))
+
+      console.log(`[SSE] Content updated - triggering full fetch`)
+      exec("npm run fetch:leadcms", (err, stdout, stderr) => {
+        if (err) {
+          console.error("[SSE] fetch:leadcms failed:", err.message)
+          console.error("[SSE] fetch:leadcms stderr:", stderr)
+          return
+        }
+        console.log("[SSE] fetch:leadcms completed successfully")
+        console.log("[SSE] fetch:leadcms output:\n", stdout)
+        if (stderr) console.warn("[SSE] fetch:leadcms stderr:", stderr)
+      })
+    } catch (e) {
+      console.warn("[SSE] Failed to parse content-updated event:", e.message)
+      console.warn("[SSE] Raw content-updated event data:", event.data)
     }
   })
 

@@ -1,0 +1,138 @@
+---
+id: 49
+createdAt: '2025-09-10T09:26:21.770688Z'
+updatedAt: '2025-09-10T09:31:24.84574Z'
+title: Upgrading
+description: >-
+  How to safely upgrade LeadCMS using Docker Compose with backup procedures and
+  rollback strategies.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/getting-started/upgrading
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+---
+
+# Upgrading LeadCMS
+
+This guide covers how to safely upgrade your LeadCMS Docker Compose installation to the latest version, including backup procedures, database migrations, and rollback strategies.
+
+<Callout type="info" title="Docker Compose Focus">
+  This guide is specifically for Docker Compose deployments as covered in our [deployment guide](/docs/getting-started/deploying). For production environments with managed services, adapt these procedures to your infrastructure.
+</Callout>
+
+## Before You Upgrade
+
+### Check Current Version
+
+```bash
+# Or check via API
+curl http://localhost:8080/api/version
+```
+
+### Review Release Notes
+
+Always review the release notes before upgrading:
+
+* Check [Core Releases](https://github.com/LeadCMS/leadcms.core/releases) for application changes
+* Check for breaking changes
+* Note any new configuration requirements
+* Review plugin compatibility
+
+### Backup Your System
+
+<Callout type="warning" title="Critical: Create Backups">
+  Always create complete backups before upgrading. Use the provided backup scripts for reliable backup and restore procedures.
+</Callout>
+
+We recommend using the automated backup scripts covered in detail in our [Backups and Recovery guide](/docs/getting-started/backups).
+
+#### Quick Backup with Scripts
+
+```bash
+# Full backup using the pg-backup.sh script
+./pg-backup.sh leadcms
+
+# This creates: leadcms-backup-YYYY-MM-DD-HH-MM.sql
+# Verify backup was created successfully
+ls -lh leadcms-backup-*.sql
+```
+
+#### Configuration Backup
+
+```bash
+# Backup essential configuration files
+cp .env .env.backup
+cp docker-compose.yml docker-compose.yml.backup
+
+# If you have custom plugins mounted via volumes
+cp -r plugins/ plugins_backup/ 2>/dev/null || echo "No custom plugins directory found"
+```
+
+## Upgrade Process
+
+This is the simplest method for upgrading when using the standard LeadCMS Docker images:
+
+<Steps>
+  <Step title="Stop Current Services">
+    ```bash
+    # Navigate to your docker-compose directory
+    cd /path/to/your/leadcms/docker-compose
+
+    # Stop all services
+    docker compose down
+    ```
+  </Step>
+
+  <Step title="Update Image Version">
+    Edit your `docker-compose.yml` to use the new version:
+
+    ```yaml
+    services:
+      leadcms:
+        image: leadcms/core:v2.1.0  # Update to desired version
+        # ... rest of your configuration
+    ```
+  </Step>
+
+  <Step title="Pull New Image">
+    ```bash
+    # Pull the new image
+    docker compose pull leadcms
+    ```
+  </Step>
+
+  <Step title="Start Services">
+    ```bash
+    # Start services with new image
+    docker compose up -d
+    ```
+  </Step>
+</Steps>
+
+## Database Migrations
+
+LeadCMS automatically runs database migrations when the container starts. You can monitor this process:
+
+## Best Practices
+
+### Upgrade Strategy
+
+1. **Test in staging** before production
+2. **Schedule maintenance windows** for upgrades
+3. **Monitor closely** after upgrades
+4. **Have rollback plan** ready
+5. **Document changes** for your team
+
+## Getting Help
+
+If you encounter issues during upgrade:
+
+1. Review [GitHub issues](https://github.com/LeadCMS/leadcms.core/issues)
+2. Join our [community discussions](https://github.com/LeadCMS/leadcms.core/discussions)
+3. Contact [professional support](https://leadcms.ai/contact-us)

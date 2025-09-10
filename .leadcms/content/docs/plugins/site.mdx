@@ -1,0 +1,198 @@
+---
+id: 54
+createdAt: '2025-09-10T09:36:25.877679Z'
+title: Site Plugin
+description: >-
+  Complete site management and deployment automation for multi-tenant CMS
+  environments.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/plugins/site
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Plugins
+order: 5
+---
+
+# 🌐 Site Plugin
+
+## Overview
+
+The Site Plugin provides essential website functionality for LeadCMS, including contact form processing, newsletter subscription management, and lead capture capabilities. This plugin serves as the foundation for website-based lead generation and customer interaction.
+
+## Purpose
+
+* **Contact Form Processing**: Handle contact form submissions from website visitors
+* **Lead Capture**: Automatically create lead records from website interactions
+* **Newsletter Management**: Process newsletter subscription requests
+* **Customer Communication**: Send automated acknowledgment and follow-up emails
+* **Website Integration**: Provide seamless integration between website and CRM
+
+## Key Features
+
+### Contact Form Management
+
+* Process contact form submissions with file attachments
+* Automatic lead creation and enhancement from form data
+* Multi-language support for international websites
+* Automated email notifications to sales/support teams
+
+### Lead Generation
+
+* **Automatic Lead Creation**: Convert website visitors into lead records
+* **Data Enrichment**: Populate lead fields from form submissions
+* **Source Attribution**: Track leads from "Contact Us" source
+* **Time Zone Handling**: Capture visitor time zone information
+* **Lead Scoring**: Initial lead scoring based on form interactions
+
+### Email Integration
+
+* **Acknowledgment Emails**: Send confirmation emails to form submitters
+* **Internal Notifications**: Alert sales/support teams of new inquiries
+* **Template-Based Emails**: Use customizable email templates
+* **Multi-language Support**: Send emails in visitor's preferred language
+* **Attachment Handling**: Process and forward file attachments
+
+### Newsletter Subscription
+
+* Newsletter signup form processing
+* Unsubscribe handling and compliance
+
+## Configuration
+
+### Environment Variables
+
+```bash
+# Site Configuration
+SITE__SITEURL=https://your-domain.com
+SITE__SUPPORTEMAIL=support@your-domain.com
+
+# Contact Form Recipients
+CONTACTUS__TO__0=sales@your-domain.com
+CONTACTUS__TO__1=support@your-domain.com
+CONTACTUS__TO__2=info@your-domain.com
+```
+
+## API Endpoints
+
+### Contact Form Processing
+
+* **POST `/api/contact-us`** - Process contact form submission
+  * **Input**: Form data including name, email, message, and optional attachment
+  * **Output**: Confirmation of form submission and lead creation
+  * **Features**:
+    * Automatic lead creation/enhancement
+    * File attachment processing
+    * Email notifications to configured recipients
+    * Acknowledgment email to form submitter
+
+### Newsletter Subscription
+
+* **POST `/api/subscribe`** - Process newsletter subscription
+  * **Input**: Email address, preferences, and opt-in confirmation
+  * **Output**: Subscription confirmation and preferences
+  * **Features**:
+    * Subscription preference management
+    * Double opt-in workflow support
+    * Automatic unsubscribe link generation
+    * Subscriber segmentation
+
+## Contact Form Processing
+
+### Form Data Handling
+
+The contact form endpoint processes the following data:
+
+**Required Fields:**
+
+* **Email**: Contact email address (used for lead creation)
+* **Message**: Contact message content
+* **Language**: Preferred language for responses
+
+**Optional Fields:**
+
+* **FirstName**: Contact's first name
+* **LastName**: Contact's last name
+* **Company**: Company or organization name
+* **Subject**: Message subject line
+* **TimeZoneOffset**: Visitor's time zone offset
+* **Attachment**: File attachment (documents, images, etc.)
+
+## Use Cases
+
+### Lead Generation
+
+* **Website Inquiries**: Capture leads from contact forms
+* **Product Interest**: Track interest in specific products/services
+* **Demo Requests**: Handle requests for product demonstrations
+* **Quote Requests**: Process requests for pricing and quotes
+* **Support Requests**: Channel support inquiries to appropriate teams
+
+### Customer Service
+
+* **General Inquiries**: Handle general customer questions
+* **Technical Support**: Process technical support requests
+* **Billing Questions**: Route billing and payment inquiries
+* **Feedback Collection**: Gather customer feedback and suggestions
+* **Complaint Handling**: Process and track customer complaints
+
+### Marketing and Communication
+
+* **Newsletter Signups**: Build email marketing lists
+* **Event Registration**: Collect event registration information
+* **Content Downloads**: Gate content downloads with lead capture
+* **Webinar Registration**: Process webinar and event signups
+* **Survey Participation**: Collect survey responses and feedback
+
+### Sales Support
+
+* **Lead Qualification**: Initial lead qualification through form data
+* **Sales Inquiries**: Route sales inquiries to appropriate team members
+* **Proposal Requests**: Handle requests for proposals and quotes
+* **Partnership Inquiries**: Process partnership and collaboration requests
+* **Vendor Applications**: Handle vendor and supplier applications
+
+## Email Template Integration
+
+### Template Requirements
+
+The plugin relies on email templates configured in LeadCMS:
+
+**Contact\_Us Template:**
+
+* Used for internal notifications to sales/support teams
+* Should include all form data variables
+* Support for file attachments
+* Multi-language support
+
+**Acknowledgment Template:**
+
+* Used for confirmation emails to form submitters
+* Should include personalization (first name)
+* Professional and welcoming tone
+* Clear next steps or expectations
+
+### Template Variables
+
+**Available Variables for Contact\_Us Template:**
+
+* `{fromEmail}` - Submitter's email address
+* `{firstName}` - Submitter's first name
+* `{lastName}` - Submitter's last name
+* `{company}` - Company or organization
+* `{subject}` - Message subject
+* `{message}` - Message content
+
+**Available Variables for Acknowledgment Template:**
+
+* `{firstName}` - Submitter's first name
+* Additional variables as configured in template
+
+<Callout type="info" title="Lead Generation Foundation">
+  This plugin provides the foundation for website-based lead generation and customer interaction, seamlessly integrating website visitors into the LeadCMS lead management system while maintaining professional communication standards and regulatory compliance.
+</Callout>

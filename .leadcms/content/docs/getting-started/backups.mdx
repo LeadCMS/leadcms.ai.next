@@ -1,0 +1,168 @@
+---
+id: 45
+createdAt: '2025-09-10T09:04:49.851148Z'
+updatedAt: '2025-09-10T09:25:16.243089Z'
+title: Backups and Recovery
+description: >-
+  Comprehensive guide to backing up and restoring LeadCMS data both locally and
+  remotely with automated scripts.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/getting-started/backups
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Getting Started
+order: 5
+---
+
+# Backups and Recovery
+
+This guide covers how to backup and restore your LeadCMS data using both local and remote backup strategies. We provide automated scripts to simplify the process and ensure data safety.
+
+<Callout type="warning" title="Critical: Regular Backups">
+  Regular backups are essential for protecting your content and configuration. Implement automated backup procedures and test restore processes regularly.
+</Callout>
+
+## Understanding LeadCMS Backups
+
+### What to Backup
+
+LeadCMS backups should include:
+
+* **PostgreSQL Database**: All content, users, and configuration data
+* **Environment Configuration**: `.env` file with all settings
+* **Docker Configuration**: `docker-compose.yml` file
+* **Custom Plugins**: Any custom plugins you've developed or modified
+
+### Backup Types
+
+**Full Backup**: Complete database backup including all tables and data. Recommended for regular backups and before upgrades.
+
+**Selective Backup**: Database backup excluding user-related tables (users, roles, permissions). Useful for development or when migrating content between environments.
+
+**Media-Only Backup**: Backup only media files table. Useful for quickly restoring just uploaded assets.
+
+## Local Backup and Restore
+
+### Prerequisites
+
+The backup scripts are included in the LeadCMS deploy repository. Ensure you have them available:
+
+```bash
+# If you haven't already cloned the deploy repository
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+
+# The repository includes these backup scripts:
+# - pg-backup.sh
+# - pg-restore.sh
+# - pg-restore-media.sh
+
+# Make scripts executable
+chmod +x pg-backup.sh pg-restore.sh pg-restore-media.sh
+
+# Ensure .env file exists with database credentials
+ls -la .env
+```
+
+### Environment Variables
+
+Your `.env` file should contain the database connection details:
+
+```bash
+# Required for backup scripts
+POSTGRES__USERNAME=leadcms_user
+POSTGRES__PASSWORD=your_password
+# Database host is assumed to be localhost:5432
+```
+
+### Full Database Backup
+
+Create a complete backup of your LeadCMS database:
+
+```bash
+# Create full backup with all tables
+./pg-backup.sh leadcms
+
+# This creates a file named: leadcms-backup-YYYY-MM-DD-HH-MM.sql
+```
+
+Verify the backup was created:
+
+```bash
+# Check backup file was created
+ls -lh leadcms-backup-*.sql
+
+# Verify backup contents (should show database structure)
+file leadcms-backup-*.sql
+```
+
+### Selective Backup (Excluding User Data)
+
+For development or content migration, exclude user-related tables:
+
+```bash
+# Backup without user tables, roles, and settings
+./pg-backup.sh leadcms --exclude-user-tables
+
+# This excludes:
+# - users
+# - user_claims
+# - user_logins
+# - user_roles
+# - user_tokens
+# - setting
+# - roles
+# - role_claims
+```
+
+<Callout type="info" title="Use Case for Selective Backups">
+  Selective backups are ideal when you want to migrate content from production to development environments without copying user accounts and permissions.
+</Callout>
+
+### Restoring from Backup
+
+#### Full Database Restore
+
+```bash
+# Stop only the LeadCMS application to avoid conflicts (keep PostgreSQL running)
+docker compose stop leadcms
+
+# Restore from backup file
+./pg-restore.sh leadcms leadcms-backup-2024-09-08-14-30.sql
+
+# The script will:
+# - Create database if it doesn't exist
+# - Drop existing tables and data
+# - Restore all data from backup
+
+# Start the LeadCMS service
+docker compose start leadcms
+
+# Verify restoration
+docker compose logs leadcms | grep -i "started successfully"
+```
+
+#### Media-Only Restore
+
+To restore just media files (uploaded assets):
+
+```bash
+# Restore only media table from backup
+./pg-restore-media.sh leadcms leadcms-backup-2024-09-08-14-30.sql
+
+# This restores only the media table, preserving other data
+```
+
+## Next Steps
+
+After setting up your backup strategy:
+
+<FeatureGrid columns={2}>
+  <FeatureCard title="Upgrading LeadCMS" description="Learn how to safely upgrade with proper backup procedures" href="/docs/getting-started/upgrading" />
+</FeatureGrid>

@@ -1,0 +1,63 @@
+{
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "Features",
+        "href": "/#features"
+      },
+      {
+        "label": "Why LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "Compare",
+        "href": "/#compare"
+      },
+      {
+        "label": "Docs",
+        "href": "/docs"
+      },
+      {
+        "label": "Contact Us",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "Get Started",
+      "href": "#contact"
+    }
+  },
+  "id": 13,
+  "createdAt": "2025-09-01T16:40:40.141439Z",
+  "updatedAt": "2025-09-10T09:49:42.920459Z",
+  "comments": null,
+  "translations": null,
+  "title": "Header Configuration",
+  "description": "Configuration for the website header including logo, navigation links, and call-to-action buttons. This controls the main navigation structure of the site.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "header",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "en",
+  "translationKey": "2473a737-3370-4123-97ad-f02dc2542a46",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": null,
+  "publishedAt": "2025-08-31T18:30:00Z"
+}

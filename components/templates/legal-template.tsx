@@ -29,7 +29,7 @@ export default function LegalTemplate({ content }: CMSContentTemplateProps) {
   return (
     <main className="flex-1">
       <section className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-b from-background to-muted">
-        <div className="container max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-[1750px] mx-auto">
           <div className="text-center mb-16">
             <Badge className="mb-4" variant="outline">
               Legal
@@ -39,7 +39,7 @@ export default function LegalTemplate({ content }: CMSContentTemplateProps) {
               <p className="mt-4 text-lg text-muted-foreground">Last Updated: {lastUpdated}</p>
             )}
           </div>
-          <div className="prose prose-gray dark:prose-invert max-w-none">
+          <div className="prose prose-gray dark:prose-invert max-w-none mx-auto">
             <MDXRemote source={content.body} options={options} components={components} />
           </div>
         </div>

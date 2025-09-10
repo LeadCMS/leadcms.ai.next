@@ -1,0 +1,79 @@
+{
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS ලාංඡනය"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. සියලු හිමිකම් ආරක්ෂිතයි.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "කොන්දේසි",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "පෞද්ගලිකත්වය",
+        "href": "/legal/privacy"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "ලේඛන",
+        "href": "https://leadcms.ai/docs",
+        "external": true
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ],
+    "languages": [
+      {
+        "code": "si",
+        "name": "සිංහල",
+        "flag": "🇱🇰",
+        "displayName": "සිංහල"
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "flag": "🇺🇸",
+        "displayName": "English"
+      },
+      {
+        "code": "da",
+        "name": "Dansk",
+        "flag": "🇩🇰",
+        "displayName": "Dansk"
+      },
+      {
+        "code": "ru",
+        "name": "Русский",
+        "flag": "🇷🇺",
+        "displayName": "Русский"
+      }
+    ]
+  },
+  "id": 35,
+  "createdAt": "2025-09-02T05:37:59.450546Z",
+  "updatedAt": "2025-09-10T09:40:03.395552Z",
+  "comments": null,
+  "translations": null,
+  "title": "පාදය වින්‍යාසය",
+  "description": "වෙබ් අඩවියේ පාදය සඳහා වින්‍යාසය, ලාංඡනය, පිටපත් හිමිකම් පෙළ හා සංචාලන සබැඳි ඇතුළුව.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "footer",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "si",
+  "translationKey": "01cc2f95-dce9-4ef9-942a-c3b9eb33f923",
+  "category": "සංරචකය",
+  "tags": [],
+  "allowComments": false,
+  "source": "AI translated from 12",
+  "publishedAt": null
+}

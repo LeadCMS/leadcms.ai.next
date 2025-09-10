@@ -1,0 +1,78 @@
+{
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. All rights reserved.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "Terms",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Privacy",
+        "href": "/legal/privacy"
+      },
+      {
+        "label": "Docs",
+        "href": "/docs"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ],
+    "languages": [
+      {
+        "code": "en",
+        "name": "English",
+        "flag": "🇺🇸",
+        "displayName": "English"
+      },
+      {
+        "code": "da",
+        "name": "Dansk",
+        "flag": "🇩🇰",
+        "displayName": "Dansk"
+      },
+      {
+        "code": "ru",
+        "name": "Русский",
+        "flag": "🇷🇺",
+        "displayName": "Русский"
+      },
+      {
+        "code": "si",
+        "name": "සිංහල",
+        "flag": "🇱🇰",
+        "displayName": "සිංහල"
+      }
+    ]
+  },
+  "id": 12,
+  "createdAt": "2025-09-01T16:38:44.204226Z",
+  "updatedAt": "2025-09-10T09:01:12.162447Z",
+  "comments": null,
+  "translations": null,
+  "title": "Footer Configuration",
+  "description": "Konfiguration af webstedets footer inklusive logo, copyright tekst og navigationslinks.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "footer",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "en",
+  "translationKey": "01cc2f95-dce9-4ef9-942a-c3b9eb33f923",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": null,
+  "publishedAt": "2025-08-31T18:30:00Z"
+}

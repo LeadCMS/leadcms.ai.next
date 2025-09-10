@@ -1,0 +1,79 @@
+{
+  "footerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo"
+    },
+    "copyright": {
+      "text": "© {year} LeadCMS. Alle rettigheder forbeholdes.",
+      "showYear": true
+    },
+    "navigation": [
+      {
+        "label": "Vilkår",
+        "href": "/legal/terms"
+      },
+      {
+        "label": "Privatliv",
+        "href": "/legal/privacy"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "Dokumentation",
+        "href": "https://leadcms.ai/docs",
+        "external": true
+      },
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "external": true
+      }
+    ],
+    "languages": [
+      {
+        "code": "da",
+        "name": "Dansk",
+        "flag": "🇩🇰",
+        "displayName": "Dansk"
+      },
+      {
+        "code": "en",
+        "name": "English",
+        "flag": "🇺🇸",
+        "displayName": "English"
+      },
+      {
+        "code": "ru",
+        "name": "Русский",
+        "flag": "🇷🇺",
+        "displayName": "Русский"
+      },
+      {
+        "code": "si",
+        "name": "සිංහල",
+        "flag": "🇱🇰",
+        "displayName": "සිංහල"
+      }
+    ]
+  },
+  "id": 24,
+  "createdAt": "2025-09-01T18:25:26.389452Z",
+  "updatedAt": "2025-09-10T09:02:25.480099Z",
+  "comments": null,
+  "translations": null,
+  "title": "Footer Configuration",
+  "description": "Configuration for the website footer including logo, copyright text, and footer navigation links.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "footer",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "da",
+  "translationKey": "01cc2f95-dce9-4ef9-942a-c3b9eb33f923",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
+}

@@ -1,0 +1,59 @@
+{
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "Логотип LeadCMS",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "Возможности",
+        "href": "/#features"
+      },
+      {
+        "label": "Почему LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "Сравнение",
+        "href": "/#compare"
+      },
+      {
+        "label": "Свяжитесь с нами",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "Начать",
+      "href": "#contact"
+    }
+  },
+  "id": 29,
+  "createdAt": "2025-09-01T18:33:43.774588Z",
+  "updatedAt": null,
+  "comments": null,
+  "translations": null,
+  "title": "Header Configuration",
+  "description": "Configuration for the website header including logo, navigation links, and call-to-action buttons. This controls the main navigation structure of the site.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "header",
+  "type": "component",
+  "author": "Пётр Ляпин",
+  "language": "ru",
+  "translationKey": "2473a737-3370-4123-97ad-f02dc2542a46",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
+}

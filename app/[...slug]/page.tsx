@@ -1,45 +1,17 @@
-import { getAllContentSlugs, getCMSContentBySlug } from "@/lib/cms"
-import path from "path"
-import { notFound } from "next/navigation"
-import { getTemplate } from "@/components/templates"
+import { createLocaleContentPage } from '@/lib/locale-page-factory';
+import { DEFAULT_LANGUAGE } from '@/lib/cms';
+import { LocaleAwareLayout } from '@/components/locale-aware-layout';
 
-const CMS_CONTENT_PATH = path.resolve(".leadcms/content")
+const pageFactory = createLocaleContentPage(DEFAULT_LANGUAGE);
 
-interface PageProps {
-  params: { slug: string[] }
-}
+export const generateMetadata = pageFactory.generateMetadata;
+export const generateStaticParams = pageFactory.generateStaticParams;
 
-export default async function CatchAllPage({ params }: PageProps) {
-  const awaitedParams = await params
-  const slug = awaitedParams.slug.join("/")
-  const content = getCMSContentBySlug(slug, CMS_CONTENT_PATH)
-  if (!content) notFound()
-  const TemplateComponent = getTemplate(content.type)
-  if (!TemplateComponent) {
-    throw new Error(`No template found for content type: ${content.type}`)
-  }
-  return <TemplateComponent content={content} />
-}
-
-// Dynamic metadata for all CMS-driven pages
-export async function generateMetadata({ params }: PageProps) {
-  const awaitedParams = await params
-  const slug = awaitedParams.slug.join("/")
-  const content = getCMSContentBySlug(slug, CMS_CONTENT_PATH)
-  if (!content) notFound()
-  return {
-    title: content.title,
-    description: content.description,
-  }
-}
-
-export async function generateStaticParams() {
-  const slugs: string[] = getAllContentSlugs(CMS_CONTENT_PATH, [
-    "legal",
-    "contact",
-    "not-found",
-    "home",
-  ])
-  console.log("Generating static params for slugs:", slugs)
-  return slugs.map((slug: string) => ({ slug: slug.split("/") }))
+export default function DefaultContentPage(props: any) {
+  const ContentPage = pageFactory.default;
+  return (
+    <LocaleAwareLayout locale={DEFAULT_LANGUAGE}>
+      <ContentPage {...props} />
+    </LocaleAwareLayout>
+  );
 }

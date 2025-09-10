@@ -1,0 +1,59 @@
+{
+  "headerData": {
+    "logo": {
+      "src": "/images/icon-192x192.png",
+      "alt": "LeadCMS Logo",
+      "text": "LeadCMS",
+      "href": "/"
+    },
+    "navigation": [
+      {
+        "label": "Funktioner",
+        "href": "/#features"
+      },
+      {
+        "label": "Hvorfor LeadCMS",
+        "href": "/#why"
+      },
+      {
+        "label": "Sammenlign",
+        "href": "/#compare"
+      },
+      {
+        "label": "Kontakt os",
+        "href": "/contact-us"
+      }
+    ],
+    "externalLinks": [
+      {
+        "label": "GitHub",
+        "href": "https://github.com/LeadCMS",
+        "icon": "github",
+        "external": true
+      }
+    ],
+    "cta": {
+      "label": "Kom i gang",
+      "href": "#contact"
+    }
+  },
+  "id": 26,
+  "createdAt": "2025-09-01T18:28:29.815397Z",
+  "updatedAt": "2025-09-01T18:29:07.941971Z",
+  "comments": null,
+  "translations": null,
+  "title": "Header Configuration",
+  "description": "Konfiguration af webstedets header inklusive logo, navigationslinks og call-to-action knapper.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "header",
+  "type": "component",
+  "author": "Peter Liapin",
+  "language": "da",
+  "translationKey": "2473a737-3370-4123-97ad-f02dc2542a46",
+  "category": "Component",
+  "tags": [],
+  "allowComments": false,
+  "source": "Translated from 0",
+  "publishedAt": null
+}

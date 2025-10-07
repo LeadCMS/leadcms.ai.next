@@ -62,7 +62,7 @@ export function getContentDirForLocale(contentDir: string, locale: string): stri
 export function getAllContentSlugsForLocale(
   contentDir: string,
   locale: string,
-  contentTypes?: string[]
+  contentTypes?: readonly string[]
 ): string[] {
   const localeContentDir = getContentDirForLocale(contentDir, locale)
 
@@ -80,7 +80,7 @@ export function getAllContentSlugsForLocale(
  */
 function getAllContentSlugsExcludingLanguageDirs(
   contentDir: string,
-  contentTypes?: string[],
+  contentTypes?: readonly string[],
   rootContentDir?: string
 ): string[] {
   // Get available languages from the root content directory to know which directories to exclude
@@ -186,7 +186,7 @@ export function getContentTranslations(
  */
 export function generateStaticParamsForAllLocales(
   contentDir: string,
-  contentTypes?: string[]
+  contentTypes?: readonly string[]
 ): { locale?: string; slug: string[] }[] {
   const languages = getAvailableLanguages(contentDir)
   const allParams: { locale?: string; slug: string[] }[] = []
@@ -208,7 +208,7 @@ export function generateStaticParamsForAllLocales(
   return allParams
 }
 
-export function getAllContentSlugs(contentDir: string, contentTypes?: string[]): string[] {
+export function getAllContentSlugs(contentDir: string, contentTypes?: readonly string[]): string[] {
   function walk(dir: string, prefix = ""): string[] {
     const entries = fs.readdirSync(dir, { withFileTypes: true })
     const slugs: string[] = []

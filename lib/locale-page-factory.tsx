@@ -11,6 +11,13 @@ import { LocaleAwareLayout } from '@/components/locale-aware-layout';
 
 const CMS_CONTENT_PATH = path.resolve('.leadcms/content');
 
+export const pagesContentTypes = [
+  'legal',
+  'contact',
+  'home',
+  'doc',
+] as const;
+
 interface PageProps {
   params: Promise<{ slug?: string[] }>;
 }
@@ -112,13 +119,7 @@ export function createLocaleContentPage(locale: string) {
   }
 
   async function generateStaticParams() {
-    const slugs: string[] = getAllContentSlugsForLocale(CMS_CONTENT_PATH, locale, [
-      'legal',
-      'contact',
-      'not-found',
-      'home',
-      'doc',
-    ]);
+    const slugs: string[] = getAllContentSlugsForLocale(CMS_CONTENT_PATH, locale, [...pagesContentTypes, 'not-found']);
     console.log(`Generating static params for ${locale === DEFAULT_LANGUAGE ? 'default language' : locale} slugs:`, slugs);
     return slugs.map((slug: string) => ({ slug: slug.split('/') }));
   }

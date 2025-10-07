@@ -52,7 +52,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...defaultLanguagePages.map<ArrayElement<MetadataRoute.Sitemap>>((slug) => ({
       url: new URL(slug, baseUrl).toString(),
       lastModified: new Date(),
-      changeFrequency: "weekly" as const,
+      changeFrequency: "weekly",
       priority: 0.7,
       alternates: getAlternates(slug, localeSlugs),
     })),

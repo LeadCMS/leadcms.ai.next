@@ -3,9 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "fetch:leadcms": "node ./scripts/fetch-leadcms-content.mjs",
+    "fetch": "leadcms fetch",
+    "watch": "leadcms watch",
+    "livepreview": "npm run dev",
     "generate:env": "node ./scripts/generate-env-js.mjs",
-    "prebuild": "npm run fetch:leadcms && npm run generate:env",
+    "prebuild": "leadcms fetch && leadcms generate-env",
     "predev": "npm run prebuild",
     "prestart": "npm run prebuild",
     "build": "next build",
@@ -58,7 +60,6 @@
     "cmdk": "1.0.4",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
-    "eventsource": "^4.0.0",
     "framer-motion": "^12.23.12",
     "geist": "latest",
     "gray-matter": "^4.0.3",
@@ -84,6 +85,7 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@leadcms/sdk": "^1.2.89-pre",
     "@types/node": "^22",
     "@types/react": "^19",
     "@types/react-dom": "^19",

@@ -1,6 +1,6 @@
 {
     "version": "0.2.0",
-    "configurations": [        
+    "configurations": [
         {
             "type": "node",
             "request": "launch",
@@ -14,14 +14,6 @@
             "outFiles": [
                 "${workspaceFolder}/**/*.js"
             ]
-        },
-        {
-            "type": "node",
-            "request": "launch",
-            "name": "Debug SSE Watcher",
-            "program": "${workspaceFolder}/scripts/sse-watcher.mjs",
-            "console": "integratedTerminal",
-            "envFile": "${workspaceFolder}/.env"
         }
     ]
 }

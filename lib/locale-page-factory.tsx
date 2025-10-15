@@ -1,15 +1,12 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import path from 'path';
 import {
   getAllContentSlugsForLocale,
   getCMSContentBySlugForLocale,
-  DEFAULT_LANGUAGE,
-} from '@/lib/cms';
+} from "@leadcms/sdk";
 import { getTemplate } from '@/components/templates';
 import { LocaleAwareLayout } from '@/components/locale-aware-layout';
-
-const CMS_CONTENT_PATH = path.resolve('.leadcms/content');
+import { DEFAULT_LANGUAGE } from './locale-utils';
 
 export const pagesContentTypes = [
   'legal',
@@ -25,26 +22,11 @@ interface PageProps {
 /**
  * Factory function to create a locale-specific home page component
  */
-export function createLocaleHomePage(locale: string) {
+export function createLocaleHomePage(locale?: string) {
   async function generateMetadata(): Promise<Metadata> {
-    const content = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, locale);
+    const content = getCMSContentBySlugForLocale('home', locale);
     if (!content) {
-      // Try fallback to default language
-      const fallbackContent = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, DEFAULT_LANGUAGE);
-      if (!fallbackContent) {
-        return {
-          title: 'Page Not Found',
-        };
-      }
-
-      return {
-        title: fallbackContent.title,
-        description: fallbackContent.description,
-        openGraph: {
-          title: fallbackContent.title,
-          description: fallbackContent.description,
-        },
-      };
+      throw new Error(`Home page content not found for locale: ${locale}. Build failed.`);
     }
 
     return {
@@ -58,21 +40,10 @@ export function createLocaleHomePage(locale: string) {
   }
 
   async function LocaleHomePage() {
-    const content = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, locale);
+    const content = getCMSContentBySlugForLocale('home', locale);
 
     if (!content) {
-      // Try to fallback to default language content
-      const fallbackContent = getCMSContentBySlugForLocale('home', CMS_CONTENT_PATH, DEFAULT_LANGUAGE);
-      if (!fallbackContent) {
-        notFound();
-      }
-
-      const TemplateComponent = getTemplate(fallbackContent.type);
-      if (!TemplateComponent) {
-        throw new Error(`No template found for content type: ${fallbackContent.type}`);
-      }
-
-      return <TemplateComponent content={fallbackContent} />;
+      throw new Error(`Home page content not found for locale: ${locale}. Build failed.`);
     }
 
     const TemplateComponent = getTemplate(content.type);
@@ -92,12 +63,12 @@ export function createLocaleHomePage(locale: string) {
 /**
  * Factory function to create a locale-specific dynamic content page component
  */
-export function createLocaleContentPage(locale: string) {
+export function createLocaleContentPage(locale?: string) {
   async function LocaleContentPage({ params }: PageProps) {
     const awaitedParams = await params;
     const slug = awaitedParams.slug?.join('/') || '';
 
-    const content = getCMSContentBySlugForLocale(slug, CMS_CONTENT_PATH, locale);
+    const content = getCMSContentBySlugForLocale(slug, locale);
     if (!content) notFound();
 
     const TemplateComponent = getTemplate(content.type);
@@ -110,7 +81,7 @@ export function createLocaleContentPage(locale: string) {
   async function generateMetadata({ params }: PageProps) {
     const awaitedParams = await params;
     const slug = awaitedParams.slug?.join('/') || '';
-    const content = getCMSContentBySlugForLocale(slug, CMS_CONTENT_PATH, locale);
+    const content = getCMSContentBySlugForLocale(slug, locale);
     if (!content) notFound();
     return {
       title: content.title,
@@ -119,7 +90,7 @@ export function createLocaleContentPage(locale: string) {
   }
 
   async function generateStaticParams() {
-    const slugs: string[] = getAllContentSlugsForLocale(CMS_CONTENT_PATH, locale, [...pagesContentTypes, 'not-found']);
+    const slugs: string[] = getAllContentSlugsForLocale(locale, [...pagesContentTypes, 'not-found']);
     console.log(`Generating static params for ${locale === DEFAULT_LANGUAGE ? 'default language' : locale} slugs:`, slugs);
     return slugs.map((slug: string) => ({ slug: slug.split('/') }));
   }
@@ -134,20 +105,14 @@ export function createLocaleContentPage(locale: string) {
 /**
  * Factory function to create a locale-specific not-found page component
  */
-export function createLocaleNotFoundPage(locale: string) {
+export function createLocaleNotFoundPage(locale?: string) {
   function LocaleNotFoundPage() {
     // Load not-found content for the specific locale
-    const content = getCMSContentBySlugForLocale('not-found', CMS_CONTENT_PATH, locale);
+    const content = getCMSContentBySlugForLocale('not-found', locale);
 
     const notFoundContent = () => {
       if (!content) {
-        // Fallback if not-found.mdx doesn't exist for this locale
-        return (
-          <div className="container mx-auto px-4 py-16 text-center">
-            <h1 className="text-4xl font-bold mb-4">404 - Page Not Found</h1>
-            <p className="text-gray-600">Sorry, the page you are looking for does not exist.</p>
-          </div>
-        );
+        throw new Error(`Not-found page content not found for locale: ${locale}. Build failed.`);
       }
 
       const TemplateComponent = getTemplate(content.type);
@@ -161,7 +126,7 @@ export function createLocaleNotFoundPage(locale: string) {
     // Locale-specific not-found pages already get the layout from their locale layout files
     if (locale === DEFAULT_LANGUAGE) {
       return (
-        <LocaleAwareLayout locale={locale}>
+        <LocaleAwareLayout>
           {notFoundContent()}
         </LocaleAwareLayout>
       );

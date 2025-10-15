@@ -1,61 +1,75 @@
-# Single-stage Dockerfile combining nginx, Node.js app, and SSE watcher in a single container
-# This Dockerfile is designed for preview mode and includes:
-# - nginx as reverse proxy on port 80
-# - Next.js preview server on port 3000
-# - SSE watcher for live LeadCMS updates
-# 
-# Usage from root folder:
-# docker build -f preview/Dockerfile -t leadcms_site_preview .
-FROM node:24.6-alpine
+# LeadCMS Live Preview Dockerfile
+# Multi-service container for development/preview with live updates
+# Includes nginx reverse proxy, development server, and LeadCMS SSE watcher
+# Works with any static site generator that supports live preview
+#
+# Requirements for your project:
+# - npm run livepreview: Start development server on port 3000
+# - LeadCMS SDK scripts available
+#
+# Usage from project root:
+# docker build -f preview/Dockerfile -t my-leadcms-site-preview .
+# docker run -p 80:80 -e LEADCMS_URL=... -e LEADCMS_API_KEY=... my-leadcms-site-preview
 
-# Install nginx and supervisor
+FROM node:20-alpine
+
+# Install nginx and supervisor for multi-service management
 RUN apk add --no-cache nginx supervisor wget
 
-# Create directories
-RUN mkdir -p /var/log/supervisor
-RUN mkdir -p /run/nginx
+# Create required directories
+RUN mkdir -p /var/log/supervisor /run/nginx
 
-# Copy the application
+# Set working directory
 WORKDIR /app
 
-# Copy package files first for better layer caching
+# Copy package files first for better Docker layer caching
 COPY package*.json ./
 
-# Add build args for environment variables
-ARG NEXT_PUBLIC_LEADCMS_URL
+# Build arguments for LeadCMS configuration
+ARG LEADCMS_URL
 ARG LEADCMS_API_KEY
+ARG LEADCMS_DEFAULT_LANGUAGE=en
 
 # Export build args as environment variables
-ENV NEXT_PUBLIC_LEADCMS_URL=$NEXT_PUBLIC_LEADCMS_URL
+ENV LEADCMS_URL=$LEADCMS_URL
 ENV LEADCMS_API_KEY=$LEADCMS_API_KEY
+ENV LEADCMS_DEFAULT_LANGUAGE=$LEADCMS_DEFAULT_LANGUAGE
 
-# Install dependencies (including SSE watcher dependencies)
+# Support Next.js environment variables for backward compatibility
+ENV NEXT_PUBLIC_LEADCMS_URL=$LEADCMS_URL
+ENV NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE=$LEADCMS_DEFAULT_LANGUAGE
+
+# Install dependencies
 RUN npm ci --verbose
-RUN npm install -g eventsource
 
-# Copy the rest of the application after dependencies are installed
+# Copy application code
 COPY . .
 
-# Copy nginx configuration as the main nginx.conf
+# Copy nginx configuration for development proxy
 COPY preview/nginx.conf /etc/nginx/nginx.conf
 
-# Copy supervisor configuration
+# Copy supervisor configuration for multi-service management
 COPY preview/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Create startup script
 RUN echo '#!/bin/sh' > /start.sh && \
-    echo '# Fetch initial LeadCMS content at startup when env vars are available' >> /start.sh && \
-    echo '# Start supervisor which will manage both nginx and Node.js' >> /start.sh && \
+    echo '# Fetch initial LeadCMS content if configuration is available' >> /start.sh && \
+    echo 'if [ ! -z "$LEADCMS_URL" ] && [ ! -z "$LEADCMS_API_KEY" ]; then' >> /start.sh && \
+    echo '  echo "Fetching initial LeadCMS content..."' >> /start.sh && \
+    echo '  npx leadcms fetch || echo "Warning: Could not fetch initial content"' >> /start.sh && \
+    echo 'fi' >> /start.sh && \
+    echo '' >> /start.sh && \
+    echo '# Start supervisor to manage all services' >> /start.sh && \
     echo 'exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf' >> /start.sh
 
 RUN chmod +x /start.sh
 
-# Expose port 80 (nginx will proxy to Node.js on port 3000)
+# Expose port 80 (nginx will proxy to development server on port 3000)
 EXPOSE 80
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=20s --retries=3 \
+HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
     CMD wget --spider -q http://localhost:80 || exit 1
 
-# Start both services
+# Start all services via supervisor
 CMD ["/start.sh"]

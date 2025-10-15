@@ -4,8 +4,7 @@ import { GitBranch } from "lucide-react"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 import { LanguageSwitcher } from "@/components/language-switcher"
 import { LocaleAwareMobileNav } from "@/components/locale-aware-mobile-nav"
-import { getLayoutConfig, type HeaderConfig, type FooterConfig } from "@/lib/layout-config"
-import { DEFAULT_LANGUAGE } from "@/lib/locale-utils"
+import { getLayoutConfig } from "@/lib/layout-config"
 import { LocaleProvider } from "@/lib/locale-context"
 
 interface LocaleAwareLayoutProps {
@@ -13,7 +12,7 @@ interface LocaleAwareLayoutProps {
   locale?: string
 }
 
-export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, locale = DEFAULT_LANGUAGE }) => {
+export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, locale }) => {
   // Load configuration at build time
   const { header: headerConfig, footer: footerConfig } = getLayoutConfig(locale)
 

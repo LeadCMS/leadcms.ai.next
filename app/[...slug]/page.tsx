@@ -1,8 +1,7 @@
 import { createLocaleContentPage } from '@/lib/locale-page-factory';
-import { DEFAULT_LANGUAGE } from '@/lib/cms';
 import { LocaleAwareLayout } from '@/components/locale-aware-layout';
 
-const pageFactory = createLocaleContentPage(DEFAULT_LANGUAGE);
+const pageFactory = createLocaleContentPage();
 
 export const generateMetadata = pageFactory.generateMetadata;
 export const generateStaticParams = pageFactory.generateStaticParams;
@@ -10,7 +9,7 @@ export const generateStaticParams = pageFactory.generateStaticParams;
 export default function DefaultContentPage(props: any) {
   const ContentPage = pageFactory.default;
   return (
-    <LocaleAwareLayout locale={DEFAULT_LANGUAGE}>
+    <LocaleAwareLayout>
       <ContentPage {...props} />
     </LocaleAwareLayout>
   );

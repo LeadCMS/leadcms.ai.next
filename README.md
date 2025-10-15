@@ -54,7 +54,7 @@ npm run dev
 ```
 
 This command will:
-1. Fetch content from LeadCMS (`npm run fetch:leadcms`)
+1. Fetch content from LeadCMS (`npm run fetch`)
 2. Generate environment JavaScript file (`npm run generate:env`)
 3. Start the Next.js development server on `http://localhost:3000`
 

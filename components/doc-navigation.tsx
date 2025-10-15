@@ -1,5 +1,4 @@
-import { getAllContentSlugsForLocale, getCMSContentBySlugForLocale, DEFAULT_LANGUAGE } from "@/lib/cms"
-import path from "path"
+import { getAllContentSlugsForLocale, getCMSContentBySlugForLocale } from "@leadcms/sdk"
 import { DocNavigationClient } from "./doc-navigation-client"
 
 interface DocItem {
@@ -20,16 +19,14 @@ interface DocNavigationProps {
   currentSlug: string
 }
 
-const CMS_CONTENT_PATH = path.resolve('.leadcms/content')
-
 export function getDocsData(): DocGroup[] {
   try {
-    const slugs = getAllContentSlugsForLocale(CMS_CONTENT_PATH, DEFAULT_LANGUAGE, ['doc'])
+    const slugs = getAllContentSlugsForLocale(undefined, ['doc'])
     const docItems: DocItem[] = []
 
     for (const slug of slugs) {
       try {
-        const content = getCMSContentBySlugForLocale(slug, CMS_CONTENT_PATH, DEFAULT_LANGUAGE)
+        const content = getCMSContentBySlugForLocale(slug)
         if (content && content.type === 'doc' && content.group && content.order !== undefined) {
           docItems.push({
             slug,

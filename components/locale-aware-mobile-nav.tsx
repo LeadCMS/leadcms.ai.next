@@ -32,9 +32,9 @@ interface DocGroup {
 }
 
 interface LocaleAwareMobileNavProps {
-  locale: string
+  locale?: string
   headerConfig: HeaderConfig
-  footerConfig?: FooterConfig
+  footerConfig: FooterConfig
 }
 
 // This will be populated by the DocNavigationProvider when on docs pages

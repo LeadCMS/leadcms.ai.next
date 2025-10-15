@@ -1,6 +1,5 @@
 import { createLocaleNotFoundPage } from '@/lib/locale-page-factory';
-import { DEFAULT_LANGUAGE } from '@/lib/cms';
 
-const { default: NotFound } = createLocaleNotFoundPage(DEFAULT_LANGUAGE);
+const { default: NotFound } = createLocaleNotFoundPage();
 
 export default NotFound;

@@ -1,5 +1,5 @@
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
-import type { CMSContentTemplateProps } from "@/lib/cms"
+import type { CMSContentTemplateProps } from "@leadcms/sdk"
 import { useMDXComponents } from "@/components/mdx-components"
 
 export default function DefaultTemplate({ content }: CMSContentTemplateProps) {

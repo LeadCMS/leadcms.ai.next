@@ -1,4 +1,4 @@
-import type { CMSContent } from "@/lib/cms"
+import type { CMSContent } from "@leadcms/sdk"
 import LegalTemplate from "./legal-template"
 import ContactTemplate from "./contact-template"
 import DocTemplate from "./doc-template"

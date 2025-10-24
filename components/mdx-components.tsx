@@ -37,7 +37,18 @@ import {
   FeatureCard,
   FeatureGrid,
 } from "./mdx/doc-components"
+import {
+  BlogCard,
+  BlogGrid,
+  FeaturedArticle,
+  BlogHeader,
+  BlogArticleMeta,
+  BlogSection,
+  BlogArticlesSection,
+  BlogIndexHero,
+} from "./mdx/blog-components"
 import { ContactUs } from "./contact-us"
+import { MermaidDiagram } from "./ui/mermaid-diagram"
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -77,8 +88,19 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Tabs,
     FeatureCard,
     FeatureGrid,
+    // Blog components
+    BlogCard,
+    BlogGrid,
+    FeaturedArticle,
+    BlogHeader,
+    BlogArticleMeta,
+    BlogSection,
+    BlogArticlesSection,
+    BlogIndexHero,
     // Contact form
     ContactUs,
+    // Diagrams
+    MermaidDiagram,
     ...components,
   }
 }

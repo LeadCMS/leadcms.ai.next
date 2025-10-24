@@ -1,0 +1,295 @@
+---
+id: 104
+createdAt: '2025-10-18T10:00:00.000Z'
+title: Building with LeadCMS SDK - A Developer's Guide
+description: >-
+  Learn how to use the LeadCMS SDK to integrate content management into your Next.js, React, and Node.js applications with ease.
+excerpt: >-
+  The LeadCMS SDK provides a simple, type-safe interface for integrating LeadCMS into your applications. Here's everything you need to know.
+slug: blog/introducing-leadcms-sdk
+type: blog
+author: Peter Liapin
+language: en
+category: Development
+tags: ['sdk', 'development', 'api', 'typescript']
+allowComments: true
+publishedAt: '2025-10-18T10:00:00Z'
+featured: false
+---
+
+The LeadCMS SDK makes it incredibly easy to integrate content management into your applications. Whether you're building with Next.js, React, or Node.js, the SDK provides a clean, type-safe interface for working with your content.
+
+## Why Use the SDK?
+
+While you can always interact with LeadCMS through its REST API, the SDK offers several advantages:
+
+### Type Safety
+
+Full TypeScript support with auto-generated types for your content:
+
+```typescript
+import { getCMSContentBySlug } from '@leadcms/sdk'
+
+// Fully typed content
+const page = getCMSContentBySlug('about-us')
+console.log(page.title) // TypeScript knows this exists
+```
+
+### Simplified API Calls
+
+No need to write fetch requests or handle authentication manually:
+
+```typescript
+// Without SDK
+const response = await fetch('https://api.leadcms.ai/content/about-us', {
+  headers: {
+    'Authorization': `Bearer ${token}`,
+    'Content-Type': 'application/json'
+  }
+})
+const data = await response.json()
+
+// With SDK
+const data = getCMSContentBySlug('about-us')
+```
+
+### Built-in Caching
+
+The SDK includes smart caching to improve performance and reduce API calls.
+
+### Framework Integration
+
+Pre-built integrations for popular frameworks like Next.js, making static site generation and server-side rendering seamless.
+
+## Getting Started
+
+Install the SDK in your project:
+
+```bash
+npm install @leadcms/sdk
+```
+
+Configure your LeadCMS connection:
+
+```typescript
+import { configureCMS } from '@leadcms/sdk'
+
+configureCMS({
+  apiUrl: process.env.LEADCMS_API_URL,
+  apiKey: process.env.LEADCMS_API_KEY,
+})
+```
+
+## Core Concepts
+
+### Content Retrieval
+
+The SDK provides several methods for fetching content:
+
+```typescript
+import {
+  getCMSContentBySlug,
+  getAllContentSlugs,
+  getCMSContentByType,
+} from '@leadcms/sdk'
+
+// Get single content item
+const page = getCMSContentBySlug('about-us')
+
+// Get all slugs (useful for static generation)
+const slugs = getAllContentSlugs()
+
+// Get content by type
+const blogPosts = getCMSContentByType('blog')
+```
+
+### Multi-language Support
+
+Built-in support for multiple languages:
+
+```typescript
+import { getCMSContentBySlugForLocale } from '@leadcms/sdk'
+
+// Get localized content
+const pageEN = getCMSContentBySlugForLocale('about-us', 'en')
+const pageDA = getCMSContentBySlugForLocale('about-us', 'da')
+```
+
+### Type Safety with Content Types
+
+Define your content structure and get full type safety:
+
+```typescript
+interface BlogPost extends CMSContent {
+  type: 'blog'
+  excerpt: string
+  author: string
+  tags: string[]
+  featured: boolean
+}
+
+const post = getCMSContentBySlug<BlogPost>('my-blog-post')
+// TypeScript knows about excerpt, author, tags, etc.
+```
+
+## Next.js Integration
+
+The SDK is designed to work seamlessly with Next.js:
+
+### Static Site Generation
+
+```typescript
+import { getAllContentSlugs, getCMSContentBySlug } from '@leadcms/sdk'
+
+export async function generateStaticParams() {
+  const slugs = getAllContentSlugs()
+  return slugs.map(slug => ({ slug: slug.split('/') }))
+}
+
+export default function Page({ params }) {
+  const content = getCMSContentBySlug(params.slug.join('/'))
+  return <div>{content.title}</div>
+}
+```
+
+### Server Components
+
+Perfect for React Server Components:
+
+```typescript
+import { getCMSContentBySlug } from '@leadcms/sdk'
+
+export default function BlogPost({ slug }) {
+  const post = getCMSContentBySlug(slug)
+
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <div>{post.body}</div>
+    </article>
+  )
+}
+```
+
+## Advanced Features
+
+### Custom Content Queries
+
+Filter and sort content programmatically:
+
+```typescript
+const recentPosts = getAllContentSlugs(['blog'])
+  .map(slug => getCMSContentBySlug(slug))
+  .filter(post => post.featured)
+  .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))
+  .slice(0, 5)
+```
+
+### Content Transformation
+
+Transform content before rendering:
+
+```typescript
+import { getCMSContentBySlug, transformContent } from '@leadcms/sdk'
+
+const content = getCMSContentBySlug('page')
+const transformed = transformContent(content, {
+  processImages: true,
+  generateToc: true,
+  optimizePerformance: true
+})
+```
+
+### Webhooks Integration
+
+React to content changes in real-time:
+
+```typescript
+import { setupWebhookHandler } from '@leadcms/sdk'
+
+setupWebhookHandler('/api/webhooks/leadcms', {
+  onContentUpdate: (content) => {
+    console.log('Content updated:', content.slug)
+    // Trigger revalidation, clear cache, etc.
+  },
+  onContentDelete: (slug) => {
+    console.log('Content deleted:', slug)
+  }
+})
+```
+
+## Best Practices
+
+### Environment Configuration
+
+Store sensitive data in environment variables:
+
+```bash
+LEADCMS_API_URL=https://api.leadcms.ai
+LEADCMS_API_KEY=your_api_key
+```
+
+### Error Handling
+
+Always handle potential errors:
+
+```typescript
+try {
+  const content = getCMSContentBySlug('page')
+  if (!content) {
+    return notFound()
+  }
+  return <Page content={content} />
+} catch (error) {
+  console.error('Failed to load content:', error)
+  return <ErrorPage />
+}
+```
+
+### Performance Optimization
+
+Use static generation when possible:
+
+```typescript
+// Good: Static generation (fast)
+export async function generateStaticParams() {
+  return getAllContentSlugs().map(slug => ({ slug }))
+}
+
+// Avoid: Runtime fetching (slower)
+export const dynamic = 'force-dynamic'
+```
+
+## Examples
+
+Check out real-world examples:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Next.js Example"
+    description="Complete Next.js site with SSG, internationalization, and dynamic routing"
+    href="https://github.com/LeadCMS/leadcms.sdk/tree/main/examples/nextjs"
+  />
+  <FeatureCard
+    title="React Example"
+    description="Client-side React application with real-time content updates"
+    href="https://github.com/LeadCMS/leadcms.sdk/tree/main/examples/react"
+  />
+</FeatureGrid>
+
+## Resources
+
+- [SDK Documentation](https://github.com/LeadCMS/leadcms.sdk)
+- [API Reference](https://github.com/LeadCMS/leadcms.sdk/blob/main/docs/api.md)
+- [TypeScript Types](https://github.com/LeadCMS/leadcms.sdk/blob/main/src/types.ts)
+- [Example Projects](https://github.com/LeadCMS/leadcms.sdk/tree/main/examples)
+
+## Get Started Today
+
+Ready to integrate LeadCMS into your project?
+
+```bash
+npm install @leadcms/sdk
+```
+
+Join our [GitHub Discussions](https://github.com/LeadCMS/leadcms.core/discussions) for support and to share your projects!

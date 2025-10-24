@@ -24,6 +24,10 @@
         "href": "/docs"
       },
       {
+        "label": "Blog",
+        "href": "/blog"
+      },
+      {
         "label": "Contact Us",
         "href": "/contact-us"
       }

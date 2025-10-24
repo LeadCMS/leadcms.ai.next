@@ -35,6 +35,7 @@ import {
   InteractiveLink,
   FloatingLabelInput
 } from "@/components/ui/micro-interactions"
+import { MermaidDiagram } from "@/components/ui/mermaid-diagram"
 
 // UI components and icons for MDX use
 const uiComponents = {
@@ -81,6 +82,7 @@ const uiComponents = {
   MicroInteractionButton,
   InteractiveLink,
   FloatingLabelInput,
+  MermaidDiagram,
 }
 
 // Use React's built-in HTML element prop types instead of custom interfaces

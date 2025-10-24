@@ -1,0 +1,575 @@
+---
+id: 109
+createdAt: '2025-10-02T10:30:00.000Z'
+title: JAMstack Architecture - The Modern Web Development Approach
+description: >-
+  Understand JAMstack architecture and why it's revolutionizing web development with better performance, security, and scalability.
+excerpt: >-
+  JAMstack isn't just a buzzword - it's a fundamental shift in how we build websites. Learn why developers are moving to JavaScript, APIs, and Markup.
+coverImageUrl: ''
+coverImageAlt: 'JAMstack Architecture'
+slug: blog/jamstack-architecture-guide
+type: blog
+author: Peter Liapin
+language: en
+category: Architecture
+tags: ['jamstack', 'architecture', 'static-sites', 'performance']
+allowComments: true
+publishedAt: '2025-10-02T10:30:00Z'
+featured: false
+---
+
+JAMstack has become the de facto standard for modern web development, and for good reason. By decoupling the frontend from the backend, JAMstack sites achieve performance, security, and scalability that traditional architectures can't match.
+
+## What is JAMstack?
+
+JAMstack stands for:
+
+- **J**avaScript - Dynamic functionality
+- **A**PIs - Backend services accessed via APIs
+- **M**arkup - Pre-built HTML served via CDN
+
+It's not a specific technology, but an architecture pattern.
+
+### Traditional Architecture
+
+```
+User Request → Web Server → Database Query →
+Template Rendering → HTML Response → User
+(200-500ms per request)
+```
+
+Every request:
+- Hits the server
+- Queries the database
+- Renders templates
+- Generates HTML
+
+### JAMstack Architecture
+
+```
+Build Time:
+Content → Static Site Generator → HTML Files → CDN
+
+User Request → CDN Edge Server → Pre-built HTML → User
+(20-50ms per request)
+```
+
+HTML is pre-generated once and served instantly from CDN edge locations worldwide.
+
+## Key Principles
+
+### 1. Pre-rendering
+
+Generate all possible pages at build time:
+
+```typescript
+// Generate static pages
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  return posts.map(post => ({ slug: post.slug }))
+}
+
+// Each page is pre-rendered
+export default function BlogPost({ params }) {
+  const post = getPost(params.slug)
+  return <article>{post.content}</article>
+}
+```
+
+Result:
+- `/blog/post-1/index.html`
+- `/blog/post-2/index.html`
+- `/blog/post-3/index.html`
+
+All ready to serve instantly.
+
+### 2. CDN Distribution
+
+Static files are distributed globally:
+
+```
+Traditional:
+User (Tokyo) → Server (New York) → 150ms latency
+
+JAMstack:
+User (Tokyo) → Tokyo CDN Edge → 8ms latency
+User (London) → London CDN Edge → 10ms latency
+User (Sydney) → Sydney CDN Edge → 7ms latency
+```
+
+### 3. API-Driven Functionality
+
+Dynamic features use APIs:
+
+```typescript
+// Static page with dynamic data
+export default function ProductPage({ product }) {
+  const [reviews, setReviews] = useState([])
+
+  useEffect(() => {
+    // Fetch dynamic data from API
+    fetch('/api/reviews/' + product.id)
+      .then(res => res.json())
+      .then(setReviews)
+  }, [product.id])
+
+  return (
+    <div>
+      <h1>{product.name}</h1> {/* Static */}
+      <ReviewList reviews={reviews} /> {/* Dynamic */}
+    </div>
+  )
+}
+```
+
+## Benefits of JAMstack
+
+### 1. Blazing Fast Performance
+
+Pre-rendered pages served from CDN:
+
+```
+Performance Comparison:
+
+Traditional WordPress:
+- Time to First Byte: 600ms
+- First Contentful Paint: 1.2s
+- Lighthouse Score: 65/100
+
+JAMstack (Next.js):
+- Time to First Byte: 50ms
+- First Contentful Paint: 0.4s
+- Lighthouse Score: 98/100
+```
+
+### 2. Enhanced Security
+
+No server, no database to hack:
+
+```
+Traditional Attack Surface:
+✗ Database injection
+✗ Server exploits
+✗ PHP vulnerabilities
+✗ Admin panel attacks
+✗ Plugin vulnerabilities
+
+JAMstack Attack Surface:
+✓ Static files only
+✓ No database exposed
+✓ No server to compromise
+✓ Read-only CDN
+```
+
+### 3. Scalability
+
+Handle traffic spikes effortlessly:
+
+```typescript
+// Traffic surge handling
+
+Traditional:
+100 requests/sec → Server struggles
+1,000 requests/sec → Add more servers ($$$)
+10,000 requests/sec → Need load balancer ($$$)
+
+JAMstack:
+100 requests/sec → CDN handles easily
+1,000 requests/sec → CDN handles easily
+10,000 requests/sec → CDN handles easily
+100,000 requests/sec → Still fine (no extra cost)
+```
+
+CDNs are built to handle massive traffic.
+
+### 4. Developer Experience
+
+Modern workflow:
+
+```bash
+# Local development
+npm run dev
+# Hot reload, fast feedback
+
+# Preview deployment
+git push origin feature-branch
+# Automatic preview URL generated
+
+# Production deployment
+git push origin main
+# Automatic build and deploy
+```
+
+### 5. Cost Efficiency
+
+Hosting static files is cheap:
+
+```
+Monthly Hosting Costs:
+
+Traditional Hosting:
+- Shared hosting: $10-30/month
+- VPS: $20-100/month
+- Managed WordPress: $30-200/month
+- Dedicated server: $100-500/month
+
+JAMstack Hosting:
+- Netlify: $0-20/month
+- Vercel: $0-20/month
+- Cloudflare Pages: $0/month
+- AWS S3 + CloudFront: $1-5/month
+```
+
+## JAMstack Ecosystem
+
+### Static Site Generators
+
+**Next.js** (React):
+```typescript
+// pages/blog/[slug].tsx
+export async function getStaticPaths() {
+  const posts = await getPosts()
+  return {
+    paths: posts.map(p => ({ params: { slug: p.slug }})),
+    fallback: false
+  }
+}
+
+export async function getStaticProps({ params }) {
+  const post = await getPost(params.slug)
+  return { props: { post }}
+}
+```
+
+**Gatsby** (React):
+```typescript
+// gatsby-node.js
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const posts = await graphql(`
+    query {
+      allMarkdownRemark {
+        edges { node { frontmatter { slug }}}
+      }
+    }
+  `)
+
+  posts.data.allMarkdownRemark.edges.forEach(({ node }) => {
+    createPage({
+      path: node.frontmatter.slug,
+      component: path.resolve(`./src/templates/blog-post.tsx`),
+    })
+  })
+}
+```
+
+**Astro**:
+```typescript
+// src/pages/blog/[slug].astro
+export async function getStaticPaths() {
+  const posts = await Astro.glob('../posts/*.md')
+  return posts.map(post => ({
+    params: { slug: post.frontmatter.slug },
+    props: { post },
+  }))
+}
+```
+
+### Headless CMS Options
+
+**LeadCMS**:
+```typescript
+import { getCMSContent } from '@leadcms/sdk'
+
+const content = getCMSContent('page-slug')
+```
+
+**Contentful**:
+```typescript
+const client = contentful.createClient({
+  space: 'xxx',
+  accessToken: 'xxx'
+})
+```
+
+**Sanity**:
+```typescript
+const client = sanityClient({
+  projectId: 'xxx',
+  dataset: 'production'
+})
+```
+
+### Deployment Platforms
+
+**Vercel**:
+```bash
+npm i -g vercel
+vercel
+```
+
+**Netlify**:
+```bash
+netlify deploy --prod
+```
+
+**Cloudflare Pages**:
+```bash
+# Automatic via Git integration
+git push origin main
+```
+
+## Dynamic Features in JAMstack
+
+### Client-Side JavaScript
+
+```typescript
+// Dynamic search
+function SearchResults() {
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
+
+  useEffect(() => {
+    if (query) {
+      fetch(`/api/search?q=${query}`)
+        .then(res => res.json())
+        .then(setResults)
+    }
+  }, [query])
+
+  return <div>{/* Search UI */}</div>
+}
+```
+
+### API Routes
+
+```typescript
+// pages/api/search.ts
+export default async function handler(req, res) {
+  const { q } = req.query
+
+  // Query external service
+  const results = await searchService.query(q)
+
+  res.json(results)
+}
+```
+
+### Third-Party Services
+
+```typescript
+// Integrate services
+import { loadStripe } from '@stripe/stripe-js'
+import { Auth0Provider } from '@auth0/auth0-react'
+
+// Payments
+const stripe = await loadStripe('pk_xxx')
+
+// Authentication
+<Auth0Provider domain="xxx" clientId="xxx">
+  <App />
+</Auth0Provider>
+```
+
+### Incremental Static Regeneration (ISR)
+
+```typescript
+// Rebuild pages periodically
+export async function getStaticProps() {
+  const data = await fetchData()
+
+  return {
+    props: { data },
+    revalidate: 60 // Rebuild every 60 seconds
+  }
+}
+```
+
+## Real-World Examples
+
+### E-commerce Store
+
+```typescript
+// Product pages (static)
+export async function generateStaticParams() {
+  const products = await getProducts()
+  return products.map(p => ({ id: p.id }))
+}
+
+// Cart and checkout (dynamic)
+function Cart() {
+  const [items, setItems] = useState([])
+
+  const checkout = async () => {
+    const session = await fetch('/api/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ items })
+    })
+    // Redirect to Stripe
+  }
+}
+```
+
+### News Website
+
+```typescript
+// Articles (static, rebuilt every 5 minutes)
+export async function getStaticProps() {
+  const articles = await getArticles()
+
+  return {
+    props: { articles },
+    revalidate: 300
+  }
+}
+
+// Comments (dynamic)
+function Comments({ articleId }) {
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    fetch(`/api/comments/${articleId}`)
+      .then(res => res.json())
+      .then(setComments)
+  }, [articleId])
+}
+```
+
+### Marketing Site
+
+```typescript
+// Pages (fully static)
+const pages = [
+  '/',
+  '/about',
+  '/features',
+  '/pricing',
+  '/contact'
+]
+
+// Contact form (API route)
+export async function POST(request) {
+  const data = await request.json()
+  await sendEmail(data)
+  await saveToCRM(data)
+  return Response.json({ success: true })
+}
+```
+
+## Migration Strategy
+
+### From WordPress to JAMstack
+
+```bash
+# 1. Export content
+wp export --dir=./content
+
+# 2. Convert to Markdown
+node convert-to-markdown.js
+
+# 3. Set up Next.js
+npx create-next-app@latest
+
+# 4. Import content
+cp ./content/*.md ./app/content/
+
+# 5. Deploy
+vercel deploy
+```
+
+### Gradual Migration
+
+```typescript
+// Keep some pages on old platform
+// Proxy via middleware
+export function middleware(request) {
+  const path = request.nextUrl.pathname
+
+  // Legacy pages
+  if (path.startsWith('/legacy')) {
+    return NextResponse.rewrite(
+      new URL(path, 'https://old-site.com')
+    )
+  }
+}
+```
+
+## Best Practices
+
+### Content Strategy
+
+```typescript
+// Organize content by type
+content/
+  blog/
+    post-1.md
+    post-2.md
+  pages/
+    about.md
+    contact.md
+  products/
+    product-1.md
+    product-2.md
+```
+
+### Performance Optimization
+
+```typescript
+// Optimize images
+import Image from 'next/image'
+
+<Image
+  src="/photo.jpg"
+  width={800}
+  height={600}
+  placeholder="blur"
+  loading="lazy"
+/>
+
+// Code splitting
+const Modal = dynamic(() => import('./Modal'), {
+  loading: () => <Spinner />
+})
+```
+
+### SEO Optimization
+
+```typescript
+// Metadata for each page
+export const metadata = {
+  title: 'Page Title',
+  description: 'Page description',
+  openGraph: {
+    title: 'OG Title',
+    images: ['/og-image.jpg'],
+  },
+}
+```
+
+## Conclusion
+
+JAMstack represents a fundamental improvement in web architecture:
+
+- **10x faster** than traditional dynamic sites
+- **More secure** with no server to attack
+- **Infinitely scalable** via CDN distribution
+- **Better developer experience** with modern tooling
+- **Lower costs** with static hosting
+
+Combined with a headless CMS like LeadCMS, you get the best of both worlds: easy content management and JAMstack performance.
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Get Started"
+    description="Deploy your first JAMstack site with LeadCMS"
+    href="/docs/getting-started/installation"
+  />
+  <FeatureCard
+    title="Why Headless"
+    description="Learn more about headless CMS architecture"
+    href="/blog/why-headless-cms"
+  />
+</FeatureGrid>
+
+Ready to build with JAMstack? [Get started with LeadCMS](/docs/getting-started/installation).

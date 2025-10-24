@@ -13,6 +13,8 @@ export const pagesContentTypes = [
   'contact',
   'home',
   'doc',
+  'blog',
+  'blog-index',
 ] as const;
 
 interface PageProps {

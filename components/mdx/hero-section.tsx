@@ -24,18 +24,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   secondaryButton,
   dashboardLabel,
 }) => (
-    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-gradient-to-b from-background to-muted overflow-hidden">
-    <div className="w-full px-4 sm:px-6 lg:px-8">
+    <section className="w-full py-12 md:py-24 lg:py-32 xl:py-40 bg-gradient-to-br from-primary/5 via-primary/10 to-accent/5 dark:from-primary/10 dark:via-primary/5 dark:to-accent/5 overflow-hidden relative">
+    {/* Decorative background elements */}
+    <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800/[0.04] bg-[size:32px_32px]" />
+    <div className="absolute h-full w-full bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+
+    <div className="relative w-full px-4 sm:px-6 lg:px-8">
       <div className="max-w-[1750px] mx-auto">
         <div className="grid gap-12 lg:grid-cols-2 items-center lg:gap-16">
           <div className="flex flex-col items-start max-w-2xl">
             <FadeIn direction="up" delay={0.1}>
-              <Badge className="mb-4" variant="outline">
+              <Badge className="mb-4 bg-primary text-primary-foreground border-0" variant="outline">
                 {badge}
               </Badge>
             </FadeIn>
             <FadeIn direction="up" delay={0.2}>
-              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
+              <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl lg:text-6xl bg-gradient-to-r from-primary via-primary/80 to-primary/60 bg-clip-text text-transparent leading-tight">
                 {title}
               </h1>
             </FadeIn>
@@ -56,7 +60,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
                   </AnimatedButton>
                 </Link>
                 <a href={secondaryButton.href} target="_blank" rel="noopener noreferrer">
-                  <AnimatedButton variant="outline" size="lg" animation="scale">
+                  <AnimatedButton variant="outline" size="lg" animation="scale" className="border-2">
                     <GitBranch className="mr-2 h-4 w-4" />
                     {secondaryButton.label}
                   </AnimatedButton>
@@ -84,7 +88,7 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <FloatingElement intensity={0.3} duration={6} className="absolute -top-4 -left-4 w-32 h-32 bg-primary/10 rounded-full z-[-1] blur-xl">
               <div />
             </FloatingElement>
-            <FloatingElement intensity={0.4} duration={5} className="absolute top-1/2 -right-8 w-16 h-16 bg-secondary/10 rounded-full z-[-1] blur-lg">
+            <FloatingElement intensity={0.4} duration={5} className="absolute top-1/2 -right-8 w-16 h-16 bg-accent/10 rounded-full z-[-1] blur-lg">
               <div />
             </FloatingElement>
           </ScaleIn>

@@ -7,7 +7,7 @@ description: >-
 excerpt: >-
   The LeadCMS SDK provides a simple, type-safe interface for integrating LeadCMS into your applications. Here's everything you need to know.
 slug: blog/introducing-leadcms-sdk
-type: blog
+type: blog-article
 author: Peter Liapin
 language: en
 category: Development
@@ -100,7 +100,7 @@ const page = getCMSContentBySlug('about-us')
 const slugs = getAllContentSlugs()
 
 // Get content by type
-const blogPosts = getCMSContentByType('blog')
+const blogPosts = getCMSContentByType('blog-article')
 ```
 
 ### Multi-language Support
@@ -121,7 +121,7 @@ Define your content structure and get full type safety:
 
 ```typescript
 interface BlogPost extends CMSContent {
-  type: 'blog'
+  type: 'blog-article'
   excerpt: string
   author: string
   tags: string[]
@@ -178,7 +178,7 @@ export default function BlogPost({ slug }) {
 Filter and sort content programmatically:
 
 ```typescript
-const recentPosts = getAllContentSlugs(['blog'])
+const recentPosts = getAllContentSlugs(['blog-article'])
   .map(slug => getCMSContentBySlug(slug))
   .filter(post => post.featured)
   .sort((a, b) => new Date(b.publishedAt) - new Date(a.publishedAt))

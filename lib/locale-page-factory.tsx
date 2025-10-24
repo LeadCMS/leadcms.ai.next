@@ -13,7 +13,7 @@ export const pagesContentTypes = [
   'contact',
   'home',
   'doc',
-  'blog',
+  'blog-article',
   'blog-index',
 ] as const;
 

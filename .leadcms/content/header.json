@@ -42,12 +42,12 @@
     ],
     "cta": {
       "label": "Get Started",
-      "href": "#contact"
+      "href": "/docs"
     }
   },
   "id": 13,
   "createdAt": "2025-09-01T16:40:40.141439Z",
-  "updatedAt": "2025-09-10T09:49:42.920459Z",
+  "updatedAt": "2025-10-24T12:46:16.885112Z",
   "comments": null,
   "translations": null,
   "title": "Header Configuration",

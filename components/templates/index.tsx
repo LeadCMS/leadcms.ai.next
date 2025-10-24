@@ -16,7 +16,7 @@ export const templateRegistry: Record<string, TemplateComponent> = {
   legal: LegalTemplate,
   contact: ContactTemplate,
   doc: DocTemplate,
-  blog: BlogTemplate,
+  "blog-article": BlogTemplate,
   "blog-index": BlogIndexTemplate,
 }
 

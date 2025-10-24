@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar, Clock, User, ArrowRight } from "lucide-react"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 import { cn } from "@/lib/utils"
+import { getAllContentSlugsForLocale, getCMSContentBySlugForLocale } from "@leadcms/sdk"
 import { BlogCoverGenerator } from "@/components/blog/blog-cover-generator"
 
 // Blog Article Card Component
@@ -285,9 +286,6 @@ export function BlogIndexHero({
   locale,
   showFeaturedPost = true,
 }: BlogIndexHeroProps) {
-  // Dynamic import to avoid server-side rendering issues
-  const { getAllContentSlugsForLocale, getCMSContentBySlugForLocale } = require("@leadcms/sdk")
-
   interface BlogPost {
     slug: string
     title: string
@@ -306,11 +304,11 @@ export function BlogIndexHero({
 
   if (showFeaturedPost) {
     // Get featured blog post
-    const blogSlugs = getAllContentSlugsForLocale(locale, ['blog'])
+    const blogSlugs = getAllContentSlugsForLocale(locale, ['blog-article'])
     const blogPosts: BlogPost[] = blogSlugs
       .map((slug: string) => {
         const postContent = getCMSContentBySlugForLocale(slug, locale)
-        if (!postContent || postContent.type !== 'blog') return null
+        if (!postContent || postContent.type !== 'blog-article') return null
 
         return {
           slug: postContent.slug,
@@ -450,9 +448,6 @@ export function BlogArticlesSection({
   columns = 3,
   locale,
 }: BlogArticlesSectionProps) {
-  // Dynamic import to avoid server-side rendering issues
-  const { getAllContentSlugsForLocale, getCMSContentBySlugForLocale } = require("@leadcms/sdk")
-
   interface BlogPost {
     slug: string
     title: string
@@ -468,11 +463,11 @@ export function BlogArticlesSection({
   }
 
   // Get all blog posts
-  const blogSlugs = getAllContentSlugsForLocale(locale, ['blog'])
+  const blogSlugs = getAllContentSlugsForLocale(locale, ['blog-article'])
   const blogPosts: BlogPost[] = blogSlugs
     .map((slug: string) => {
       const postContent = getCMSContentBySlugForLocale(slug, locale)
-      if (!postContent || postContent.type !== 'blog') return null
+      if (!postContent || postContent.type !== 'blog-article') return null
 
       return {
         slug: postContent.slug,

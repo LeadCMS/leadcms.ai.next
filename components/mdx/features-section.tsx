@@ -50,11 +50,13 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                 hoverEffect="lift"
                 className="relative overflow-hidden border-2 border-primary/20 group"
               >
-                <div className="absolute top-0 right-0 p-2 bg-primary/10 rounded-bl-lg group-hover:bg-primary/20 transition-colors duration-300">
-                  <Icon className="h-6 w-6 text-primary" />
-                </div>
-                <AnimatedCardHeader className="pt-12">
-                  <CardTitle className="text-xl font-semibold">{feature.title}</CardTitle>
+                <AnimatedCardHeader className="pt-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <CardTitle className="text-xl font-semibold flex-1 pr-3">{feature.title}</CardTitle>
+                    <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300 flex-shrink-0">
+                      <Icon className="h-6 w-6 text-primary" />
+                    </div>
+                  </div>
                   <CardDescription className="text-muted-foreground">
                     {feature.description}
                   </CardDescription>

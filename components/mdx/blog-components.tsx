@@ -7,6 +7,7 @@ import { LocaleAwareLink } from "@/components/locale-aware-link"
 import { cn } from "@/lib/utils"
 import { getAllContentSlugsForLocale, getCMSContentBySlugForLocale } from "@leadcms/sdk"
 import { BlogCoverGenerator } from "@/components/blog/blog-cover-generator"
+import { AlertCircle, CheckCircle, Info, AlertTriangle, Lightbulb } from "lucide-react"
 
 // Blog Article Card Component
 interface BlogCardProps {
@@ -537,5 +538,48 @@ export function BlogArticlesSection({
         </div>
       </div>
     </section>
+  )
+}
+
+// Blog-specific Callout component (same as doc-components but optimized for blog styling)
+interface BlogCalloutProps {
+  type?: "note" | "tip" | "warning" | "danger" | "info" | "success"
+  title?: string
+  children: React.ReactNode
+}
+
+export function BlogCallout({ type = "info", title, children }: BlogCalloutProps) {
+  const icons = {
+    note: Info,
+    tip: Lightbulb,
+    warning: AlertTriangle,
+    danger: AlertCircle,
+    info: Info,
+    success: CheckCircle,
+  }
+
+  const styles = {
+    note: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-100",
+    tip: "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
+    warning: "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-100",
+    danger: "border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-100",
+    info: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-100",
+    success: "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
+  }
+
+  const Icon = icons[type]
+
+  return (
+    <div className={cn("border-l-4 p-4 my-6 rounded-r-lg", styles[type])}>
+      <div className="flex items-start gap-3">
+        <Icon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+        <div className="flex-1">
+          {title && <div className="font-semibold mb-2">{title}</div>}
+          <div className="prose prose-sm dark:prose-invert max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
+            {children}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

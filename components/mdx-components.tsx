@@ -46,6 +46,7 @@ import {
   BlogSection,
   BlogArticlesSection,
   BlogIndexHero,
+  BlogCallout,
 } from "./mdx/blog-components"
 import { ContactUs } from "./contact-us"
 import { MermaidDiagram } from "./ui/mermaid-diagram"
@@ -97,6 +98,7 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     BlogSection,
     BlogArticlesSection,
     BlogIndexHero,
+    BlogCallout,
     // Contact form
     ContactUs,
     // Diagrams

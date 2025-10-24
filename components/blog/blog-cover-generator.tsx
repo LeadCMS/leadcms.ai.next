@@ -87,7 +87,7 @@ export function BlogCoverGenerator({
   publishedAt,
   readTime
 }: BlogCoverGeneratorProps) {
-  const heightClass = size === 'hero' ? 'h-64 md:h-96' : 'h-48'
+  const heightClass = size === 'hero' ? 'h-64 md:h-96' : 'h-72 md:h-80'
   const colors = getCategoryColorScheme(category || title)
 
   const titleSize = size === 'hero' ? 'text-3xl md:text-4xl' : 'text-xl md:text-2xl'
@@ -118,11 +118,6 @@ export function BlogCoverGenerator({
         {/* Top section with metadata */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex flex-wrap gap-2">
-            {category && (
-              <Badge className={`${colors.badge} ${colors.badgeDark} font-medium`}>
-                {category}
-              </Badge>
-            )}
             {tags && tags.map((tag) => (
               <Badge
                 key={tag}
@@ -140,12 +135,40 @@ export function BlogCoverGenerator({
           )}
         </div>
 
+        {/* Center section with large category text for auto-generated covers */}
+        {!coverImageUrl && category && (
+          <div className="absolute inset-x-4 inset-y-0 flex items-center justify-center -mt-6">
+            <div className="w-full text-center px-4">
+              <div className={`
+                font-black uppercase tracking-wider text-white/20 select-none pointer-events-none leading-none break-words
+                ${category.length > 15 ? 'text-lg sm:text-xl md:text-2xl lg:text-3xl' :
+                  category.length > 10 ? 'text-xl sm:text-2xl md:text-3xl lg:text-4xl' :
+                  category.length > 6 ? 'text-2xl sm:text-3xl md:text-4xl lg:text-5xl' :
+                  'text-3xl sm:text-4xl md:text-5xl lg:text-6xl'}
+                ${size === 'hero' ? (
+                  category.length > 15 ? 'xl:text-4xl' :
+                  category.length > 10 ? 'xl:text-5xl' :
+                  category.length > 6 ? 'xl:text-6xl' :
+                  'xl:text-7xl'
+                ) : ''}
+              `}>
+                {category}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Bottom section with title and metadata */}
         <div className="space-y-3">
           <h3 className={`${titleSize} font-bold line-clamp-3 text-white drop-shadow-lg leading-tight`}>
             {title}
           </h3>
           <div className="flex flex-wrap items-center gap-3 text-sm text-white/90">
+            {category && (
+              <Badge className={`${colors.badge} ${colors.badgeDark} font-medium`}>
+                {category}
+              </Badge>
+            )}
             {author && (
               <span className="font-medium">by {author}</span>
             )}

@@ -232,8 +232,10 @@ interface FeatureCardProps {
 export function FeatureCard({ title, description, icon, href }: FeatureCardProps) {
   const content = (
     <div className="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
-      {icon && <div className="mb-4">{icon}</div>}
-      <h3 className="font-semibold mb-2">{title}</h3>
+      <div className="flex items-center mb-2">
+        {icon && <div className="mr-3">{icon}</div>}
+        <h3 className="font-semibold">{title}</h3>
+      </div>
       <p className="text-sm text-muted-foreground">{description}</p>
     </div>
   )

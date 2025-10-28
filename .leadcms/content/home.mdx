@@ -29,81 +29,79 @@ source: ''
 publishedAt: '2025-05-24T15:58:49.176Z'
 ---
 
-<HeroSection badge="Free & Open Source" title="The AI‑First Headless CMS & CRM for Modern Developers" description="Build lightning-fast websites with the open source headless CMS that automates content creation with AI. Perfect for Next.js, Gatsby, and modern frameworks." image="/media/home/leadcms-preview.png" primaryButton={{ label: "Get Started", href: "#contact" }} secondaryButton={{ label: "View on GitHub", href: "https://github.com/LeadCMS" }} dashboardLabel="LeadCMS.AI Admin" />
+<HeroSection
+  title="The AI‑First Headless CMS & CRM for Modern Developers"
+  description="Build lightning-fast websites with the open source headless CMS that automates content creation with AI. Perfect for Next.js, Gatsby, and modern frameworks."
+>
+  <HeroBadge>Free & Open Source</HeroBadge>
+  <HeroButtons>
+    <HeroButton href="#contact">Get Started</HeroButton>
+    <HeroButton href="https://github.com/LeadCMS" variant="outline" icon="GitBranch" external>
+      View on GitHub
+    </HeroButton>
+  </HeroButtons>
+  <HeroPreview image="/media/home/leadcms-preview.png" label="LeadCMS.AI Admin" />
+</HeroSection>
 
 <FeaturesSection
   title="One Unified Platform"
   description="Built for developers and tech‑savvy teams, LeadCMS is the free open source platform that unifies everything you need to build modern websites and grow your business."
-  features={[
-{
-icon: "Database",
-title: "Headless CMS",
-description: "Free, open source headless CMS with API-first architecture. Perfect for Next.js, Gatsby, Astro, and any modern framework.",
-bullets: [
-"RESTful API with OpenAPI docs",
-"Content versioning and history",
-"Works with any frontend framework"
-]
-},
-{
-icon: "Globe",
-title: "Intelligent CRM",
-description: "Track customer journeys with automatic contact and account enrichment from public data sources.",
-bullets: [
-"Automatic contact enrichment",
-"Company data from domain lookup",
-"Customer journey tracking"
-]
-},
-{
-icon: "Zap",
-title: "AI Content Automation",
-description: "AI-powered content creation and optimization helps you build content faster than ever before.",
-bullets: [
-"AI content generation",
-"Smart content optimization",
-"Automated content workflows"
-]
-}
-]}
-/>
+>
+  <FeaturesSectionCards>
+    <FeaturesCardWithBullets icon="Database" title="Headless CMS">
+      Free, open source headless CMS with API-first architecture. Perfect for Next.js, Gatsby, Astro, and any modern framework.
+
+      * RESTful API with OpenAPI docs
+      * Content versioning and history
+      * Works with any frontend framework
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Globe" title="Intelligent CRM">
+      Track customer journeys with automatic contact and account enrichment from public data sources.
+
+      * Automatic contact enrichment
+      * Company data from domain lookup
+      * Customer journey tracking
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Zap" title="AI Content Automation">
+      AI-powered content creation and optimization helps you build content faster than ever before.
+
+      * AI content generation
+      * Smart content optimization
+      * Automated content workflows
+    </FeaturesCardWithBullets>
+  </FeaturesSectionCards>
+</FeaturesSection>
 
 <WhySection
   title="Why LeadCMS?"
   description="Built with developers in mind, LeadCMS gives you complete control over your sales and content platform."
-  reasons={[
-{
-icon: "Code",
-title: "100% Open Source",
-description: "Available on GitHub under the MIT license for full code ownership and transparency. No vendor lock‑in or hidden costs."
-},
-{
-icon: "Server",
-title: "Self‑Hosted or Cloud",
-description: "Docker‑ready for fast, flexible deployment anywhere: your private cloud, on‑premises, or a managed host."
-},
-{
-icon: "GitBranch",
-title: "Developer‑First Workflow",
-description: "Use Git to version content changes, integrate with CI/CD, and extend via plugins or direct source code edits."
-},
-{
-icon: "Package",
-title: "Modular Architecture",
-description: "Pick only the features you need. Add new plugins for custom functionality or integrations anytime."
-},
-{
-icon: "Zap",
-title: "Lightning‑Fast Websites",
-description: "Open source headless CMS optimized for Next.js and modern frameworks. Build ultra‑fast websites with static site generation and achieve perfect Lighthouse scores.",
-},
-{
-icon: "Globe",
-title: "API-First Design",
-description: "Comprehensive API endpoints for seamless integration with your existing tools and workflows. Build custom solutions with ease."
-}
-]}
-/>
+>
+  <WhyReasonCard icon="Code" title="100% Open Source">
+    Available on GitHub under the MIT license for full code ownership and transparency. No vendor lock‑in or hidden costs.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Server" title="Self‑Hosted or Cloud">
+    Docker‑ready for fast, flexible deployment anywhere: your private cloud, on‑premises, or a managed host.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="GitBranch" title="Developer‑First Workflow">
+    Use Git to version content changes, integrate with CI/CD, and extend via plugins or direct source code edits.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Package" title="Modular Architecture">
+    Pick only the features you need. Add new plugins for custom functionality or integrations anytime.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Zap" title="Lightning‑Fast Websites">
+    Open source headless CMS optimized for Next.js and modern frameworks. Build ultra‑fast websites with static site generation and achieve perfect Lighthouse scores.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Globe" title="API-First Design">
+    Comprehensive API endpoints for seamless integration with your existing tools and workflows. Build custom solutions with ease.
+  </WhyReasonCard>
+</WhySection>
 
 <DeploySection
   title="Deploy in Seconds"
@@ -163,39 +161,31 @@ description: "From performance tuning to updates, we're here to back your team w
 <WhySection
   title="Key Features"
   description="Everything you need to build modern websites and automate your content management."
-  reasons={[
-{
-icon: "Zap",
-title: "Unified Dashboard",
-description: "Track site traffic, lead generation, and sales performance at a glance. Consolidate vital metrics in one place."
-},
-{
-icon: "Database",
-title: "Open Source Headless CMS",
-description: "Structure and publish content with Git sync. Free, open source platform with complete version control."
-},
-{
-icon: "Globe",
-title: "Integrated CRM System",
-description: "Manage contacts, leads, and deals while tracking the entire customer journey from first visit to conversion."
-},
-{
-icon: "Settings",
-title: "Sales Automation",
-description: "Automated triggers for email sequences, license activations, and upsell offers based on user behavior patterns."
-},
-{
-icon: "ShieldCheck",
-title: "Secure & Compliant",
-description: "Deploy it behind your firewall. Your data, your rules - ensuring compliance with GDPR or other privacy standards."
-},
-{
-icon: "Server",
-title: "Fast. Flexible. Scalable.",
-description: "Powered by .NET for high-performance and robust tooling for enterprise workloads. Containerized deployment."
-}
-]}
-/>
+>
+  <WhyReasonCard icon="Zap" title="Unified Dashboard">
+    Track site traffic, lead generation, and sales performance at a glance. Consolidate vital metrics in one place.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Database" title="Open Source Headless CMS">
+    Structure and publish content with Git sync. Free, open source platform with complete version control.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Globe" title="Integrated CRM System">
+    Manage contacts, leads, and deals while tracking the entire customer journey from first visit to conversion.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Settings" title="Sales Automation">
+    Automated triggers for email sequences, license activations, and upsell offers based on user behavior patterns.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="ShieldCheck" title="Secure & Compliant">
+    Deploy it behind your firewall. Your data, your rules - ensuring compliance with GDPR or other privacy standards.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Server" title="Fast. Flexible. Scalable.">
+    Powered by .NET for high-performance and robust tooling for enterprise workloads. Containerized deployment.
+  </WhyReasonCard>
+</WhySection>
 
 <CompareSection
   title="How LeadCMS Compares"

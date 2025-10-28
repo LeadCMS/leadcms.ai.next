@@ -2,10 +2,10 @@
 id: 16
 createdAt: '2025-09-01T18:11:49.878267Z'
 updatedAt: '2025-09-10T09:02:57.169115Z'
-title: AI-drevet, udvikler-først CMS & CRM til SaaS
+title: AI-drevet CMS og CRM til SaaS-teams
 description: >-
-  LeadCMS er et AI-drevet, udvikler-først CMS og CRM, der gør det muligt for
-  SaaS-teams at bygge landingssider, administrere indhold og accelerere
+  LeadCMS er et AI-drevet CMS og CRM bygget til udviklere. Platformen gør
+  SaaS-teams i stand til at bygge landingssider, styre indhold og accelerere
   leadgenerering med minimal indsats.
 coverImageUrl: ''
 coverImageAlt: ''
@@ -28,92 +28,82 @@ source: AI translated from 4
 ---
 
 <HeroSection
-  badge="Open source"
-  title="Den open‑source salgsautomatisering & CMS til SaaS"
-  description="Styrk din SaaS‑vækst med en udvikler‑først‑platform. Automatisér hvert trin i produktets salgs‑livscyklus."
-  image="/media/home/leadcms-preview.png"
-  primaryButton={{ label: "Kom i gang", href: "#contact" }}
-  secondaryButton={{ label: "Se på GitHub", href: "https://github.com/LeadCMS" }}
-  dashboardLabel="LeadCMS.AI Admin"
-/>
+  title="Det AI‑første headless CMS og CRM til moderne udviklere"
+  description="Byg lynhurtige websites med det open source headless CMS, der automatiserer indholdsproduktionen med AI. Perfekt til Next.js, Gatsby og andre moderne frameworks."
+>
+  <HeroBadge>Open source</HeroBadge>
+  <HeroButtons>
+    <HeroButton href="#contact">Kom godt i gang</HeroButton>
+    <HeroButton href="https://github.com/LeadCMS" variant="outline" icon="GitBranch" external>
+      Se på GitHub
+    </HeroButton>
+  </HeroButtons>
+  <HeroPreview image="/media/home/leadcms-preview.png" label="LeadCMS.AI Admin" />
+</HeroSection>
 
 <FeaturesSection
   title="Én samlet platform"
-  description="Bygget til udviklere og teknisk kyndige teams samler LeadCMS alt, hvad du behøver for at vokse din SaaS‑forretning."
-  features={[
-    {
-      icon: "Database",
-      title: "Headless CMS",
-      description: "Strukturer og publicér indhold med fuld versionskontrol. Perfekt til produktsider og dokumentation.",
-      bullets: [
-        "Git‑baseret indholdsstyring",
-        "Strukturerede indholdsmodeller",
-        "API‑first‑arkitektur"
-      ]
-    },
-    {
-      icon: "Globe",
-      title: "CRM til SaaS",
-      description: "Følg hele kunderejsen fra første klik til konvertering og videre.",
-      bullets: [
-        "Håndtering af kontakter og deals",
-        "Sporing af kunderejse",
-        "Visualisering af salgspipeline"
-      ]
-    },
-    {
-      icon: "Zap",
-      title: "AI‑first‑tilgang",
-      description: "Udnyt AI til at automatisere indholdsoprettelse, optimere lead‑indsamling og generere indsigter for potentielle kunder med høj værdi.",
-      bullets: [
-        "Automatisk generering af landingssider",
-        "AI‑drevet lead‑scoring",
-        "Personlige indholdsanbefalinger"
-      ]
-    }
-  ]}
-/>
+  description="Bygget til udviklere og tekniske teams er LeadCMS den gratis open source‑platform, der samler alt, hvad du skal bruge til at bygge moderne websites og skalere din forretning."
+>
+  <FeaturesSectionCards>
+    <FeaturesCardWithBullets icon="Database" title="Headless CMS">
+      Et gratis, open source headless CMS med en API‑first‑arkitektur. Perfekt til Next.js, Gatsby, Astro og andre moderne frameworks.
+
+      * RESTful API med OpenAPI‑dokumentation
+      * Versionshistorik for indhold
+      * Virker med alle frontend‑frameworks
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Globe" title="Intelligent CRM">
+      Overvåg kunderejsen med automatisk berigelse af kontakter og konti fra offentlige datakilder.
+
+      * Automatisk berigelse af kontaktdata
+      * Virksomhedsdata via domæneopslag
+      * Kunderejse-sporing på tværs af touchpoints
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Zap" title="AI‑indholdsautomatisering">
+      AI‑drevet indholdsproduktion og optimering hjælper dig med at levere indhold hurtigere end nogensinde.
+
+      * AI‑genereret copy og visuals
+      * Intelligent optimering af budskaber
+      * Automatiserede indholdsworkflows
+    </FeaturesCardWithBullets>
+  </FeaturesSectionCards>
+</FeaturesSection>
 
 <WhySection
   title="Hvorfor LeadCMS?"
   description="Bygget med udviklere i tankerne giver LeadCMS dig fuld kontrol over din salgs‑ og indholdsplatform."
-  reasons={[
-    {
-      icon: "Code",
-      title: "100% open source",
-      description: "Tilgængelig på GitHub under MIT‑licensen for fuldt kodeejerskab og transparens. Ingen leverandørlåsning eller skjulte omkostninger."
-    },
-    {
-      icon: "Server",
-      title: "Selvhostet eller cloud",
-      description: "Docker‑klar til hurtig, fleksibel udrulning overalt: din private cloud, on‑premises eller en managed host."
-    },
-    {
-      icon: "GitBranch",
-      title: "Udvikler‑først‑arbejdsgang",
-      description: "Brug Git til at versionsstyre indholdsændringer, integrér med CI/CD, og udvid via plugins eller direkte redigering af kildekoden."
-    },
-    {
-      icon: "Package",
-      title: "Modulær arkitektur",
-      description: "Vælg kun de funktioner, du har brug for. Tilføj nye plugins for skræddersyet funktionalitet eller integrationer når som helst."
-    },
-    {
-      icon: "Zap",
-      title: "Lynhurtige hjemmesider",
-      description: "Perfekt headless CMS til at bygge ultra‑hurtige hjemmesider med Next.js, Gatsby og moderne frameworks. Opnå høje Lighthouse‑performancescores."
-    },
-    {
-      icon: "Globe",
-      title: "API‑first‑design",
-      description: "Omfattende API‑endepunkter til problemfri integration med dine eksisterende værktøjer og arbejdsgange. Byg tilpassede løsninger nemt."
-    }
-  ]}
-/>
+>
+  <WhyReasonCard icon="Code" title="100% open source">
+    Tilgængelig på GitHub under MIT‑licensen, så du bevarer fuldt kodeejerskab og transparens. Ingen leverandørlåsning eller skjulte omkostninger.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Server" title="Selvhostet eller cloud">
+    Docker‑klar til hurtig, fleksibel udrulning – uanset om det er i din egen cloud, on‑premises eller hos en managed host.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="GitBranch" title="Udviklervenlige workflows">
+    Versionsstyr indhold med Git, integrer med CI/CD, og udvid via plugins eller direkte kodeændringer.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Package" title="Modulær arkitektur">
+    Vælg kun de moduler, du behøver. Tilføj nye plugins, når du skal bruge ekstra funktioner eller integrationer.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Zap" title="Lynhurtige hjemmesider">
+    Perfekt som headless CMS til lynhurtige websites med Next.js, Gatsby og andre moderne frameworks. Ram nemt topresultater i Lighthouse.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Globe" title="API‑first‑design">
+    Omfattende API‑endpoints giver problemfri integration med dine eksisterende værktøjer og workflows. Byg skræddersyede løsninger uden friktion.
+  </WhyReasonCard>
+</WhySection>
 
 <DeploySection
   title="Udrul på få sekunder"
-  description="Kom op at køre med én kommando. Ingen kompleks opsætning påkrævet."
+  description="Kom i gang på få minutter. Ingen kompliceret opsætning."
   commands={[
     "git clone https://github.com/LeadCMS/leadcms.deploy.git",
     "cd leadcms.deploy",
@@ -137,22 +127,22 @@ source: AI translated from 4
 
 <HelpSection
   title="Få eksperthjælp, når du har brug for det"
-  description="Uanset om du lancerer en MVP eller skalerer et modent produkt, står vores team klar til at hjælpe dig i gang."
+  description="Uanset om du lancerer en MVP eller skalerer et modent produkt, står vores team klar til at hjælpe dig videre."
   services={[
     {
       icon: "Settings",
       title: "Professionel opsætning",
-      description: "Vi kan guide dig gennem installationen eller håndtere hele processen og sikre en gnidningsfri lancering."
+      description: "Vi guider dig sikkert gennem installationen eller tager hele processen for jer, så lanceringen bliver gnidningsfri."
     },
     {
       icon: "Code",
       title: "Skræddersyet udvikling",
-      description: "Har du brug for et specialiseret workflow eller en integration? Vores eksperter kan tilpasse platformen til dine unikke krav."
+      description: "Behøver du et specialiseret workflow eller en integration? Vores eksperter tilpasser platformen til jeres unikke behov."
     },
     {
       icon: "ShieldCheck",
       title: "Løbende support",
-      description: "Fra performance‑tuning til opdateringer - vi støtter jeres team med ekspertbistand."
+      description: "Fra performance‑tuning til opdateringer – vi understøtter jeres team med løbende ekspertbistand."
     }
   ]}
   serviceList={[
@@ -167,44 +157,36 @@ source: AI translated from 4
 
 <WhySection
   title="Nøglefunktioner"
-  description="Alt, hvad du behøver for at automatisere SaaS‑salget og indholdsstyringen."
-  reasons={[
-    {
-      icon: "Zap",
-      title: "Samlet dashboard",
-      description: "Følg webtrafik, lead‑generering og salgsperformance med et øjekast. Konsolider vigtige nøgletal ét sted."
-    },
-    {
-      icon: "Database",
-      title: "Headless CMS med Git‑synk",
-      description: "Strukturer og publicér indhold med din favorit‑editor. Push ændringer til et Git‑repo for fuld versionskontrol."
-    },
-    {
-      icon: "Globe",
-      title: "CRM bygget til SaaS",
-      description: "Administrér kontakter, deals og domæner, mens du følger hele kunderejsen fra første klik til konvertering."
-    },
-    {
-      icon: "Settings",
-      title: "Salgsautomatisering",
-      description: "Udløs e‑mailsekvenser, licensaktiveringer eller opsalgstilbud øjeblikkeligt baseret på brugeradfærd."
-    },
-    {
-      icon: "ShieldCheck",
-      title: "Sikkert og compliant",
-      description: "Implementér det bag din firewall. Dine data, dine regler - sikrer overholdelse af GDPR eller andre privatlivsstandarder."
-    },
-    {
-      icon: "Server",
-      title: "Hurtigt. Fleksibelt. Skalerbart.",
-      description: "Drevet af .NET for høj ydeevne og robust værktøj til enterprise‑workloads. Containeriseret udrulning."
-    }
-  ]}
-/>
+  description="Alt, hvad du behøver for at automatisere SaaS‑salg og indholdsstyring."
+>
+  <WhyReasonCard icon="Zap" title="Samlet dashboard">
+    Få overblik over webtrafik, lead‑generering og salgsperformance på et øjeblik. Alle nøglemetrics samlet ét sted.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Database" title="Open source headless CMS">
+    Strukturer og publicer indhold med Git‑synkronisering. En gratis, open source‑platform med fuld versionskontrol.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Globe" title="Integreret CRM‑system">
+    Administrer kontakter, leads og deals, mens du følger hele kunderejsen fra første besøg til konvertering.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Settings" title="Salgsautomatisering">
+    Automatisér e‑mailsekvenser, licensaktiveringer eller upsell‑tilbud øjeblikkeligt baseret på brugeradfærd.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="ShieldCheck" title="Sikkert og compliant">
+    Kør det bag din egen firewall: dine data, dine regler – fuld overholdelse af GDPR og andre privatlivsstandarder.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Server" title="Hurtigt. Fleksibelt. Skalerbart.">
+    Drevet af .NET for høj ydeevne. Klar til enterprise‑workloads og containeriseret fra dag ét.
+  </WhyReasonCard>
+</WhySection>
 
 <CompareSection
   title="Sådan klarer LeadCMS sig"
-  description="I modsætning til proprietære løsninger giver LeadCMS dig fuld kontrol over din platform."
+  description="I modsætning til proprietære løsninger beholder du fuld kontrol over platformen med LeadCMS."
   tabs={[
     {
       value: "features",
@@ -244,7 +226,7 @@ source: AI translated from 4
 
 <ContactSection
   title="Klar til at komme i gang?"
-  description="Deltag i det voksende fællesskab af SaaS‑teams, der stoler på LeadCMS for hele deres produktsalgs‑livscyklus."
+  description="Bliv en del af det voksende fællesskab af udviklere, der bygger med det gratis open source headless CMS og det indbyggede CRM."
   buttons={[
     { label: "Se på GitHub", href: "https://github.com/LeadCMS", icon: "GitBranch" },
     { label: "Kontakt os", href: "#contact-form" }
@@ -253,7 +235,7 @@ source: AI translated from 4
 
 <ContactFormSection
   title="Få professionel assistance"
-  description="Uanset om du har brug for hjælp til opsætning, tilpasset integration eller løbende support, er vores team klar til at hjælpe."
+  description="Har du brug for hjælp til opsætning, skræddersyede integrationer eller løbende support? Vores team står klar til at hjælpe."
   servicesTitle="Vores tjenester omfatter:"
   services={[
     "Professionel installation og opsætning",

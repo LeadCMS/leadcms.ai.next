@@ -3,6 +3,7 @@ import { Server, Code, CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { FadeIn, ScaleIn, StaggerContainer, StaggerItem, TypeWriter } from "@/components/ui/animated-elements"
+import { cn } from "@/lib/utils"
 
 export interface DeploySectionProps {
   title: string
@@ -11,6 +12,7 @@ export interface DeploySectionProps {
   specs: string[]
   devExperience: string[]
   docButton: { label: string; href: string }
+  variant?: "surface" | "muted" | "gradient"
 }
 
 export const DeploySection: React.FC<DeploySectionProps> = ({
@@ -20,8 +22,16 @@ export const DeploySection: React.FC<DeploySectionProps> = ({
   specs = [], // Added default empty array to prevent map error
   devExperience = [], // Added default empty array to prevent map error
   docButton = { label: "Documentation", href: "#" }, // Added default docButton to prevent href error
-}) => (
-  <section className="w-full py-12 md:py-24 lg:py-32">
+  variant = "gradient",
+}) => {
+  const backgroundClasses: Record<NonNullable<DeploySectionProps["variant"]>, string> = {
+    surface: "bg-background",
+    muted: "bg-muted dark:bg-slate-900",
+    gradient: "bg-gradient-to-br from-background via-primary/10 to-primary/20 dark:from-slate-950 dark:via-primary/20 dark:to-slate-900",
+  }
+
+  return (
+    <section className={cn("relative w-full py-12 md:py-24 lg:py-32 overflow-hidden", backgroundClasses[variant])}>
     <div className="w-full px-4 sm:px-6 lg:px-8">
       <FadeIn>
         <div className="text-center mb-16">
@@ -103,5 +113,6 @@ export const DeploySection: React.FC<DeploySectionProps> = ({
         </FadeIn>
       </div>
     </div>
-  </section>
-)
+    </section>
+  )
+}

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { FadeIn, StaggerContainer, StaggerItem, ScaleIn } from "@/components/ui/animated-elements"
 import { DynamicIcon } from "@/lib/dynamic-icon"
+import { cn } from "@/lib/utils"
 
 export interface HelpSectionProps {
   title: string
@@ -16,6 +17,7 @@ export interface HelpSectionProps {
   serviceList: string[]
   servicesTitle: string
   contactButton: { label: string; href: string }
+  variant?: "surface" | "muted" | "soft"
 }
 
 export const HelpSection: React.FC<HelpSectionProps> = ({
@@ -25,8 +27,16 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
   serviceList = [], // Added default empty array to prevent map error
   servicesTitle,
   contactButton = { label: "Contact Us", href: "#" }, // Added default contactButton to prevent href error
-}) => (
-  <section className="w-full py-12 md:py-24 lg:py-32" id="help">
+  variant = "surface",
+}) => {
+  const backgroundClasses: Record<NonNullable<HelpSectionProps["variant"]>, string> = {
+    surface: "bg-background",
+    muted: "bg-muted dark:bg-slate-900",
+    soft: "bg-primary/5 dark:bg-primary/10",
+  }
+
+  return (
+    <section className={cn("w-full py-12 md:py-24 lg:py-32", backgroundClasses[variant])} id="help">
     <div className="w-full px-4 sm:px-6 lg:px-8">
       <div className="grid gap-12 md:grid-cols-2 items-center max-w-[1750px] mx-auto">
         <FadeIn direction="left">
@@ -82,5 +92,6 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
         </ScaleIn>
       </div>
     </div>
-  </section>
-)
+    </section>
+  )
+}

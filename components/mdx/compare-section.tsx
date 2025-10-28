@@ -139,10 +139,8 @@ export const CompareSection: React.FC<CompareSectionProps> = ({
     }
   ) as React.ReactElement<CompareTabProps>[]
 
-  console.log('CompareSection rendering, tabs found:', tabs.length)
 
   if (tabs.length === 0) {
-    console.warn('CompareSection: No tabs found')
     return null
   }
 

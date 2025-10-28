@@ -106,146 +106,189 @@ publishedAt: '2025-05-24T15:58:49.176Z'
 <DeploySection
   title="Deploy in Seconds"
   description="Get up and running with a single command. No complex setup required."
-  commands={[
-"git clone https://github.com/LeadCMS/leadcms.deploy.git",
-"cd leadcms.deploy",
-"./generate-env.sh",
-"docker compose up -d"
-]}
-  specs={[
-"Built on .NET for high performance",
-"Containerized with Docker for consistent deployment",
-"PostgreSQL database for reliable data storage",
-"RESTful API with OpenAPI documentation"
-]}
-  devExperience={[
-"Comprehensive API for custom integrations",
-"Plugin system for extending functionality",
-"Webhooks for real-time event notifications",
-"Detailed documentation and examples"
-]}
-  docButton={{ label: "View Documentation", href: "/docs" }}
-/>
+>
+  <DeployCommands>
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+./generate-env.sh
+docker compose up -d
+  </DeployCommands>
 
-<HelpSection
+  <DeployCards>
+    <FeaturesCardWithBullets icon="Server" title="Technical Specifications">
+      High-performance platform built for modern deployments.
+
+      * Built on .NET for high performance
+      * Containerized with Docker for consistent deployment
+      * PostgreSQL database for reliable data storage
+      * RESTful API with OpenAPI documentation
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Code" title="Developer Experience">
+      Everything you need to extend and customize the platform.
+
+      * Comprehensive API for custom integrations
+      * Plugin system for extending functionality
+      * Webhooks for real-time event notifications
+      * Detailed documentation and examples
+    </FeaturesCardWithBullets>
+  </DeployCards>
+
+  <DeployButton href="/docs">View Documentation</DeployButton>
+</DeploySection>
+
+<ServicesSection
   title="Get Expert Help When You Need It"
   description="Whether you're launching an MVP or scaling a mature product, our team stands by to help you get started."
-  services={[
-{
-icon: "Settings",
-title: "Professional Setup",
-description: "We can guide you through installation or handle the entire process, ensuring a smooth launch."
-},
-{
-icon: "Code",
-title: "Custom Development",
-description: "Need a specialized workflow or integration? Our experts can tailor the platform to your unique requirements."
-},
-{
-icon: "ShieldCheck",
-title: "Ongoing Support",
-description: "From performance tuning to updates, we're here to back your team with expert assistance."
-}
-]}
-  serviceList={[
-"Professional installation and setup",
-"Custom development and integrations",
-"Training and onboarding",
-"Ongoing maintenance and support",
-"Performance optimization"
-]}
   servicesTitle="Our Services Include:"
-  contactButton={{ label: "Contact Our Team", href: "#contact-form" }}
-/>
+>
+  <ServiceCard icon="Settings" title="Professional Setup">
+    We can guide you through installation or handle the entire process, ensuring a smooth launch.
+  </ServiceCard>
 
-<WhySection
+  <ServiceCard icon="Code" title="Custom Development">
+    Need a specialized workflow or integration? Our experts can tailor the platform to your unique requirements.
+  </ServiceCard>
+
+  <ServiceCard icon="ShieldCheck" title="Ongoing Support">
+    From performance tuning to updates, we're here to back your team with expert assistance.
+  </ServiceCard>
+
+  <ServiceList>
+    * Professional installation and setup
+    * Custom development and integrations
+    * Training and onboarding
+    * Ongoing maintenance and support
+    * Performance optimization
+  </ServiceList>
+
+  <ServiceButton href="#contact-form">Contact Our Team</ServiceButton>
+</ServicesSection>
+
+<CapabilitiesSection
   title="Key Features"
   description="Everything you need to build modern websites and automate your content management."
 >
-  <WhyReasonCard icon="Zap" title="Unified Dashboard">
+  <CapabilityCard icon="Zap" title="Unified Dashboard">
     Track site traffic, lead generation, and sales performance at a glance. Consolidate vital metrics in one place.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Database" title="Open Source Headless CMS">
+  <CapabilityCard icon="Database" title="Open Source Headless CMS">
     Structure and publish content with Git sync. Free, open source platform with complete version control.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Globe" title="Integrated CRM System">
+  <CapabilityCard icon="Globe" title="Integrated CRM System">
     Manage contacts, leads, and deals while tracking the entire customer journey from first visit to conversion.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Settings" title="Sales Automation">
+  <CapabilityCard icon="Settings" title="Sales Automation">
     Automated triggers for email sequences, license activations, and upsell offers based on user behavior patterns.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="ShieldCheck" title="Secure & Compliant">
+  <CapabilityCard icon="ShieldCheck" title="Secure & Compliant">
     Deploy it behind your firewall. Your data, your rules - ensuring compliance with GDPR or other privacy standards.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Server" title="Fast. Flexible. Scalable.">
+  <CapabilityCard icon="Server" title="Fast. Flexible. Scalable.">
     Powered by .NET for high-performance and robust tooling for enterprise workloads. Containerized deployment.
-  </WhyReasonCard>
-</WhySection>
+  </CapabilityCard>
+</CapabilitiesSection>
 
 <CompareSection
   title="How LeadCMS Compares"
   description="Unlike proprietary solutions, LeadCMS gives you complete control over your platform."
-  tabs={[
-{
-value: "features",
-label: "Features",
-headers: ["LeadCMS", "HubSpot", "Salesforce"],
-rows: [
-{ label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-{ label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-{ label: "Self-Hosted", values: [{ icon: "check" }, "No", "No"] },
-{ label: "Open Source", values: [{ icon: "check" }, "No", "No"] }
-]
-},
-{
-value: "pricing",
-label: "Pricing",
-headers: ["LeadCMS", "HubSpot", "Salesforce"],
-rows: [
-{ label: "Per-User Fees", values: ["No", "Yes", "Yes"] },
-{ label: "Feature Lockouts", values: ["No", "Yes", "Yes"] },
-{ label: "One-time Cost", values: ["Optional", "No", "No"] },
-{ label: "Subscription", values: ["Optional Support", "Required", "Required"] }
-]
-},
-{
-value: "control",
-label: "Control",
-headers: ["LeadCMS", "HubSpot", "Salesforce"],
-rows: [
-{ label: "Source Code Access", values: [{ icon: "check" }, "No", "No"] },
-{ label: "Custom Extensions", values: ["Unlimited", "Limited", "Limited"] },
-{ label: "Data Ownership", values: ["100%", "Shared", "Shared"] },
-{ label: "Deployment Control", values: ["Complete", "None", "Limited"] }
-]
-}
-]}
-/>
+>
+  <CompareTab value="features" label="Features" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="CMS">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="CRM">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="Self-Hosted">
+      <CompareCell icon="check" />
+      <CompareCell>No</CompareCell>
+      <CompareCell>No</CompareCell>
+    </CompareRow>
+    <CompareRow label="Open Source">
+      <CompareCell icon="check" />
+      <CompareCell>No</CompareCell>
+      <CompareCell>No</CompareCell>
+    </CompareRow>
+  </CompareTab>
 
-<ContactSection
+  <CompareTab value="pricing" label="Pricing" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Per-User Fees">
+      <CompareCell>No</CompareCell>
+      <CompareCell>Yes</CompareCell>
+      <CompareCell>Yes</CompareCell>
+    </CompareRow>
+    <CompareRow label="Feature Lockouts">
+      <CompareCell>No</CompareCell>
+      <CompareCell>Yes</CompareCell>
+      <CompareCell>Yes</CompareCell>
+    </CompareRow>
+    <CompareRow label="One-time Cost">
+      <CompareCell>Optional</CompareCell>
+      <CompareCell>No</CompareCell>
+      <CompareCell>No</CompareCell>
+    </CompareRow>
+    <CompareRow label="Subscription">
+      <CompareCell>Optional Support</CompareCell>
+      <CompareCell>Required</CompareCell>
+      <CompareCell>Required</CompareCell>
+    </CompareRow>
+  </CompareTab>
+
+  <CompareTab value="control" label="Control" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Source Code Access">
+      <CompareCell icon="check" />
+      <CompareCell>No</CompareCell>
+      <CompareCell>No</CompareCell>
+    </CompareRow>
+    <CompareRow label="Custom Extensions">
+      <CompareCell>Unlimited</CompareCell>
+      <CompareCell>Limited</CompareCell>
+      <CompareCell>Limited</CompareCell>
+    </CompareRow>
+    <CompareRow label="Data Ownership">
+      <CompareCell>100%</CompareCell>
+      <CompareCell>Shared</CompareCell>
+      <CompareCell>Shared</CompareCell>
+    </CompareRow>
+    <CompareRow label="Deployment Control">
+      <CompareCell>Complete</CompareCell>
+      <CompareCell>None</CompareCell>
+      <CompareCell>Limited</CompareCell>
+    </CompareRow>
+  </CompareTab>
+</CompareSection>
+
+<CTASection
   title="Ready to Get Started?"
   description="Join the growing community of developers using the free, open source headless CMS with built-in CRM."
-  buttons={[
-{ label: "View on GitHub", href: "https://github.com/LeadCMS", icon: "GitBranch" },
-{ label: "Contact Us", href: "#contact-form" }
-]}
-/>
+>
+  <CTAButton href="https://github.com/LeadCMS" icon="GitBranch">View on GitHub</CTAButton>
+  <CTAButton href="#contact-form">Contact Us</CTAButton>
+</CTASection>
 
 <ContactFormSection
   title="Get Professional Assistance"
   description="Whether you need help with setup, custom integration, or ongoing support, our team is here to help."
-  servicesTitle="Our Services Include:"
-  services={[
-"Professional installation and setup",
-"Custom development and integrations",
-"Training and onboarding",
-"Ongoing maintenance and support",
-"Performance optimization"
-]}
-  formComponent={<ContactUs />}
-/>
+>
+  <ContactFormServiceList title="Our Services Include:">
+    * Professional installation and setup
+    * Custom development and integrations
+    * Training and onboarding
+    * Ongoing maintenance and support
+    * Performance optimization
+  </ContactFormServiceList>
+
+  <ContactForm>
+    <ContactUs />
+  </ContactForm>
+</ContactFormSection>

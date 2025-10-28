@@ -1,7 +1,5 @@
 import type { MDXComponents } from "mdx/types"
-import { CompareSection } from "./mdx/compare-section"
 import mdxComponents from "@/components/mdx"
-import { ContactFormSection } from "./mdx/contact-form-section"
 import {
   HeroSection,
   HeroBadge,
@@ -22,9 +20,12 @@ import {
   FeatureBullet
 } from "./mdx/features-section"
 import { WhySection, WhySectionTitle, WhySectionDescription, WhyReasonCard } from "./mdx/why-section"
-import { DeploySection } from "./mdx/deploy-section"
-import { HelpSection } from "./mdx/help-section"
-import { ContactSection } from "./mdx/contact-section"
+import { CapabilitiesSection, CapabilitiesSectionTitle, CapabilitiesSectionDescription, CapabilityCard } from "./mdx/capabilities-section"
+import { DeploySection, DeployCommands, DeployCards, DeployButton } from "./mdx/deploy-section"
+import { ServicesSection, ServiceCard, ServiceList, ServiceButton } from "./mdx/services-section"
+import { CTASection, CTAButton } from "./mdx/cta-section"
+import { ContactFormSection, ContactFormServiceList, ContactForm } from "./mdx/contact-form-section"
+import { CompareSection, CompareTab, CompareRow, CompareCell } from "./mdx/compare-section"
 import {
   LegalSection,
   LegalList,
@@ -90,11 +91,27 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     WhySectionTitle,
     WhySectionDescription,
     WhyReasonCard,
+    CapabilitiesSection,
+    CapabilitiesSectionTitle,
+    CapabilitiesSectionDescription,
+    CapabilityCard,
     DeploySection,
-    HelpSection,
+    DeployCommands,
+    DeployCards,
+    DeployButton,
+    ServicesSection,
+    ServiceCard,
+    ServiceList,
+    ServiceButton,
     CompareSection,
-    ContactSection,
+    CompareTab,
+    CompareRow,
+    CompareCell,
+    CTASection,
+    CTAButton,
     ContactFormSection,
+    ContactFormServiceList,
+    ContactForm,
     // Legal components
     LegalSection,
     LegalList,

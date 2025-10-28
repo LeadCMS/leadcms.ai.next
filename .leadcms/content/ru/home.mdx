@@ -101,149 +101,194 @@ source: AI translated from 4
   </WhyReasonCard>
 </WhySection>
 
+
 <DeploySection
   title="Разверните за секунды"
   description="Запуститесь одной командой. Никакой сложной настройки."
-  commands={[
-  "git clone https://github.com/LeadCMS/leadcms.deploy.git",
-  "cd leadcms.deploy",
-  "./generate-env.sh",
-  "docker compose up -d"
-]}
-  specs={[
-  "Создана на .NET для высокой производительности",
-  "Контейнеризация с Docker для предсказуемого развертывания",
-  "База данных PostgreSQL для надёжного хранения данных",
-  "RESTful API с документацией OpenAPI"
-]}
-  devExperience={[
-  "Полноценный API для пользовательских интеграций",
-  "Система плагинов для расширения функциональности",
-  "Вебхуки для уведомлений о событиях в реальном времени",
-  "Подробная документация и примеры"
-]}
-  docButton={{ label: "Посмотреть документацию", href: "/ru/docs" }}
-/>
+>
+  <DeployCommands>
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+./generate-env.sh
+docker compose up -d
+  </DeployCommands>
 
-<HelpSection
-  title="Получите помощь экспертов, когда она вам нужна"
-  description="Запускаете MVP или масштабируете зрелый продукт? Наша команда готова помочь вам начать."
-  services={[
-  {
-    icon: "Settings",
-    title: "Профессиональная настройка",
-    description: "Проведём через установку или возьмём процесс на себя, обеспечив гладкий запуск."
-  },
-  {
-    icon: "Code",
-    title: "Индивидуальная разработка",
-    description: "Нужен особый процесс или интеграция? Наши эксперты адаптируют платформу под ваши требования."
-  },
-  {
-    icon: "ShieldCheck",
-    title: "Постоянная поддержка",
-    description: "От оптимизации производительности до обновлений - мы всегда готовы поддержать вашу команду."
-  }
-]}
-  serviceList={[
-  "Профессиональная установка и настройка",
-  "Индивидуальная разработка и интеграции",
-  "Обучение и онбординг",
-  "Постоянное сопровождение и поддержка",
-  "Оптимизация производительности"
-]}
+  <DeployCards>
+    <FeaturesCardWithBullets icon="Server" title="Технические характеристики">
+      Высокопроизводительная платформа для современного развертывания.
+
+      * Создана на .NET для высокой производительности
+      * Контейнеризация с Docker для предсказуемого развертывания
+      * База данных PostgreSQL для надёжного хранения данных
+      * RESTful API с документацией OpenAPI
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Code" title="Опыт разработчика">
+      Всё необходимое для расширения и настройки платформы.
+
+      * Полноценный API для пользовательских интеграций
+      * Система плагинов для расширения функциональности
+      * Вебхуки для уведомлений о событиях в реальном времени
+      * Подробная документация и примеры
+    </FeaturesCardWithBullets>
+  </DeployCards>
+
+  <DeployButton href="/ru/docs">Посмотреть документацию</DeployButton>
+</DeploySection>
+
+<ServicesSection
+  title="Экспертная помощь, когда вам нужна"
+  description="Запускаете MVP или масштабируете зрелый продукт - наша команда готова помочь вам начать."
   servicesTitle="Наши услуги включают:"
-  contactButton={{ label: "Связаться с нашей командой", href: "#contact-form" }}
-/>
+  variant="soft"
+>
+  <ServiceCard icon="Settings" title="Профессиональная настройка">
+    Проведём через установку или возьмём процесс на себя, обеспечив гладкий запуск.
+  </ServiceCard>
 
-<WhySection
+  <ServiceCard icon="Code" title="Индивидуальная разработка">
+    Нужен особый процесс или интеграция? Наши эксперты адаптируют платформу под ваши требования.
+  </ServiceCard>
+
+  <ServiceCard icon="ShieldCheck" title="Постоянная поддержка">
+    От оптимизации производительности до обновлений - мы всегда готовы поддержать вашу команду.
+  </ServiceCard>
+
+  <ServiceList>
+    * Профессиональная установка и настройка
+    * Индивидуальная разработка и интеграции
+    * Обучение и онбординг
+    * Постоянное сопровождение и поддержка
+    * Оптимизация производительности
+  </ServiceList>
+
+  <ServiceButton href="#contact-form">Связаться с нашей командой</ServiceButton>
+</ServicesSection>
+
+<CapabilitiesSection
   title="Ключевые возможности"
   description="Всё, что нужно для автоматизации продаж и управления контентом в вашем SaaS."
 >
-  <WhyReasonCard icon="Zap" title="Единая панель управления">
+  <CapabilityCard icon="Zap" title="Единая панель управления">
     Отслеживайте трафик, генерацию лидов и эффективность продаж одним взглядом. Все ключевые метрики в одном месте.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Database" title="Headless CMS с открытым исходным кодом">
+  <CapabilityCard icon="Database" title="Headless CMS с открытым исходным кодом">
     Структурируйте и публикуйте контент с синхронизацией через Git. Свободная платформа с полным контролем версий.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Globe" title="Интегрированная CRM‑система">
+  <CapabilityCard icon="Globe" title="Интегрированная CRM‑система">
     Управляйте контактами, лидами и сделками, отслеживая путь клиента от первого касания до конверсии.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Settings" title="Автоматизация продаж">
+  <CapabilityCard icon="Settings" title="Автоматизация продаж">
     Запускайте серии писем, активации лицензий или предложения допродажи мгновенно на основе поведения пользователя.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="ShieldCheck" title="Безопасность и соответствие">
+  <CapabilityCard icon="ShieldCheck" title="Безопасность и соответствие">
     Разворачивайте решение за собственным файерволом. Ваши данные - ваши правила, при этом соблюдаются требования GDPR и других стандартов конфиденциальности.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Server" title="Быстро. Гибко. Масштабируемо.">
+  <CapabilityCard icon="Server" title="Быстро. Гибко. Масштабируемо.">
     Работает на .NET с высокой производительностью и надёжными инструментами для корпоративных задач. Контейнеризованное развертывание.
-  </WhyReasonCard>
-</WhySection>
+  </CapabilityCard>
+</CapabilitiesSection>
 
 <CompareSection
   title="Сравнение LeadCMS"
   description="В отличие от проприетарных решений, LeadCMS даёт вам полный контроль над платформой."
-  tabs={[
-  {
-    value: "features",
-    label: "Возможности",
-    headers: ["LeadCMS", "HubSpot", "Salesforce"],
-    rows: [
-      { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-      { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-      { label: "Self-Hosted", values: [{ icon: "check" }, "Нет", "Нет"] },
-      { label: "Open Source", values: [{ icon: "check" }, "Нет", "Нет"] }
-    ]
-  },
-  {
-    value: "pricing",
-    label: "Цены",
-    headers: ["LeadCMS", "HubSpot", "Salesforce"],
-    rows: [
-      { label: "Per-User Fees", values: ["Нет", "Да", "Да"] },
-      { label: "Feature Lockouts", values: ["Нет", "Да", "Да"] },
-      { label: "One-time Cost", values: ["Опционально", "Нет", "Нет"] },
-      { label: "Subscription", values: ["Опциональная поддержка", "Обязательно", "Обязательно"] }
-    ]
-  },
-  {
-    value: "control",
-    label: "Контроль",
-    headers: ["LeadCMS", "HubSpot", "Salesforce"],
-    rows: [
-      { label: "Source Code Access", values: [{ icon: "check" }, "Нет", "Нет"] },
-      { label: "Custom Extensions", values: ["Неограниченно", "Ограничено", "Ограничено"] },
-      { label: "Data Ownership", values: ["100%", "Совместное", "Совместное"] },
-      { label: "Deployment Control", values: ["Полный", "Нет", "Ограниченный"] }
-    ]
-  }
-]}
-/>
+>
+  <CompareTab value="features" label="Возможности" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="CMS">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="CRM">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="Self-Hosted">
+      <CompareCell icon="check" />
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+    <CompareRow label="Open Source">
+      <CompareCell icon="check" />
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+  </CompareTab>
 
-<ContactSection
+  <CompareTab value="pricing" label="Цены" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Per-User Fees">
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Да</CompareCell>
+      <CompareCell>Да</CompareCell>
+    </CompareRow>
+    <CompareRow label="Feature Lockouts">
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Да</CompareCell>
+      <CompareCell>Да</CompareCell>
+    </CompareRow>
+    <CompareRow label="One-time Cost">
+      <CompareCell>Опционально</CompareCell>
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+    <CompareRow label="Subscription">
+      <CompareCell>Опциональная поддержка</CompareCell>
+      <CompareCell>Обязательно</CompareCell>
+      <CompareCell>Обязательно</CompareCell>
+    </CompareRow>
+  </CompareTab>
+
+  <CompareTab value="control" label="Контроль" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Source Code Access">
+      <CompareCell icon="check" />
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+    <CompareRow label="Custom Extensions">
+      <CompareCell>Неограниченно</CompareCell>
+      <CompareCell>Ограничено</CompareCell>
+      <CompareCell>Ограничено</CompareCell>
+    </CompareRow>
+    <CompareRow label="Data Ownership">
+      <CompareCell>100%</CompareCell>
+      <CompareCell>Совместное</CompareCell>
+      <CompareCell>Совместное</CompareCell>
+    </CompareRow>
+    <CompareRow label="Deployment Control">
+      <CompareCell>Полный</CompareCell>
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Ограниченный</CompareCell>
+    </CompareRow>
+  </CompareTab>
+</CompareSection>
+
+<CTASection
   title="Готовы начать?"
   description="Присоединяйтесь к растущему сообществу разработчиков, которые используют свободную headless CMS с открытым исходным кодом и встроенной CRM."
-  buttons={[
-  { label: "Посмотреть на GitHub", href: "https://github.com/LeadCMS", icon: "GitBranch" },
-  { label: "Связаться с нами", href: "#contact-form" }
-]}
-/>
+>
+  <CTAButton href="https://github.com/LeadCMS" icon="GitBranch">Посмотреть на GitHub</CTAButton>
+  <CTAButton href="#contact-form">Связаться с нами</CTAButton>
+</CTASection>
 
 <ContactFormSection
   title="Получите профессиональную помощь"
   description="Нужна помощь с настройкой, кастомной интеграцией или постоянной поддержкой? Наша команда всегда рядом."
-  servicesTitle="Наши услуги включают:"
-  services={[
-  "Профессиональная установка и настройка",
-  "Индивидуальная разработка и интеграции",
-  "Обучение и онбординг",
-  "Постоянное сопровождение и поддержка",
-  "Оптимизация производительности"
-]}
-  formComponent={<ContactUs />}
-/>
+>
+  <ContactFormServiceList title="Наши услуги включают:">
+    * Профессиональная установка и настройка
+    * Индивидуальная разработка и интеграции
+    * Обучение и онбординг
+    * Постоянное сопровождение и поддержка
+    * Оптимизация производительности
+  </ContactFormServiceList>
+
+  <ContactForm>
+    <ContactUs />
+  </ContactForm>
+</ContactFormSection>

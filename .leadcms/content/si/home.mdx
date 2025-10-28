@@ -104,146 +104,190 @@ source: AI translated from 4
 <DeploySection
   title="මිනිත්තු කිහිපයකින් දියත් කරන්න"
   description="Docker සහ අපගේ සරල deploy ස්ක්‍රිප්ට් භාවිතයෙන් LeadCMS ඔබ කැමති පරිසරයක දියත් කරන්න."
-  commands={[
-    "git clone https://github.com/LeadCMS/leadcms.deploy.git",
-    "cd leadcms.deploy",
-    "./generate-env.sh",
-    "docker compose up -d"
-  ]}
-  specs={[
-    "උසස් කාර්ය සාධනය සඳහා .NET මත ගොඩනැගිනි",
-    "ඒකාකාර දියත් කිරීම් සඳහා Docker සමඟ containerized",
-    "විශ්වාසනීය දත්ත ගබඩා කිරීම සඳහා PostgreSQL",
-    "OpenAPI ප්‍රලේඛනය සමඟ RESTful API"
-  ]}
-  devExperience={[
-    "අභිරුචි ඒකාබද්ධකිරීම් සඳහා සම්පූර්ණ API",
-    "ක්‍රියාකාරීත්වය විස්තාරය සඳහා plugin පද්ධතිය",
-    "සත්‍ය කාලීන සිදුවීම් නිවේදන සඳහා webhooks",
-    "විස්තරාත්මක ප්‍රලේඛනය සහ උදාහරණ"
-  ]}
-  docButton={{ label: "ලේඛන බලන්න", href: "/docs" }}
-/>
+>
+  <DeployCommands>
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+./generate-env.sh
+docker compose up -d
+  </DeployCommands>
 
-<HelpSection
-  title="ඔබට අවශ්‍ය විට විශේෂඥ සහාය ලබා ගන්න"
-  description="ඔබ MVP එකක් දියත් කරනවාද, නැත්නම් පරිපක්ව වූ නිෂ්පාදනයක් පරිමාණය කරනවාද, අවශ්‍ය වේලාවට අපගේ කණ්ඩායම ඔබට සහාය දක්වයි."
-  services={[
-    {
-      icon: "Settings",
-      title: "වෘත්තීය පිහිටුවීම",
-      description: "ස්ථාපනයේදී ඔබව මඟපෙන්වීමට හෝ සම්පූර්ණ ක්‍රියාවලිය අප විසින් භාරගැනීමට අපට හැක, සුමට ආරම්භයක් සහතික කරමින්."
-    },
-    {
-      icon: "Code",
-      title: "රිසිකරණ සංවර්ධනය",
-      description: "විශේෂ වැඩ ප්‍රවාහයක් හෝ ඒකාබද්ධකරණයක් අවශ්‍යද? ඔබගේ අනන්‍ය අවශ්‍යතා සඳහා වේදිකාව අභිරුචිකරණය කිරීමට අපගේ විශේෂඥයින්ට හැක."
-    },
-    {
-      icon: "ShieldCheck",
-      title: "නිරන්තර සහාය",
-      description: "ක්‍රියාදාක්ෂමතා මෙලි කිරීමෙන් යාවත්කාලීන දක්වා, ඔබගේ කණ්ඩායමට අපි නිරන්තර විශේෂඥ සහාය ලබා දෙමු."
-    }
-  ]}
-  serviceList={[
-    "වෘත්තීය ස්ථාපනය සහ පිහිටුවීම",
-    "රිසිකරණ සංවර්ධනය සහ ඒකාබද්ධකරණ",
-    "පුහුණු කිරීම සහ ඇතුළත් කිරීම",
-    "නිරන්තර නඩත්තු සහ සහාය",
-    "කාර්ය සාධන ප්‍රශස්තිකරණය"
-  ]}
+  <DeployCards>
+    <FeaturesCardWithBullets icon="Server" title="තාක්ෂණික විශේෂාංග">
+      නවීන දියත් කිරීම් සඳහා ගොඩනගා ඇති උසස් කාර්ය සාධන වේදිකාව.
+
+      * උසස් කාර්ය සාධනය සඳහා .NET මත ගොඩනැගිනි
+      * ඒකාකාර දියත් කිරීම් සඳහා Docker සමඟ containerized
+      * විශ්වාසනීය දත්ත ගබඩා කිරීම සඳහා PostgreSQL
+      * OpenAPI ප්‍රලේඛනය සමඟ RESTful API
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Code" title="සංවර්ධක අත්දැකීම">
+      වේදිකාව විස්තාරය හා අභිරුචිකරණය සඳහා අවශ්‍ය සියල්ල.
+
+      * අභිරුචි ඒකාබද්ධකිරීම් සඳහා සම්පූර්ණ API
+      * ක්‍රියාකාරීත්වය විස්තාරය සඳහා plugin පද්ධතිය
+      * සත්‍ය කාලීන සිදුවීම් නිවේදන සඳහා webhooks
+      * විස්තරාත්මක ප්‍රලේඛනය සහ උදාහරණ
+    </FeaturesCardWithBullets>
+  </DeployCards>
+
+  <DeployButton href="/docs">ලේඛන බලන්න</DeployButton>
+</DeploySection>
+
+<ServicesSection
+  title="අවශ්‍ය වූ විට විශේෂඥ සහාය ලබාගන්න"
+  description="ඔබ MVP එකක් දියත් කරන්නේ හෝ පරිණත නිෂ්පාදනයක් පරිමාණගත කරන්නේ වුවත්, ඔබට පටන්ගැනීමට අපගේ කණ්ඩායම සූදානමින් සිටී."
   servicesTitle="අපගේ සේවා ඇතුළත් කරන්නේ:"
-  contactButton={{ label: "අපගේ කණ්ඩායම අමතන්න", href: "#contact-form" }}
-/>
+  variant="soft"
+>
+  <ServiceCard icon="Settings" title="වෘත්තීය පිහිටුවීම">
+    ස්ථාපනයේදී ඔබව මඟපෙන්වීමට හෝ සම්පූර්ණ ක්‍රියාවලිය අප විසින් භාරගැනීමට අපට හැක, සුමට ආරම්භයක් සහතික කරමින්.
+  </ServiceCard>
 
-<WhySection
+  <ServiceCard icon="Code" title="රිසිකරණ සංවර්ධනය">
+    විශේෂ වැඩ ප්‍රවාහයක් හෝ ඒකාබද්ධකරණයක් අවශ්‍යද? ඔබගේ අනන්‍ය අවශ්‍යතා සඳහා වේදිකාව අභිරුචිකරණය කිරීමට අපගේ විශේෂඥයින්ට හැක.
+  </ServiceCard>
+
+  <ServiceCard icon="ShieldCheck" title="නිරන්තර සහාය">
+    ක්‍රියාදාක්ෂමතා මෙලි කිරීමෙන් යාවත්කාලීන දක්වා, ඔබගේ කණ්ඩායමට අපි නිරන්තර විශේෂඥ සහාය ලබා දෙමු.
+  </ServiceCard>
+
+  <ServiceList>
+    * වෘත්තීය ස්ථාපනය සහ පිහිටුවීම
+    * රිසිකරණ සංවර්ධනය සහ ඒකාබද්ධකරණ
+    * පුහුණු කිරීම සහ ඇතුළත් කිරීම
+    * නිරන්තර නඩත්තු සහ සහාය
+    * කාර්ය සාධන ප්‍රශස්තිකරණය
+  </ServiceList>
+
+  <ServiceButton href="#contact-form">අපගේ කණ්ඩායම අමතන්න</ServiceButton>
+</ServicesSection>
+
+<CapabilitiesSection
   title="ප්‍රධාන විශේෂාංග"
   description="SaaS විකුණුම් සහ අන්තර්ගත කළමනාකරණය ස්වයංක්‍රීය කිරීමට අවශ්‍ය සියල්ල මෙහි ඇත."
 >
-  <WhyReasonCard icon="Zap" title="එකීකෘත ඩෑෂ්බෝඩ්">
+  <CapabilityCard icon="Zap" title="එකීකෘත ඩෑෂ්බෝඩ්">
     වෙබ් ගමනාගමන, ලීඩ් ජනනය සහ විකුණුම් කාර්ය සාධනය එකම පුවරුවකින් නිරීක්ෂණය කරන්න. අත්‍යවශ්‍ය මැනුම් එක තැනක එකතු කරගන්න.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Database" title="විවෘත මූලාශ්‍ර headless CMS">
+  <CapabilityCard icon="Database" title="විවෘත මූලාශ්‍ර headless CMS">
     Git සමඟ සමමිතිකව අන්තර්ගතය ව්‍යුහගත කර ප්‍රකාශ කරන්න. සම්පූර්ණ version control සහිත නොමිලේ වේදිකාවකි.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Globe" title="එකාබද්ධ CRM පද්ධතිය">
+  <CapabilityCard icon="Globe" title="එකාබද්ධ CRM පද්ධතිය">
     සම්බන්ධතා, ලීඩ් සහ ගනුදෙනු කළමනාකරණය කරමින් පළමු පිවිසුමෙන් පරිවර්තනය දක්වා සම්පූර්ණ ගමන පාලනය කරන්න.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Settings" title="විකුණුම් ස්වයංක්‍රීයකරණය">
+  <CapabilityCard icon="Settings" title="විකුණුම් ස්වයංක්‍රීයකරණය">
     පරිශීලක හැසිරීම මත පදනම්ව ඊමේල් අනුපිළිවෙළ, බලපත්‍ර සක්‍රීය කිරීම හෝ upsell යෝජනා තත්ක්ෂණයෙන් ක්‍රියාත්මක කරන්න.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="ShieldCheck" title="ආරක්ෂිත සහ අනුකූල">
+  <CapabilityCard icon="ShieldCheck" title="ආරක්ෂිත සහ අනුකූල">
     ඔබේ firewall පිටුපසින් දියත් කර ඔබගේ දත්ත ඔබගේ නීති අනුව රැකගන්න. GDPR සහ අනෙකුත් පෞද්ගලිකත්ව ප්‍රමිතීන්ට පූර්ණ අනුකූලතාවය.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Server" title="වේගවත්. ඉවහල්. පරිමාණගත.">
+  <CapabilityCard icon="Server" title="වේගවත්. ඉවහල්. පරිමාණගත.">
     .NET මඟින් බලගන්වන නිසා උසස් කාර්ය සාධනය සහ කර්මාන්ත මට්ටමේ වැඩබර සඳහා සුදුසුය. ආරම්භය සිටම containerized deployment.
-  </WhyReasonCard>
-</WhySection>
+  </CapabilityCard>
+</CapabilitiesSection>
 
 <CompareSection
   title="LeadCMS සසඳන්නේ කෙසේද"
   description="අයිතිවාසික විසඳුම්වලට වඩා LeadCMS සමඟ ඔබේ වේදිකාව මත සම්පූර්ණ පාලනය ඔබ සතු වේ."
-  tabs={[
-    {
-      value: "features",
-      label: "විශේෂාංග",
-      headers: ["LeadCMS", "HubSpot", "Salesforce"],
-      rows: [
-        { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-        { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-        { label: "ස්වයං-භාරගත", values: [{ icon: "check" }, "නැහැ", "නැහැ"] },
-        { label: "විවෘත මූලාශ්‍ර", values: [{ icon: "check" }, "නැහැ", "නැහැ"] }
-      ]
-    },
-    {
-      value: "pricing",
-      label: "මිල ගණන්",
-      headers: ["LeadCMS", "HubSpot", "Salesforce"],
-      rows: [
-        { label: "ප්‍රති පරිශීලක ගාස්තු", values: ["නැහැ", "ඔව්", "ඔව්"] },
-        { label: "විශේෂාංග අවහිර කිරීම්", values: ["නැහැ", "ඔව්", "ඔව්"] },
-        { label: "එක්වර වියදම", values: ["විකල්පීය", "නැහැ", "නැහැ"] },
-        { label: "දායකත්වය", values: ["විකල්පීය සහය", "අවශ්‍ය", "අවශ්‍ය"] }
-      ]
-    },
-    {
-      value: "control",
-      label: "පාලනය",
-      headers: ["LeadCMS", "HubSpot", "Salesforce"],
-      rows: [
-        { label: "මූලාශ්‍ර කේත ප්‍රවේශය", values: [{ icon: "check" }, "නැහැ", "නැහැ"] },
-        { label: "රිසිකරණ විස්තාර", values: ["අසීමිත", "සීමිත", "සීමිත"] },
-        { label: "දත්ත හිමිකම්", values: ["100%", "හවුල්", "හවුල්"] },
-        { label: "දියත් කිරීමේ පාලනය", values: ["සම්පූර්ණ", "කිසිවක් නැත", "සීමිත"] }
-      ]
-    }
-  ]}
-/>
+>
+  <CompareTab value="features" label="විශේෂාංග" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="CMS">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="CRM">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="ස්වයං-භාරගත">
+      <CompareCell icon="check" />
+      <CompareCell>නැහැ</CompareCell>
+      <CompareCell>නැහැ</CompareCell>
+    </CompareRow>
+    <CompareRow label="විවෘත මූලාශ්‍ර">
+      <CompareCell icon="check" />
+      <CompareCell>නැහැ</CompareCell>
+      <CompareCell>නැහැ</CompareCell>
+    </CompareRow>
+  </CompareTab>
 
-<ContactSection
+  <CompareTab value="pricing" label="මිල ගණන්" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="ප්‍රති පරිශීලක ගාස්තු">
+      <CompareCell>නැහැ</CompareCell>
+      <CompareCell>ඔව්</CompareCell>
+      <CompareCell>ඔව්</CompareCell>
+    </CompareRow>
+    <CompareRow label="විශේෂාංග අවහිර කිරීම්">
+      <CompareCell>නැහැ</CompareCell>
+      <CompareCell>ඔව්</CompareCell>
+      <CompareCell>ඔව්</CompareCell>
+    </CompareRow>
+    <CompareRow label="එක්වර වියදම">
+      <CompareCell>විකල්පීය</CompareCell>
+      <CompareCell>නැහැ</CompareCell>
+      <CompareCell>නැහැ</CompareCell>
+    </CompareRow>
+    <CompareRow label="දායකත්වය">
+      <CompareCell>විකල්පීය සහය</CompareCell>
+      <CompareCell>අවශ්‍ය</CompareCell>
+      <CompareCell>අවශ්‍ය</CompareCell>
+    </CompareRow>
+  </CompareTab>
+
+  <CompareTab value="control" label="පාලනය" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="මූලාශ්‍ර කේත ප්‍රවේශය">
+      <CompareCell icon="check" />
+      <CompareCell>නැහැ</CompareCell>
+      <CompareCell>නැහැ</CompareCell>
+    </CompareRow>
+    <CompareRow label="රිසිකරණ විස්තාර">
+      <CompareCell>අසීමිත</CompareCell>
+      <CompareCell>සීමිත</CompareCell>
+      <CompareCell>සීමිත</CompareCell>
+    </CompareRow>
+    <CompareRow label="දත්ත හිමිකම්">
+      <CompareCell>100%</CompareCell>
+      <CompareCell>හවුල්</CompareCell>
+      <CompareCell>හවුල්</CompareCell>
+    </CompareRow>
+    <CompareRow label="දියත් කිරීමේ පාලනය">
+      <CompareCell>සම්පූර්ණ</CompareCell>
+      <CompareCell>කිසිවක් නැත</CompareCell>
+      <CompareCell>සීමිත</CompareCell>
+    </CompareRow>
+  </CompareTab>
+</CompareSection>
+
+<CTASection
   title="ආරම්භ කිරීමට සූදානම්ද?"
   description="නොමිලේ විවෘත මූලාශ්‍ර headless CMS එක සහ CRM එක සමඟ වැඩ කරන සංවර්ධකයින්ගේ සජීවී ප්‍රජාවට එකතු වන්න."
-  buttons={[
-    { label: "GitHub මත බලන්න", href: "https://github.com/LeadCMS", icon: "GitBranch" },
-    { label: "අපව අමතන්න", href: "#contact-form" }
-  ]}
-/>
+>
+  <CTAButton href="https://github.com/LeadCMS" icon="GitBranch">GitHub මත බලන්න</CTAButton>
+  <CTAButton href="#contact-form">අපව අමතන්න</CTAButton>
+</CTASection>
 
 <ContactFormSection
   title="වෘත්තීය සහාය ලබා ගන්න"
   description="සකස් කිරීම, රිසිකරණ ඒකාබද්ධකරණ හෝ නිරන්තර සහාය සඳහා සහය අවශ්‍යද? අපගේ කණ්ඩායම ඉක්මණින් සම්බන්ධ වේ."
-  servicesTitle="අපගේ සේවා ඇතුළත් කරන්නේ:"
-  services={[
-    "වෘත්තීය ස්ථාපනය සහ පිහිටුවීම",
-    "රිසිකරණ සංවර්ධනය සහ ඒකාබද්ධකරණ",
-    "පුහුණු කිරීම සහ ඇතුළත් කිරීම",
-    "නිරන්තර නඩත්තු සහ සහාය",
-    "කාර්ය සාධන ප්‍රශස්තිකරණය"
-  ]}
-  formComponent={<ContactUs />}
-/>
+>
+  <ContactFormServiceList title="අපගේ සේවා ඇතුළත් කරන්නේ:">
+    * වෘත්තීය ස්ථාපනය සහ පිහිටුවීම
+    * රිසිකරණ සංවර්ධනය සහ ඒකාබද්ධකරණ
+    * පුහුණු කිරීම සහ ඇතුළත් කිරීම
+    * නිරන්තර නඩත්තු සහ සහාය
+    * කාර්ය සාධන ප්‍රශස්තිකරණය
+  </ContactFormServiceList>
+
+  <ContactForm>
+    <ContactUs />
+  </ContactForm>
+</ContactFormSection>

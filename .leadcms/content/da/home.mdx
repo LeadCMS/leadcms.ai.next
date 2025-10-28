@@ -101,148 +101,194 @@ source: AI translated from 4
   </WhyReasonCard>
 </WhySection>
 
+
 <DeploySection
   title="Udrul på få sekunder"
   description="Kom i gang på få minutter. Ingen kompliceret opsætning."
-  commands={[
-    "git clone https://github.com/LeadCMS/leadcms.deploy.git",
-    "cd leadcms.deploy",
-    "./generate-env.sh",
-    "docker compose up -d"
-  ]}
-  specs={[
-    "Bygget på .NET for høj ydeevne",
-    "Containeriseret med Docker for konsistent deployment",
-    "PostgreSQL database for pålidelig datalagring",
-    "RESTful API med OpenAPI dokumentation"
-  ]}
-  devExperience={[
-    "Omfattende API til tilpassede integrationer",
-    "Plugin-system til udvidelse af funktionalitet",
-    "Webhooks til realtids event notifikationer",
-    "Detaljeret dokumentation og eksempler"
-  ]}
-  docButton={{ label: "Se dokumentation", href: "/docs" }}
-/>
+>
+  <DeployCommands>
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+./generate-env.sh
+docker compose up -d
+  </DeployCommands>
 
-<HelpSection
-  title="Få eksperthjælp, når du har brug for det"
-  description="Uanset om du lancerer en MVP eller skalerer et modent produkt, står vores team klar til at hjælpe dig videre."
-  services={[
-    {
-      icon: "Settings",
-      title: "Professionel opsætning",
-      description: "Vi guider dig sikkert gennem installationen eller tager hele processen for jer, så lanceringen bliver gnidningsfri."
-    },
-    {
-      icon: "Code",
-      title: "Skræddersyet udvikling",
-      description: "Behøver du et specialiseret workflow eller en integration? Vores eksperter tilpasser platformen til jeres unikke behov."
-    },
-    {
-      icon: "ShieldCheck",
-      title: "Løbende support",
-      description: "Fra performance‑tuning til opdateringer – vi understøtter jeres team med løbende ekspertbistand."
-    }
-  ]}
-  serviceList={[
-    "Professionel installation og opsætning",
-    "Skræddersyet udvikling og integrationer",
-    "Træning og onboarding",
-    "Løbende vedligeholdelse og support",
-    "Ydelsesoptimering"
-  ]}
-  contactButton={{ label: "Kontakt vores team", href: "#contact-form" }}
-/>
+  <DeployCards>
+    <FeaturesCardWithBullets icon="Server" title="Tekniske specifikationer">
+      Højtydende platform bygget til moderne deployments.
 
-<WhySection
+      * Bygget på .NET for høj ydeevne
+      * Containeriseret med Docker for konsistent deployment
+      * PostgreSQL database for pålidelig datalagring
+      * RESTful API med OpenAPI dokumentation
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Code" title="Udvikleroplevelse">
+      Alt hvad du har brug for til at udvide og tilpasse platformen.
+
+      * Omfattende API til tilpassede integrationer
+      * Plugin-system til udvidelse af funktionalitet
+      * Webhooks til realtids event notifikationer
+      * Detaljeret dokumentation og eksempler
+    </FeaturesCardWithBullets>
+  </DeployCards>
+
+  <DeployButton href="/docs">Se dokumentation</DeployButton>
+</DeploySection>
+
+<ServicesSection
+  title="Få eksperthjælp når du har brug for det"
+  description="Uanset om du lancerer en MVP eller skalerer et modent produkt, står vores team klar til at hjælpe dig i gang."
+  servicesTitle="Vores ydelser omfatter:"
+  variant="soft"
+>
+  <ServiceCard icon="Settings" title="Professionel opsætning">
+    Vi guider dig sikkert gennem installationen eller tager hele processen for jer, så lanceringen bliver gnidningsfri.
+  </ServiceCard>
+
+  <ServiceCard icon="Code" title="Skræddersyet udvikling">
+    Behøver du et specialiseret workflow eller en integration? Vores eksperter tilpasser platformen til jeres unikke behov.
+  </ServiceCard>
+
+  <ServiceCard icon="ShieldCheck" title="Løbende support">
+    Fra performance‑tuning til opdateringer – vi understøtter jeres team med løbende ekspertbistand.
+  </ServiceCard>
+
+  <ServiceList>
+    * Professionel installation og opsætning
+    * Skræddersyet udvikling og integrationer
+    * Træning og onboarding
+    * Løbende vedligeholdelse og support
+    * Ydelsesoptimering
+  </ServiceList>
+
+  <ServiceButton href="#contact-form">Kontakt vores team</ServiceButton>
+</ServicesSection>
+
+<CapabilitiesSection
   title="Nøglefunktioner"
   description="Alt, hvad du behøver for at automatisere SaaS‑salg og indholdsstyring."
 >
-  <WhyReasonCard icon="Zap" title="Samlet dashboard">
+  <CapabilityCard icon="Zap" title="Samlet dashboard">
     Få overblik over webtrafik, lead‑generering og salgsperformance på et øjeblik. Alle nøglemetrics samlet ét sted.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Database" title="Open source headless CMS">
+  <CapabilityCard icon="Database" title="Open source headless CMS">
     Strukturer og publicer indhold med Git‑synkronisering. En gratis, open source‑platform med fuld versionskontrol.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Globe" title="Integreret CRM‑system">
+  <CapabilityCard icon="Globe" title="Integreret CRM‑system">
     Administrer kontakter, leads og deals, mens du følger hele kunderejsen fra første besøg til konvertering.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Settings" title="Salgsautomatisering">
+  <CapabilityCard icon="Settings" title="Salgsautomatisering">
     Automatisér e‑mailsekvenser, licensaktiveringer eller upsell‑tilbud øjeblikkeligt baseret på brugeradfærd.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="ShieldCheck" title="Sikkert og compliant">
+  <CapabilityCard icon="ShieldCheck" title="Sikkert og compliant">
     Kør det bag din egen firewall: dine data, dine regler – fuld overholdelse af GDPR og andre privatlivsstandarder.
-  </WhyReasonCard>
+  </CapabilityCard>
 
-  <WhyReasonCard icon="Server" title="Hurtigt. Fleksibelt. Skalerbart.">
+  <CapabilityCard icon="Server" title="Hurtigt. Fleksibelt. Skalerbart.">
     Drevet af .NET for høj ydeevne. Klar til enterprise‑workloads og containeriseret fra dag ét.
-  </WhyReasonCard>
-</WhySection>
+  </CapabilityCard>
+</CapabilitiesSection>
 
 <CompareSection
   title="Sådan klarer LeadCMS sig"
   description="I modsætning til proprietære løsninger beholder du fuld kontrol over platformen med LeadCMS."
-  tabs={[
-    {
-      value: "features",
-      label: "Funktioner",
-      headers: ["LeadCMS", "HubSpot", "Salesforce"],
-      rows: [
-        { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-        { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-        { label: "Selvhostet", values: [{ icon: "check" }, "Nej", "Nej"] },
-        { label: "Open source", values: [{ icon: "check" }, "Nej", "Nej"] }
-      ]
-    },
-    {
-      value: "pricing",
-      label: "Priser",
-      headers: ["LeadCMS", "HubSpot", "Salesforce"],
-      rows: [
-        { label: "Per‑bruger‑gebyrer", values: ["Nej", "Ja", "Ja"] },
-        { label: "Funktionslåse", values: ["Nej", "Ja", "Ja"] },
-        { label: "Engangsomkostning", values: ["Valgfrit", "Nej", "Nej"] },
-        { label: "Abonnement", values: ["Valgfri support", "Påkrævet", "Påkrævet"] }
-      ]
-    },
-    {
-      value: "control",
-      label: "Kontrol",
-      headers: ["LeadCMS", "HubSpot", "Salesforce"],
-      rows: [
-        { label: "Adgang til kildekode", values: [{ icon: "check" }, "Nej", "Nej"] },
-        { label: "Brugerdefinerede udvidelser", values: ["Ubegrænset", "Begrænset", "Begrænset"] },
-        { label: "Dataejerskab", values: ["100%", "Delt", "Delt"] },
-        { label: "Udrulningskontrol", values: ["Fuldstændig", "Ingen", "Begrænset"] }
-      ]
-    }
-  ]}
-/>
+>
+  <CompareTab value="features" label="Funktioner" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="CMS">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="CRM">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="Selvhostet">
+      <CompareCell icon="check" />
+      <CompareCell>Nej</CompareCell>
+      <CompareCell>Nej</CompareCell>
+    </CompareRow>
+    <CompareRow label="Open source">
+      <CompareCell icon="check" />
+      <CompareCell>Nej</CompareCell>
+      <CompareCell>Nej</CompareCell>
+    </CompareRow>
+  </CompareTab>
 
-<ContactSection
+  <CompareTab value="pricing" label="Priser" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Per‑bruger‑gebyrer">
+      <CompareCell>Nej</CompareCell>
+      <CompareCell>Ja</CompareCell>
+      <CompareCell>Ja</CompareCell>
+    </CompareRow>
+    <CompareRow label="Funktionslåse">
+      <CompareCell>Nej</CompareCell>
+      <CompareCell>Ja</CompareCell>
+      <CompareCell>Ja</CompareCell>
+    </CompareRow>
+    <CompareRow label="Engangsomkostning">
+      <CompareCell>Valgfrit</CompareCell>
+      <CompareCell>Nej</CompareCell>
+      <CompareCell>Nej</CompareCell>
+    </CompareRow>
+    <CompareRow label="Abonnement">
+      <CompareCell>Valgfri support</CompareCell>
+      <CompareCell>Påkrævet</CompareCell>
+      <CompareCell>Påkrævet</CompareCell>
+    </CompareRow>
+  </CompareTab>
+
+  <CompareTab value="control" label="Kontrol" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Adgang til kildekode">
+      <CompareCell icon="check" />
+      <CompareCell>Nej</CompareCell>
+      <CompareCell>Nej</CompareCell>
+    </CompareRow>
+    <CompareRow label="Brugerdefinerede udvidelser">
+      <CompareCell>Ubegrænset</CompareCell>
+      <CompareCell>Begrænset</CompareCell>
+      <CompareCell>Begrænset</CompareCell>
+    </CompareRow>
+    <CompareRow label="Dataejerskab">
+      <CompareCell>100%</CompareCell>
+      <CompareCell>Delt</CompareCell>
+      <CompareCell>Delt</CompareCell>
+    </CompareRow>
+    <CompareRow label="Udrulningskontrol">
+      <CompareCell>Fuldstændig</CompareCell>
+      <CompareCell>Ingen</CompareCell>
+      <CompareCell>Begrænset</CompareCell>
+    </CompareRow>
+  </CompareTab>
+</CompareSection>
+
+<CTASection
   title="Klar til at komme i gang?"
   description="Bliv en del af det voksende fællesskab af udviklere, der bygger med det gratis open source headless CMS og det indbyggede CRM."
-  buttons={[
-    { label: "Se på GitHub", href: "https://github.com/LeadCMS", icon: "GitBranch" },
-    { label: "Kontakt os", href: "#contact-form" }
-  ]}
-/>
+>
+  <CTAButton href="https://github.com/LeadCMS" icon="GitBranch">Se på GitHub</CTAButton>
+  <CTAButton href="#contact-form">Kontakt os</CTAButton>
+</CTASection>
 
 <ContactFormSection
   title="Få professionel assistance"
   description="Har du brug for hjælp til opsætning, skræddersyede integrationer eller løbende support? Vores team står klar til at hjælpe."
-  servicesTitle="Vores tjenester omfatter:"
-  services={[
-    "Professionel installation og opsætning",
-    "Skræddersyet udvikling og integrationer",
-    "Træning og onboarding",
-    "Løbende vedligeholdelse og support",
-    "Ydelsesoptimering"
-  ]}
-  formComponent={<ContactUs />}
-/>
+>
+  <ContactFormServiceList title="Vores tjenester omfatter:">
+    * Professionel installation og opsætning
+    * Skræddersyet udvikling og integrationer
+    * Træning og onboarding
+    * Løbende vedligeholdelse og support
+    * Ydelsesoptimering
+  </ContactFormServiceList>
+
+  <ContactForm>
+    <ContactUs />
+  </ContactForm>
+</ContactFormSection>

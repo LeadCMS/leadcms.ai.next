@@ -1,49 +1,15 @@
 import React from "react"
-import {
-  Code,
-  Server,
-  GitBranch,
-  Package,
-  Lock,
-  Globe,
-  Zap,
-  Database,
-  Settings,
-  ShieldCheck,
-} from "lucide-react"
 import { FadeIn, StaggerContainer, StaggerItem, HoverLift } from "@/components/ui/animated-elements"
+import { DynamicIcon } from "@/lib/dynamic-icon"
 
 export interface WhySectionProps {
   title: string
   description: string
   reasons: {
-    icon:
-      | "Code"
-      | "Server"
-      | "GitBranch"
-      | "Package"
-      | "Lock"
-      | "Globe"
-      | "Zap"
-      | "Database"
-      | "Settings"
-      | "ShieldCheck"
+    icon: string
     title: string
     description: string
   }[]
-}
-
-const iconMap = {
-  Code,
-  Server,
-  GitBranch,
-  Package,
-  Lock,
-  Globe,
-  Zap,
-  Database,
-  Settings,
-  ShieldCheck,
 }
 
 export const WhySection: React.FC<WhySectionProps> = ({ title, description, reasons }) => (
@@ -57,22 +23,19 @@ export const WhySection: React.FC<WhySectionProps> = ({ title, description, reas
       </FadeIn>
       <StaggerContainer>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 max-w-[1750px] mx-auto">
-          {reasons.map((reason, idx) => {
-            const Icon = iconMap[reason.icon] ?? Code // fallback to Code icon
-            return (
-              <StaggerItem key={reason.title + idx}>
-                <HoverLift className="h-full">
-                  <div className="bg-background rounded-xl p-6 shadow-sm border flex flex-col items-center text-center h-full hover:shadow-lg transition-shadow duration-300">
-                    <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
-                    <h3 className="text-xl font-bold mb-2">{reason.title}</h3>
-                    <p className="text-muted-foreground flex-1">{reason.description}</p>
+          {reasons.map((reason, idx) => (
+            <StaggerItem key={reason.title + idx}>
+              <HoverLift className="h-full">
+                <div className="bg-background rounded-xl p-6 shadow-sm border flex flex-col items-center text-center h-full hover:shadow-lg transition-shadow duration-300">
+                  <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110">
+                    <DynamicIcon name={reason.icon} className="h-6 w-6 text-primary" />
                   </div>
-                </HoverLift>
-              </StaggerItem>
-            )
-          })}
+                  <h3 className="text-xl font-bold mb-2">{reason.title}</h3>
+                  <p className="text-muted-foreground flex-1">{reason.description}</p>
+                </div>
+              </HoverLift>
+            </StaggerItem>
+          ))}
         </div>
       </StaggerContainer>
     </div>

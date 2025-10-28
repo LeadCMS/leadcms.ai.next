@@ -1,7 +1,7 @@
 ---
 id: 58
 createdAt: '2025-10-24T17:03:44.678452Z'
-updatedAt: '2025-10-27T05:52:01.019862Z'
+updatedAt: '2025-10-28T04:39:04.617011Z'
 title: Building a Modern Site with LeadCMS SDK – A Developer's Guide
 description: >-
   Master the LeadCMS SDK to build blazing-fast static sites with Next.js. Learn
@@ -35,13 +35,10 @@ By the end, you'll understand how **LeadCMS SDK enables a modern content workflo
 Using the SDK instead of calling LeadCMS's REST API directly offers several compelling benefits for modern developers:
 
 <FeatureGrid columns={2}>
-  <FeatureCard title="Type Safety" description="Full TypeScript support with auto-generated types for your content models. Get compile-time checking of fields (e.g. page.title is known to exist) and catch errors before they reach production." icon={<Code className="h-6 w-6" />} />
-
-  <FeatureCard title="Simplified API Calls" description="No more manual fetch() calls or authentication handling. One function call like getCMSContentBySlug('about-us') handles querying and returns structured data." icon={<Zap className="h-6 w-6" />} />
-
-  <FeatureCard title="Smart Caching" description="Built-in caching for content and config data improves performance. Content files are cached in memory during build, with optional file-system caching for rapid subsequent calls." icon={<Database className="h-6 w-6" />} />
-
-  <FeatureCard title="Framework Integration" description="Seamlessly plugs into Next.js, Astro, Gatsby, Nuxt, and more. Use it at build time for static sites or at runtime for dynamic routes with equal ease." icon={<Globe className="h-6 w-6" />} />
+  <FeatureCard title="Type Safety" description="Full TypeScript support with auto-generated types for your content models. Get compile-time checking of fields (e.g. page.title is known to exist) and catch errors before they reach production." icon="Code" />
+  <FeatureCard title="Simplified API Calls" description="No more manual fetch() calls or authentication handling. One function call like getCMSContentBySlug('about-us') handles querying and returns structured data." icon="Zap" />
+  <FeatureCard title="Smart Caching" description="Built-in caching for content and config data improves performance. Content files are cached in memory during build, with optional file-system caching for rapid subsequent calls." icon="Database" />
+  <FeatureCard title="Framework Integration" description="Seamlessly plugs into Next.js, Astro, Gatsby, Nuxt, and more. Use it at build time for static sites or at runtime for dynamic routes with equal ease." icon="Globe" />
 </FeatureGrid>
 
 In short, the **LeadCMS SDK streamlines content integration** – letting you treat your CMS content as local data in your code, with all the convenience of TypeScript and none of the boilerplate of direct API calls.
@@ -77,7 +74,7 @@ In short, the **LeadCMS SDK streamlines content integration** – letting you tr
 
   The SDK needs to know how to connect to your LeadCMS instance. The **best practice** is to provide your LeadCMS URL and API key via environment variables for security.
 
-  In your project's environment (e.g. a `.env.local` file for Next.js), set the following:
+  In your project's environment (e.g. a `.env` file for Next.js), set the following:
 
   ```bash
   LEADCMS_URL=<your-leadcms-instance-url>
@@ -358,13 +355,13 @@ The result is a **modern, content-driven site** where:
 Here are essential **best practices** when building with LeadCMS SDK:
 
 <FeatureGrid columns={1}>
-  <FeatureCard title="Automate Fetching in Builds" description="Include npx leadcms fetch in your build or deployment scripts as a pre-build step. This ensures your static site always includes the latest CMS content. Use leadcms generate-env to scaffold environment files, or leadcms docker for containerized deployments." icon={<Zap className="h-5 w-5" />} />
+  <FeatureCard title="Automate Fetching in Builds" description="Include npx leadcms fetch in your build or deployment scripts as a pre-build step. This ensures your static site always includes the latest CMS content. Use leadcms generate-env to scaffold environment files, or leadcms docker for containerized deployments." icon="Zap" />
 
-  <FeatureCard title="Use Draft Mode for Previews" description="Enable draft content support in development by setting LEADCMS_ENABLE_DRAFTS=true. This allows content editors to preview changes on a live URL before publishing, using getCMSContentBySlugForLocaleWithDraftSupport()." icon={<Eye className="h-5 w-5" />} />
+  <FeatureCard title="Use Draft Mode for Previews" description="Enable draft content support in development by setting LEADCMS_ENABLE_DRAFTS=true. This allows content editors to preview changes on a live URL before publishing, using getCMSContentBySlugForLocaleWithDraftSupport()." icon="Eye" />
 
-  <FeatureCard title="Leverage TypeScript Interfaces" description="Define interfaces for your content types to get full type safety. You can even generate types from the CMS schema, catching mismatches at compile time instead of runtime." icon={<Code className="h-5 w-5" />} />
+  <FeatureCard title="Leverage TypeScript Interfaces" description="Define interfaces for your content types to get full type safety. You can even generate types from the CMS schema, catching mismatches at compile time instead of runtime." icon="Code" />
 
-  <FeatureCard title="Multi-framework Flexibility" description="The same SDK functions work across frameworks. Whether you use Astro, Gatsby, Nuxt, or others, the content fetch functions integrate seamlessly into each framework's data sourcing mechanisms." icon={<Globe className="h-5 w-5" />} />
+  <FeatureCard title="Multi-framework Flexibility" description="The same SDK functions work across frameworks. Whether you use Astro, Gatsby, Nuxt, or others, the content fetch functions integrate seamlessly into each framework's data sourcing mechanisms." icon="Globe" />
 </FeatureGrid>
 
 * **Use Draft Mode for Previews:** In your development or staging environment, consider enabling draft content support. By setting `LEADCMS_ENABLE_DRAFTS=true` (or in code `configure({ enableDrafts: true })`), the SDK can include content that is saved but not published, keyed by user. This allows you to preview changes that are not live. The function `getCMSContentBySlugForLocaleWithDraftSupport(slug, locale, userUid)` can retrieve a draft version if it exists. This is more advanced, but useful for a workflow where content editors want to see changes on a live preview URL before publishing.

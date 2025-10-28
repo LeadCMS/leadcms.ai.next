@@ -1,26 +1,21 @@
 import type React from "react"
-import { Settings, Code, ShieldCheck, CheckCircle } from "lucide-react"
+import { CheckCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { FadeIn, StaggerContainer, StaggerItem, ScaleIn } from "@/components/ui/animated-elements"
+import { DynamicIcon } from "@/lib/dynamic-icon"
 
 export interface HelpSectionProps {
   title: string
   description: string
   services: {
-    icon: "Settings" | "Code" | "ShieldCheck"
+    icon: string
     title: string
     description: string
   }[]
   serviceList: string[]
   servicesTitle: string
   contactButton: { label: string; href: string }
-}
-
-const iconMap = {
-  Settings,
-  Code,
-  ShieldCheck,
 }
 
 export const HelpSection: React.FC<HelpSectionProps> = ({
@@ -40,22 +35,19 @@ export const HelpSection: React.FC<HelpSectionProps> = ({
             <p className="mt-4 text-lg text-muted-foreground">{description}</p>
             <StaggerContainer delay={0.3}>
               <div className="mt-8 space-y-6">
-                {services.map((service, idx) => {
-                  const Icon = iconMap[service.icon]
-                  return (
-                    <StaggerItem key={service.title + idx}>
-                      <div className="flex items-start gap-4 group">
-                        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
-                          <Icon className="h-5 w-5 text-primary" />
-                        </div>
-                        <div>
-                          <h3 className="text-lg font-semibold mb-1">{service.title}</h3>
-                          <p className="text-muted-foreground">{service.description}</p>
-                        </div>
+                {services.map((service, idx) => (
+                  <StaggerItem key={service.title + idx}>
+                    <div className="flex items-start gap-4 group">
+                      <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 transition-transform duration-300 group-hover:scale-110">
+                        <DynamicIcon name={service.icon} className="h-5 w-5 text-primary" />
                       </div>
-                    </StaggerItem>
-                  )
-                })}
+                      <div>
+                        <h3 className="text-lg font-semibold mb-1">{service.title}</h3>
+                        <p className="text-muted-foreground">{service.description}</p>
+                      </div>
+                    </div>
+                  </StaggerItem>
+                ))}
               </div>
             </StaggerContainer>
           </div>

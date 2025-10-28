@@ -4,6 +4,7 @@ import type React from "react"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs"
 import { CheckCircle } from "lucide-react"
 import { FadeIn, StaggerContainer, StaggerItem, ScaleIn } from "@/components/ui/animated-elements"
+import { DynamicIcon } from "@/lib/dynamic-icon"
 
 export interface CompareSectionProps {
   title: string
@@ -19,10 +20,17 @@ export interface CompareSectionProps {
   }[]
 }
 
-const iconMap = {
-  check: <CheckCircle className="mx-auto h-5 w-5 text-green-500" />,
-  limited: <span className="text-red-500">Limited</span>,
-  no: <span className="text-red-500">No</span>,
+const getIconContent = (iconName: string) => {
+  switch (iconName) {
+    case "check":
+      return <CheckCircle className="mx-auto h-5 w-5 text-green-500" />
+    case "limited":
+      return <span className="text-red-500">Limited</span>
+    case "no":
+      return <span className="text-red-500">No</span>
+    default:
+      return <DynamicIcon name={iconName} className="mx-auto h-5 w-5" />
+  }
 }
 
 export const CompareSection: React.FC<CompareSectionProps> = ({
@@ -75,7 +83,7 @@ export const CompareSection: React.FC<CompareSectionProps> = ({
                               <div className="text-center" key={j}>
                                 {typeof v === "string"
                                   ? v
-                                  : iconMap[v.icon as keyof typeof iconMap] || v.icon}
+                                  : getIconContent(v.icon) || v.icon}
                               </div>
                             ))}
                           </div>

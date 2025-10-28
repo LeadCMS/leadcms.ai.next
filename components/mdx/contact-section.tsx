@@ -1,17 +1,13 @@
 import type React from "react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { GitBranch } from "lucide-react"
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/animated-elements"
+import { DynamicIcon } from "@/lib/dynamic-icon"
 
 export interface ContactSectionProps {
   title: string
   description: string
-  buttons: { label: string; href: string; icon?: "GitBranch" }[]
-}
-
-const iconMap = {
-  GitBranch: <GitBranch className="mr-2 h-4 w-4" />,
+  buttons: { label: string; href: string; icon?: string }[]
 }
 
 export const ContactSection: React.FC<ContactSectionProps> = ({ title, description, buttons }) => (
@@ -35,7 +31,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({ title, descripti
                   target={btn.href.startsWith("http") ? "_blank" : undefined}
                   rel={btn.href.startsWith("http") ? "noopener noreferrer" : undefined}
                 >
-                  {btn.icon ? iconMap[btn.icon] : null}
+                  {btn.icon && <DynamicIcon name={btn.icon} className="mr-2 h-4 w-4" />}
                   {btn.label}
                 </Link>
               </Button>

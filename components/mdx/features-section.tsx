@@ -1,24 +1,19 @@
 import React from "react"
 import { AnimatedCard, AnimatedCardHeader, AnimatedCardContent } from "@/components/ui/animated-card"
 import { CardTitle, CardDescription } from "@/components/ui/card"
-import { Database, Globe, Zap, CheckCircle } from "lucide-react"
+import { CheckCircle } from "lucide-react"
 import { FadeIn, StaggerContainer, StaggerItem } from "@/components/ui/animated-elements"
+import { DynamicIcon } from "@/lib/dynamic-icon"
 
 export interface FeaturesSectionProps {
   title: string
   description: string
   features: {
-    icon: "Database" | "Globe" | "Zap"
+    icon: string
     title: string
     description: string
     bullets: string[]
   }[]
-}
-
-const iconMap = {
-  Database: Database,
-  Globe: Globe,
-  Zap: Zap,
 }
 
 export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
@@ -42,21 +37,19 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
           </FadeIn>
         </div>
         <StaggerContainer className="grid gap-8 md:grid-cols-3" staggerDelay={0.1}>
-        {features.map((feature, idx) => {
-          const Icon = iconMap[feature.icon]
-          return (
-            <StaggerItem key={feature.title + idx}>
-              <AnimatedCard
-                hoverEffect="lift"
-                className="relative overflow-hidden border-2 border-primary/20 group"
-              >
-                <AnimatedCardHeader className="pt-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <CardTitle className="text-xl font-semibold flex-1 pr-3">{feature.title}</CardTitle>
-                    <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300 flex-shrink-0">
-                      <Icon className="h-6 w-6 text-primary" />
-                    </div>
+        {features.map((feature, idx) => (
+          <StaggerItem key={feature.title + idx}>
+            <AnimatedCard
+              hoverEffect="lift"
+              className="relative overflow-hidden border-2 border-primary/20 group"
+            >
+              <AnimatedCardHeader className="pt-6">
+                <div className="flex items-center justify-between mb-4">
+                  <CardTitle className="text-xl font-semibold flex-1 pr-3">{feature.title}</CardTitle>
+                  <div className="p-2 bg-primary/10 rounded-lg group-hover:bg-primary/20 transition-colors duration-300 flex-shrink-0">
+                    <DynamicIcon name={feature.icon} className="h-6 w-6 text-primary" />
                   </div>
+                </div>
                   <CardDescription className="text-muted-foreground">
                     {feature.description}
                   </CardDescription>
@@ -75,8 +68,7 @@ export const FeaturesSection: React.FC<FeaturesSectionProps> = ({
                 </AnimatedCardContent>
               </AnimatedCard>
             </StaggerItem>
-          )
-        })}
+          ))}
       </StaggerContainer>
       </div>
     </div>

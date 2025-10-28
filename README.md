@@ -25,10 +25,10 @@ A Next.js-based website powered by LeadCMS with support for multiple languages a
 
 3. **Configure environment variables**
    ```bash
-   cp .env.sample .env.local
+   cp .env.sample .env
    ```
 
-   Edit `.env.local` and configure the following variables:
+   Edit `.env` and configure the following variables:
    ```bash
    # LeadCMS Configuration
    NEXT_PUBLIC_LEADCMS_URL=https://admin.leadcms.ai
@@ -180,7 +180,7 @@ Use preview mode for:
 
 ### Common Issues
 
-1. **Missing environment variables**: Ensure `.env.local` is properly configured
+1. **Missing environment variables**: Ensure `.env` is properly configured
 2. **Content not loading**: Check LeadCMS API key and URL
 3. **Build failures**: Run `npm run fetch:leadcms` manually to debug content issues
 4. **Docker issues**: Ensure environment variables are passed to containers

@@ -69,8 +69,6 @@
   "id": 10,
   "createdAt": "2025-08-23T08:23:02.26159Z",
   "updatedAt": "2025-10-24T12:09:12.325098Z",
-  "comments": null,
-  "translations": null,
   "title": "Site Metadata",
   "description": "This file controls all the SEO and social sharing metadata for the LeadCMS.ai website. For more details on each field and how metadata works in Next.js, see the official documentation: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
   "coverImageUrl": "",
@@ -83,6 +81,5 @@
   "category": "Metadata",
   "tags": [],
   "allowComments": false,
-  "source": null,
   "publishedAt": "2025-08-22T18:30:00Z"
 }

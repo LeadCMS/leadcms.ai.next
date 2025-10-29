@@ -60,8 +60,6 @@
   "id": 24,
   "createdAt": "2025-09-01T18:25:26.389452Z",
   "updatedAt": "2025-09-10T09:02:25.480099Z",
-  "comments": null,
-  "translations": null,
   "title": "Footer Configuration",
   "description": "Configuration for the website footer including logo, copyright text, and footer navigation links.",
   "coverImageUrl": "",
@@ -74,6 +72,5 @@
   "category": "Component",
   "tags": [],
   "allowComments": false,
-  "source": "Translated from 0",
-  "publishedAt": null
+  "source": "Translated from 0"
 }

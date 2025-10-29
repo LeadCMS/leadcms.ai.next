@@ -48,8 +48,6 @@
   "id": 13,
   "createdAt": "2025-09-01T16:40:40.141439Z",
   "updatedAt": "2025-10-24T12:46:16.885112Z",
-  "comments": null,
-  "translations": null,
   "title": "Header Configuration",
   "description": "Configuration for the website header including logo, navigation links, and call-to-action buttons. This controls the main navigation structure of the site.",
   "coverImageUrl": "",
@@ -62,6 +60,5 @@
   "category": "Component",
   "tags": [],
   "allowComments": false,
-  "source": null,
   "publishedAt": "2025-08-31T18:30:00Z"
 }

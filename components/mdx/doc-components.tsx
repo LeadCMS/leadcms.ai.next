@@ -224,12 +224,13 @@ export function Tabs({ items, defaultValue }: TabsProps) {
 // Card component for feature highlights
 interface FeatureCardProps {
   title: string
-  description: string
+  description?: string
   icon?: IconName
   href?: string
+  children?: React.ReactNode
 }
 
-export function FeatureCard({ title, description, icon, href }: FeatureCardProps) {
+export function FeatureCard({ title, description, icon, href, children }: FeatureCardProps) {
   const content = (
     <div className="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
       <div className="flex items-center mb-2">
@@ -240,7 +241,10 @@ export function FeatureCard({ title, description, icon, href }: FeatureCardProps
         )}
         <h3 className="font-semibold">{title}</h3>
       </div>
-      <p className="text-sm text-muted-foreground">{description}</p>
+      <div className="text-sm text-muted-foreground">
+        {description && <p className="mb-2">{description}</p>}
+        {children}
+      </div>
     </div>
   )
 

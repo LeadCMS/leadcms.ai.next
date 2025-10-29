@@ -27,58 +27,40 @@ publishedAt: '2025-10-27T18:30:00Z'
 
 In 2025, building a professional website no longer takes weeks. With AI-assisted tools, you can create and run a modern website locally in hours. This guide documents the development workflow using [nuzzl.co.uk](https://nuzzl.co.uk) as an example - a business website with multiple landing pages, service pages, and contact forms - built in approximately 6 hours using three AI-assisted tools that integrate effectively.
 
-## The AI Development Stack
+## AI-Powered Site Development Stack
 
-Modern web development uses AI tools for specific development tasks. Each tool serves a distinct purpose in the development workflow:
-
-<FeatureGrid columns={1}>
+<FeatureGrid columns={3}>
   <FeatureCard
-    title="V0: AI-Powered UI Generation"
-    description="Vercel's AI tool that generates production-ready React components and complete Next.js applications from natural language descriptions. It applies modern design principles, accessibility standards, and established coding practices."
+    title="V0"
+    description="Generates complete Next.js websites from prompts with professional design."
     icon="Zap"
-  />
-</FeatureGrid>
-
-**V0 Key Capabilities:**
-- Generates complete Next.js 15+ applications with proper file structure
-- Uses shadcn/ui components and Tailwind CSS for modern styling
-- Supports TypeScript by default with proper type definitions
-- Creates responsive, accessible designs that work across devices
-- Exports ready-to-use code that follows industry best practices
-
-<FeatureGrid columns={1}>
+  >
+    * Natural language to code generation
+    * Production-ready component library
+    * Responsive design & accessibility
+    * Instant visual feedback & iteration
+  </FeatureCard>
   <FeatureCard
-    title="GitHub Copilot: AI Coding Assistant"
-    description="Your AI pair programmer that provides intelligent code completion, helps with refactoring, and acts as a coding assistant throughout development. It analyzes context, patterns, and project conventions to generate relevant code suggestions."
+    title="GitHub Copilot"
+    description="AI pair programmer that refactors code intelligently."
     icon="GitBranch"
-  />
-</FeatureGrid>
-
-**Copilot Development Assistance:**
-- Provides context-aware code completions and suggestions
-- Helps refactor and optimize existing code for better performance
-- Answers technical questions about your specific codebase
-- Assists with debugging and problem-solving in real-time
-- Learns and adapts to your project patterns and conventions
-
-<FeatureGrid columns={1}>
+  >
+    * Context-aware architectural guidance
+    * Intelligent content-code separation
+    * Pattern recognition & best practices
+    * Real-time refactoring assistance
+  </FeatureCard>
   <FeatureCard
-    title="LeadCMS: Developer-First Headless CMS"
-    description="A modern headless CMS that separates content from presentation, offering developers full control over both content management and frontend implementation. Features built-in SDK, content versioning, and seamless framework integration."
+    title="LeadCMS"
+    description="Headless CMS with developer-first approach."
     icon="Database"
-  />
+  >
+    * API-first headless architecture
+    * Developer-friendly SDK integration
+    * Content versioning & collaboration
+    * Build-time content synchronization
+  </FeatureCard>
 </FeatureGrid>
-
-**LeadCMS Architecture Benefits:**
-- **Headless Architecture**: Content delivered via API, presentation via your choice of framework
-- **Developer SDK**: Official SDK for seamless integration with type safety
-- **MDX Support**: Write rich content with embedded React components
-- **Content Versioning**: Git-based version control for content and media
-- **Flexible Deployment**: Build-time static generation or runtime dynamic content
-
-<Callout type="info">
-**Prerequisites**: This guide assumes you have a LeadCMS instance already set up and running. For detailed setup instructions, see the [LeadCMS Installation Guide](/docs/getting-started/installation/).
-</Callout>
 
 ## Step 1: V0 Site Generation
 
@@ -116,6 +98,8 @@ Start by crafting a detailed prompt that describes your website vision to V0. Th
 
 **Reference**: [View the complete Nuzzl V0 project](https://v0.app/chat/nuzzl-website-os7yB65HnOp)
 
+![V0 interface showing the generated Nuzzl website with prompt input, preview panel, and export options](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/v0-interface-nuzzl-generation.png)
+
   </Step>
 
   <Step title="Initialize Development Environment">
@@ -146,6 +130,10 @@ At this stage, you should have a fully functional website running locally at `ht
 ## Step 2: LeadCMS Integration
 
 Transform your V0-generated static site into a content-managed architecture by integrating the LeadCMS SDK and separating content from presentation.
+
+<Callout type="info">
+**Prerequisites**: This article assumes you have LeadCMS running locally or on a server. If you don't have LeadCMS set up yet, follow the [Installation Guide](/docs/getting-started/installation/) first.
+</Callout>
 
 <Steps>
   <Step title="Integrate LeadCMS SDK">
@@ -194,6 +182,8 @@ Update your `package.json` scripts section:
 <Callout type="tip" title="Automated Workflow">
 The `prebuild` and `predev` scripts ensure content is automatically fetched before every build or development session, keeping your local content synchronized with the CMS.
 </Callout>
+
+![VS Code project structure showing .env file, package.json with LeadCMS scripts, and newly created .leadcms folder](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/project-structure-leadcms-integration.png)
 
   </Step>
 </Steps>
@@ -259,6 +249,8 @@ curl -o .github/copilot-instructions.md https://raw.githubusercontent.com/LeadCM
 
 This battle-tested file contains the architectural patterns and development workflows that make this entire approach possible. Understanding these principles is essential for successful implementation.
 </Callout>
+
+![GitHub Copilot in VS Code showing intelligent code suggestions for LeadCMS component creation with the instructions file context](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/copilot-suggestions-component-creation.png)
 
   </Step>
 </Steps>
@@ -344,6 +336,8 @@ components/
     contact-section.tsx   # Contact forms with validation
     cta-section.tsx       # Call-to-action sections with analytics
 ```
+
+![File explorer showing the generated .leadcms/content folder structure with MDX files and components/mdx directory](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/generated-content-structure.png)
 
 **AI-Generated MDX Content Example:**
 
@@ -484,6 +478,8 @@ Use the LeadCMS SDK to synchronize all your local content files to your LeadCMS 
 pnpm exec leadcms push
 ```
 
+![Terminal showing the output of leadcms push command with content synchronization progress and success messages](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/leadcms-push-terminal-output.png)
+
 **What This Command Does:**
 
 1. **Content Type Management**: Reads content types from both CMS and local system, creating any missing content types automatically
@@ -581,6 +577,8 @@ Content editors can now manage content through the user-friendly LeadCMS admin i
 - **Media management** - Upload and organize images and files
 - **Content workflows** - Draft, review, and publish content
 
+![LeadCMS admin interface showing content management dashboard with list of pages and editing interface](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/leadcms-admin-interface.png)
+
 <Callout type="info" title="Content Editor Benefits">
 Content editors don't need VS Code, Git, or technical knowledge. They can focus purely on content while developers handle the technical architecture.
 </Callout>
@@ -632,6 +630,8 @@ Your website will be available at `http://localhost:3000` with:
 - ✅ **Interactive Features**: Forms, navigation, and responsive design
 - ✅ **Hot Reload**: Real-time updates as you make changes
 - ✅ **Professional Styling**: Tailwind CSS and shadcn/ui components
+
+![Browser showing the completed Nuzzl website running locally at localhost:3000 with modern design and responsive layout](/media/blog/build-a-modern-website-with-ai-v0-copilot-leadcms/website-running-locally.png)
 
 <Callout type="success" title="Development Complete">
 🎉 **Congratulations!** You've successfully built a modern website using AI tools. Your site is now running locally with:

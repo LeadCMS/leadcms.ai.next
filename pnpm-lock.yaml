@@ -196,8 +196,8 @@ importers:
         version: 3.25.76
     devDependencies:
       '@leadcms/sdk':
-        specifier: ^1.2.91-pre
-        version: 1.2.91-pre
+        specifier: ^2.0.0-pre
+        version: 2.0.0-pre
       '@types/node':
         specifier: ^22
         version: 22.18.12
@@ -500,8 +500,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@leadcms/sdk@1.2.91-pre':
-    resolution: {integrity: sha512-dN0dho6EhQ6+VdnvAjBuMINFkGrH+9nib0NeGcr8V3ep78BjKEweJGm3f47IoL9aRrd4YeYI3IyBJ7tDTpofxw==}
+  '@leadcms/sdk@2.0.0-pre':
+    resolution: {integrity: sha512-teoeS/dPTDqnN+vi23ao2+323hpB3Z8ynLf1HSTgyexN+kwNWnbAJRoaQ+EEKGQu93a2+RJ6+puY45ofS37pKg==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -2095,6 +2095,10 @@ packages:
 
   didyoumean@1.2.2:
     resolution: {integrity: sha512-gxtyfqMg7GKyhQmb056K7M3xszy/myH8w+B4RT+QXBQsvAOdc3XymqDDPHx1BgPgsdAA5SIifona89YtRATDzw==}
+
+  diff@8.0.2:
+    resolution: {integrity: sha512-sSuxWU5j5SR9QQji/o2qMvqRNYRDOcBTgsJ/DeCf4iSN4gW+gNMXM7wFIP+fdXZxoNiAnHUTGjCr+TSWXdRDKg==}
+    engines: {node: '>=0.3.1'}
 
   dlv@1.1.3:
     resolution: {integrity: sha512-+HlytyjlPKnIG8XuRG8WvmBP8xs8P71y+SKKS6ZXWoEgLuePxtDoUEiH7WkdePWrQ5JBpE6aoVqfZfJUQkjXwA==}
@@ -4130,13 +4134,13 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@leadcms/sdk@1.2.91-pre':
+  '@leadcms/sdk@2.0.0-pre':
     dependencies:
       axios: 1.13.0
+      diff: 8.0.2
       dotenv: 16.6.1
       eventsource: 4.0.0
       gray-matter: 4.0.3
-      js-yaml: 4.1.0
     transitivePeerDependencies:
       - debug
 
@@ -5869,6 +5873,8 @@ snapshots:
       dequal: 2.0.3
 
   didyoumean@1.2.2: {}
+
+  diff@8.0.2: {}
 
   dlv@1.1.3: {}
 

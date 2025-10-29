@@ -303,9 +303,6 @@ Every MDX file MUST include:
 
 ```yaml
 ---
-id: 1                                    # Unique numeric ID
-createdAt: '2025-10-27T15:27:49.145884Z' # ISO 8601 timestamp
-updatedAt: '2025-10-27T15:27:49.145884Z' # ISO 8601 timestamp
 title: "Page Title"                      # Required
 description: >-                          # SEO description
   Page description text
@@ -315,7 +312,6 @@ author: 'Author Name'                    # Content author
 language: 'en'                           # Language code
 category: 'category-name'                # Optional category
 tags: ['tag1', 'tag2']                   # Optional tags
-publishedAt: '2025-10-27T17:00:00Z'     # Publication date
 ---
 ```
 

@@ -87,7 +87,7 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@leadcms/sdk": "^2.1.1",
+    "@leadcms/sdk": "^2.1.5",
     "@types/node": "^22.18.13",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",

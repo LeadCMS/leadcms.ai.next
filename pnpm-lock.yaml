@@ -196,8 +196,8 @@ importers:
         version: 3.25.76
     devDependencies:
       '@leadcms/sdk':
-        specifier: ^2.1.1
-        version: 2.1.1
+        specifier: ^2.1.5
+        version: 2.1.5
       '@types/node':
         specifier: ^22.18.13
         version: 22.18.13
@@ -504,8 +504,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@leadcms/sdk@2.1.1':
-    resolution: {integrity: sha512-u+5QL2KMrBQ0bOE9jwou9PYmwPXsTuf1xpvUFG+qLxgFQYv3BHn3r1H+34wCy4KVcVOuWwhm8uHZ5JlmQC7AEg==}
+  '@leadcms/sdk@2.1.5':
+    resolution: {integrity: sha512-Tvpf+MvzjwR0p4PleNbUoNc0EAhIoRUnXbR+urjWZQOcD4MKrBDQCgZUzBfb0GH7s3TljE0VeszRxxEj1yaMnA==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
 
@@ -4142,7 +4142,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@leadcms/sdk@2.1.1':
+  '@leadcms/sdk@2.1.5':
     dependencies:
       axios: 1.13.1
       diff: 8.0.2

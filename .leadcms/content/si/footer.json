@@ -59,7 +59,7 @@
   },
   "id": 35,
   "createdAt": "2025-09-02T05:37:59.450546Z",
-  "updatedAt": "2025-09-10T09:40:03.395552Z",
+  "updatedAt": "2025-10-30T07:36:56.4497Z",
   "title": "පාදය වින්‍යාසය",
   "description": "වෙබ් අඩවියේ පාදය සඳහා වින්‍යාසය, ලාංඡනය, පිටපත් හිමිකම් පෙළ හා සංචාලන සබැඳි ඇතුළුව.",
   "coverImageUrl": "",
@@ -72,5 +72,6 @@
   "category": "සංරචකය",
   "tags": [],
   "allowComments": false,
-  "source": "AI translated from 12"
+  "source": "AI translated from 12",
+  "publishedAt": "2025-08-31T00:00:00Z"
 }

@@ -68,8 +68,9 @@
   },
   "id": 39,
   "createdAt": "2025-09-02T09:12:56.176462Z",
-  "title": "මෙටා දත්ත",
-  "description": "මෙම ගොනුව LeadCMS.ai වෙබ් අඩවිය සඳහා ඇති සියලුම SEO සහ සමාජ මාධ්‍ය බෙදාහදාගැනීමේ මෙටා දත්ත පාලනය කරයි. මෙම ගොනුව සංස්කරණය කිරීමෙන්, ඔබට අඩවියේ මාතෘකාව, විස්තරය, අයිකන, Open Graph, Twitter Card තොරතුරු, සහ සෙවුම් යන්ත්‍ර දර්ශකකරණ සැකසුම් යාවත්කාලීන කළ හැක.\n\nඑක් එක් ක්ෂේත්‍රය පිළිබඳ වැඩිදුර විස්තර සහ Next.js හි මෙටා දත්ත ක්‍රියා කරන ආකාරය පිළිබඳව, නිල ප්‍රලේඛනය බලන්න: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
+  "updatedAt": "2025-10-30T07:59:42.188206Z",
+  "title": "සයිට් මෙටා දත්ත",
+  "description": "LeadCMS.ai වෙබ් අඩවිය සඳහා සියලුම SEO සහ සමාජ මාධ්‍ය බෙදාහදාගැනීමේ මෙටා දත්ත පාලනය කරයි. අඩවියේ මාතෘකාව, විස්තරය, අයිකන, Open Graph, Twitter Card සැකසුම් අඩංගු වේ.",
   "coverImageUrl": "",
   "coverImageAlt": "",
   "slug": "metadata",
@@ -80,5 +81,6 @@
   "category": "මෙටා දත්ත",
   "tags": [],
   "allowComments": false,
-  "source": "AI translated from 10"
+  "source": "AI translated from 10",
+  "publishedAt": "2025-08-31T00:00:00Z"
 }

@@ -39,6 +39,7 @@
   },
   "id": 23,
   "createdAt": "2025-09-01T18:24:55.165108Z",
+  "updatedAt": "2025-10-30T07:36:53.218462Z",
   "title": "Contact Form Text Configuration",
   "description": "Tekstindhold til kontaktformular-komponenten, inklusive etiketter, pladsholdere, knapper og beskeder.",
   "coverImageUrl": "",
@@ -51,5 +52,6 @@
   "category": "Component",
   "tags": [],
   "allowComments": false,
-  "source": "Translated from 0"
+  "source": "Translated from 0",
+  "publishedAt": "2025-08-31T00:00:00Z"
 }

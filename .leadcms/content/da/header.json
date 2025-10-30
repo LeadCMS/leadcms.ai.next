@@ -39,9 +39,7 @@
   },
   "id": 26,
   "createdAt": "2025-09-01T18:28:29.815397Z",
-  "updatedAt": "2025-09-01T18:29:07.941971Z",
-  "comments": null,
-  "translations": null,
+  "updatedAt": "2025-10-30T07:36:53.807619Z",
   "title": "Header Configuration",
   "description": "Konfiguration af webstedets header inklusive logo, navigationslinks og call-to-action knapper.",
   "coverImageUrl": "",
@@ -55,5 +53,5 @@
   "tags": [],
   "allowComments": false,
   "source": "Translated from 0",
-  "publishedAt": null
+  "publishedAt": "2025-08-31T00:00:00Z"
 }

@@ -4,7 +4,7 @@
 # Works with any static site generator that supports live preview
 #
 # Requirements for your project:
-# - npm run livepreview: Start development server on port 3000
+# - pnpm run livepreview: Start development server on port 3000
 # - LeadCMS SDK scripts available
 #
 # Usage from project root:
@@ -16,6 +16,9 @@ FROM node:20-alpine
 # Install nginx and supervisor for multi-service management
 RUN apk add --no-cache nginx supervisor wget
 
+# Install pnpm globally
+RUN npm install -g pnpm
+
 # Create required directories
 RUN mkdir -p /var/log/supervisor /run/nginx
 
@@ -23,7 +26,7 @@ RUN mkdir -p /var/log/supervisor /run/nginx
 WORKDIR /app
 
 # Copy package files first for better Docker layer caching
-COPY package*.json ./
+COPY package*.json pnpm-lock.yaml ./
 
 # Build arguments for LeadCMS configuration
 ARG LEADCMS_URL
@@ -40,7 +43,7 @@ ENV NEXT_PUBLIC_LEADCMS_URL=$LEADCMS_URL
 ENV NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE=$LEADCMS_DEFAULT_LANGUAGE
 
 # Install dependencies
-RUN npm ci --verbose
+RUN pnpm install --frozen-lockfile
 
 # Copy application code
 COPY . .
@@ -56,7 +59,7 @@ RUN echo '#!/bin/sh' > /start.sh && \
     echo '# Fetch initial LeadCMS content if configuration is available' >> /start.sh && \
     echo 'if [ ! -z "$LEADCMS_URL" ] && [ ! -z "$LEADCMS_API_KEY" ]; then' >> /start.sh && \
     echo '  echo "Fetching initial LeadCMS content..."' >> /start.sh && \
-    echo '  npx leadcms fetch || echo "Warning: Could not fetch initial content"' >> /start.sh && \
+    echo '  pnpm exec leadcms fetch || echo "Warning: Could not fetch initial content"' >> /start.sh && \
     echo 'fi' >> /start.sh && \
     echo '' >> /start.sh && \
     echo '# Start supervisor to manage all services' >> /start.sh && \

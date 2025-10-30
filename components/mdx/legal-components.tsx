@@ -1,7 +1,7 @@
 import React from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { CheckCircle, Mail, Phone, MapPin } from "lucide-react"
-import * as LucideIcons from "lucide-react"
+import { CheckCircle } from "lucide-react"
+import { DynamicIcon } from "@/lib/dynamic-icon"
 
 interface LegalSectionProps {
   title: string
@@ -41,18 +41,18 @@ interface ContactInfoProps {
 
 export const ContactInfo: React.FC<ContactInfoProps> = ({ type, value, label }) => {
   const iconMap = {
-    email: Mail,
-    phone: Phone,
-    address: MapPin,
+    email: "Mail",
+    phone: "Phone",
+    address: "MapPin",
   }
 
-  const Icon = iconMap[type]
+  const iconName = iconMap[type]
 
   return (
     <div className="bg-background rounded-xl p-6 shadow-sm border">
       <div className="flex items-center gap-4">
         <div className="h-12 w-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-          <Icon className="h-6 w-6 text-primary" />
+          <DynamicIcon name={iconName} className="h-6 w-6 text-primary" />
         </div>
         <div>
           <h3 className="text-lg font-bold">
@@ -77,7 +77,7 @@ export const DisclaimerBox: React.FC<DisclaimerBoxProps> = ({ children }) => (
 
 interface PrivacyGridProps {
   items: Array<{
-    icon: keyof typeof LucideIcons
+    icon: string
     title: string
     description: string
     bullets: string[]
@@ -86,22 +86,19 @@ interface PrivacyGridProps {
 
 export const PrivacyGrid: React.FC<PrivacyGridProps> = ({ items }) => (
   <div className="grid gap-6 mt-4 md:grid-cols-2">
-    {items.map((item, index) => {
-      const Icon = LucideIcons[item.icon] as React.ComponentType<any>
-      return (
-        <div key={index} className="bg-background rounded-xl p-6 shadow-sm border">
-          <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-            <Icon className="h-5 w-5 text-primary" />
-          </div>
-          <h3 className="text-lg font-bold mb-2">{item.title}</h3>
-          <ul className="space-y-2 text-sm text-muted-foreground">
-            {item.bullets.map((bullet, bulletIndex) => (
-              <li key={bulletIndex}>{bullet}</li>
-            ))}
-          </ul>
+    {items.map((item, index) => (
+      <div key={index} className="bg-background rounded-xl p-6 shadow-sm border">
+        <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+          <DynamicIcon name={item.icon} className="h-5 w-5 text-primary" />
         </div>
-      )
-    })}
+        <h3 className="text-lg font-bold mb-2">{item.title}</h3>
+        <ul className="space-y-2 text-sm text-muted-foreground">
+          {item.bullets.map((bullet, bulletIndex) => (
+            <li key={bulletIndex}>{bullet}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
   </div>
 )
 

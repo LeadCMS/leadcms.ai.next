@@ -35,6 +35,7 @@ import {
   InteractiveLink,
   FloatingLabelInput
 } from "@/components/ui/micro-interactions"
+import { MermaidDiagram } from "@/components/ui/mermaid-diagram"
 
 // UI components and icons for MDX use
 const uiComponents = {
@@ -81,6 +82,7 @@ const uiComponents = {
   MicroInteractionButton,
   InteractiveLink,
   FloatingLabelInput,
+  MermaidDiagram,
 }
 
 // Use React's built-in HTML element prop types instead of custom interfaces
@@ -146,14 +148,24 @@ const baseComponents = {
       {children}
     </p>
   ),
-  a: ({ children, ...props }: AnchorProps) => (
-    <a
-      className="font-medium text-primary underline underline-offset-4 hover:text-primary/80 transition-colors break-all"
-      {...props}
-    >
-      {children}
-    </a>
-  ),
+  a: ({ children, href, ...props }: AnchorProps) => {
+    // Check if the link is external (starts with http:// or https://)
+    const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'))
+
+    return (
+      <a
+        className="font-medium text-primary underline underline-offset-4 hover:text-primary/80 transition-colors break-all"
+        href={href}
+        {...(isExternal && {
+          target: "_blank",
+          rel: "nofollow noopener noreferrer"
+        })}
+        {...props}
+      >
+        {children}
+      </a>
+    )
+  },
   ul: (props: ListProps) => (
     <ul className="my-8 ml-7 list-disc space-y-3 text-foreground" {...props} />
   ),

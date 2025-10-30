@@ -13,6 +13,8 @@ export const pagesContentTypes = [
   'contact',
   'home',
   'doc',
+  'blog-article',
+  'blog-index',
 ] as const;
 
 interface PageProps {
@@ -30,7 +32,6 @@ export function createLocaleHomePage(locale?: string) {
     }
 
     return {
-      title: content.title,
       description: content.description,
       openGraph: {
         title: content.title,

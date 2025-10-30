@@ -1,22 +1,24 @@
 "use client"
 
+import React from "react"
 import { cn } from "@/lib/utils"
-import { AlertCircle, CheckCircle, Info, AlertTriangle, Lightbulb } from "lucide-react"
+import { DynamicIcon, type IconName } from "@/lib/dynamic-icon"
 
 // Callout component for tips, warnings, notes, etc.
 interface CalloutProps {
-  type?: "note" | "tip" | "warning" | "danger" | "info"
+  type?: "note" | "tip" | "warning" | "danger" | "info" | "success"
   title?: string
   children: React.ReactNode
 }
 
 export function Callout({ type = "info", title, children }: CalloutProps) {
-  const icons = {
-    note: Info,
-    tip: Lightbulb,
-    warning: AlertTriangle,
-    danger: AlertCircle,
-    info: Info,
+  const icons: Record<string, IconName> = {
+    note: 'Info',
+    tip: 'Lightbulb',
+    warning: 'AlertTriangle',
+    danger: 'AlertCircle',
+    info: 'Info',
+    success: 'CheckCircle',
   }
 
   const styles = {
@@ -25,14 +27,15 @@ export function Callout({ type = "info", title, children }: CalloutProps) {
     warning: "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-100",
     danger: "border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-100",
     info: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-100",
+    success: "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
   }
 
-  const Icon = icons[type]
+  const iconName = icons[type]
 
   return (
     <div className={cn("border-l-4 p-4 my-6 rounded-r-lg", styles[type])}>
       <div className="flex items-start gap-3">
-        <Icon className="h-5 w-5 mt-0.5 flex-shrink-0" />
+        <DynamicIcon name={iconName} className="h-5 w-5 mt-0.5 flex-shrink-0" />
         <div className="flex-1">
           {title && <div className="font-semibold mb-2">{title}</div>}
           <div className="prose prose-sm dark:prose-invert max-w-none [&>*:first-child]:mt-0 [&>*:last-child]:mb-0">
@@ -129,7 +132,7 @@ export function Step({ title, children }: StepProps) {
   return (
     <div className="relative pl-8">
       <div className="absolute left-0 top-1 h-6 w-6 rounded-full bg-primary text-primary-foreground text-sm font-bold flex items-center justify-center">
-        <CheckCircle className="h-4 w-4" />
+        <DynamicIcon name="CheckCircle" className="h-4 w-4" />
       </div>
       <div>
         <h4 className="font-semibold mb-2">{title}</h4>
@@ -221,17 +224,27 @@ export function Tabs({ items, defaultValue }: TabsProps) {
 // Card component for feature highlights
 interface FeatureCardProps {
   title: string
-  description: string
-  icon?: React.ReactNode
+  description?: string
+  icon?: IconName
   href?: string
+  children?: React.ReactNode
 }
 
-export function FeatureCard({ title, description, icon, href }: FeatureCardProps) {
+export function FeatureCard({ title, description, icon, href, children }: FeatureCardProps) {
   const content = (
     <div className="rounded-lg border bg-card p-6 hover:shadow-md transition-shadow">
-      {icon && <div className="mb-4">{icon}</div>}
-      <h3 className="font-semibold mb-2">{title}</h3>
-      <p className="text-sm text-muted-foreground">{description}</p>
+      <div className="flex items-center mb-2">
+        {icon && (
+          <div className="mr-3">
+            <DynamicIcon name={icon} className="h-6 w-6" />
+          </div>
+        )}
+        <h3 className="font-semibold">{title}</h3>
+      </div>
+      <div className="text-sm text-muted-foreground">
+        {description && <p className="mb-2">{description}</p>}
+        {children}
+      </div>
     </div>
   )
 
@@ -264,5 +277,3 @@ export function FeatureGrid({ children, columns = 2 }: FeatureGridProps) {
     </div>
   )
 }
-
-import React from "react"

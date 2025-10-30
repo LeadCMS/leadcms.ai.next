@@ -39,9 +39,7 @@
   },
   "id": 34,
   "createdAt": "2025-09-02T05:37:07.567339Z",
-  "updatedAt": null,
-  "comments": null,
-  "translations": null,
+  "updatedAt": "2025-10-30T07:36:56.657212Z",
   "title": "ශීර්ෂ කොටසේ සැකසුම",
   "description": "වෙබ් අඩවියේ ශීර්ෂ කොටස සඳහා, ලාංඡනය, සංචරණ සබැඳි සහ ක්‍රියාවට කැඳවන බොත්තම් ඇතුළත් සැකසුමකි. මෙය අඩවියේ ප්‍රධාන සංචරණ ව්‍යුහය පාලනය කරයි.",
   "coverImageUrl": "",
@@ -55,5 +53,5 @@
   "tags": [],
   "allowComments": false,
   "source": "AI translated from 13",
-  "publishedAt": null
+  "publishedAt": "2025-08-31T00:00:00Z"
 }

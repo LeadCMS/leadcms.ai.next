@@ -3,9 +3,9 @@
     "baseUrl": "https://leadcms.ai",
     "title": {
       "template": "LeadCMS - %s",
-      "default": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS"
+      "default": "LeadCMS - Open Source Headless CMS & CRM with AI"
     },
-    "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+    "description": "Build lightning-fast websites with the AI-first, free open source headless CMS & CRM. Perfect for Next.js and modern frameworks. No vendor lock-in.",
     "icons": {
       "icon": [
         {
@@ -42,8 +42,8 @@
     "openGraph": {
       "type": "website",
       "siteName": "LeadCMS.ai",
-      "title": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS",
-      "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+      "title": "LeadCMS - AI-First, Free Open Source Headless CMS & CRM",
+      "description": "Build lightning-fast websites with the AI-first, free open source headless CMS & CRM. Perfect for Next.js and modern frameworks. No vendor lock-in.",
       "images": [
         {
           "url": "/logo.svg",
@@ -55,8 +55,8 @@
     },
     "twitter": {
       "card": "summary",
-      "title": "LeadCMS - AI-Driven, Developer-First CMS & CRM for SaaS",
-      "description": "Empower Your SaaS Growth with a Developer‑First Platform. Automate every step of the product sales lifecycle.",
+      "title": "LeadCMS - AI-First, Free Open Source Headless CMS & CRM",
+      "description": "Build lightning-fast websites with the AI-first, free open source headless CMS & CRM. Perfect for Next.js and modern frameworks. No vendor lock-in.",
       "images": [
         "/logo.svg"
       ]
@@ -68,11 +68,9 @@
   },
   "id": 10,
   "createdAt": "2025-08-23T08:23:02.26159Z",
-  "updatedAt": "2025-08-31T06:59:46.566611Z",
-  "comments": null,
-  "translations": null,
-  "title": "Metadata",
-  "description": "This file controls all the SEO and social sharing metadata for the LeadCMS.ai website. By editing this file, you can update the site’s title, description, icons, Open Graph, Twitter card information, and search engine indexing settings.\n\nFor more details on each field and how metadata works in Next.js, see the official documentation: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
+  "updatedAt": "2025-10-24T12:09:12.325098Z",
+  "title": "Site Metadata",
+  "description": "This file controls all the SEO and social sharing metadata for the LeadCMS.ai website. For more details on each field and how metadata works in Next.js, see the official documentation: https://nextjs.org/docs/app/api-reference/functions/generate-metadata",
   "coverImageUrl": "",
   "coverImageAlt": "",
   "slug": "metadata",
@@ -83,6 +81,5 @@
   "category": "Metadata",
   "tags": [],
   "allowComments": false,
-  "source": null,
   "publishedAt": "2025-08-22T18:30:00Z"
 }

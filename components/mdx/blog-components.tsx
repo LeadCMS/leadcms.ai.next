@@ -359,20 +359,20 @@ export function BlogIndexHero({
         <div className="max-w-[1750px] mx-auto">
           <div className="grid gap-12 lg:grid-cols-2 items-center">
             {/* Left side - Hero content */}
-            <div className="flex flex-col items-start max-w-2xl">
+            <div className="flex flex-col items-center lg:items-start max-w-2xl mx-auto lg:mx-0">
               <div className="text-center lg:text-left w-full">
                 <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 dark:from-blue-400 dark:via-indigo-400 dark:to-purple-400 bg-clip-text text-transparent leading-tight pb-1">
                   {title || "Blog"}
                 </h1>
                 {description && (
-                  <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-8 leading-relaxed">
+                  <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto lg:mx-0 mb-8 leading-relaxed">
                     {description}
                   </p>
                 )}
               </div>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap gap-4 w-full lg:w-auto">
+              <div className="flex flex-wrap gap-4 w-full lg:w-auto justify-center lg:justify-start">
                 <a href="#articles" className="flex-1 lg:flex-initial">
                   <Button size="lg" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
                     View All Articles

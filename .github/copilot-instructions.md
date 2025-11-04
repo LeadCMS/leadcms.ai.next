@@ -99,6 +99,207 @@ Design content types based on structure and purpose, NOT URL patterns.
 - Fixed schema (header, footer, site metadata)
 - No narrative text needed
 
+**CRITICAL: `type` attribute is REQUIRED in both MDX and JSON:**
+- ✅ **MDX files** - Must have `type: "content-type"` in frontmatter
+- ✅ **JSON files** - Must have `"type": "content-type"` as a top-level attribute
+- ❌ **Missing type** - Content without `type` will cause errors or be inaccessible
+- 📋 **Examples**: `type: "home"`, `type: "doc"`, `type: "component"`
+
+**JSON Configuration Files** must include all required CMS fields:
+```json
+{
+  "type": "component",
+  "title": "Configuration Title (min 10 chars)",
+  "description": "Configuration description (min 20 chars)",
+  "slug": "config-name",
+  "author": "Author Name",
+  "language": "en",
+  "publishedAt": "2024-01-01T00:00:00Z",
+  "coverImageUrl": "/media/path/to/image.jpg",
+  "coverImageAlt": "Descriptive alt text",
+  ... // other configuration fields
+}
+```
+
+## LeadCMS SDK Usage
+
+This project uses the official `@leadcms/sdk` package for all content access. **Never** create wrapper functions or read files directly.
+
+### Core SDK Functions
+
+```typescript
+import {
+  getCMSContentBySlugForLocale,
+  getAllContentSlugsForLocale,
+  getAllContentRoutes,
+  loadContentConfigStrict
+} from '@leadcms/sdk'
+
+// Get content by slug
+const content = getCMSContentBySlugForLocale('about', 'en')
+// Returns: { metadata: {...}, body: "..." }
+
+// Get all slugs for a locale (for static generation)
+const slugs = getAllContentSlugsForLocale('en')
+// Returns: ['', 'projects/xltools', 'projects/leadcms', ...]
+
+// Get all routes (multi-locale sites)
+const routes = getAllContentRoutes()
+// Returns: [{ slug: 'about', locale: 'en', path: '/about', ... }, ...]
+
+// Load JSON configuration files
+const config = loadContentConfigStrict('header', 'en')
+// Loads .leadcms/content/header.json (or header.en.json)
+```
+
+### Getting the Locale
+
+Always get the locale from environment variables:
+
+```typescript
+const locale = process.env.LEADCMS_DEFAULT_LANGUAGE ||
+               process.env.NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE ||
+               'en'
+```
+
+### Error Handling
+
+The SDK throws errors when content is missing. Always provide helpful error messages:
+
+```typescript
+const content = getCMSContentBySlugForLocale(slug, locale)
+
+if (!content) {
+  throw new Error(
+    `Content not found for slug: ${slug}. ` +
+    `Please ensure the corresponding MDX file exists in .leadcms/content/ ` +
+    `or run 'npx leadcms pull' to sync content from LeadCMS.`
+  )
+}
+```
+
+For JSON configs, use `loadContentConfigStrict` with try-catch:
+
+```typescript
+let config: { logo: { text: string; href: string } }
+
+try {
+  config = loadContentConfigStrict('header', locale) as typeof config
+} catch (error) {
+  throw new Error(
+    `Header configuration not found. ` +
+    `Please ensure header.json exists in .leadcms/content/ ` +
+    `or run 'npx leadcms pull' to sync content from LeadCMS.`
+  )
+}
+```
+
+### Type Annotations
+
+The SDK returns `unknown` types, so add type annotations:
+
+```typescript
+// For content
+const content = getCMSContentBySlugForLocale(slug, locale)
+// content has metadata (Record<string, any>) and body (string)
+
+// For configs
+const config = loadContentConfigStrict('metadata', locale) as {
+  siteTitle: string
+  siteDescription: string
+  language: string
+  theme: string
+}
+```
+
+### Static Generation
+
+Use SDK functions in `generateStaticParams`:
+
+```typescript
+export async function generateStaticParams() {
+  const locale = process.env.LEADCMS_DEFAULT_LANGUAGE || 'en'
+  const slugs = getAllContentSlugsForLocale(locale)
+
+  return slugs
+    .filter((slug) => slug !== '') // Exclude homepage
+    .map((slug) => ({
+      slug: slug.split('/'), // Convert to path segments
+    }))
+}
+```
+
+### CLI Commands
+
+Content is synced using the LeadCMS CLI:
+
+```bash
+# Pull all content, media, and comments
+npx leadcms pull
+
+# Pull only content
+npx leadcms pull-content
+
+# Pull only media
+npx leadcms pull-media
+
+# Check sync status
+npx leadcms status
+
+# Push local changes
+npx leadcms push
+```
+
+### Content Frontmatter Requirements
+
+**CRITICAL:** Every MDX file MUST include `publishedAt` to be visible. Without it, content is treated as draft and filtered out.
+
+```yaml
+---
+title: "Page Title"              # Required: min 10 characters
+description: "Page description"  # Required: min 20 characters
+slug: "page-slug"                # Required: URL slug (MANDATORY, cannot be empty)
+type: "content-type"             # Required: Content type (home, project, etc.)
+author: "Author Name"            # Required
+language: "en"                   # Required: Language code
+publishedAt: "2024-01-01T00:00:00Z"  # REQUIRED: ISO 8601 date, omit for drafts
+coverImageUrl: "/media/path/to/image.jpg"  # REQUIRED: Cover image URL
+coverImageAlt: "Descriptive alt text for image"  # REQUIRED: Alt text for accessibility
+---
+```
+
+**Required Fields (both MDX and JSON):**
+- ✅ **title** - Minimum 10 characters
+- ✅ **description** - Minimum 20 characters
+- ✅ **slug** - Non-empty string (e.g., "home", "projects/my-project")
+- ✅ **type** - Content type identifier (e.g., "home", "project", "component")
+- ✅ **author** - Content author name
+- ✅ **language** - Language code (e.g., "en")
+- ✅ **publishedAt** - ISO 8601 date (omit for drafts)
+- ✅ **coverImageUrl** - Path to cover image (required by CMS database)
+- ✅ **coverImageAlt** - Alt text for cover image (required for accessibility)
+
+**Slug Requirements:**
+- ✅ **MANDATORY** - Every MDX file MUST have a non-empty slug
+- 🏠 **Homepage** - Use `slug: "home"` for the homepage (handled separately in routing)
+- ❌ **Empty slug** - Never use empty string `""` for slug
+- 📁 **Nested paths** - Use forward slashes for subdirectories (e.g., `"blog/my-post"`)
+
+**Publishing Rules:**
+- ✅ **With `publishedAt`** - Content is visible and returned by SDK
+- ❌ **Without `publishedAt`** - Content is treated as draft and NOT returned
+- 🕐 **Future `publishedAt`** - Content scheduled for future publication (not visible until that date)
+- 📝 **Drafts** - Omit `publishedAt` to create draft content
+
+### Key Principles
+
+1. **Use SDK directly** - Never create wrapper functions (no `lib/leadcms.ts`)
+2. **Import from '@leadcms/sdk'** - Use official SDK functions
+3. **Type annotations** - Cast SDK results to specific types
+4. **Error handling** - Provide helpful error messages with sync instructions
+5. **Build-time only** - All SDK calls happen during build, not at runtime
+6. **Always add publishedAt** - Content without `publishedAt` will not be visible
+
 ## MDX Component Design Principles
 
 ### 1. Content Inside Tags, Metadata as Props
@@ -299,21 +500,28 @@ URL: /docs/getting-started/installation
 
 ## Frontmatter Requirements
 
-Every MDX file MUST include:
+**CRITICAL:** Every MDX file MUST include `publishedAt` to be visible!
 
 ```yaml
 ---
 title: "Page Title"                      # Required
-description: >-                          # SEO description
+description: >-                          # Required: SEO description
   Page description text
-slug: 'page-slug'                        # URL slug
-type: 'content-type'                     # Content type (home, landing, doc, etc.)
-author: 'Author Name'                    # Content author
-language: 'en'                           # Language code
-category: 'category-name'                # Optional category
-tags: ['tag1', 'tag2']                   # Optional tags
+slug: 'page-slug'                        # Required: URL slug
+type: 'content-type'                     # Required: Content type (home, project, doc, etc.)
+author: 'Author Name'                    # Required: Content author
+language: 'en'                           # Required: Language code
+publishedAt: "2024-01-01T00:00:00Z"     # REQUIRED: ISO 8601 date (content is invisible without this!)
+category: 'category-name'                # Optional: category
+tags: ['tag1', 'tag2']                   # Optional: tags
 ---
 ```
+
+**Publishing Rules:**
+- ✅ **With `publishedAt`** - Content is visible and returned by SDK
+- ❌ **Without `publishedAt`** - Content is treated as draft and NOT returned by SDK
+- 🕐 **Future `publishedAt`** - Content scheduled for future (not visible until that date)
+- 📝 **Create Drafts** - Omit `publishedAt` to create draft content
 
 ## Build-Time Validation
 

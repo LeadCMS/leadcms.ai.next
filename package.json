@@ -87,13 +87,13 @@
     "zod": "^3.25.76"
   },
   "devDependencies": {
-    "@leadcms/sdk": "^2.2.3",
+    "@leadcms/sdk": "^2.2.4",
     "@types/node": "^22.19.0",
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@typescript-eslint/eslint-plugin": "^8.46.3",
     "@typescript-eslint/parser": "^8.46.3",
-    "axios": "^1.13.1",
+    "axios": "^1.13.2",
     "chokidar": "^4.0.3",
     "concurrently": "^9.2.1",
     "dotenv": "^17.2.3",

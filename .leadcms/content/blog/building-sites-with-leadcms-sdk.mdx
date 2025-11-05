@@ -2,13 +2,13 @@
 id: 58
 createdAt: '2025-10-24T17:03:44.678452Z'
 updatedAt: '2025-10-30T04:48:35.418134Z'
-title: Building a Modern Site with LeadCMS SDK – A Developer's Guide
+title: Building a Modern Site with LeadCMS SDK - A Developer's Guide
 description: >-
   How to use LeadCMS SDK to build blazing-fast static sites with Next.js. Learn
   to integrate headless CMS capabilities with TypeScript support, smart caching,
   and seamless framework integration.
 coverImageUrl: /media/blog/building-sites-with-leadcms-sdk/leadcms-sdk.avif
-coverImageAlt: Building a Modern Site with LeadCMS SDK – A Developer's Guide
+coverImageAlt: Building a Modern Site with LeadCMS SDK - A Developer's Guide
 slug: blog/building-sites-with-leadcms-sdk
 type: blog-article
 author: LeadCMS Team
@@ -24,7 +24,7 @@ allowComments: true
 
 **LeadCMS** is an AI-driven, open-source **headless CMS & CRM** that lets you manage content and media separately from your code. The LeadCMS SDK is a **framework-agnostic** JavaScript/TypeScript library and CLI that makes it easy to integrate LeadCMS content into any website or app.
 
-In this comprehensive guide, we'll walk through using the SDK to add headless CMS capabilities to a Next.js site (as an example – the same approach works with other frameworks or static site generators). You'll learn how to set up the SDK, model your content and media in LeadCMS, fetch that content into your project, and render it on your site.
+In this comprehensive guide, we'll walk through using the SDK to add headless CMS capabilities to a Next.js site (as an example - the same approach works with other frameworks or static site generators). You'll learn how to set up the SDK, model your content and media in LeadCMS, fetch that content into your project, and render it on your site.
 
 By the end, you'll understand how **LeadCMS SDK enables a modern content workflow** with static generation, dynamic content (when needed), and a unified way to handle both content and media assets.
 
@@ -39,12 +39,12 @@ Using the SDK instead of calling LeadCMS's REST API directly offers several comp
   <FeatureCard title="Framework Integration" description="Seamlessly plugs into Next.js, Astro, Gatsby, Nuxt, and more. Use it at build time for static sites or at runtime for dynamic routes with equal ease." icon="Globe" />
 </FeatureGrid>
 
-In short, the **LeadCMS SDK streamlines content integration** – letting you treat your CMS content as local data in your code, with all the convenience of TypeScript and none of the boilerplate of direct API calls.
+In short, the **LeadCMS SDK streamlines content integration** - letting you treat your CMS content as local data in your code, with all the convenience of TypeScript and none of the boilerplate of direct API calls.
 
 ## Setting Up LeadCMS and the SDK
 
 <Callout type="info">
-  **Prerequisites:** Make sure you have a LeadCMS instance running (self-hosted via Docker or deployed in the cloud) and have an API URL and API key for it. If you haven't set up LeadCMS yet, you can spin it up with just a few commands – see the [LeadCMS documentation](/docs) for deployment instructions.
+  **Prerequisites:** Make sure you have a LeadCMS instance running (self-hosted via Docker or deployed in the cloud) and have an API URL and API key for it. If you haven't set up LeadCMS yet, you can spin it up with just a few commands - see the [LeadCMS documentation](/docs) for deployment instructions.
 </Callout>
 
 <Steps>
@@ -102,8 +102,8 @@ In short, the **LeadCMS SDK streamlines content integration** – letting you tr
 Before we fetch or display anything, let’s discuss how content is structured in LeadCMS and what we assume is already configured in the CMS:
 
 * **Content Types:** In LeadCMS you define *content types* (similar to schemas or models) that represent different kinds of content. For example, you might have a type called **Page** for static pages (with fields like title, body, etc.), a type **BlogArticle** for blog posts (fields like title, excerpt, author, body, published date, etc.), or types for things like **Project**, **Product**, etc. In our reference site (LeadCMS’s own website), content types include `"home"` (for the homepage content), `"blog-article"` (for blog posts), `"doc"` (for documentation pages), `"contact"` (contact page), and so on. Each content type defines what fields each entry will have.
-* **Content Records:** Once types are defined, editors create **content entries** (records) of those types. Each entry has a unique **slug** and content for each field. For instance, a *BlogArticle* entry might have `slug: "blog/introducing-leadcms-sdk"` and fields filled in (title, author, tags, body text, etc.). LeadCMS supports writing rich text content in Markdown/MDX format, which allows embedding components or dynamic content in pages. For example, the "Home" page entry in our reference has an MDX body that includes custom React components for layout (HeroSection, FeaturesSection, etc.) and text content. Each content record also stores metadata like `createdAt`, `updatedAt`, `language` (for multi-language support), and an `id`. When content is fetched via the SDK, Markdown/MDX content comes through with its frontmatter and body separated – the SDK will parse the frontmatter into fields and provide the body content as a Markdown/MDX string for rendering. Content written as structured JSON (e.g., a contact form config) would be delivered as JSON objects.
-* **Media Assets:** LeadCMS includes a central **media library** where you can upload images and other files. You can then attach or reference these media files in your content (for example, a BlogArticle might have a cover image field, or your homepage content might include an image in the hero section). The benefit of using the CMS for media is that you **upload once and use anywhere** – you don’t need to duplicate images across pages. LeadCMS (and its SDK) will ensure media gets served from your own site’s domain with SEO-friendly URLs, and can handle optimizations like automatic WebP/AVIF conversion and CDN delivery behind the scenes. In practice, when you fetch media via the SDK, each file is downloaded to the local `public/media` directory (or your configured `mediaDir`) and can be referenced by path. For example, an image uploaded for the home page with filename "leadcms-preview.png" might end up at `public/media/home/leadcms-preview.png` in the project, and the content MDX references it as `/media/home/leadcms-preview.png`. This means when the site is built, that image is available at [`https://your-site.com/media/home/leadcms-preview.png`](https://your-site.com/media/home/leadcms-preview.png) – under your control and domain.
+* **Content Records:** Once types are defined, editors create **content entries** (records) of those types. Each entry has a unique **slug** and content for each field. For instance, a *BlogArticle* entry might have `slug: "blog/introducing-leadcms-sdk"` and fields filled in (title, author, tags, body text, etc.). LeadCMS supports writing rich text content in Markdown/MDX format, which allows embedding components or dynamic content in pages. For example, the "Home" page entry in our reference has an MDX body that includes custom React components for layout (HeroSection, FeaturesSection, etc.) and text content. Each content record also stores metadata like `createdAt`, `updatedAt`, `language` (for multi-language support), and an `id`. When content is fetched via the SDK, Markdown/MDX content comes through with its frontmatter and body separated - the SDK will parse the frontmatter into fields and provide the body content as a Markdown/MDX string for rendering. Content written as structured JSON (e.g., a contact form config) would be delivered as JSON objects.
+* **Media Assets:** LeadCMS includes a central **media library** where you can upload images and other files. You can then attach or reference these media files in your content (for example, a BlogArticle might have a cover image field, or your homepage content might include an image in the hero section). The benefit of using the CMS for media is that you **upload once and use anywhere** - you don’t need to duplicate images across pages. LeadCMS (and its SDK) will ensure media gets served from your own site’s domain with SEO-friendly URLs, and can handle optimizations like automatic WebP/AVIF conversion and CDN delivery behind the scenes. In practice, when you fetch media via the SDK, each file is downloaded to the local `public/media` directory (or your configured `mediaDir`) and can be referenced by path. For example, an image uploaded for the home page with filename "leadcms-preview.png" might end up at `public/media/home/leadcms-preview.png` in the project, and the content MDX references it as `/media/home/leadcms-preview.png`. This means when the site is built, that image is available at [`https://your-site.com/media/home/leadcms-preview.png`](https://your-site.com/media/home/leadcms-preview.png) - under your control and domain.
 
 ### Defining Your Content Model
 
@@ -136,10 +136,10 @@ Example content entries you might create:
 * Multiple Project entries for portfolio items
 * Homepage (slug "home") that lists or highlights content
 
-The exact modeling is up to you – the key point is that you have **structured content** in the CMS, ready to be pulled into the frontend. Ensure each entry has a unique slug and that any media files are uploaded to LeadCMS and properly referenced.
+The exact modeling is up to you - the key point is that you have **structured content** in the CMS, ready to be pulled into the frontend. Ensure each entry has a unique slug and that any media files are uploaded to LeadCMS and properly referenced.
 
 <Callout type="note">
-  If you're following along with an existing LeadCMS instance, create the content types and records you need. For the reference site LeadCMS.ai, these were already set up – including a home page with multiple sections, blog posts, and media files.
+  If you're following along with an existing LeadCMS instance, create the content types and records you need. For the reference site LeadCMS.ai, these were already set up - including a home page with multiple sections, blog posts, and media files.
 </Callout>
 
 ## Fetching Content and Media into Your Project
@@ -160,7 +160,7 @@ For our guide, we’ll focus on static generation with build-time fetch, which c
   npx leadcms fetch
   ```
 
-  This will connect to your configured LeadCMS instance, download all content and media assets, and save them to your local filesystem. By default, you’ll now have a folder `.leadcms/content` containing files (Markdown/MDX or JSON) for each content entry, organized by slug and locale, and a `public/media` folder with any images/files. The fetch process uses a *sync* mechanism so it only pulls changes after the first time – it won’t re-download everything on each run, just the new or updated content. (It keeps track of a sync token in `.leadcms/` to know what’s new.) You can run `npx leadcms fetch` any time you update content in the CMS to refresh the local content.
+  This will connect to your configured LeadCMS instance, download all content and media assets, and save them to your local filesystem. By default, you’ll now have a folder `.leadcms/content` containing files (Markdown/MDX or JSON) for each content entry, organized by slug and locale, and a `public/media` folder with any images/files. The fetch process uses a *sync* mechanism so it only pulls changes after the first time - it won’t re-download everything on each run, just the new or updated content. (It keeps track of a sync token in `.leadcms/` to know what’s new.) You can run `npx leadcms fetch` any time you update content in the CMS to refresh the local content.
 
   ### (Optional) Watch for Updates
 
@@ -170,7 +170,7 @@ For our guide, we’ll focus on static generation with build-time fetch, which c
   npx leadcms watch
   ```
 
-  This will keep your local content in sync while you run Next.js in dev mode, enabling a **live preview setup** – whenever an editor updates something in LeadCMS, the SDK will fetch the changes and trigger your Next.js app to reload with the new content.
+  This will keep your local content in sync while you run Next.js in dev mode, enabling a **live preview setup** - whenever an editor updates something in LeadCMS, the SDK will fetch the changes and trigger your Next.js app to reload with the new content.
 
   <Callout type="tip">
     This is perfect for an editing workflow where you want to see content updates immediately on a local preview site.
@@ -178,7 +178,7 @@ For our guide, we’ll focus on static generation with build-time fetch, which c
 
   After fetching, inspect the `.leadcms/content` directory in your project. You should see files corresponding to your entries. For example, if you had an "about" page, there might be `about.mdx` with frontmatter (YAML with fields like title, etc.) and the body text. If you created multi-language content, you’d see subfolders for each locale (e.g., `es/about.mdx` for a Spanish version). The SDK automatically organizes content by locale directories if multiple languages are present. Similarly, the `public/media` folder will have any images you uploaded, possibly nested in subfolders (e.g., an image attached to the about page might reside in `public/media/about/yourimage.png`).
 
-  Now that content is fetched, it's effectively part of your project – ready to be queried by the SDK's JavaScript functions.
+  Now that content is fetched, it's effectively part of your project - ready to be queried by the SDK's JavaScript functions.
 </Steps>
 
 ## Building Pages with Next.js and LeadCMS SDK
@@ -188,12 +188,12 @@ With content available locally, we can use the SDK's **data access functions** i
 <Callout type="info">
   **Core SDK Functions**
 
-  * `getAllContentSlugs()` – Returns array of all content slugs
-  * `getCMSContentBySlug(slug)` – Returns content object for a given slug
-  * `getAllContentSlugsForLocale(locale)` – Locale-specific slug retrieval
-  * `getCMSContentBySlugForLocale(slug, locale)` – Locale-specific content
-  * `getCMSContentByType(type)` – Get all entries of a certain type
-  * `getAllContentRoutes()` – Returns route info objects for framework integration
+  * `getAllContentSlugs()` - Returns array of all content slugs
+  * `getCMSContentBySlug(slug)` - Returns content object for a given slug
+  * `getAllContentSlugsForLocale(locale)` - Locale-specific slug retrieval
+  * `getCMSContentBySlugForLocale(slug, locale)` - Locale-specific content
+  * `getCMSContentByType(type)` - Get all entries of a certain type
+  * `getAllContentRoutes()` - Returns route info objects for framework integration
 
   There are also functions for config objects like `getHeaderConfig()` and draft content support.
 </Callout>
@@ -296,7 +296,7 @@ Let’s integrate this into Next.js. We’ll assume you’re using **Next.js 13+
     ```
   </CodeBlock>
 
-  The content files are organized in subfolders per locale, so these functions know where to look. The process is similar – you'll just pass locale when fetching.
+  The content files are organized in subfolders per locale, so these functions know where to look. The process is similar - you'll just pass locale when fetching.
 
   ### Building Your Site
 
@@ -331,11 +331,11 @@ import Image from 'next/image';
 
 This will serve the image from the `public/media` folder. Because the images are now hosted on your domain, you get the SEO benefit of having them under your URL (not an external CMS domain), and you can take advantage of Next.js image optimization if desired. The LeadCMS SDK and CMS ensure that the images were downloaded and stored with efficient formats. In fact, LeadCMS can automatically optimize images to modern formats like WebP/AVIF and integrate with a CDN for global delivery. All you need to do is reference them properly.
 
-One important thing: if your content has images *inside* an MDX body (for example, an `<img src="/media/...." />` tag in the markdown), you should ensure those references are correct. The fetch process will have placed the files accordingly. Just verify that your markdown renderer doesn’t rewrite the path. In most cases, it will work out of the box – the MDX is referencing `/media/...` which Next will serve as static files.
+One important thing: if your content has images *inside* an MDX body (for example, an `<img src="/media/...." />` tag in the markdown), you should ensure those references are correct. The fetch process will have placed the files accordingly. Just verify that your markdown renderer doesn’t rewrite the path. In most cases, it will work out of the box - the MDX is referencing `/media/...` which Next will serve as static files.
 
 If you add new images to content, just re-run `leadcms fetch` to sync them. The sync mechanism will only download new or changed files, so it’s quite fast on successive runs.
 
-To summarize, **media management with LeadCMS** means you get a **central library** (upload once, use anywhere), and the SDK brings those files into your project so you can serve them optimally. This eliminates the need for separate image hosting or worrying about broken links – your content and media stay in sync. And since everything lives in your Git repository (if you commit the `.leadcms/content` and `public/media` folders) or your deployment artifact, you also get version control for content and media. Rollbacks or previews of old versions become possible by just switching branches or using older build output, which is a big advantage of the Git-backed approach.
+To summarize, **media management with LeadCMS** means you get a **central library** (upload once, use anywhere), and the SDK brings those files into your project so you can serve them optimally. This eliminates the need for separate image hosting or worrying about broken links - your content and media stay in sync. And since everything lives in your Git repository (if you commit the `.leadcms/content` and `public/media` folders) or your deployment artifact, you also get version control for content and media. Rollbacks or previews of old versions become possible by just switching branches or using older build output, which is a big advantage of the Git-backed approach.
 
 ## Conclusion and Next Steps
 

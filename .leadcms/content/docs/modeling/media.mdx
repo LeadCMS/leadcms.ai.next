@@ -1,0 +1,134 @@
+---
+title: Media
+description: >-
+  Manage images and other assets in LeadCMS.
+  Learn how to upload and organize media, understand path transformations between the CMS and your site, and optimize files for fast page loads.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/modeling/media
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Modeling
+order: 3
+---
+
+# Media
+
+Media files—images, videos and documents—are often the largest part of a website.
+LeadCMS helps you manage these assets, but it does **not** perform image optimization or deliver files through a CDN.
+It’s up to you to upload pre‑optimized files and organise them in a way that supports fast, reliable page loads.
+
+## No built‑in CDN or optimisation
+
+LeadCMS does not integrate with a CDN or automatically compress images. Every file you upload is stored and served as‑is.
+To maintain fast pages and high Lighthouse scores, you should:
+
+- **Compress images before uploading.** Aim for files under **500 KB** for JPEG/PNG/WebP and under **2 MB** for AVIF. Videos should stay under **10 MB** and PDFs under **20 MB** (default limits can be customised in your `.env`, but increasing them is not recommended for performance).
+- **Use modern formats.** Prefer **AVIF** for maximum compression or **WebP** for broad browser support. JPEG and PNG should only be used when necessary (for legacy browsers or lossless graphics).
+- **Resize images to actual display size.** Don’t upload 4 K photos if they will be displayed at 800 × 600 px.
+- **Choose the right quality.** For hero images, a quality setting of 85–90 is appropriate; for thumbnails or backgrounds, 60–75 is sufficient.
+- **Test with Lighthouse or similar tools** to monitor Largest Contentful Paint (LCP) and Cumulative Layout Shift (CLS).
+
+<Callout type="info" title="Adjusting upload limits">
+The default upload limits are set to ensure good performance. You can increase them via environment variables (e.g. `MEDIA__MAX_IMAGESIZE_KB`) but doing so may result in slower pages and poor user experience on mobile networks.
+</Callout>
+
+## Uploading media
+
+LeadCMS does **not** allow pushing files directly from your local `public/media` folder. Instead, upload media through the **Admin UI**. There are two methods:
+
+<Steps>
+  <Step title="Upload via content editor">
+    When editing an MDX page in the Admin UI, you can drag and drop images into the editor or use the **Insert Image** button in the rich text toolbar.
+    LeadCMS automatically uploads the file and saves it in a folder matching the content’s slug (e.g. `blog/my-article`) and inserts a reference into your content.
+    This ensures a consistent folder structure and makes it easy to associate media with a specific page.
+  </Step>
+  <Step title="Upload via media library">
+    Navigate to **Media** in the Admin UI to upload files in bulk.
+    Create folders that mirror your content slugs (`blog/my-article`, `services/consulting`) and upload files into those folders.
+    Avoid placing files directly in the root of the media directory; always organise by page or by type (e.g. `shared/icons`).
+  </Step>
+</Steps>
+
+After uploading, run `npx leadcms pull-media` or `npx leadcms pull` to download the media files into your repository. They will be saved into your configured `mediaDir` (default `public/media`), ready to be served by your site.
+
+## Organising media
+
+Use a **slug‑based directory structure** to organise your assets:
+
+- **By content slug** – Place images in a folder matching the content’s slug, e.g. `/media/blog/my-article/cover.jpg`. This is the default when uploading from the content editor.
+- **By type** – If a file is shared across multiple pages, store it in a shared folder like `/media/shared/icons/`.
+- **Avoid the root** – Never store files directly in `/media/`; always use subfolders.
+
+This structure improves clarity, prevents name collisions and keeps large sites manageable. When you pull media, the SDK preserves this structure in your local `public/media` folder.
+
+## Path transformation
+
+Media paths are different in the CMS versus your local files. LeadCMS automatically rewrites these paths during sync:
+
+- **CMS format** – When editing content in LeadCMS, media references use the `/api/media/` prefix: `/api/media/blog/my-article/cover.jpg`.
+- **Local format** – When content is pulled, the SDK rewrites `/api/media/` to `/media/` and downloads the files into `public/media/`. Your local MDX files therefore reference images as `/media/blog/my-article/cover.jpg`.
+
+During a push, the reverse happens: `/media/...` paths in your files are converted back to `/api/media/...` so the CMS can interpret them. This process allows your static site to serve files from the `public/media` folder while the CMS continues to use API URLs.
+
+## Referencing media in content
+
+Always reference media using the **local format** (`/media/...`) in your MDX or JSON files.
+For example:
+
+```mdx
+---
+title: "Our Services"
+slug: "services"
+type: "page"
+publishedAt: "2025-01-01T00:00:00Z"
+coverImageUrl: "/media/services/consulting/hero.jpg"
+coverImageAlt: "Consulting hero image"
+---
+
+# Consulting Services
+
+We help companies scale their businesses.
+
+<Image src="/media/services/consulting/team.jpg" alt="Our team" width={800} height={600} />
+```
+
+After a pull, the files `hero.jpg` and `team.jpg` will exist in `public/media/services/consulting/` and the content will render correctly.
+If you edit the image inside the Admin UI, the SDK will update the file accordingly when you run `npx leadcms pull` again.
+
+## Best practices for media optimisation
+
+To ensure fast loading pages, follow these guidelines when preparing your assets:
+
+1. **Choose the right format.** Use **AVIF** or **WebP** for most images. Use **PNG** for graphics requiring transparency and **SVG** for simple icons. Reserve **JPEG** for legacy scenarios only.
+2. **Compress before upload.** Use tools like **TinyPNG**, **ImageOptim**, **Squoosh** or command‑line utilities like **cwebp** and **avifenc** to reduce file sizes. Aim for the smallest file size that still looks good.
+3. **Set appropriate quality.** Higher quality values (85–90) are suitable for hero images; lower values (60–75) suffice for thumbnails and backgrounds.
+4. **Resize images to actual use.** Do not upload images larger than needed. For responsive pages, export multiple sizes or let your framework (e.g. Next.js `<Image>`) handle responsive sizes and format conversions.
+5. **Specify dimensions.** Always provide width and height attributes when embedding images to prevent layout shift and improve Core Web Vitals.
+6. **Use lazy loading.** For images below the fold, enable lazy loading to defer loading until they are in view.
+
+<Callout type="info" title="Using Next.js Image component">
+If you’re building with **Next.js**, the `<Image>` component automatically converts JPEGs and PNGs to WebP/AVIF and generates multiple sizes for responsive images. This is a powerful way to optimize images for different devices without manual processing. Remember to set `unoptimized={true}` when using static export.
+</Callout>
+
+## Next steps
+
+With your media organised and optimised, you’re ready to internationalise your site or continue exploring LeadCMS. Continue with:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="i18n"
+    description="Localise your content with multiple languages"
+    href="/docs/modeling/i18n"
+  />
+  <FeatureCard
+    title="Preview"
+    description="Set up live preview and draft mode for content"
+    href="/docs/preview/overview"
+  />
+</FeatureGrid>

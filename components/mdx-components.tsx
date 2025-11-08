@@ -1,3 +1,4 @@
+import React from "react"
 import type { MDXComponents } from "mdx/types"
 import mdxComponents from "@/components/mdx"
 import {
@@ -69,7 +70,20 @@ import {
 import { ContactUs } from "./contact-us"
 import { MermaidDiagram } from "./ui/mermaid-diagram"
 
-export function useMDXComponents(components: MDXComponents): MDXComponents {
+/**
+ * Registry of all available MDX components with userUid context support.
+ *
+ * Usage in templates:
+ * ```tsx
+ * const components = useMDXComponents({ userUid })
+ * ```
+ *
+ * Components that support draft content (like BlogArticlesSection) will
+ * automatically receive userUid and include draft content when present.
+ */
+export function useMDXComponents(components: Record<string, any> = {}): MDXComponents {
+  const { userUid, ...otherComponents } = components
+
   return {
     ...mdxComponents,
     HeroSection,
@@ -139,20 +153,20 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
     Tabs,
     FeatureCard,
     FeatureGrid,
-    // Blog components
+    // Blog components with userUid context
     BlogCard,
     BlogGrid,
     FeaturedArticle,
     BlogHeader,
     BlogArticleMeta,
     BlogSection,
-    BlogArticlesSection,
+    BlogArticlesSection: (props: any) => <BlogArticlesSection {...props} userUid={userUid} />,
     BlogIndexHero,
     BlogCallout,
     // Contact form
     ContactUs,
     // Diagrams
     MermaidDiagram,
-    ...components,
+    ...otherComponents,
   }
 }

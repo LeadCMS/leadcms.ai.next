@@ -8,6 +8,7 @@ import DefaultTemplate from "./default-template"
 
 export interface TemplateProps {
   content: CMSContent
+  userUid?: string | null
 }
 
 export type TemplateComponent = React.ComponentType<TemplateProps>

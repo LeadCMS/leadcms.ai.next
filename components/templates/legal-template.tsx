@@ -3,7 +3,7 @@ import type { CMSContentTemplateProps } from "@leadcms/sdk"
 import { useMDXComponents } from "@/components/mdx-components"
 import { Badge } from "@/components/ui/badge"
 
-export default function LegalTemplate({ content }: CMSContentTemplateProps) {
+export default function LegalTemplate({ content, userUid }: CMSContentTemplateProps & { userUid?: string | null }) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
     scope: {
@@ -22,7 +22,7 @@ export default function LegalTemplate({ content }: CMSContentTemplateProps) {
     : undefined
 
   // Legal pages need components that include legal components
-  const components = useMDXComponents({})
+  const components = useMDXComponents({ userUid })
 
   // For static builds, let errors bubble up to fail the build
   // No need for Suspense or error handling since everything is resolved at build time

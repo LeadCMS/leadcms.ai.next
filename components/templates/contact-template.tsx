@@ -2,7 +2,7 @@ import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import type { CMSContentTemplateProps } from "@leadcms/sdk"
 import { useMDXComponents } from "@/components/mdx-components"
 
-export default function ContactTemplate({ content }: CMSContentTemplateProps) {
+export default function ContactTemplate({ content, userUid }: CMSContentTemplateProps & { userUid?: string | null }) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
     scope: {
@@ -11,7 +11,7 @@ export default function ContactTemplate({ content }: CMSContentTemplateProps) {
   }
 
   // Contact pages need components that include contact components
-  const components = useMDXComponents({})
+  const components = useMDXComponents({ userUid })
 
   // For static builds, let errors bubble up to fail the build
   // No need for Suspense or error handling since everything is resolved at build time

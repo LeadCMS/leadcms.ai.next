@@ -1,0 +1,123 @@
+---
+title: Docker Image
+description: >-
+  Package your LeadCMS site as a Docker image. This guide explains the `leadcms docker` command, the generated Dockerfile and Nginx configuration, and how to run your static site in a container.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/deploy/docker-image
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-11-06T00:00:00Z'
+group: Deploy
+order: 2
+---
+
+# Docker Image
+
+While static export gives you files ready to host anywhere, sometimes you want a self‑contained container image that serves your site with an embedded web server and environment injection. LeadCMS offers a `leadcms docker` command in the SDK that scaffolds a production‑ready Docker setup for your static site.
+
+## Why use Docker?
+
+Packaging your site as a Docker image provides:
+
+- **Predictable environment:** The OS, web server, caching rules and environment injection are baked into the image. You avoid differences between hosting platforms.
+- **Easy deployment:** Deploy the same image to any container platform (Docker, Kubernetes, ECS, Cloud Run). You don’t need to configure Nginx manually.
+- **Runtime environment variables:** The container injects environment variables at startup so you can build once and configure at deploy time.
+
+## Generating a Dockerfile
+
+After running a static build (see [Static Export](/docs/deploy/static-export/)), you can create a Dockerfile with the LeadCMS CLI:
+
+```bash
+pnpm exec leadcms docker
+```
+
+This command copies a template Dockerfile, an `nginx.conf` and a small shell script for injecting environment variables into your project directory. The generated Dockerfile typically looks like this:
+
+```dockerfile
+FROM nginx:alpine
+
+# Copy static site
+COPY out/ /usr/share/nginx/html
+
+# Copy Nginx configuration
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Copy environment injection script
+COPY inject-runtime-env.sh /usr/local/bin/inject-runtime-env.sh
+RUN chmod +x /usr/local/bin/inject-runtime-env.sh
+
+# Define health check
+HEALTHCHECK CMD wget --no-verbose --spider http://localhost || exit 1
+
+# Start Nginx with environment injection
+CMD ["/bin/sh", "-c", "inject-runtime-env.sh && nginx -g 'daemon off;'"]
+```
+
+The most important pieces are:
+
+- **Static files**: The contents of your `out/` directory are copied into `/usr/share/nginx/html`.
+- **Nginx configuration**: A custom `nginx.conf` optimised for static sites is provided. It defines cache headers, handles `try_files $uri $uri/index.html =404`, and serves `404.html` for missing pages.
+- **Environment injection**: At container start, `inject-runtime-env.sh` scans all environment variables starting with `NEXT_PUBLIC_` and writes them into a `public/__env.js` file. This allows runtime configuration (see [Env & Secrets](/docs/deploy/env-and-secrets/)).
+
+## Building and running the image
+
+After generating the Dockerfile:
+
+<Steps>
+  <Step title="Build the container">
+    ```bash
+    docker build -t my-leadcms-site .
+    ```
+    The build copies your static files and configuration into the image.
+  </Step>
+  <Step title="Run the container locally">
+    ```bash
+    # Pass runtime environment variables when starting
+    docker run -p 8080:80 \
+      -e NEXT_PUBLIC_SITE_URL=https://example.com \
+      -e NEXT_PUBLIC_FEATURE_FLAG=true \
+      my-leadcms-site
+    ```
+    When the container starts, `inject-runtime-env.sh` writes a `__env.js` file containing the `NEXT_PUBLIC_` variables. Nginx then serves the site on port 80 (mapped to host port 8080).
+  </Step>
+  <Step title="Deploy to your platform">
+    Push the image to your preferred container registry (Docker Hub, GitHub Container Registry, Amazon ECR, etc.) and deploy it on a container service (e.g. Kubernetes, AWS ECS, Cloud Run).
+    Because all static files and configuration are in the image, deployment is straightforward: start the container with appropriate environment variables.
+  </Step>
+</Steps>
+
+## Understanding the Nginx configuration
+
+The generated `nginx.conf` is tuned for static sites. Key directives include:
+
+- **Caching**: Static assets (images, CSS, JS) are served with long cache headers. HTML files are served with shorter cache headers to allow content updates.
+- **Error pages**: `404.html` is served for unknown routes. You can customise the 404 page in your project.
+- **Trailing slashes**: The `try_files $uri $uri/index.html =404;` directive ensures that both `/about` and `/about/` resolve correctly when trailing slashes are enabled.
+
+Feel free to adjust `nginx.conf` to meet your project’s needs. For example, you can enable gzip compression or set specific cache times for certain file types.
+
+## Preview server container
+
+LeadCMS also includes a separate `preview/Dockerfile` for live preview environments. That image starts a Node.js development server alongside Nginx and watches for changes. It’s intended for previewing unpublished content and drafts. For production deployments, use the static Dockerfile described above.
+
+## Next steps
+
+Your site is now containerized and ready for deployment. Configure secure environment handling and explore operations:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Env & Secrets"
+    description="Configure runtime environment variables and secrets securely"
+    href="/docs/deploy/env-and-secrets"
+  />
+  <FeatureCard
+    title="Deploying"
+    description="Deploy LeadCMS with Docker Compose in production"
+    href="/docs/ops/deploying"
+  />
+</FeatureGrid>

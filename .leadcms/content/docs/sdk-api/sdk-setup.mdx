@@ -1,0 +1,139 @@
+---
+title: SDK Setup
+description: >-
+  Configure your project to use the LeadCMS SDK and CLI. Learn how to install the package, set up environment variables, run the interactive init wizard, authenticate for write access and pull your initial content.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/setup
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-09-10T18:30:00Z'
+group: SDK & API
+order: 1
+---
+
+# SDK Setup
+
+The LeadCMS SDK provides both a programmatic library and CLI tools for integrating your site with LeadCMS.  This article shows you how to install the package, configure your environment and run the interactive setup wizard.
+
+## Installation methods
+
+The SDK is published on npm under the `@leadcms/sdk` scope.  There are three common ways to install it depending on how you plan to use it:
+
+- **Development dependency** – install as a dev dependency to use the SDK only during your build process.  This is the most common approach when generating static websites with frameworks like Next.js, Astro, Gatsby or Nuxt.
+- **Production dependency** – install without the dev flag when you need runtime access to LeadCMS (for example, on a server‑rendered page, API route or live preview mode).
+- **Global installation** – install the package globally to access the `leadcms` CLI from any project.  This is convenient when you want to initialise new projects or run pull/push commands without adding the SDK to each repository.
+
+```bash
+# Development dependency (build‑time only)
+npm install --save-dev @leadcms/sdk
+
+# Production dependency (runtime usage)
+npm install @leadcms/sdk
+
+# Global CLI installation
+npm install -g @leadcms/sdk
+```
+
+## Environment variables
+
+The SDK reads its configuration from environment variables.  At minimum you must specify your LeadCMS instance URL and default language:
+
+```bash
+# Required
+LEADCMS_URL=https://your-instance.leadcms.ai
+
+# Optional – provide an API key when you need write access
+LEADCMS_API_KEY=your-api-key
+
+# Language used when no locale is specified (default: "en")
+LEADCMS_DEFAULT_LANGUAGE=en
+
+# Directories for downloaded content and media (defaults shown)
+LEADCMS_CONTENT_DIR=.leadcms/content
+LEADCMS_MEDIA_DIR=public/media
+
+# Enable draft support (requires API key) – include unpublished content when pulling
+LEADCMS_ENABLE_DRAFTS=false
+```
+
+You can place these variables in a `.env` file at the root of your project.  The SDK will load them automatically using `dotenv`.  For security reasons we recommend storing credentials (such as the API key) only in environment variables, not in source‑controlled files.
+
+### Configuration file (optional)
+
+If you need to override directory settings or the default language, you can create a `leadcms.config.json` file.  Running the init wizard (described below) will create this file for you only when you choose non‑default directories.  The configuration file should contain only non‑sensitive values:
+
+```json
+{
+  "defaultLanguage": "en",
+  "contentDir": ".leadcms/content",
+  "mediaDir": "public/media",
+  "enableDrafts": false
+}
+```
+
+For most projects the environment variables are sufficient and you do not need a config file.
+
+## Initialise your project
+
+After installation, use the interactive init wizard to connect your project to a LeadCMS instance.  The wizard performs all of the initial setup for you: it verifies your CMS URL, detects available languages, configures directories and creates a `.env` file.  Run the command with `npx` (which will use your local or global installation automatically):
+
+```bash
+npx leadcms init
+```
+
+During the wizard you will be prompted for:
+
+- **LeadCMS URL** – the base URL of your LeadCMS instance.
+- **Authentication** – optional; if you provide an API key, the wizard will skip authentication.  Without a key you can continue in read‑only mode, or choose to authenticate immediately (required for pushing content).
+- **Default language** – the wizard lists all languages configured on the CMS and lets you choose the default.  This corresponds to the `LEADCMS_DEFAULT_LANGUAGE` setting.
+- **Directories** – confirm or change the local folders for content, media and comments.  Press Enter to accept the defaults.
+
+At the end of the process the wizard writes a `.env` file populated with your URL, default language and API key (if provided).  If you selected custom directories, it also creates a `leadcms.config.json` file.
+
+<Callout type="info" title="Anonymous mode">
+You can run the init wizard without providing an API key.  In anonymous mode you can pull published content from your instance but you will not be able to push changes.  You can authenticate later at any time by running `npx leadcms login`.
+</Callout>
+
+## Authenticate for write access
+
+Some CLI commands (such as **push**) require write access.  To enable these features, authenticate your CLI session by running:
+
+```bash
+npx leadcms login
+```
+
+On LeadCMS v1.2.88 and later the login command uses device authentication: it opens a browser window for you to approve the CLI.  On older versions you will be guided through manually obtaining a token.  The resulting API key is saved to your `.env` file.
+
+You only need to log in once per machine unless your token expires or you switch instances.  For read‑only operations (pulling content) you can skip authentication.
+
+## Download your content
+
+Once your project is initialised, download your content, media and comments with a single command:
+
+```bash
+npx leadcms pull
+```
+
+This populates the local directories with the current state of your LeadCMS instance.  The SDK stores incremental sync tokens so subsequent pulls only download changed items, making updates fast even for large projects.  For more details on pull operations see the **Pull Content** article.
+
+## Next steps
+
+With the SDK installed and configured, you're ready to explore its capabilities:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="CLI Basics"
+    description="Explore the available CLI commands and common workflows"
+    href="/docs/sdk-api/cli-basics"
+  />
+  <FeatureCard
+    title="Pull Content"
+    description="Learn how to synchronize content, media and comments"
+    href="/docs/sdk-api/pull-content"
+  />
+</FeatureGrid>

@@ -1,0 +1,119 @@
+---
+title: Static Export
+description: >-
+  Learn how to build and deploy a fully static site with LeadCMS using static site generation.
+  This guide covers exporting your site with Next.js, handling 404 pages and trailing slashes, and choosing a hosting provider.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/deploy/static-export
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-11-06T00:00:00Z'
+group: Deploy
+order: 1
+---
+
+# Static Export
+
+Most LeadCMS‑powered sites use static site generation to deliver content quickly and securely.
+With static export, your pages are pre‑rendered at build time and served as simple HTML and assets from any hosting provider.
+Although LeadCMS can drive a full server‑rendered application, this guide focuses on the most common pattern: exporting your site as static files.
+
+## Overview
+
+Static site generation (SSG) lets you build your site once and serve it anywhere – a CDN, object storage or even a simple file server.
+LeadCMS works seamlessly with modern frameworks like Next.js, Astro and Gatsby. When using Next.js, the `output: 'export'` option generates a static build containing HTML files and assets for each route.
+
+Key advantages of static export:
+
+* **Performance & security:** Pages are served as pure HTML and assets, with no server runtime or database at request time.
+* **Portability:** Host your site on any platform that can serve files (e.g. Vercel, Netlify, Cloudflare Pages, GitHub Pages, Amazon S3, Azure Static Web Apps).
+* **Predictability:** Builds are reproducible; your site does not depend on runtime environment configuration other than environment variables injected at deploy time.
+
+## Building a static export with Next.js
+
+To generate a static export you typically:
+
+<Steps>
+  <Step title="Enable static export in Next.js">
+    In your `next.config.js`, set the `output` property to `'export'` and enable trailing slashes if desired:
+
+    ```js
+    // next.config.js
+    const nextConfig = {
+      output: 'export',
+      trailingSlash: true, // Optional: add '/' to all URLs for static hosting
+    }
+    module.exports = nextConfig
+    ```
+
+    The `trailingSlash` option ensures that URLs like `/about` are served from `/about/index.html` instead of `/about.html`. Some static hosts require one or the other; adjust based on your hosting platform.
+  </Step>
+  <Step title="Run the build and export">
+    Build and export your site:
+
+    ```bash
+    pnpm run build
+    pnpm run export
+    ```
+
+    After exporting, the contents of the `out/` directory are ready to deploy. The LeadCMS SDK ensures that any content linked to your project is pulled before the build.
+  </Step>
+  <Step title="Test locally">
+    Serve the static build locally to verify everything works:
+
+    ```bash
+    npx serve out
+    ```
+
+    Navigate to `http://localhost:3000` (or the port displayed) and click through your pages. Check that links, images and 404 fallbacks behave correctly.
+  </Step>
+  <Step title="Deploy to your host">
+    Deploy the contents of `out/` to your chosen hosting provider.
+    For example:
+
+    - **Vercel**: Push the `out/` directory to a Git repository and configure Vercel for static deployment.
+    - **Netlify**: Set the `publish` directory to `out/` and choose a static build.
+    - **S3/CloudFront**: Upload the files in `out/` to an S3 bucket and configure CloudFront (ensure 404 responses redirect to `/404.html`).
+
+    Refer to your hosting provider’s documentation for specifics. The key point is that no server runtime is required – only static files.
+  </Step>
+</Steps>
+
+## Handling 404 pages
+
+Static exports require explicit handling of missing pages. In Next.js, you create a `404.tsx` page in your `pages` or `app` directory. When you export, Next.js generates a `404.html` file that your host can serve when a URL is not found.
+Ensure your hosting platform is configured to use `404.html` for unknown routes; on some platforms you may need to set up custom error page rules.
+
+## Considerations for other frameworks
+
+While this guide focuses on Next.js, the principles apply to any SSG framework:
+
+* **Astro/Gatsby/SvelteKit** – Use their respective static export commands to generate files.
+* **Trailing slashes** – Many frameworks support trailing slash settings; choose based on your host’s requirements.
+* **Routes & 404** – Ensure a 404 page is included and your server is configured to serve it.
+
+## Limitations
+
+Static export works well for content‑heavy sites. However, certain dynamic features (authentication, personalised dashboards, real‑time data) may require a server. For those scenarios you can still use LeadCMS with a server‑rendered or hybrid framework, but that is outside the scope of this documentation.
+
+## Next steps
+
+Ready to deploy your static site? Explore different deployment strategies and container options:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Docker Image"
+    description="Package your static build as a Docker container with Nginx"
+    href="/docs/deploy/docker-image"
+  />
+  <FeatureCard
+    title="Env & Secrets"
+    description="Configure runtime environment variables and secrets securely"
+    href="/docs/deploy/env-and-secrets"
+  />
+</FeatureGrid>

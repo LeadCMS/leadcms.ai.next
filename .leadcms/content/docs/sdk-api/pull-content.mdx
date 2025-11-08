@@ -1,0 +1,85 @@
+---
+title: Pull Content
+description: >-
+  Learn how to use the `pull` commands to synchronise content, media and comments from your LeadCMS instance.  Understand incremental syncing, selective pulls and best practices for keeping your local project up to date.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/pull-content
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-09-10T18:30:00Z'
+group: SDK & API
+order: 3
+---
+
+# Pull Content
+
+Once your project is set up, you'll regularly synchronise data from your LeadCMS instance.  The `pull` commands download published content, media files and comments into your local directories.  The SDK uses incremental sync tokens so only changed items are transferred, making pulls fast and efficient.
+
+## All‑in‑one pull
+
+Run the `pull` command to synchronise everything in one step:
+
+```bash
+npx leadcms pull
+```
+
+This command performs a full synchronisation of **content**, **media** and **comments**.  On the first run it downloads all published data.  On subsequent runs the SDK compares your local sync token with the server and only fetches new or updated items.  This means that even very large content repositories can be kept up to date quickly.
+
+The downloaded files are stored in the directories configured by `LEADCMS_CONTENT_DIR`, `LEADCMS_MEDIA_DIR` and `.leadcms/comments` (for comments).  By default these are `.leadcms/content`, `public/media` and `.leadcms/comments` respectively.
+
+<Callout type="info" title="Drafts and private content">
+The `pull` commands retrieve **published** content by default.  To include draft items you must enable draft support (`LEADCMS_ENABLE_DRAFTS=true`) and provide an API key.  See the **Drafts & Previews** and **i18n** guides for more information on how drafts are organised and served.
+</Callout>
+
+## Selective pulls
+
+Sometimes you only need to refresh certain types of data.  The CLI provides specialised commands for these cases:
+
+- **`pull-content`** – Downloads only content files (MDX/JSON).  Use this when you have updated pages or posts but no new assets.
+- **`pull-media`** – Downloads only media files to your `mediaDir`.  Useful when editors upload new images or update assets in the CMS.
+- **`pull-comments`** – Downloads only comments.  Use this when you need to update user feedback without touching content or media.
+
+For example, to fetch only new images:
+
+```bash
+npx leadcms pull-media
+```
+
+These commands also use incremental sync tokens, so they will only download changed items.
+
+## How it works
+
+Under the hood the SDK stores a small token for each entity type (content, media, comments).  When you run a pull command it sends the token to LeadCMS and asks for items changed since the last sync.  The server returns only the delta, and the SDK updates your local store accordingly.  This process dramatically reduces network traffic and improves performance.
+
+After the files are downloaded, the SDK merges remote metadata into your local files.  For content this means updating frontmatter fields like `id`, `createdAt` and `updatedAt`, and rewriting media URLs from `/api/media/...` to local `/media/...` paths (see the **Media** article for details).  The reverse transformation happens when you push changes back to LeadCMS.
+
+## Best practices
+
+- **Pull before you push.**  Always run `npx leadcms pull` before pushing changes to make sure you have the latest remote updates.  This avoids conflicts and ensures your status output is accurate.
+- **Use selective pulls for efficiency.**  If only media or comments have changed, save time by running `pull-media` or `pull-comments` instead of a full pull.
+- **Automate pulls in CI/CD.**  In your build pipeline, run `pull` to fetch the latest content before generating your static site.  The incremental sync mechanism makes this operation quick even on cold CI runners.
+- **Do not edit downloaded media.**  Media files pulled from LeadCMS should be treated as read‑only.  To update images or videos, upload new versions via the CMS Admin UI and pull again.
+
+By understanding how pulls work and following these practices, you'll maintain a fast and reliable sync between your local project and LeadCMS.
+
+## Next steps
+
+With content synchronized locally, learn about monitoring changes and pushing updates:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Status"
+    description="Check sync status and preview changes before pushing"
+    href="/docs/sdk-api/status"
+  />
+  <FeatureCard
+    title="Push Content"
+    description="Push your local changes back to LeadCMS safely"
+    href="/docs/sdk-api/push-content"
+  />
+</FeatureGrid>

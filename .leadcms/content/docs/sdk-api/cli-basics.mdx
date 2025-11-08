@@ -1,0 +1,74 @@
+---
+title: CLI Basics
+description: >-
+  Learn the essential LeadCMS CLI commands available through the SDK.  This overview explains each command and when to use it without going into the detailed behaviour covered in other articles.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/cli-basics
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-09-10T18:30:00Z'
+group: SDK & API
+order: 2
+---
+
+# CLI Basics
+
+The `leadcms` command‑line interface provides a set of tools to initialise your project, synchronise content, generate deployment templates and more.  All commands can be run with `npx leadcms <command>` if the SDK is installed locally or globally.  Use `--help` on any command to see its options.
+
+## Core commands
+
+- **`init`** – Interactive setup wizard.  Connects to your LeadCMS instance, detects languages, configures directories and creates a `.env` file.  See **SDK Setup** for details.
+- **`login`** – Authenticates the CLI for write access.  Opens a browser for device authentication (v1.2.88+) or guides you through manual token extraction on older versions.  Stores the API key in your `.env` file.
+- **`pull`** – Downloads all content, media and comments from LeadCMS into your local directories.  Uses incremental sync tokens to transfer only changed items on subsequent runs.  See **Pull Content** for more information.
+- **`pull-content`** – Downloads only content files (MDX/JSON) without media or comments.  Useful when you want to refresh text and metadata but not assets.
+- **`pull-media`** – Downloads only media files into your configured media directory.  Run this after updating images in the CMS.
+- **`pull-comments`** – Downloads only comments.  Use when you have user feedback but no content changes.
+- **`status`** – Shows the difference between your local content and the remote CMS.  It lists new, modified, renamed, type‑changed and conflicted files without making changes.  See **Status** for details.
+- **`push`** – Synchronises your local content with LeadCMS.  Detects new files, updates and renames, and prompts for confirmation before applying changes.  Supports creating missing content types interactively.  See **Push Content** for details.
+- **`watch`** – Watches your local files and pulls remote updates on the fly.  Use this to develop a live preview server that reflects changes in both directions.  See the [Preview Setup](/docs/preview/setup) and [Deploy](/docs/deploy/static-export) guides for configuration.
+- **`docker`** – Generates Docker files and templates for deploying your static site and preview environment.  Produces production and preview Dockerfiles, nginx configuration and helper scripts.
+- **`version`**/`-v`/`--version` – Displays the installed SDK version.
+- **`help`** – Shows general help or command‑specific usage information.
+
+Run any command with `--help` to see its options.  For example:
+
+```bash
+npx leadcms push --help
+```
+
+Outputs detailed descriptions of parameters such as `--dry-run`, `--force`, `--slug`, `--id`, and `--preview`.
+
+## Workflow overview
+
+In most projects your CLI workflow follows this pattern:
+
+1. **Initialise** – Run `npx leadcms init` once per project to create a `.env` file and optional config file.
+2. **Authenticate** – Run `npx leadcms login` if you need to push changes back to the CMS.
+3. **Pull** – Use `npx leadcms pull` (or `pull-content`, `pull-media`, `pull-comments`) to populate and keep your local files in sync.
+4. **Work offline** – Edit MDX/JSON files, add new content, update slugs and structure using your editor.
+5. **Check status** – Run `npx leadcms status` to see what will change and resolve any conflicts.
+6. **Push** – Run `npx leadcms push` to apply your local updates to LeadCMS.  Use `--dry-run` or `--force` options as needed.
+
+Additional commands like `watch` and `docker` support previewing changes in real time and creating deployment artefacts.  See the [Preview Setup](/docs/preview/setup) and [deployment guides](/docs/deploy/static-export) for more details.
+
+## Next steps
+
+Now that you understand the CLI basics, dive deeper into specific operations:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Pull Content"
+    description="Master content synchronization with incremental pulls"
+    href="/docs/sdk-api/pull-content"
+  />
+  <FeatureCard
+    title="Push Content"
+    description="Learn how to push local changes back to LeadCMS safely"
+    href="/docs/sdk-api/push-content"
+  />
+</FeatureGrid>

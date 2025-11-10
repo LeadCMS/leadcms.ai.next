@@ -1,7 +1,7 @@
 ---
 id: 71
 createdAt: '2025-11-10T15:50:52.373813Z'
-updatedAt: '2025-11-10T16:19:05.98415Z'
+updatedAt: '2025-11-10T17:43:52.127704Z'
 title: First Project
 description: >-
   Kick off your first LeadCMS site locally using the Next.js portfolio demo.
@@ -86,7 +86,7 @@ Next, connect your project to a LeadCMS instance. The SDK provides an interactiv
 <Steps>
   <Step title="Run the init command">
     ```bash
-    npx leadcms init
+    pnpm exec leadcms init
     ```
     This command prompts you for your LeadCMS URL (e.g. `https://localhost:8080` if you’re running LeadCMS locally). It auto‑detects the default language and creates a `.env` file with `LEADCMS_URL` and `LEADCMS_DEFAULT_LANGUAGE`. You can skip authentication for read‑only mode, but to push content you’ll need an API key, which the wizard can store securely in `.env`.
   </Step>
@@ -156,12 +156,12 @@ Now that your content is stored in LeadCMS, you can use the default dev script. 
     ```bash
     pnpm run dev
     ```
-    The script runs `pnpm exec leadcms pull` to sync content from your CMS and then starts `next dev`. If the local and remote content are already in sync, it simply starts the server. Open `http://localhost:3000` again — the site should look identical to before, but it's now sourcing content from LeadCMS.
+    The script runs `pnpm exec leadcms pull` to sync content from your CMS and then starts `next dev`. If the local and remote content are already in sync, it simply starts the server. Open `http://localhost:3000` again - the site should look identical to before, but it's now sourcing content from LeadCMS.
   </Step>
 </Steps>
 
 <Callout type="tip" title="Live preview">
-Once integrated, changes made in the CMS can be pulled automatically by adding `pnpm exec leadcms watch` to your workflow. The watch command listens for changes and updates your local files accordingly. We'll cover preview servers and live reload in the **Preview** section.
+Once integrated, changes made in the CMS can be pulled automatically by adding `pnpm exec leadcms watch` to your workflow. The watch command listens for changes and updates your local files accordingly. See the [Preview Setup](/docs/preview/setup/) guide for details on preview servers and live reload.
 </Callout>
 
 ## Edit content in LeadCMS and update your site
@@ -184,7 +184,7 @@ You can now edit content using either your local files or the LeadCMS admin UI. 
     ```bash
     pnpm run build
     ```
-    The build script fetches remote content, generates static HTML for each page and writes it to the `out` directory. You can then deploy the static output or containerise it (covered in the **Deploy** and **CI/CD** sections).
+    The build script fetches remote content, generates static HTML for each page and writes it to the `out` directory. You can then deploy the static output or containerise it (see [Static Export](/docs/deploy/static-export/) and [Docker Image](/docs/deploy/docker-image/)).
   </Step>
 </Steps>
 

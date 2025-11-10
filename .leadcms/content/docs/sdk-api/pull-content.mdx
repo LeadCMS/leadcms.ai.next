@@ -1,7 +1,7 @@
 ---
 id: 78
 createdAt: '2025-11-10T15:50:54.358849Z'
-updatedAt: '2025-11-10T16:19:08.938434Z'
+updatedAt: '2025-11-10T17:43:52.540299Z'
 title: "Pull\_Content"
 description: >-
   Learn how to use the `pull` commands to synchronise content, media and
@@ -38,7 +38,7 @@ This command performs a full synchronisation of **content**, **media** and **com
 The downloaded files are stored in the directories configured by `LEADCMS_CONTENT_DIR`, `LEADCMS_MEDIA_DIR` and `.leadcms/comments` (for comments).  By default these are `.leadcms/content`, `public/media` and `.leadcms/comments` respectively.
 
 <Callout type="info" title="Drafts and private content">
-The `pull` commands retrieve **published** content by default.  To include draft items you must enable draft support (`LEADCMS_ENABLE_DRAFTS=true`) and provide an API key.  See the **Drafts & Previews** and **i18n** guides for more information on how drafts are organised and served.
+The `pull` commands retrieve **published** content by default.  To include draft items you must enable draft support (`LEADCMS_ENABLE_DRAFTS=true`) and provide an API key.  See the [Draft Preview](/docs/preview/draft-preview/) and [i18n](/docs/modeling/i18n/) guides for more information on how drafts are organised and served.
 </Callout>
 
 ## Selective pulls
@@ -61,7 +61,7 @@ These commands also use incremental sync tokens, so they will only download chan
 
 Under the hood the SDK stores a small token for each entity type (content, media, comments).  When you run a pull command it sends the token to LeadCMS and asks for items changed since the last sync.  The server returns only the delta, and the SDK updates your local store accordingly.  This process dramatically reduces network traffic and improves performance.
 
-After the files are downloaded, the SDK merges remote metadata into your local files.  For content this means updating frontmatter fields like `id`, `createdAt` and `updatedAt`, and rewriting media URLs from `/api/media/...` to local `/media/...` paths (see the **Media** article for details).  The reverse transformation happens when you push changes back to LeadCMS.
+After the files are downloaded, the SDK merges remote metadata into your local files.  For content this means updating frontmatter fields like `id`, `createdAt` and `updatedAt`, and rewriting media URLs from `/api/media/...` to local `/media/...` paths (see the [Media](/docs/modeling/media/) article for details).  The reverse transformation happens when you push changes back to LeadCMS.
 
 ## Best practices
 

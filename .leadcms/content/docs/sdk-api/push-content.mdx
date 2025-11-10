@@ -1,7 +1,7 @@
 ---
 id: 79
 createdAt: '2025-11-10T15:50:54.552373Z'
-updatedAt: '2025-11-10T16:19:09.168639Z'
+updatedAt: '2025-11-10T17:43:52.748074Z'
 title: "Push\_Content"
 description: >-
   Learn how to push your local MDX/JSON files back to LeadCMS.  This article
@@ -75,7 +75,7 @@ Currently the SDK only synchronises **content** (MDX and JSON files).  Media fil
 
 ## Best practices
 
-- **Write clean frontmatter.**  Ensure each local file contains the required fields: `type`, `title`, `slug` and `language`.  Optional fields like `publishedAt`, `description`, `category`, `tags`, etc. should follow your content modelling conventions.  See the **Content** article for details on standard and custom metadata.
+- **Write clean frontmatter.**  Ensure each local file contains the required fields: `type`, `title`, `slug` and `language`.  Optional fields like `publishedAt`, `description`, `category`, `tags`, etc. should follow your content modelling conventions.  See the [Content](/docs/modeling/content/) article for details on standard and custom metadata.
 - **Pull before you push.**  Always run `npx leadcms pull` and resolve conflicts before pushing.  This prevents data loss and keeps your local store current.
 - **Use dry runs.**  When working on large changes or unfamiliar types, run `npx leadcms push --dry-run` to see what will happen without modifying anything.
 - **Limit scope when needed.**  Use `--id` or `--slug` to push only the file you are working on, especially in large repositories.  This speeds up the operation and reduces risk.

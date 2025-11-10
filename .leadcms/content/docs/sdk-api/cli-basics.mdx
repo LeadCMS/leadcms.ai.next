@@ -31,7 +31,7 @@ The `leadcms` command‑line interface provides a set of tools to initialise you
 - **`pull-comments`** – Downloads only comments.  Use when you have user feedback but no content changes.
 - **`status`** – Shows the difference between your local content and the remote CMS.  It lists new, modified, renamed, type‑changed and conflicted files without making changes.  See **Status** for details.
 - **`push`** – Synchronises your local content with LeadCMS.  Detects new files, updates and renames, and prompts for confirmation before applying changes.  Supports creating missing content types interactively.  See **Push Content** for details.
-- **`watch`** – Watches your local files and pulls remote updates on the fly.  Use this to develop a live preview server that reflects changes in both directions.  See the [Preview Setup](/docs/preview/setup) and [Deploy](/docs/deploy/static-export) guides for configuration.
+- **`watch`** – Watches your local files and pulls remote updates on the fly.  Use this to develop a live preview server that reflects changes in both directions.  See the [Preview Setup](/docs/preview/setup/) and [Deploy](/docs/deploy/static-export/) guides for configuration.
 - **`docker`** – Generates Docker files and templates for deploying your static site and preview environment.  Produces production and preview Dockerfiles, nginx configuration and helper scripts.
 - **`version`**/`-v`/`--version` – Displays the installed SDK version.
 - **`help`** – Shows general help or command‑specific usage information.
@@ -55,7 +55,7 @@ In most projects your CLI workflow follows this pattern:
 5. **Check status** – Run `npx leadcms status` to see what will change and resolve any conflicts.
 6. **Push** – Run `npx leadcms push` to apply your local updates to LeadCMS.  Use `--dry-run` or `--force` options as needed.
 
-Additional commands like `watch` and `docker` support previewing changes in real time and creating deployment artefacts.  See the [Preview Setup](/docs/preview/setup) and [deployment guides](/docs/deploy/static-export) for more details.
+Additional commands like `watch` and `docker` support previewing changes in real time and creating deployment artefacts.  See the [Preview Setup](/docs/preview/setup/) and [deployment guides](/docs/deploy/static-export/) for more details.
 
 ## Next steps
 
@@ -65,11 +65,11 @@ Now that you understand the CLI basics, dive deeper into specific operations:
   <FeatureCard
     title="Pull Content"
     description="Master content synchronization with incremental pulls"
-    href="/docs/sdk-api/pull-content"
+    href="/docs/sdk-api/pull-content/"
   />
   <FeatureCard
     title="Push Content"
     description="Learn how to push local changes back to LeadCMS safely"
-    href="/docs/sdk-api/push-content"
+    href="/docs/sdk-api/push-content/"
   />
 </FeatureGrid>

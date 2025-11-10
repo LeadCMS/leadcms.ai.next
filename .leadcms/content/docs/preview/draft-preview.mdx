@@ -53,7 +53,7 @@ This approach mirrors common practices in other headless CMSs: Contentful’s pr
 
 ## Handling drafts in different scenarios
 
-- **Page components**: When rendering a single page, always fetch the content by slug. In current SDKs this looks like `getCMSContentBySlugForLocale(slug, locale, includeDrafts, userUid)`. In the upcoming unified API (see [Live Preview](/docs/preview/live-preview)), the SDK will handle drafts automatically based on the environment.
+- **Page components**: When rendering a single page, always fetch the content by slug. In current SDKs this looks like `getCMSContentBySlugForLocale(slug, locale, includeDrafts, userUid)`. In the upcoming unified API (see [Live Preview](/docs/preview/live-preview/)), the SDK will handle drafts automatically based on the environment.
 - **Collections**: When generating lists of posts (e.g. blog index pages), call `getAllContentSlugsForLocale(locale, contentTypes, includeDrafts)` with `includeDrafts` set to `false` or omit it entirely. Then fetch each item by slug. Sorting by `publishedAt` remains the same; items without a `publishedAt` date should appear at the end (or be excluded).
 
 ## Draft scheduling
@@ -72,11 +72,11 @@ With draft handling implemented, explore live preview functionality or prepare f
   <FeatureCard
     title="Live Preview"
     description="Learn about future simplified preview architecture"
-    href="/docs/preview/live-preview"
+    href="/docs/preview/live-preview/"
   />
   <FeatureCard
     title="Static Export"
     description="Build and deploy your site with exported static content"
-    href="/docs/deploy/static-export"
+    href="/docs/deploy/static-export/"
   />
 </FeatureGrid>

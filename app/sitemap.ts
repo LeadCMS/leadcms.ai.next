@@ -84,14 +84,13 @@ function getAlternates(
  */
 export function generateStaticParamsForAllLocales(
   contentTypes?: readonly string[],
-  includeDrafts?: boolean | null,
   draftUserUid?: string | null
 ): { locale?: string; slug: string[] }[] {
   const languages = getAvailableLanguages();
   const allParams: { locale?: string; slug: string[] }[] = [];
 
   for (const locale of languages) {
-    const slugs = getAllContentSlugsForLocale(locale, contentTypes as string[], includeDrafts, draftUserUid);
+    const slugs = getAllContentSlugsForLocale(locale, contentTypes as string[], draftUserUid as any);
 
     for (const slug of slugs) {
       if (locale === DEFAULT_LANGUAGE) {

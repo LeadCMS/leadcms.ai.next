@@ -1,0 +1,101 @@
+---
+id: 79
+createdAt: '2025-11-10T15:50:54.552373Z'
+updatedAt: '2025-11-10T17:43:52.748074Z'
+title: "Push\_Content"
+description: >-
+  Learn how to push your local MDX/JSON files back to LeadCMS.  This article
+  explains how the SDK detects changes, handles content types, resolves
+  conflicts and updates your local metadata after a successful push.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/push-content
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-09-10T18:30:00Z'
+group: SDK & API
+order: 5
+---
+
+# Push Content
+
+After editing or adding new content in your local repository, you'll want to synchronise those changes back to LeadCMS.  The `push` command analyses your MDX/JSON files, compares them with the remote CMS and performs the necessary API calls to create, update or rename content.  It also updates your local metadata with IDs and timestamps returned by the server.
+
+## How pushing works
+
+When you run `npx leadcms push`, the SDK performs several steps:
+
+1. **Read local content** – Scans your configured content directory for MDX and JSON files.  It determines the locale, slug and type of each file based on its path and frontmatter.
+2. **Validate content types** – Fetches the list of content types from LeadCMS and ensures all local types exist remotely.  If any are missing, you will be prompted to create them interactively.  In **dry‑run** mode the CLI displays the API requests that would be made instead of prompting.
+3. **Fetch remote content** – Retrieves all remote content (or the targeted item) to compare with your local files.  It uses IDs, slugs and titles to match records.
+4. **Detect operations** – Compares local and remote versions to determine whether each item is new, updated, renamed, has a type change or is in conflict.  Conflicts occur when the remote `updatedAt` timestamp is newer than the local value (e.g. another editor changed the content in the CMS).
+5. **Display status** – Prints a summary of the detected operations and, if requested, detailed diffs of each file.  At this stage no changes have been made yet.
+6. **Confirm and execute** – Asks you whether to proceed.  If you confirm, the SDK creates, updates or renames the content via the LeadCMS API.  After each successful operation it updates your local file with the returned `id` field.  System fields like `createdAt`, `updatedAt` and `publishedAt` are not added to your local files.
+7. **Pull latest changes** – At the end of a successful push, the CLI automatically pulls the latest changes to keep your local store in sync.
+
+This process ensures that your local repository and the remote CMS stay aligned and that you can always track which files correspond to which remote records.
+
+## Command options
+
+The push command supports several flags to tailor its behaviour:
+
+- `--dry-run` – Show what API calls would be made without performing them.  This is useful for previewing the effect of a push.
+- `--force` – Override conflict detection and push your changes even if the remote content has been updated.  Use with caution as this will overwrite remote modifications.
+- `--id <number>` – Push only the content item with the specified ID.
+- `--slug <slug>` – Push only the content item with the specified slug.  This is helpful when working on a single page or post.
+- `--preview` – Show a line‑by‑line diff of each modified file before prompting for confirmation.
+
+You can combine `--dry-run` with `--id` or `--slug` to preview changes for a single file.
+
+## Creating content types automatically
+
+If you define a new `type` in a local file that does not exist in LeadCMS, the SDK will detect this during the push.  You will be prompted to create the missing type interactively.  The wizard asks for:
+
+- **Format** – Choose between `MDX` and `JSON`.
+- **Supports cover images?** – Indicate whether this content type should include a cover image field.
+- **Supports comments?** – Enable or disable comments for the type.
+
+After you answer these questions the SDK calls the `/api/content-types` endpoint to create the new type.  You can also run the push command in **dry‑run** mode to see what would be posted without executing it.  If you prefer to create content types manually, choose “no” when prompted and create the type via the LeadCMS Admin UI instead.
+
+## Handling conflicts
+
+Conflicts occur when the remote content was updated after your last pull.  The push command detects this by comparing `updatedAt` timestamps.  When a conflict is detected the CLI shows the conflicting file in the **Conflict** section of the status output and recommends pulling to merge remote changes before pushing.  You have three options:
+
+1. **Pull and merge** – Run `npx leadcms pull` to fetch the latest version, merge any conflicting changes in your local file and then push again.
+2. **Use `--force`** – If you are sure your local changes should overwrite the remote version, run `npx leadcms push --force`.  This will apply your changes regardless of the remote timestamp.
+3. **Skip** – Do nothing; the conflicting file will remain unsynced until resolved.
+
+## What can be pushed
+
+Currently the SDK only synchronises **content** (MDX and JSON files).  Media files and comments cannot yet be pushed from your local repository to the CMS.  When you update images or other assets, upload them via the LeadCMS Admin UI and use `pull-media` to refresh your local media directory.  Media sync support is planned for a future release.
+
+## Best practices
+
+- **Write clean frontmatter.**  Ensure each local file contains the required fields: `type`, `title`, `slug` and `language`.  Optional fields like `publishedAt`, `description`, `category`, `tags`, etc. should follow your content modelling conventions.  See the [Content](/docs/modeling/content/) article for details on standard and custom metadata.
+- **Pull before you push.**  Always run `npx leadcms pull` and resolve conflicts before pushing.  This prevents data loss and keeps your local store current.
+- **Use dry runs.**  When working on large changes or unfamiliar types, run `npx leadcms push --dry-run` to see what will happen without modifying anything.
+- **Limit scope when needed.**  Use `--id` or `--slug` to push only the file you are working on, especially in large repositories.  This speeds up the operation and reduces risk.
+- **Keep type definitions in sync.**  Whenever you introduce a new content type, decide whether to create it via the CLI or in the Admin UI.  Be consistent to avoid confusion.
+
+By leveraging these options and following the recommended workflow, you can safely and efficiently push your local content changes back to LeadCMS.
+
+## Next steps
+
+With push workflows mastered, explore content modeling and deployment strategies:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Content Modeling"
+    description="Learn how to design content types and structure your data"
+    href="/docs/modeling/content-types/"
+  />
+  <FeatureCard
+    title="Static Export"
+    description="Build and deploy your site with the latest content"
+    href="/docs/deploy/static-export/"
+  />
+</FeatureGrid>

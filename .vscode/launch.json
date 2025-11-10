@@ -4,10 +4,10 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Debug npm run dev",
-            "runtimeExecutable": "npm",
+            "name": "Debug pnpm run dev",
+            "runtimeExecutable": "pnpm",
             "runtimeArgs": [
-                "run-script", "dev"
+                "run", "dev"
             ],
             "console": "integratedTerminal",
             "internalConsoleOptions": "neverOpen",

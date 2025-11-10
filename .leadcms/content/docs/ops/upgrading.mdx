@@ -1,21 +1,23 @@
 ---
 id: 49
 createdAt: '2025-09-10T09:26:21.770688Z'
-updatedAt: '2025-09-10T09:31:24.84574Z'
-title: Upgrading
+updatedAt: '2025-11-10T16:19:07.889953Z'
+title: Upgrading Guide
 description: >-
   How to safely upgrade LeadCMS using Docker Compose with backup procedures and
   rollback strategies.
 coverImageUrl: ''
 coverImageAlt: ''
-slug: docs/getting-started/upgrading
+slug: docs/ops/upgrading
 type: doc
-author: Peter Liapin
+author: LeadCMS Team
 language: en
 category: Docs
 tags: []
 allowComments: true
 publishedAt: '2025-09-09T18:30:00Z'
+group: Ops
+order: 3
 ---
 
 # Upgrading LeadCMS
@@ -23,7 +25,7 @@ publishedAt: '2025-09-09T18:30:00Z'
 This guide covers how to safely upgrade your LeadCMS Docker Compose installation to the latest version, including backup procedures, database migrations, and rollback strategies.
 
 <Callout type="info" title="Docker Compose Focus">
-  This guide is specifically for Docker Compose deployments as covered in our [deployment guide](/docs/getting-started/deploying). For production environments with managed services, adapt these procedures to your infrastructure.
+  This guide is specifically for Docker Compose deployments as covered in our [deployment guide](/docs/ops/deploying/). For production environments with managed services, adapt these procedures to your infrastructure.
 </Callout>
 
 ## Before You Upgrade
@@ -50,7 +52,7 @@ Always review the release notes before upgrading:
   Always create complete backups before upgrading. Use the provided backup scripts for reliable backup and restore procedures.
 </Callout>
 
-We recommend using the automated backup scripts covered in detail in our [Backups and Recovery guide](/docs/getting-started/backups).
+We recommend using the automated backup scripts covered in detail in our [Backups and Recovery guide](/docs/ops/backups/).
 
 #### Quick Backup with Scripts
 

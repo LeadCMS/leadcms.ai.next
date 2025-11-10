@@ -1,0 +1,186 @@
+---
+id: 81
+createdAt: '2025-11-10T16:02:13.135158Z'
+updatedAt: '2025-11-10T16:19:06.627951Z'
+title: Content Management
+description: >-
+  Understand how LeadCMS stores and synchronises your content. Learn about
+  standard and custom metadata, how the SDK maps fields between local files and
+  the CMS, and best practices for modelling MDX and JSON content.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/modeling/content
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Modeling
+order: 2
+---
+
+# Content
+
+LeadCMS follows a **content-first approach** where all website content and configuration are stored as files in your repository, separate from your React components and application logic.
+
+By default, all content lives in the `.leadcms/content/` directory (though this location can be configured) as either **MDX** or **JSON** files:
+
+- **MDX files** contain rich text content with **frontmatter** (metadata fields between `---` markers)
+- **JSON files** store structured configuration data with metadata as top-level properties
+
+The LeadCMS SDK handles the separation and merging of standard vs custom fields automatically:
+
+**During build** (when you run `pnpm run build`): The SDK pulls content from LeadCMS, merges standard fields from the CMS database with any custom attributes, and writes unified files with all fields together in the frontmatter (MDX) or as top-level properties (JSON).
+
+**During push** (when you run `npx leadcms push`): The SDK reads your local files, maps standard fields to their dedicated CMS database columns, and preserves custom attributes separately in the content body or JSON structure.
+
+## Standard metadata fields
+
+Every MDX and JSON file must include certain metadata attributes. These are recognised by the SDK and mapped to dedicated fields in the CMS. Here are the standard fields:
+
+- **title** – The human‑readable name of the content (minimum 10 characters).
+- **description** – A short description for SEO and previews (minimum 20 characters).
+- **slug** – The URL segment for the content. Slugs must be non‑empty and mirror your folder structure (e.g. `about-us`). The homepage uses `slug: "home"`.
+- **type** – The content type identifier (e.g. `home`, `project`, `doc`). This must match an existing content type.
+- **author** – The author’s name.
+- **language** – The language code (`en`, `de`, etc.).
+- **publishedAt** – An ISO 8601 timestamp. If omitted, the content is treated as a draft and will not appear on the site until published.
+- **category** – (Optional) A grouping for filtering or navigation.
+- **tags** – (Optional) A list of strings for more granular organisation.
+- **coverImageUrl** – (Optional) Path to a cover image in `/media/` for pages that need a featured image.
+- **coverImageAlt** – (Optional) Alt text for the cover image.
+
+When you push content to LeadCMS, the SDK stores these standard fields in dedicated database columns. When you later pull content, the CLI reconstructs the frontmatter with the latest values from the CMS.
+
+<Callout type="warning" title="Publish dates are required">
+Content without a `publishedAt` date is considered a draft and will not be returned by the SDK.
+Add `publishedAt` when you’re ready for your content to go live, or leave it blank to keep it in draft.
+</Callout>
+
+## Custom attributes
+
+You can add any other key‑value pairs beyond the standard metadata fields. These custom attributes are preserved when you push and pull content, allowing you to model extra data without changing the database schema.
+
+**For MDX files**, custom attributes are stored in the frontmatter alongside standard fields:
+
+```yaml
+---
+title: "Getting Started Guide"
+type: "doc"
+# Standard fields...
+group: "Getting Started"    # Custom: section grouping
+order: 1                    # Custom: sort order
+allowComments: true         # Custom: enable comments
+---
+```
+
+**For JSON files**, custom attributes become top‑level properties alongside the standard metadata:
+
+```json
+{
+  "title": "Header Configuration",
+  "type": "component",
+  "headerData": {             // Custom: configuration object
+    "logo": { "text": "LeadCMS", "href": "/" },
+    "navigation": [...]
+  }
+}
+```
+
+Use custom attributes to store metadata such as navigation grouping, sort order, feature flags, or structured configuration data.
+
+## From files to the CMS and back
+
+The content workflow is bi‑directional. Here’s how data flows between your local files and LeadCMS:
+
+<Steps>
+  <Step title="Create or edit content locally">
+    Write an MDX or JSON file in `.leadcms/content/` with all required metadata and any custom attributes.
+    Use MDX for narrative pages and JSON for structured configuration.
+    Reference media with `/media/` paths and commit both content and media to git.
+  </Step>
+  <Step title="Push to LeadCMS">
+    Run `npx leadcms push`. The CLI reads your files, extracts the standard fields and uploads the content body and metadata to LeadCMS.
+    If the file’s `type` doesn’t exist yet, the CLI prompts you to create a new content type.
+    During push, image URLs are rewritten: references like `/media/blog/my-post/cover.jpg` are converted to their internal `/api/media` identifiers so LeadCMS can track the assets.
+  </Step>
+  <Step title="Edit in the Admin UI (optional)">
+    In the LeadCMS Admin UI, content managers can edit the standard fields, change custom attributes or update the body of the content.
+    For JSON content types, each top‑level key is editable.
+    Changes saved here will be reflected when you pull content back.
+  </Step>
+  <Step title="Pull back to your repository">
+    Run `npx leadcms pull`. The CLI downloads the latest content and media from the CMS.
+    It merges standard fields and custom attributes into the frontmatter of your MDX files and writes JSON files with updated fields.
+    Image URLs are rewritten back to `/media/` paths and media files are saved into `public/media/` so your site can build and run locally.
+  </Step>
+</Steps>
+
+This flow ensures your repository stays the single source of truth while allowing editors to work in the CMS interface. Always push local changes before pulling remote edits to avoid conflicts.
+
+## JSON content
+
+When using JSON content types, the same metadata rules apply. All standard metadata fields become top‑level JSON keys alongside your configuration data. For example:
+
+```json
+{
+  "title": "Site Header",
+  "description": "Configuration for the site header",
+  "slug": "header",
+  "type": "component",
+  "author": "Jane Doe",
+  "language": "en",
+  "publishedAt": "2025-01-01T00:00:00Z",
+  "logo": {
+    "text": "LeadCMS",
+    "href": "/"
+  },
+  "cta": {
+    "text": "Get Started",
+    "href": "/docs/getting-started/install"
+  }
+}
+```
+
+Additional keys beyond the standard metadata (e.g. `logo`, `cta`) are treated as custom attributes and preserved by the SDK. JSON types are ideal for configuration objects such as navigation menus, footers or structured data that doesn’t need rich text.
+
+## Handling media
+
+LeadCMS manages media assets for you. When you run `npx leadcms push`, any `/media/` references in your MDX and JSON files are converted to internal `/api/media/...` identifiers. When you later pull content, the CLI rewrites those identifiers back to `/media/...` and downloads the files into `public/media/`. Use these guidelines for media:
+
+1. **Upload through LeadCMS admin** – Upload images via the Admin UI so they receive a proper ID. Don’t manually add files to `public/media/`.
+2. **Use relative paths** – Always reference images with `/media/your-image.jpg`. The SDK handles the rest.
+3. **Commit media files** – Keep `public/media/` under version control. This allows your team to preview the site locally without hitting the CMS.
+4. **Sync before pushing** – Run `npx leadcms pull` before committing to ensure you have the latest media.
+
+## MDX modelling best practices
+
+Good MDX design makes your content clear and maintainable. Here are some key principles:
+
+1. **Keep content inside tags, metadata as props.** Use component props only for metadata such as `title`, `icon` or `variant`. Place the primary content between the opening and closing tags. This ensures proper Markdown formatting and easier editing.
+2. **Use standard Markdown syntax.** Write lists, headings and emphasis using regular Markdown inside MDX components. Avoid creating custom sub‑components when Markdown can express the structure.
+3. **Avoid raw HTML.** Do not embed `<div>` or `<span>` elements directly. Use your design system components instead. This keeps your content consistent with the site’s styles.
+4. **Use semantic component names.** Name components according to their function (`<ServiceGrid>`, `<HeroSection>`, `<ContactForm>`) instead of generic names (`<Section>`, `<Div>`). This helps content editors understand what each component does.
+5. **Nest components rather than passing arrays.** When listing items, wrap each item in a child component instead of passing an array prop. This makes the MDX more readable and editable.
+6. **Avoid over‑specialisation.** Only introduce new components when existing components and Markdown can’t express the content. This keeps the component library small and easy to maintain.
+
+Following these practices will make your MDX content easier for both developers and content editors to work with. It also ensures consistent rendering across your site.
+
+## Next steps
+
+With a clear understanding of how content and metadata work, you can start adding media and enabling multilingual support. Continue with:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Media"
+    description="Upload and manage images, audio and video for your site"
+    href="/docs/modeling/media/"
+  />
+  <FeatureCard
+    title="i18n"
+    description="Localise your content with multiple languages"
+    href="/docs/modeling/i18n/"
+  />
+</FeatureGrid>

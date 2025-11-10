@@ -1,0 +1,159 @@
+---
+id: 83
+createdAt: '2025-11-10T16:02:13.537372Z'
+updatedAt: '2025-11-10T16:19:07.266336Z'
+title: Media Management
+description: >-
+  Manage images and other assets in LeadCMS. Learn how to upload and organize
+  media, understand path transformations between the CMS and your site, and
+  optimize files for fast page loads.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/modeling/media
+type: doc
+author: Peter Liapin
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Modeling
+order: 3
+---
+
+# Media
+
+Media files (images, videos and documents) are often the largest part of a website.
+LeadCMS serves as a content management system that stores your original media assets, which are then pulled locally during your site's build process.
+Since the files are downloaded to your local repository, you have full control over how they are optimized and delivered.
+
+## Static site approach with local media
+
+LeadCMS does not perform image optimization or CDN delivery. Instead, it stores your original files and syncs them to your local `public/media` folder during the build process.
+This approach gives you complete flexibility to implement your own optimization pipeline:
+
+- **Use framework features** such as Next.js `<Image>` component for automatic format conversion and responsive sizing
+- **Implement build-time optimization** with tools like Sharp, ImageOptim, or custom scripts in your CI/CD pipeline
+- **Upload to CDN during deployment** with custom logic to transform and distribute optimized versions
+- **Apply progressive enhancement** by serving optimized formats (AVIF, WebP) with fallbacks
+
+The images uploaded to LeadCMS serve as your **source of truth** - the original, high-quality assets that your optimization pipeline processes according to your specific requirements and toolchain.
+
+## Upload recommendations
+
+Whether you optimize during build time or upload pre-optimized files, these guidelines will help maintain good performance:
+
+- **Compress images before uploading.** Aim for files under **500 KB** for JPEG/PNG/WebP and under **2 MB** for AVIF. Videos should stay under **10 MB** and PDFs under **20 MB** (default limits can be customised in your `.env`, but increasing them is not recommended for performance).
+- **Use modern formats.** Prefer **AVIF** for maximum compression or **WebP** for broad browser support. JPEG and PNG should only be used when necessary (for legacy browsers or lossless graphics).
+- **Resize images to actual display size.** Don't upload 4 K photos if they will be displayed at 800 × 600 px.
+- **Choose the right quality.** For hero images, a quality setting of 85–90 is appropriate; for thumbnails or backgrounds, 60–75 is sufficient.
+- **Test with Lighthouse or similar tools** to monitor Largest Contentful Paint (LCP) and Cumulative Layout Shift (CLS).
+
+<Callout type="info" title="Static export considerations">
+When using Next.js with `output: "export"` for static sites, built-in image optimization is disabled. You can still use the `<Image>` component with `unoptimized={true}` or implement your own optimization during the build process.
+</Callout>
+
+## Uploading media
+
+LeadCMS does **not yet** allow pushing files directly from your local `public/media` folder. Instead, upload media through the **Admin UI**. There are two methods:
+
+<Callout type="info" title="Future feature">
+Direct media pushing from local files is planned for future versions of the LeadCMS SDK to streamline developer workflows.
+</Callout>
+
+<Steps>
+  <Step title="Upload via content editor">
+    When editing an MDX page in the Admin UI, you can drag and drop images into the editor or use the **Insert Image** button in the rich text toolbar.
+    LeadCMS automatically uploads the file and saves it in a folder matching the content’s slug (e.g. `blog/my-article`) and inserts a reference into your content.
+    This ensures a consistent folder structure and makes it easy to associate media with a specific page.
+  </Step>
+  <Step title="Upload via media library">
+    Navigate to **Media** in the Admin UI to upload files in bulk.
+    Create folders that mirror your content slugs (`blog/my-article`, `services/consulting`) and upload files into those folders.
+    Avoid placing files directly in the root of the media directory; always organise by page or by type (e.g. `shared/icons`).
+  </Step>
+</Steps>
+
+After uploading, run `npx leadcms pull-media` or `npx leadcms pull` to download the media files into your repository. They will be saved into your configured `mediaDir` (default `public/media`), ready to be served by your site.
+
+## Organising media
+
+Use a **slug‑based directory structure** to organise your assets:
+
+- **By content slug** – Place images in a folder matching the content’s slug, e.g. `/media/blog/my-article/cover.jpg`. This is the default when uploading from the content editor.
+- **By type** – If a file is shared across multiple pages, store it in a shared folder like `/media/shared/icons/`.
+- **Avoid the root** – Never store files directly in `/media/`; always use subfolders.
+
+This structure improves clarity, prevents name collisions and keeps large sites manageable. When you pull media, the SDK preserves this structure in your local `public/media` folder.
+
+## Path transformation
+
+Media paths are different in the CMS versus your local files. LeadCMS automatically rewrites these paths during sync:
+
+- **CMS format** – When editing content in LeadCMS, media references use the `/api/media/` prefix: `/api/media/blog/my-article/cover.jpg`.
+- **Local format** – When content is pulled, the SDK rewrites `/api/media/` to `/media/` and downloads the files into `public/media/`. Your local MDX files therefore reference images as `/media/blog/my-article/cover.jpg`.
+
+During a push, the reverse happens: `/media/...` paths in your files are converted back to `/api/media/...` so the CMS can interpret them. This process allows your static site to serve files from the `public/media` folder while the CMS continues to use API URLs.
+
+## Referencing media in content
+
+Always reference media using the **local format** (`/media/...`) in your MDX or JSON files.
+For example:
+
+```mdx
+---
+title: "Our Services"
+slug: "services"
+type: "page"
+publishedAt: "2025-01-01T00:00:00Z"
+coverImageUrl: "/media/services/consulting/hero.jpg"
+coverImageAlt: "Consulting hero image"
+---
+
+# Consulting Services
+
+We help companies scale their businesses.
+
+![Our team](/media/services/consulting/team.jpg)
+```
+
+After a pull, the files `hero.jpg` and `team.jpg` will exist in `public/media/services/consulting/` and the content will render correctly.
+If you edit the image inside the Admin UI, the SDK will update the file accordingly when you run `npx leadcms pull` again.
+
+## Optimization approaches
+
+Since media files are pulled locally and become part of your static site, you can implement optimization strategies that fit your development workflow:
+
+**Build-time optimization:**
+- Use image processing libraries (Sharp, ImageOptim) in your build scripts
+- Generate multiple formats and sizes automatically during CI/CD
+- Apply compression and format conversion as part of your deployment pipeline
+
+**Framework integration:**
+- Leverage built-in optimization features (Next.js `<Image>` component, Astro's image service)
+- Configure automatic format conversion and responsive sizing
+- Enable lazy loading and progressive enhancement
+
+**CDN deployment:**
+- Upload optimized versions to a CDN during your deployment process
+- Implement custom logic to transform original files into various formats and sizes
+- Serve optimized images while keeping originals in your repository as source of truth
+
+The key advantage of this approach is flexibility - you choose the optimization strategy that best fits your project's needs and toolchain, while LeadCMS simply manages your original assets.
+
+## Next steps
+
+With your media organized and your optimization strategy in place, you're ready to explore more advanced LeadCMS features. Continue with:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="i18n"
+    description="Localise your content with multiple languages"
+    href="/docs/modeling/i18n/"
+  />
+  <FeatureCard
+    title="Preview Setup"
+    description="Set up live preview and draft mode for content"
+    href="/docs/preview/setup/"
+  />
+</FeatureGrid>

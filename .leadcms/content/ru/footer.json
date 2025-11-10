@@ -59,9 +59,7 @@
   },
   "id": 19,
   "createdAt": "2025-09-01T18:19:00.63383Z",
-  "updatedAt": "2025-09-10T09:39:14.064237Z",
-  "comments": null,
-  "translations": null,
+  "updatedAt": "2025-10-30T07:32:42.472471Z",
   "title": "Footer Configuration",
   "description": "Конфигурация подвала сайта включая логотип, текст авторских прав и навигационные ссылки.",
   "coverImageUrl": "",
@@ -75,5 +73,5 @@
   "tags": [],
   "allowComments": false,
   "source": "Translated from 0",
-  "publishedAt": null
+  "publishedAt": "2025-08-31T00:00:00Z"
 }

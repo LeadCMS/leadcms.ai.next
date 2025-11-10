@@ -1,0 +1,149 @@
+---
+id: 73
+createdAt: '2025-11-10T15:50:53.184811Z'
+updatedAt: '2025-11-10T16:19:07.047629Z'
+title: i18n (Localization)
+description: >-
+  Implement multilingual support in your LeadCMS projects. Learn how to
+  configure languages, organise content by locale, use the SDK to fetch
+  translations and routes, and leverage the Admin UI for translating content
+  with AI assistance.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/modeling/i18n
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-11-06T00:00:00Z'
+group: Modeling
+order: 4
+---
+
+# i18n (Localization)
+
+LeadCMS makes it easy to build multi‑language websites.  Out of the box, the CMS and SDK support multiple locales, and the Admin UI offers tools for translating content and managing language variants.  This guide explains how to configure languages, organise your content by locale, and integrate localisation into your front‑end.
+
+## Enable languages in the CMS
+
+Define the languages you want to support in your `.env` file.  At a minimum you must list each language and specify the default language:
+
+```bash
+# .env (development example)
+# Supported languages (one per line)
+SUPPORTEDLANGUAGES__0=en
+SUPPORTEDLANGUAGES__1=ru
+# Default language used when none is specified
+APISETTINGS__DEFAULTLANGUAGE=en
+```
+
+The first language in the list does not automatically become the default – you must set `APISETTINGS__DEFAULTLANGUAGE` (or `LEADCMS_DEFAULT_LANGUAGE` if configuring the SDK) to the language code you want to use as the default.  All other languages will be treated as non‑default locales.
+
+After restarting the server, the Admin UI will show a **language selector** in the header.  You can filter the content list by language or create translations from existing content.  If the **AI plugin** is enabled, you can generate a translated version of a page with one click; the AI engine will keep MDX structure intact while translating the text.
+
+## Content organisation by locale
+
+When you pull content from LeadCMS using the CLI or SDK, the files are organised into directories based on their language:
+
+- **Default language**: content lives at the root of the `.leadcms/content` directory (e.g. `about.mdx`, `blog/post-1.mdx`).
+- **Non‑default languages**: each language has its own subfolder (e.g. `.leadcms/content/ru/about.mdx` for Russian, `.leadcms/content/fr/about.mdx` for French).
+
+This pattern applies to config files (`header.json`, `footer.json`) and comment files as well.  When you build a site that uses the same domain for all languages, you typically leave the default language at the root of your URL structure (`/about-us`) and prefix other languages with the locale code (`/ru/about-us`).  If you host each language on a separate domain (e.g. `example.ru`, `example.de`), you can build separate static sites by specifying the desired locale when you call your build script.
+
+## Fetching content and routes with the SDK
+
+The LeadCMS SDK exposes helper functions to work with multi‑language content:
+
+- `getAvailableLanguages()` returns an array of language codes based on your `.leadcms/content` folder.
+- `getAllContentSlugsForLocale(locale, contentTypes?)` lists all slugs for a given language.  Use it to generate dynamic routes in your framework.
+- `getAllContentRoutes(contentTypes?)` returns objects with `locale`, `slug`, `slugParts` and `path` fields, making it easy to build static params for frameworks like Next.js, Astro or Gatsby.
+- `getContentTranslations(translationKey)` returns an array of translated versions of a content item.  Each translation includes the locale and content object.
+- `makeLocaleAwareLink(href, currentLocale)` prefixes internal links with the current locale (unless it is the default).
+- `getLocaleFromPath(pathname)` parses the locale from a URL path.
+
+For example, a Next.js App Router page can generate static parameters for all languages like this:
+
+```ts
+import { getAllContentRoutes } from '@leadcms/sdk';
+
+export function generateStaticParams() {
+  return getAllContentRoutes().map(route => ({
+    slug: route.slugParts,
+    locale: route.locale,
+  }));
+}
+```
+
+When rendering links, call `makeLocaleAwareLink()` to ensure they include the language prefix when necessary:
+
+```ts
+import { makeLocaleAwareLink } from '@leadcms/sdk';
+
+function NavLink({ href, label }) {
+  const locale = useLocale(); // from your front-end framework
+  return <a href={makeLocaleAwareLink(href, locale)}>{label}</a>;
+}
+```
+
+## Working with translations in the Admin UI
+
+LeadCMS stores translations as separate content items linked by a `translationKey`.  When you duplicate or translate content in the Admin UI, a translation key is automatically created for the source item, and the translated pages all share that key.  This allows the SDK to fetch all translations for a piece of content.
+
+To create a translation:
+
+1. Open the original content item and click **Add Translation**.
+2. Select the target language.
+3. If the AI plugin is enabled, choose **Translate with AI** to generate a translated draft.  Otherwise, manually translate the text and metadata.
+4. Save the translation.
+
+You can also create translations programmatically by adding separate files in the appropriate language folder and setting the same `translationKey` in the frontmatter or JSON.
+
+## Image and link handling
+
+When the SDK converts content from LeadCMS to local files, it normalises media URLs and links:
+
+- Image links such as `/api/media/<file>` in LeadCMS are rewritten to `/media/<file>` locally so that they reference the `public/media` directory in your repository.  During a push, the SDK converts `/media/<file>` back to `/api/media/<file>` so that the CMS can serve the file via its API.
+- Links between pages are transformed into locale‑aware paths.  When you edit content in the Admin UI, the editor uses API‑based URLs.  When you pull content locally, those links are adjusted to point to the correct local file structure.
+
+## Multiple builds for separate domains
+
+If you plan to deploy each language on a separate domain, you can build your site once per language.  For example:
+
+```bash
+# Build English version
+NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE=en npm run build
+# Build Russian version
+NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE=ru npm run build
+```
+
+Set the environment variable before building so that your front-end framework knows which language to use as the default and which folders to read.  Deploy the output to the appropriate domain.
+
+## Best practices
+
+- Define all supported languages and the default language early in your project and keep them consistent across your CMS configuration (`SUPPORTEDLANGUAGES`), the SDK (`LEADCMS_DEFAULT_LANGUAGE`) and your front-end framework.
+- Use a consistent slug across all languages to simplify linking.  Store translations under language‑specific directories, and rely on the SDK’s `translationKey` to relate them.
+- Translate MDX frontmatter fields such as `title`, `description`, and `slug` as needed.  Untranslated custom metadata will remain unchanged.
+- When using the AI plugin for translation, review the output for accuracy and nuance, especially for technical or domain‑specific content.
+- For websites with a shared domain, always prefix non‑default locales in your URLs and use `makeLocaleAwareLink()` to generate links.
+- For separate domain deployments, perform a dedicated build for each language with the correct default language environment variable.
+
+With these tools and patterns, you can build multilingual sites that share templates and content models across languages while maintaining clean URLs and efficient build pipelines.
+
+## Next steps
+
+With internationalization configured, you're ready to work with drafts and preview functionality, or move to deployment. Continue with:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Drafts & Previews"
+    description="Handle draft content and temporary user previews in your site"
+    href="/docs/modeling/drafts-and-temp-previews/"
+  />
+  <FeatureCard
+    title="Preview Setup"
+    description="Set up live preview servers and watch for content changes"
+    href="/docs/preview/setup/"
+  />
+</FeatureGrid>

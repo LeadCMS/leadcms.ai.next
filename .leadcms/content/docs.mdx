@@ -1,15 +1,17 @@
 ---
 id: 44
 createdAt: '2025-09-10T08:59:29.444539Z'
+updatedAt: '2025-11-10T15:45:42.153297Z'
 title: Documentation
 description: >-
-  Complete guide to building with LeadCMS - the open-source AI-powered CMS & CRM
-  for SaaS teams. Learn how to deploy, configure, and extend the platform.
+  Complete guide to building with LeadCMS - the free, open source headless CMS &
+  CRM for modern developers. Learn how to deploy, configure, and extend the
+  platform.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs
 type: doc
-author: Peter Liapin
+author: LeadCMS Team
 language: en
 category: Docs
 tags: []
@@ -23,35 +25,40 @@ Welcome to the LeadCMS documentation!
 
 ## What is LeadCMS?
 
-LeadCMS is an open-source, AI-powered CMS & CRM designed specifically for SaaS teams. You use it to manage content, track customer journeys, and automate sales processes. LeadCMS provides headless CMS capabilities for building fast websites, plus comprehensive CRM features for lead management.
+LeadCMS is a free, open source headless CMS & CRM platform for modern developers. You use it to manage content with AI assistance, track customer journeys, and automate lead generation. LeadCMS provides headless CMS capabilities perfect for Next.js, Gatsby, and any modern framework, plus comprehensive CRM features for complete customer management.
 
-It automatically handles complex backend operations like content versioning, customer tracking, and plugin orchestration. You can instead focus on building your product and growing your business.
+It automatically handles complex backend operations like content versioning, customer tracking, and plugin orchestration. You can focus on building great websites and growing your business.
 
-Whether you're an individual developer or part of a larger SaaS team, LeadCMS can help you build fast, scalable websites and automate your entire sales funnel.
+Whether you're an individual developer, agency, startup, or enterprise team, LeadCMS gives you a free, open source alternative to expensive proprietary CMS platforms.
 
-## CMS and CRM in one box
+## CMS and CRM in one platform
 
 LeadCMS uniquely combines two powerful systems:
 
-- **Headless CMS**: Modern content management system, perfect for building fast websites with Next.js, Gatsby, and other frameworks.
-- **CRM**: Customer relationship management built specifically for SaaS businesses, tracking the entire customer journey from first visit to conversion.
+* **Free Open Source Headless CMS**: Modern content management system with AI-powered automation. Perfect for building lightning-fast websites with Next.js, Gatsby, Astro, or any framework you prefer.
+* **Integrated CRM**: Customer relationship management with analytics and insights for tracking the entire customer journey from first visit to conversion.
 
 This integrated approach means you can manage both content and customers in one platform, with shared data and unified workflows.
 
 ## How to use the docs
 
-The docs are organized into 2 main sections:
+The documentation is organized into the following sections:
 
-- **[Getting Started](/docs/getting-started)**: Step-by-step tutorials to help you deploy LeadCMS and learn the core features.
-- **[Plugins](/docs/plugins)**: Comprehensive guide to available plugins and how to extend functionality.
+* [Getting Started](/docs/getting-started/install/): Step-by-step tutorials to help you set up your instance of LeadCMS locally and learn core features
+* [Content Modeling](/docs/modeling/content-types/): Learn how to structure content types, manage media, and implement internationalization
+* [SDK & API](/docs/sdk-api/setup/): Work with the LeadCMS SDK and REST API to integrate with your frontend
+* [Deployment](/docs/deploy/static-export/): Deploy LeadCMS to production environments with Docker and cloud platforms
+* [Operations](/docs/ops/deploying/): Manage deployments, perform backups, and upgrade your LeadCMS instance
+* [Preview](/docs/preview/setup/): Set up and configure content preview features for editors
+* [Plugins](/docs/plugins/overview/): Extend functionality with built-in and custom plugins
 
 ## Architecture Overview
 
 LeadCMS uses a modern, enterprise-grade technology stack:
 
-- **Backend**: Built on .NET and C# for high performance and cross-platform compatibility.
-- **Database**: PostgreSQL for reliable data storage with JSON support and full-text search.
-- **Deployment**: Docker containerization for consistent deployment across environments.
+* **Backend**: Built on .NET and C# for high performance and cross-platform compatibility.
+* **Database**: PostgreSQL for reliable data storage with JSON support and full-text search.
+* **Deployment**: Docker containerization for consistent deployment across environments.
 
 This architecture ensures scalability, performance, and maintainability.
 
@@ -59,10 +66,10 @@ This architecture ensures scalability, performance, and maintainability.
 
 Our documentation assumes some familiarity with modern web development. Before getting started, it'll help if you're comfortable with:
 
-- **Docker** and containerization concepts
-- **REST APIs** and HTTP requests
-- **Git** for version control
-- **Command line** basics
+* **Docker** and containerization concepts
+* **REST APIs** and HTTP requests
+* **Git** for version control
+* **Command line** basics
 
 If you're planning to extend LeadCMS with custom plugins, knowledge of **C#** and **.NET** will be helpful.
 
@@ -74,17 +81,10 @@ For professional support, training, and custom development, [contact our team](h
 
 ## Next Steps
 
-Deploy your first LeadCMS instance and learn the core features:
+Get started with LeadCMS by deploying your first instance and building your first project:
 
 <FeatureGrid columns={2}>
-  <FeatureCard
-    title="Getting Started"
-    description="Complete setup guide with step-by-step instructions to deploy and configure LeadCMS"
-    href="/docs/getting-started/installation/"
-  />
-  <FeatureCard
-    title="Plugins"
-    description="Extend functionality with built-in and custom C# plugins using our modular architecture"
-    href="/docs/getting-started/plugins/"
-  />
+  <FeatureCard title="Installation" description="Deploy LeadCMS locally using Docker Compose and get your instance up and running" href="/docs/getting-started/install/" />
+
+  <FeatureCard title="First Project" description="Build your first LeadCMS-powered website using the Next.js portfolio demo" href="/docs/getting-started/first-project/" />
 </FeatureGrid>

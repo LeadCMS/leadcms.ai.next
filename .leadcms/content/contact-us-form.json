@@ -40,8 +40,6 @@
   "id": 11,
   "createdAt": "2025-09-01T16:34:55.851894Z",
   "updatedAt": "2025-09-01T18:21:28.065082Z",
-  "comments": null,
-  "translations": null,
   "title": "Contact Form Text Configuration",
   "description": "Text content for the contact form component including labels, placeholders, buttons, and messages.",
   "coverImageUrl": "",
@@ -54,6 +52,5 @@
   "category": "Component",
   "tags": [],
   "allowComments": false,
-  "source": null,
   "publishedAt": "2025-08-31T18:30:00Z"
 }

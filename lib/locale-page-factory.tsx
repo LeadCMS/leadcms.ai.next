@@ -1,46 +1,51 @@
-import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import {
   getAllContentSlugsForLocale,
   getCMSContentBySlugForLocale,
+  extractUserUidFromSlug,
 } from "@leadcms/sdk";
 import { getTemplate } from '@/components/templates';
 import { LocaleAwareLayout } from '@/components/locale-aware-layout';
 import { DEFAULT_LANGUAGE } from './locale-utils';
+import { generatePageMetadata } from './metadata';
+import { PageProps } from './types';
 
 export const pagesContentTypes = [
   'legal',
   'contact',
   'home',
   'doc',
+  'blog-article',
+  'blog-index',
 ] as const;
-
-interface PageProps {
-  params: Promise<{ slug?: string[] }>;
-}
 
 /**
  * Factory function to create a locale-specific home page component
  */
 export function createLocaleHomePage(locale?: string) {
-  async function generateMetadata(): Promise<Metadata> {
-    const content = getCMSContentBySlugForLocale('home', locale);
+  async function generateHomeMetadata({ params }: { params: PageProps['params'] }) {
+    const awaitedParams = params ? await params : { slug: [] };
+    const slug = awaitedParams.slug?.join('/') || 'home';
+
+    // Extract userUid from slug if it's a preview slug
+    const userUid = extractUserUidFromSlug(slug);
+
+    const content = getCMSContentBySlugForLocale('home', locale, userUid as any);
     if (!content) {
       throw new Error(`Home page content not found for locale: ${locale}. Build failed.`);
     }
 
-    return {
-      title: content.title,
-      description: content.description,
-      openGraph: {
-        title: content.title,
-        description: content.description,
-      },
-    };
+    return generatePageMetadata(content, 'home', userUid);
   }
 
-  async function LocaleHomePage() {
-    const content = getCMSContentBySlugForLocale('home', locale);
+  async function LocaleHomePage({ params }: PageProps) {
+    const awaitedParams = params ? await params : { slug: [] };
+    const slug = awaitedParams.slug?.join('/') || 'home';
+
+    // Extract userUid from slug if it's a preview slug
+    const userUid = extractUserUidFromSlug(slug);
+
+    const content = getCMSContentBySlugForLocale('home', locale, userUid as any);
 
     if (!content) {
       throw new Error(`Home page content not found for locale: ${locale}. Build failed.`);
@@ -51,11 +56,11 @@ export function createLocaleHomePage(locale?: string) {
       throw new Error(`No template found for content type: ${content.type}`);
     }
 
-    return <TemplateComponent content={content} />;
+    return <TemplateComponent content={content} userUid={userUid} />;
   }
 
   return {
-    generateMetadata,
+    generateMetadata: generateHomeMetadata,
     default: LocaleHomePage,
   };
 }
@@ -64,29 +69,36 @@ export function createLocaleHomePage(locale?: string) {
  * Factory function to create a locale-specific dynamic content page component
  */
 export function createLocaleContentPage(locale?: string) {
-  async function LocaleContentPage({ params }: PageProps) {
+  async function LocaleSlugPage({ params }: PageProps) {
     const awaitedParams = await params;
     const slug = awaitedParams.slug?.join('/') || '';
 
-    const content = getCMSContentBySlugForLocale(slug, locale);
+    // Extract userUid from slug if it's a preview slug
+    const userUid = extractUserUidFromSlug(slug);
+
+    // Note: Using type assertion until SDK package is updated with new signature
+    const content = getCMSContentBySlugForLocale(slug, locale, userUid as any);
     if (!content) notFound();
 
     const TemplateComponent = getTemplate(content.type);
     if (!TemplateComponent) {
       throw new Error(`No template found for content type: ${content.type}`);
     }
-    return <TemplateComponent content={content} />;
+    return <TemplateComponent content={content} userUid={userUid} />;
   }
 
   async function generateMetadata({ params }: PageProps) {
     const awaitedParams = await params;
     const slug = awaitedParams.slug?.join('/') || '';
-    const content = getCMSContentBySlugForLocale(slug, locale);
+
+    // Extract userUid from slug if it's a preview slug
+    const userUid = extractUserUidFromSlug(slug);
+
+    // Note: Using type assertion until SDK package is updated with new signature
+    const content = getCMSContentBySlugForLocale(slug, locale, userUid as any);
     if (!content) notFound();
-    return {
-      title: content.title,
-      description: content.description,
-    };
+
+    return generatePageMetadata(content, slug, userUid);
   }
 
   async function generateStaticParams() {
@@ -96,7 +108,7 @@ export function createLocaleContentPage(locale?: string) {
   }
 
   return {
-    default: LocaleContentPage,
+    default: LocaleSlugPage,
     generateMetadata,
     generateStaticParams,
   };
@@ -106,9 +118,12 @@ export function createLocaleContentPage(locale?: string) {
  * Factory function to create a locale-specific not-found page component
  */
 export function createLocaleNotFoundPage(locale?: string) {
-  function LocaleNotFoundPage() {
+  function LocaleNotFoundPage({ params }: PageProps) {
+    // For not-found pages, we typically don't have preview support, but let's be consistent
+    let userUid: string | null = null;
+
     // Load not-found content for the specific locale
-    const content = getCMSContentBySlugForLocale('not-found', locale);
+    const content = getCMSContentBySlugForLocale('not-found', locale, userUid as any);
 
     const notFoundContent = () => {
       if (!content) {
@@ -119,7 +134,7 @@ export function createLocaleNotFoundPage(locale?: string) {
       if (!TemplateComponent) {
         throw new Error(`No template found for content type: ${content.type}`);
       }
-      return <TemplateComponent content={content} />;
+      return <TemplateComponent content={content} userUid={userUid} />;
     };
 
     // Only wrap with LocaleAwareLayout for the default language

@@ -1,0 +1,215 @@
+---
+id: 71
+createdAt: '2025-11-10T15:50:52.373813Z'
+updatedAt: '2025-11-10T17:43:52.127704Z'
+title: First Project
+description: >-
+  Kick off your first LeadCMS site locally using the Next.js portfolio demo.
+  Learn how to clone the repository, run it without LeadCMS, initialise the SDK,
+  push content and work with your own CMS instance.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/getting-started/first-project
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Getting Started
+order: 2
+---
+
+# First Project
+
+In this guide you’ll build your first LeadCMS‑powered website using the **Next.js CTO Portfolio Demo**.
+This sample project demonstrates LeadCMS’s content‑first workflow: all content lives locally in `.leadcms/content`, and developers work with Markdown/JSON files instead of filling in forms.
+You’ll clone the repository, run the site without connecting to a CMS, initialise the SDK to connect to your own instance, push content (automatically creating the required content types), and finally run the site with full LeadCMS integration.
+
+## Clone the portfolio demo
+
+Start by cloning the sample repository to your machine. This template contains all the pages, components and content needed for a basic portfolio site. It uses Next.js with the App Router and has a modular structure for content, presentation components and templates.
+
+<Steps>
+  <Step title="Clone the repository">
+    ```bash
+    git clone https://github.com/LeadCMS/nextjs-cto-portfolio-demo.git
+    cd nextjs-cto-portfolio-demo
+    ```
+  </Step>
+  <Step title="Install pnpm (if not already installed)">
+    First, install pnpm - a fast, disk space efficient package manager that's an alternative to npm. It's better than npm because it uses symlinks to avoid duplicating dependencies, resulting in faster installs and less disk usage.
+    ```bash
+    npm install -g pnpm
+    ```
+  </Step>
+  <Step title="Install dependencies">
+    ```bash
+    pnpm install
+    ```
+  </Step>
+  <Step title="Explore the content">
+    Check the `.leadcms/content/` directory. You’ll see files such as `home.mdx` and `projects/*.mdx` that store the content for the homepage and portfolio projects.
+    Each file contains front matter defining its `type` (e.g. `home` or `project`), slug and other metadata.
+  </Step>
+</Steps>
+
+<Callout type="info" title="Content‑first workflow">
+The portfolio demo embraces a content‑first philosophy: content files (MDX/JSON) live alongside your code and are version‑controlled. You can build and run the site without ever connecting to a CMS – the pages pull their data from local files.
+</Callout>
+
+## Run locally without LeadCMS
+
+Before connecting to your CMS instance, verify that the site runs using the local content. Instead of the default `pnpm run dev` command (which fetches remote content and will fail without a `.env` file), use the Next.js CLI directly:
+
+<Steps>
+  <Step title="Start the dev server">
+    ```bash
+    pnpm exec next dev --webpack
+    ```
+    This runs the Next.js development server and uses the local content files. Open `http://localhost:3000` and you should see the portfolio site with the home page and projects loaded from `.leadcms/content`.
+  </Step>
+  <Step title="Verify the pages">
+    Navigate through the site. The home page and each project page should render correctly. Because no CMS integration is configured yet, the site is entirely static and does not contact any external services.
+  </Step>
+</Steps>
+
+<Callout type="tip" title="Why not pnpm run dev?">
+The `pnpm run dev` script in the demo is designed to fetch the latest content from LeadCMS before starting the dev server. Without a configured `.env` (containing `LEADCMS_URL`, `LEADCMS_API_KEY` and `LEADCMS_DEFAULT_LANGUAGE`) it will fail. Using `pnpm exec next dev --webpack` bypasses the LeadCMS integration so you can preview the local content.
+</Callout>
+
+## Initialise LeadCMS SDK
+
+Next, connect your project to a LeadCMS instance. The SDK provides an interactive setup wizard that creates your `.env` file and optionally authenticates you for write access.
+
+<Steps>
+  <Step title="Run the init command">
+    ```bash
+    pnpm exec leadcms init
+    ```
+    This command prompts you for your LeadCMS URL (e.g. `https://localhost:8080` if you’re running LeadCMS locally). It auto‑detects the default language and creates a `.env` file with `LEADCMS_URL` and `LEADCMS_DEFAULT_LANGUAGE`. You can skip authentication for read‑only mode, but to push content you’ll need an API key, which the wizard can store securely in `.env`.
+  </Step>
+  <Step title="Authenticate for content pushing">
+    Authentication is optional for many use cases - if you only need to pull public content to render your site, you can skip this step. However, since we'll be pushing the portfolio content to your LeadCMS instance, authentication is required.
+
+    The `leadcms init` command includes integrated authentication. When prompted "Would you like to authenticate now?", select **Yes** to complete the device-based authentication flow. This will save your API key to `.env`.
+
+    During the init command execution, keep all the proposed values as defaults (content directory, media directory, etc.) by pressing Enter when prompted.
+
+    If you skipped authentication during init, you can authenticate later by running:
+    ```bash
+    pnpm exec leadcms login
+    ```
+  </Step>
+  <Step title="Inspect the .env file">
+    After initialisation, open `.env` in your editor. It should include:
+    ```env
+    LEADCMS_URL=http://localhost:8080
+    LEADCMS_DEFAULT_LANGUAGE=en
+    LEADCMS_API_KEY=your-api-key
+    ```
+  </Step>
+</Steps>
+
+<Callout type="note" title="Environment variables">
+The demo uses `LEADCMS_URL`, `LEADCMS_API_KEY` and `LEADCMS_DEFAULT_LANGUAGE` from the `.env` file when running the default scripts. Without these values, the site cannot fetch remote content.
+</Callout>
+
+## Push local content to LeadCMS
+
+With your CMS configured, push the demo content into your LeadCMS instance. This will create the required content types (e.g. `home` and `project`) if they do not exist and upload all content files.
+
+<Steps>
+  <Step title="Preview the changes">
+    Before pushing content, you can preview what changes will be made:
+    ```bash
+    pnpm exec leadcms status
+    ```
+    This shows the sync status between local and remote content. For a detailed preview of the changes:
+    ```bash
+    pnpm exec leadcms status --preview
+    ```
+    This will show you exactly what content will be created, updated, or deleted.
+  </Step>
+  <Step title="Push content">
+    ```bash
+    pnpm exec leadcms push
+    ```
+    The CLI analyses your local content (MDX/JSON files) and compares it with the remote CMS. If the required content types (`home` and `project`) don't exist, it prompts you to create them. Accept the prompts to automatically create the types with default settings. Once complete, your LeadCMS instance will have the demo content imported.
+  </Step>
+  <Step title="Verify in LeadCMS admin">
+    Open your LeadCMS admin UI (e.g. `http://localhost:8080`), navigate to **Content** and confirm that the `home` page and several `project` entries have been created. You can preview each content item and make changes.
+  </Step>
+</Steps>
+
+<Callout type="info" title="Content front matter requirements">
+Each content file must include front matter with the `type`, `title`, `slug` and `language` fields for successful pushing. The `publishedAt` field is optional; omitting it creates draft content.
+</Callout>
+
+## Run with LeadCMS integration
+
+Now that your content is stored in LeadCMS, you can use the default dev script. This command pulls the latest content and starts the Next.js dev server.
+
+<Steps>
+  <Step title="Start the dev server with LeadCMS">
+    ```bash
+    pnpm run dev
+    ```
+    The script runs `pnpm exec leadcms pull` to sync content from your CMS and then starts `next dev`. If the local and remote content are already in sync, it simply starts the server. Open `http://localhost:3000` again - the site should look identical to before, but it's now sourcing content from LeadCMS.
+  </Step>
+</Steps>
+
+<Callout type="tip" title="Live preview">
+Once integrated, changes made in the CMS can be pulled automatically by adding `pnpm exec leadcms watch` to your workflow. The watch command listens for changes and updates your local files accordingly. See the [Preview Setup](/docs/preview/setup/) guide for details on preview servers and live reload.
+</Callout>
+
+## Edit content in LeadCMS and update your site
+
+You can now edit content using either your local files or the LeadCMS admin UI. To experience the full round‑trip:
+
+<Steps>
+  <Step title="Edit in the admin UI">
+    Open the `home` page or any project in LeadCMS. Change the title or description and click **Save**. Your CMS now has a new version of the content.
+  </Step>
+  <Step title="Pull updated content">
+    In your project directory, run:
+    ```bash
+    pnpm exec leadcms pull
+    ```
+    This downloads changes from the CMS into your `.leadcms/content` directory. If you're running the dev server, restart it to see the updated content.
+  </Step>
+  <Step title="Rebuild the site (static export)">
+    For production builds, run:
+    ```bash
+    pnpm run build
+    ```
+    The build script fetches remote content, generates static HTML for each page and writes it to the `out` directory. You can then deploy the static output or containerise it (see [Static Export](/docs/deploy/static-export/) and [Docker Image](/docs/deploy/docker-image/)).
+  </Step>
+</Steps>
+
+## Developer vs content editor workflows
+
+Two complementary workflows coexist in a LeadCMS project:
+
+- **Developer flow:** Developers typically work in a code editor (e.g. VS Code) and maintain both the code and the content files locally. They can add new pages, change templates and update MDX/JSON files. When ready, they use the CLI to push changes to LeadCMS (`pnpm exec leadcms push`), ensuring the CMS stays in sync. This enables version control of content and allows offline work.
+- **Content editor flow:** Content editors use the LeadCMS Admin UI to create and edit content. Changes made in the CMS are downloaded via `pnpm exec leadcms pull` or automatically through `pnpm exec leadcms watch`. The next build or deployment will incorporate these updates. Editors never need to touch the code repository.
+
+Both flows support multilingual content, draft handling and preview links. For details on preview mode, see the [Preview Setup](/docs/preview/setup/) documentation.
+
+## Next steps
+
+You've successfully connected your first project to LeadCMS. Continue your journey:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="SDK Setup"
+    description="Dive deeper into the SDK: CLI basics, content fetching and API usage"
+    href="/docs/sdk-api/setup/"
+  />
+  <FeatureCard
+    title="Content Types"
+    description="Learn how to design content types, fields, media and roles"
+    href="/docs/modeling/content-types/"
+  />
+</FeatureGrid>

@@ -1,10 +1,10 @@
 ---
 id: 18
 createdAt: '2025-09-01T18:17:07.675996Z'
-updatedAt: '2025-09-10T09:40:34.016267Z'
-title: ИИ-управляемая, ориентированная на разработчиков CMS & CRM для SaaS
+updatedAt: '2025-10-30T07:36:54.982212Z'
+title: 'ИИ-управляемая, ориентированная на разработчиков CMS & CRM для SaaS'
 description: >-
-  LeadCMS — это ориентированная на разработчиков платформа CMS и CRM на базе ИИ,
+  LeadCMS - это ориентированная на разработчиков платформа CMS и CRM на базе ИИ,
   позволяющая командам SaaS создавать целевые страницы, управлять контентом и
   ускорять генерацию лидов с минимальными усилиями.
 coverImageUrl: ''
@@ -25,235 +25,270 @@ tags:
   - SaaS
 allowComments: false
 source: AI translated from 4
+publishedAt: '2025-10-30T00:00:00Z'
 ---
 
-<HeroSection badge="С открытым исходным кодом" title="Платформа с открытым исходным кодом для автоматизации продаж и CMS для SaaS" description="Ускорьте рост вашего SaaS с платформой, ориентированной на разработчиков. Автоматизируйте каждый этап жизненного цикла продаж продукта." image="/media/home/leadcms-preview.png" primaryButton={{ label: "Начать", href: "#contact" }} secondaryButton={{ label: "Посмотреть на GitHub", href: "https://github.com/LeadCMS" }} dashboardLabel="LeadCMS.AI Admin" />
+<HeroSection
+  title="AI‑ориентированная headless CMS и CRM для современных разработчиков"
+  description="Создавайте молниеносные сайты на свободно распространяемой headless CMS, которая автоматизирует создание контента с помощью ИИ. Идеально подходит для Next.js, Gatsby и других современных фреймворков."
+>
+  <HeroBadge>С открытым исходным кодом</HeroBadge>
+  <HeroButtons>
+    <HeroButton href="#contact">Начать</HeroButton>
+    <HeroButton href="https://github.com/LeadCMS" variant="outline" icon="GitBranch" external>
+      Посмотреть на GitHub
+    </HeroButton>
+  </HeroButtons>
+  <HeroPreview image="/media/home/leadcms-preview.png" label="LeadCMS.AI Admin" />
+</HeroSection>
 
 <FeaturesSection
   title="Единая платформа"
-  description="Создан для разработчиков и технических команд: LeadCMS объединяет всё, что нужно для роста вашего SaaS."
-  features={[
-  {
-    icon: "Database",
-    title: "Headless CMS",
-    description: "Структурируйте и публикуйте контент с полной системой контроля версий. Идеально для продуктовых страниц и документации.",
-    bullets: [
-      "Управление контентом на базе Git",
-      "Структурированные модели контента",
-      "Архитектура API‑first"
-    ]
-  },
-  {
-    icon: "Globe",
-    title: "CRM для SaaS",
-    description: "Отслеживайте весь путь клиента — от первого клика до конверсии и дальше.",
-    bullets: [
-      "Управление контактами и сделками",
-      "Отслеживание пути клиента",
-      "Визуализация воронки продаж"
-    ]
-  },
-  {
-    icon: "Zap",
-    title: "Подход AI‑first",
-    description: "Используйте ИИ для автоматизации создания контента, оптимизации захвата лидов и получения инсайтов о ценных потенциальных клиентах.",
-    bullets: [
-      "Автоматическая генерация посадочных страниц",
-      "Оценка лидов на базе ИИ",
-      "Персонализированные рекомендации контента"
-    ]
-  }
-]}
-/>
+  description="LeadCMS - свободно распространяемая платформа с открытым исходным кодом, созданная для разработчиков и технических команд. Она объединяет всё необходимое для создания современных сайтов и роста бизнеса."
+>
+  <FeaturesSectionCards>
+    <FeaturesCardWithBullets icon="Database" title="Headless CMS">
+      Свободная headless CMS с открытым исходным кодом и архитектурой API‑first. Идеально подходит для Next.js, Gatsby, Astro и других современных фреймворков.
+
+      * RESTful API с документацией OpenAPI
+      * Версионирование контента и история изменений
+      * Совместима с любыми фронтенд‑фреймворками
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Globe" title="Интеллектуальная CRM">
+      Отслеживайте клиентские пути с автоматическим обогащением контактов и аккаунтов из открытых источников данных.
+
+      * Автоматическое обогащение контактов
+      * Обогащение данных о компании по доменному имени
+      * Отслеживание пути клиента
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Zap" title="AI‑автоматизация контента">
+      Создание и оптимизация контента с поддержкой ИИ помогает команде работать быстрее, чем когда‑либо.
+
+      * Генерация контента с помощью ИИ
+      * Умная оптимизация контента
+      * Автоматизированные контентные процессы
+    </FeaturesCardWithBullets>
+  </FeaturesSectionCards>
+</FeaturesSection>
 
 <WhySection
   title="Почему LeadCMS?"
-  description="Создан с учётом потребностей разработчиков: LeadCMS даёт вам полный контроль над платформой продаж и контента."
-  reasons={[
-  {
-    icon: "Code",
-    title: "100% с открытым исходным кодом",
-    description: "Доступен на GitHub под лицензией MIT — полный контроль над кодом и прозрачность. Никакой привязки к вендору и скрытых затрат."
-  },
-  {
-    icon: "Server",
-    title: "Самостоятельный хостинг или облако",
-    description: "Поддержка Docker для быстрого и гибкого развертывания где угодно: в вашем частном облаке, на своих серверах или у управляемого провайдера."
-  },
-  {
-    icon: "GitBranch",
-    title: "Процесс, ориентированный на разработчиков",
-    description: "Используйте Git для версионирования изменений контента, интегрируйте с CI/CD и расширяйте через плагины или правки исходного кода."
-  },
-  {
-    icon: "Package",
-    title: "Модульная архитектура",
-    description: "Выбирайте только нужные возможности. В любое время добавляйте новые плагины для кастомного функционала или интеграций."
-  },
-  {
-    icon: "Zap",
-    title: "Молниеносно быстрые сайты",
-    description: "Идеальная headless CMS для создания сверхбыстрых сайтов с Next.js, Gatsby и современными фреймворками. Достигайте высоких показателей в Lighthouse."
-  },
-  {
-    icon: "Globe",
-    title: "API‑first дизайн",
-    description: "Полноценные API‑эндпоинты для бесшовной интеграции с вашими инструментами и процессами. Легко создавайте кастомные решения."
-  }
-]}
-/>
+  description="Создана с учётом потребностей разработчиков: LeadCMS даёт вам полный контроль над платформой продаж и контента."
+>
+  <WhyReasonCard icon="Code" title="100% открытый исходный код">
+    Доступен на GitHub под лицензией MIT - полный контроль над кодом и прозрачность. Никакой привязки к поставщику и скрытых затрат.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Server" title="Самостоятельный хостинг или облако">
+    Поддержка Docker для быстрого и гибкого развертывания где угодно: в вашем частном облаке, на своих серверах или у управляемого провайдера.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="GitBranch" title="Процесс, ориентированный на разработчиков">
+    Используйте Git для версионирования изменений контента, интегрируйте с CI/CD и расширяйте через плагины или правки исходного кода.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Package" title="Модульная архитектура">
+    Выбирайте только нужные возможности. В любое время добавляйте новые плагины для кастомного функционала или интеграций.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Zap" title="Молниеносно быстрые сайты">
+    Идеальная headless CMS для создания сверхбыстрых сайтов с Next.js, Gatsby и современными фреймворками. Достигайте высоких показателей в Lighthouse.
+  </WhyReasonCard>
+
+  <WhyReasonCard icon="Globe" title="API‑first подход">
+    Полноценные API‑эндпоинты для бесшовной интеграции с вашими инструментами и процессами. Легко создавайте индивидуальные решения.
+  </WhyReasonCard>
+</WhySection>
+
 
 <DeploySection
   title="Разверните за секунды"
   description="Запуститесь одной командой. Никакой сложной настройки."
-  commands={[
-  "git clone https://github.com/LeadCMS/leadcms.deploy.git",
-  "cd leadcms.deploy",
-  "./generate-env.sh",
-  "docker compose up -d"
-]}
-  specs={[
-  "Создан на .NET для высокой производительности",
-  "Контейнеризация с Docker для предсказуемого развертывания",
-  "База данных PostgreSQL для надёжного хранения данных",
-  "RESTful API с документацией OpenAPI"
-]}
-  devExperience={[
-  "Полноценный API для пользовательских интеграций",
-  "Система плагинов для расширения функциональности",
-  "Вебхуки для уведомлений о событиях в реальном времени",
-  "Подробная документация и примеры"
-]}
-  docButton={{ label: "Посмотреть документацию", href: "/ru/docs" }}
-/>
+>
+  <DeployCommands>
+git clone https://github.com/LeadCMS/leadcms.deploy.git
+cd leadcms.deploy
+./generate-env.sh
+docker compose up -d
+  </DeployCommands>
 
-<HelpSection
-  title="Получите помощь экспертов, когда она вам нужна"
-  description="Запускаете MVP или масштабируете зрелый продукт? Наша команда готова помочь вам начать."
-  services={[
-  {
-    icon: "Settings",
-    title: "Профессиональная настройка",
-    description: "Проведём через установку или возьмём процесс на себя, обеспечив гладкий запуск."
-  },
-  {
-    icon: "Code",
-    title: "Индивидуальная разработка",
-    description: "Нужен особый процесс или интеграция? Наши эксперты адаптируют платформу под ваши требования."
-  },
-  {
-    icon: "ShieldCheck",
-    title: "Постоянная поддержка",
-    description: "От оптимизации производительности до обновлений — мы всегда готовы поддержать вашу команду."
-  }
-]}
-  serviceList={[
-  "Профессиональная установка и настройка",
-  "Индивидуальная разработка и интеграции",
-  "Обучение и онбординг",
-  "Постоянное сопровождение и поддержка",
-  "Оптимизация производительности"
-]}
+  <DeployCards>
+    <FeaturesCardWithBullets icon="Server" title="Технические характеристики">
+      Высокопроизводительная платформа для современного развертывания.
+
+      * Создана на .NET для высокой производительности
+      * Контейнеризация с Docker для предсказуемого развертывания
+      * База данных PostgreSQL для надёжного хранения данных
+      * RESTful API с документацией OpenAPI
+    </FeaturesCardWithBullets>
+
+    <FeaturesCardWithBullets icon="Code" title="Опыт разработчика">
+      Всё необходимое для расширения и настройки платформы.
+
+      * Полноценный API для пользовательских интеграций
+      * Система плагинов для расширения функциональности
+      * Вебхуки для уведомлений о событиях в реальном времени
+      * Подробная документация и примеры
+    </FeaturesCardWithBullets>
+  </DeployCards>
+
+  <DeployButton href="/ru/docs">Посмотреть документацию</DeployButton>
+</DeploySection>
+
+<ServicesSection
+  title="Экспертная помощь, когда вам нужна"
+  description="Запускаете MVP или масштабируете зрелый продукт - наша команда готова помочь вам начать."
   servicesTitle="Наши услуги включают:"
-  contactButton={{ label: "Связаться с нашей командой", href: "#contact-form" }}
-/>
+>
+  <ServiceCard icon="Settings" title="Профессиональная настройка">
+    Проведём через установку или возьмём процесс на себя, обеспечив гладкий запуск.
+  </ServiceCard>
 
-<WhySection
+  <ServiceCard icon="Code" title="Индивидуальная разработка">
+    Нужен особый процесс или интеграция? Наши эксперты адаптируют платформу под ваши требования.
+  </ServiceCard>
+
+  <ServiceCard icon="ShieldCheck" title="Постоянная поддержка">
+    От оптимизации производительности до обновлений - мы всегда готовы поддержать вашу команду.
+  </ServiceCard>
+
+  <ServiceList>
+    * Профессиональная установка и настройка
+    * Индивидуальная разработка и интеграции
+    * Обучение и онбординг
+    * Постоянное сопровождение и поддержка
+    * Оптимизация производительности
+  </ServiceList>
+
+  <ServiceButton href="#contact-form">Связаться с нашей командой</ServiceButton>
+</ServicesSection>
+
+<CapabilitiesSection
   title="Ключевые возможности"
   description="Всё, что нужно для автоматизации продаж и управления контентом в вашем SaaS."
-  reasons={[
-  {
-    icon: "Zap",
-    title: "Единая панель управления",
-    description: "Отслеживайте трафик, генерацию лидов и эффективность продаж одним взглядом. Все ключевые метрики в одном месте."
-  },
-  {
-    icon: "Database",
-    title: "Headless CMS с синхронизацией через Git",
-    description: "Структурируйте и публикуйте контент в любимом редакторе. Отправляйте изменения в репозиторий Git для полного контроля версий."
-  },
-  {
-    icon: "Globe",
-    title: "CRM для SaaS",
-    description: "Управляйте контактами, сделками и доменами, отслеживая весь путь клиента — от первого клика до конверсии."
-  },
-  {
-    icon: "Settings",
-    title: "Автоматизация продаж",
-    description: "Запускайте серии писем, активации лицензий или предложения допродажи мгновенно на основе поведения пользователя."
-  },
-  {
-    icon: "ShieldCheck",
-    title: "Безопасность и соответствие",
-    description: "Разворачивайте за вашим файерволом. Ваши данные — ваши правила, при этом соблюдаются требования GDPR и других стандартов конфиденциальности."
-  },
-  {
-    icon: "Server",
-    title: "Быстро. Гибко. Масштабируемо.",
-    description: "Работает на .NET с высокой производительностью и надёжными инструментами для корпоративных задач. Контейнеризованное развертывание."
-  }
-]}
-/>
+>
+  <CapabilityCard icon="Zap" title="Единая панель управления">
+    Отслеживайте трафик, генерацию лидов и эффективность продаж одним взглядом. Все ключевые метрики в одном месте.
+  </CapabilityCard>
+
+  <CapabilityCard icon="Database" title="Headless CMS с открытым исходным кодом">
+    Структурируйте и публикуйте контент с синхронизацией через Git. Свободная платформа с полным контролем версий.
+  </CapabilityCard>
+
+  <CapabilityCard icon="Globe" title="Интегрированная CRM‑система">
+    Управляйте контактами, лидами и сделками, отслеживая путь клиента от первого касания до конверсии.
+  </CapabilityCard>
+
+  <CapabilityCard icon="Settings" title="Автоматизация продаж">
+    Запускайте серии писем, активации лицензий или предложения допродажи мгновенно на основе поведения пользователя.
+  </CapabilityCard>
+
+  <CapabilityCard icon="ShieldCheck" title="Безопасность и соответствие">
+    Разворачивайте решение за собственным файерволом. Ваши данные - ваши правила, при этом соблюдаются требования GDPR и других стандартов конфиденциальности.
+  </CapabilityCard>
+
+  <CapabilityCard icon="Server" title="Быстро. Гибко. Масштабируемо.">
+    Работает на .NET с высокой производительностью и надёжными инструментами для корпоративных задач. Контейнеризованное развертывание.
+  </CapabilityCard>
+</CapabilitiesSection>
 
 <CompareSection
   title="Сравнение LeadCMS"
   description="В отличие от проприетарных решений, LeadCMS даёт вам полный контроль над платформой."
-  tabs={[
-  {
-    value: "features",
-    label: "Возможности",
-    headers: ["LeadCMS", "HubSpot", "Salesforce"],
-    rows: [
-      { label: "CMS", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-      { label: "CRM", values: [{ icon: "check" }, { icon: "check" }, { icon: "check" }] },
-      { label: "Self-Hosted", values: [{ icon: "check" }, "Нет", "Нет"] },
-      { label: "Open Source", values: [{ icon: "check" }, "Нет", "Нет"] }
-    ]
-  },
-  {
-    value: "pricing",
-    label: "Цены",
-    headers: ["LeadCMS", "HubSpot", "Salesforce"],
-    rows: [
-      { label: "Per-User Fees", values: ["Нет", "Да", "Да"] },
-      { label: "Feature Lockouts", values: ["Нет", "Да", "Да"] },
-      { label: "One-time Cost", values: ["Опционально", "Нет", "Нет"] },
-      { label: "Subscription", values: ["Опциональная поддержка", "Обязательно", "Обязательно"] }
-    ]
-  },
-  {
-    value: "control",
-    label: "Контроль",
-    headers: ["LeadCMS", "HubSpot", "Salesforce"],
-    rows: [
-      { label: "Source Code Access", values: [{ icon: "check" }, "Нет", "Нет"] },
-      { label: "Custom Extensions", values: ["Неограниченно", "Ограничено", "Ограничено"] },
-      { label: "Data Ownership", values: ["100%", "Совместное", "Совместное"] },
-      { label: "Deployment Control", values: ["Полный", "Нет", "Ограниченный"] }
-    ]
-  }
-]}
-/>
+>
+  <CompareTab value="features" label="Возможности" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="CMS">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="CRM">
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+      <CompareCell icon="check" />
+    </CompareRow>
+    <CompareRow label="Self-Hosted">
+      <CompareCell icon="check" />
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+    <CompareRow label="Open Source">
+      <CompareCell icon="check" />
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+  </CompareTab>
 
-<ContactSection
+  <CompareTab value="pricing" label="Цены" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Per-User Fees">
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Да</CompareCell>
+      <CompareCell>Да</CompareCell>
+    </CompareRow>
+    <CompareRow label="Feature Lockouts">
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Да</CompareCell>
+      <CompareCell>Да</CompareCell>
+    </CompareRow>
+    <CompareRow label="One-time Cost">
+      <CompareCell>Опционально</CompareCell>
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+    <CompareRow label="Subscription">
+      <CompareCell>Опциональная поддержка</CompareCell>
+      <CompareCell>Обязательно</CompareCell>
+      <CompareCell>Обязательно</CompareCell>
+    </CompareRow>
+  </CompareTab>
+
+  <CompareTab value="control" label="Контроль" headers={["LeadCMS", "HubSpot", "Salesforce"]}>
+    <CompareRow label="Source Code Access">
+      <CompareCell icon="check" />
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Нет</CompareCell>
+    </CompareRow>
+    <CompareRow label="Custom Extensions">
+      <CompareCell>Неограниченно</CompareCell>
+      <CompareCell>Ограничено</CompareCell>
+      <CompareCell>Ограничено</CompareCell>
+    </CompareRow>
+    <CompareRow label="Data Ownership">
+      <CompareCell>100%</CompareCell>
+      <CompareCell>Совместное</CompareCell>
+      <CompareCell>Совместное</CompareCell>
+    </CompareRow>
+    <CompareRow label="Deployment Control">
+      <CompareCell>Полный</CompareCell>
+      <CompareCell>Нет</CompareCell>
+      <CompareCell>Ограниченный</CompareCell>
+    </CompareRow>
+  </CompareTab>
+</CompareSection>
+
+<CTASection
   title="Готовы начать?"
-  description="Присоединяйтесь к растущему сообществу команд SaaS, которые доверяют LeadCMS управление всем жизненным циклом продаж продукта."
-  buttons={[
-  { label: "Посмотреть на GitHub", href: "https://github.com/LeadCMS", icon: "GitBranch" },
-  { label: "Связаться с нами", href: "#contact-form" }
-]}
-/>
+  description="Присоединяйтесь к растущему сообществу разработчиков, которые используют свободную headless CMS с открытым исходным кодом и встроенной CRM."
+>
+  <CTAButton href="https://github.com/LeadCMS" icon="GitBranch">Посмотреть на GitHub</CTAButton>
+  <CTAButton href="#contact-form">Связаться с нами</CTAButton>
+</CTASection>
 
 <ContactFormSection
   title="Получите профессиональную помощь"
   description="Нужна помощь с настройкой, кастомной интеграцией или постоянной поддержкой? Наша команда всегда рядом."
-  servicesTitle="Наши услуги включают:"
-  services={[
-  "Профессиональная установка и настройка",
-  "Индивидуальная разработка и интеграции",
-  "Обучение и онбординг",
-  "Постоянное сопровождение и поддержка",
-  "Оптимизация производительности"
-]}
-  formComponent={<ContactUs />}
-/>
+>
+  <ContactFormServiceList title="Наши услуги включают:">
+    * Профессиональная установка и настройка
+    * Индивидуальная разработка и интеграции
+    * Обучение и онбординг
+    * Постоянное сопровождение и поддержка
+    * Оптимизация производительности
+  </ContactFormServiceList>
+
+  <ContactForm>
+    <ContactUs />
+  </ContactForm>
+</ContactFormSection>

@@ -8,7 +8,7 @@ import { DocTableOfContents } from "@/components/doc-table-of-contents"
 import { DocMobileNavProvider } from "@/components/doc-mobile-nav-provider"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 
-export default function DocTemplate({ content }: CMSContentTemplateProps) {
+export default function DocTemplate({ content, userUid }: CMSContentTemplateProps & { userUid?: string | null }) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
     scope: {
@@ -27,7 +27,7 @@ export default function DocTemplate({ content }: CMSContentTemplateProps) {
     : undefined
 
   // Doc pages need components that include all MDX and doc-specific components
-  const components = useMDXComponents({})
+  const components = useMDXComponents({ userUid })
 
   // Get metadata from frontmatter
   const group = content.group || "Documentation"

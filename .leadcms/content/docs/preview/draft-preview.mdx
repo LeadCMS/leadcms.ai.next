@@ -1,0 +1,83 @@
+---
+id: 74
+createdAt: '2025-11-10T15:50:53.573281Z'
+updatedAt: '2025-11-10T16:19:08.308098Z'
+title: Draft Preview
+description: >-
+  Learn how draft content works in LeadCMS and how to preview unpublished pages
+  without affecting your production site. This article describes best practices
+  for including or excluding drafts in your lists and how to configure the SDK
+  for preview mode.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/preview/draft-preview
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-11-06T00:00:00Z'
+group: Preview
+order: 2
+---
+
+# Draft Preview
+
+In LeadCMS, a **draft** is any piece of content that either has no `publishedAt` date or has a `publishedAt` date in the future. Drafts allow you to work on pages or posts without immediately publishing them to your production site. This article explains how drafts are handled by the LeadCMS SDK and how to preview them without accidental publication.
+
+## How drafts work
+
+Draft content behaves differently depending on the environment:
+
+- **Production builds**: When you build your static site for production (`next build`, `astro build`, etc.), the SDK excludes drafts by default. Only content with a past `publishedAt` date is included in the static output. This ensures that unpublished content does not appear on your live site.
+- **Preview mode**: When running a preview server (see [Preview Setup](/docs/preview/setup/)), the SDK can return draft content when requested directly by slug. Drafts are not listed automatically in collections (like blog indexes) unless you explicitly include them.
+
+Draft support is implemented through the `includeDrafts` flag in the current SDK. For example, in the sample project’s dynamic project grid, the list of project slugs is fetched like this:
+
+```ts
+const includeDrafts = !!userUid;
+const slugs = await getAllContentSlugsForLocale(locale, ['project'], includeDrafts, userUid);
+```
+
+When `includeDrafts` is `true` (for example when a user UID is present during live preview), drafts are included in the list; otherwise they are filtered out【97649375988743†L62-L78】. Similarly, to fetch a single page, the sample code calls `getCMSContentBySlugForLocale(slug, locale, includeDrafts)`【237727577357856†L33-L55】.
+
+## Recommended approach
+
+To avoid confusion and duplicate entries in your lists, we recommend the following best practices:
+
+1. **Exclude drafts from collections by default.** When displaying lists of articles, projects or any enumerable content, filter out items where `publishedAt` is null or in the future. This prevents unfinished work from appearing alongside published posts.
+2. **Use direct links to preview drafts.** Editors can preview an unpublished page by navigating directly to its slug. For example, `/blog/my-unpublished-post/` will render the draft on the preview server (but not on production). This requires that your page component always fetches the content by slug and handles drafts transparently.
+3. **Enable preview mode with an environment variable.** In our next SDK iteration (see [Live Preview](/docs/preview/live-preview/)), we plan to remove the `includeDrafts` parameter entirely. Instead, the SDK will detect `process.env.NODE_ENV === 'preview'` and automatically include drafts for direct requests. Collections will still exclude drafts by default.
+
+This approach mirrors common practices in other headless CMSs: Contentful’s preview API returns drafts only when explicitly requested, and Strapi hides drafts from the main API unless the `publicationState=preview` parameter is passed. Keeping drafts out of lists by default maintains a clean editing experience and prevents duplicate entries.
+
+## Handling drafts in different scenarios
+
+- **Page components**: When rendering a single page, always fetch the content by slug. In current SDKs this looks like `getCMSContentBySlugForLocale(slug, locale, includeDrafts, userUid)`. In the upcoming unified API (see [Live Preview](/docs/preview/live-preview/)), the SDK will handle drafts automatically based on the environment.
+- **Collections**: When generating lists of posts (e.g. blog index pages), call `getAllContentSlugsForLocale(locale, contentTypes, includeDrafts)` with `includeDrafts` set to `false` or omit it entirely. Then fetch each item by slug. Sorting by `publishedAt` remains the same; items without a `publishedAt` date should appear at the end (or be excluded).
+
+## Draft scheduling
+
+You can schedule content by setting `publishedAt` to a future date. During production builds the content will only appear once the current date exceeds the scheduled time. On preview servers, you can still open the page directly by slug to see how it will look.
+
+## Summary
+
+Drafts are essential for a content‑first workflow, allowing you to iterate without affecting your live site. The current SDK exposes an `includeDrafts` flag so you can choose when to include them. In the next iteration of the SDK we will simplify this by automatically including drafts in preview mode and keeping them out of collections. Until then, use the guidelines above to manage drafts effectively.
+
+## Next steps
+
+With draft handling implemented, explore live preview functionality or prepare for deployment:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Live Preview"
+    description="Learn about future simplified preview architecture"
+    href="/docs/preview/live-preview/"
+  />
+  <FeatureCard
+    title="Static Export"
+    description="Build and deploy your site with exported static content"
+    href="/docs/deploy/static-export/"
+  />
+</FeatureGrid>

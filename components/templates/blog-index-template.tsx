@@ -2,13 +2,13 @@ import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import type { CMSContentTemplateProps } from "@leadcms/sdk"
 import { useMDXComponents } from "@/components/mdx-components"
 
-export default function BlogIndexTemplate({ content }: CMSContentTemplateProps) {
+export default function BlogIndexTemplate({ content, userUid }: CMSContentTemplateProps & { userUid?: string | null }) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
     scope: {},
   }
 
-  const components = useMDXComponents({})
+  const components = useMDXComponents({ userUid })
 
   return (
     <main className="flex-1">

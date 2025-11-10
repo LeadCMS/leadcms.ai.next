@@ -1,0 +1,94 @@
+---
+title: Content Types
+description: >-
+  Learn how to define and manage content types in LeadCMS.
+  Understand the built‑in defaults, design best practices and how to create new types via the CLI or the Admin UI.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/modeling/content-types
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Modeling
+order: 1
+---
+
+# Content Types
+
+Content types define the **structure** of your content.
+They tell LeadCMS how to interpret the frontmatter in your MDX or JSON files and how to organise the data in the database.
+Choosing the right content types is the foundation of a well‑structured site because it directly affects routing, page layouts and how editors interact with your CMS.
+
+## Built‑in types
+
+Out of the box, LeadCMS ships with a few essential content types. These cover the minimum requirements for any website:
+
+- **Home** – Used for the homepage. Stored in MDX with no comments or cover image.
+- **Component** – JSON configuration blocks for reusable pieces such as header, footer or site metadata.
+- **Not Found** – MDX content shown on 404 pages, also with no comments or cover image.
+
+These predefined types ensure your site has basic pages ready to go.
+
+## Designing new types
+
+When your website needs additional pages or data models, you can define your own content types. Here are some guidelines drawn from our architecture principles:
+
+- **Model structure, not URLs.** Base your types on the structure and purpose of the page—not its URL. For example, use separate `blog-index` and `blog-article` types when list and detail views have different fields, but use a single `doc` type if all documentation pages share the same structure.
+- **Follow standard patterns.** Reuse common types where possible: `home`, `doc`, `blog-index`/`blog-article`, `legal`, `contact`, `not-found`, `component`. This keeps your schema predictable and makes it easier for editors to understand.
+- **Choose the right format.** Use **MDX** for narrative pages with rich text and embedded components. Use **JSON** for structured configuration where there is no free‑form text. Both MDX and JSON require a `type` attribute to link them to a content type.
+- **Use required frontmatter.** Every MDX file must include `title`, `description`, `slug`, `type`, `author`, `language`, `publishedAt`, `coverImageUrl` and `coverImageAlt`. Without `publishedAt` the content remains a draft and is invisible on the site.
+
+Following these best practices will help you build a scalable schema that supports growth without cluttering your CMS with unnecessary types.
+
+## Creating content types via the CLI
+
+If you’re working locally with the **content‑first workflow**, the simplest way to create a new type is to let the CLI do it for you. Write your MDX or JSON file in `.leadcms/content/` with a `type` that doesn’t exist yet, then run:
+
+```bash
+npx leadcms push
+```
+
+The push command will detect unknown types and prompt you to create them in your LeadCMS instance. You’ll be asked to choose a **content format** (MDX or JSON) and whether the type **supports cover images** or **supports comments**. After confirming, the CLI creates the new type and uploads your content.
+
+This method is ideal when prototyping or migrating content, because you can define everything locally and then synchronise it with the CMS in one step.
+
+## Creating content types in the Admin UI
+
+You can also create types through the LeadCMS web interface. This is useful for content editors or when you’re not working directly with code. To add a custom type:
+
+<Steps>
+  <Step title="Open the New Content menu">
+    In the Admin UI, go to **Content → Add Content**. Choose an existing type from the drop‑down or select **Add Custom Type** to create a new one.
+    <Image src="{{file:file-2RTD52n39Z3LhJpCQjbwcj}}" alt="Selecting Add Custom Type in the content type picker" width="80%" />
+  </Step>
+  <Step title="Define the type details">
+    In the **Create New Content Type** dialog, enter a **Content Type Name**. The ID field will auto‑generate based on the name and will be used in your MDX/JSON files (as the `type` value). Choose the **Content Format** (MDX for articles or JSON for configurations) and toggle **Supports Cover Image** or **Supports Comments** as needed.
+    <Image src="{{file:file-CnZkJPp2eQGAd8gsQgDcgn}}" alt="Define a new content type with format and features" width="80%" />
+  </Step>
+  <Step title="Save the new type">
+    Click **Create** to add the type. You can now create entries of this type from the **Add Content** screen, or push local files with a matching `type` using the CLI.
+  </Step>
+</Steps>
+
+Once created, your new type appears in the content type picker and can be assigned to any MDX or JSON file. You can define as many types as you need to organise your content.
+
+## Next steps
+
+With your content types defined, you’re ready to populate them with content and media. Continue with:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Content"
+    description="Create and manage MDX and JSON content within your types"
+    href="/docs/modeling/content"
+  />
+  <FeatureCard
+    title="Media"
+    description="Upload and manage images, audio and video in your project"
+    href="/docs/modeling/media"
+  />
+</FeatureGrid>

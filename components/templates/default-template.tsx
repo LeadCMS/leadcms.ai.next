@@ -1,29 +1,13 @@
-import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
-import type { CMSContentTemplateProps } from "@leadcms/sdk"
+import { MDXRemote } from "next-mdx-remote-client/rsc"
 import { useMDXComponents } from "@/components/mdx-components"
+import { TemplateProps } from "./index"
 
-export default function DefaultTemplate({ content }: CMSContentTemplateProps) {
-  const options: MDXRemoteOptions = {
-    parseFrontmatter: true,
-    scope: {
-      // Add any additional scope variables here
-    },
-  }
+/**
+ * Default template for home and other content types
+ * Renders full-width MDX content with proper prose styling
+ */
+export default function DefaultTemplate({ content, userUid }: TemplateProps) {
+  const components = useMDXComponents({ userUid })
 
-  // Format lastUpdated from content.updatedAt or content.createdAt
-  const lastUpdatedRaw = content.updatedAt || content.createdAt
-  const lastUpdated = lastUpdatedRaw
-    ? new Date(lastUpdatedRaw).toLocaleDateString(undefined, {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : undefined
-
-  // Use the extended MDX components that include all page-specific components
-  const components = useMDXComponents({})
-
-  // For static builds, let errors bubble up to fail the build
-  // No need for Suspense or error handling since everything is resolved at build time
-  return <MDXRemote source={content.body} options={options} components={components} />
+  return <MDXRemote source={content.body} components={components} />
 }

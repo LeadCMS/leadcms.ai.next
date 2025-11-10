@@ -1,14 +1,10 @@
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import type { CMSContentTemplateProps } from "@leadcms/sdk"
 import { useMDXComponents } from "@/components/mdx-components"
-import { LocaleAwareLink } from "@/components/locale-aware-link"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, Share2 } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
 import { DocTableOfContents } from "@/components/doc-table-of-contents"
 import { BlogCoverGenerator } from "@/components/blog/blog-cover-generator"
 
-export default function BlogTemplate({ content }: CMSContentTemplateProps) {
+export default function BlogTemplate({ content, userUid }: CMSContentTemplateProps & { userUid?: string | null }) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
     scope: {
@@ -17,7 +13,7 @@ export default function BlogTemplate({ content }: CMSContentTemplateProps) {
   }
 
   // Blog pages need components that include all MDX and blog-specific components
-  const components = useMDXComponents({})
+  const components = useMDXComponents({ userUid })
 
   // Extract metadata
   const author = content.author

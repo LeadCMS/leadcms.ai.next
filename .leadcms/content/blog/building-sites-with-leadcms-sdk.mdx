@@ -1,13 +1,13 @@
 ---
 id: 58
 createdAt: '2025-10-24T17:03:44.678452Z'
-updatedAt: '2025-10-30T04:48:35.418134Z'
+updatedAt: '2025-11-08T11:57:40.102227Z'
 title: Building a Modern Site with LeadCMS SDK – A Developer's Guide
 description: >-
   How to use LeadCMS SDK to build blazing-fast static sites with Next.js. Learn
   to integrate headless CMS capabilities with TypeScript support, smart caching,
   and seamless framework integration.
-coverImageUrl: /media/blog/building-sites-with-leadcms-sdk/leadcms-sdk.avif
+coverImageUrl: ''
 coverImageAlt: Building a Modern Site with LeadCMS SDK – A Developer's Guide
 slug: blog/building-sites-with-leadcms-sdk
 type: blog-article
@@ -34,8 +34,11 @@ Using the SDK instead of calling LeadCMS's REST API directly offers several comp
 
 <FeatureGrid columns={2}>
   <FeatureCard title="Type Safety" description="Full TypeScript support with auto-generated types for your content models. Get compile-time checking of fields (e.g. page.title is known to exist) and catch errors before they reach production." icon="Code" />
+
   <FeatureCard title="Simplified API Calls" description="No more manual fetch() calls or authentication handling. One function call like getCMSContentBySlug('about-us') handles querying and returns structured data." icon="Zap" />
+
   <FeatureCard title="Smart Caching" description="Built-in caching for content and config data improves performance. Content files are cached in memory during build, with optional file-system caching for rapid subsequent calls." icon="Database" />
+
   <FeatureCard title="Framework Integration" description="Seamlessly plugs into Next.js, Astro, Gatsby, Nuxt, and more. Use it at build time for static sites or at runtime for dynamic routes with equal ease." icon="Globe" />
 </FeatureGrid>
 
@@ -375,10 +378,7 @@ Integrating a headless CMS might seem daunting at first, but as we've seen, **Le
 * **Organized content management** (no more hardcoding text or copying snippets)
 * **Great developer experience** with your favorite front-end framework
 
-<CTASection
-  title="Start Building with LeadCMS SDK Today"
-  description="Ready to create your next content-driven site? Get started with LeadCMS and experience the power of AI-driven, developer-friendly content management."
->
+<CTASection title="Start Building with LeadCMS SDK Today" description="Ready to create your next content-driven site? Get started with LeadCMS and experience the power of AI-driven, developer-friendly content management.">
   <CTAButton href="/docs" icon="GitBranch">View Documentation</CTAButton>
   <CTAButton href="https://github.com/LeadCMS/leadcms">Try LeadCMS Free</CTAButton>
 </CTASection>

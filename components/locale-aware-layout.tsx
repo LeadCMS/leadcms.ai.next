@@ -10,11 +10,12 @@ import { LocaleProvider } from "@/lib/locale-context"
 interface LocaleAwareLayoutProps {
   children: React.ReactNode
   locale?: string
+  userUid?: string | null
 }
 
-export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, locale }) => {
+export const LocaleAwareLayout: React.FC<LocaleAwareLayoutProps> = ({ children, locale, userUid }) => {
   // Load configuration at build time
-  const { header: headerConfig, footer: footerConfig } = getLayoutConfig(locale)
+  const { header: headerConfig, footer: footerConfig } = getLayoutConfig(locale, userUid)
 
   return (
     <LocaleProvider locale={locale}>

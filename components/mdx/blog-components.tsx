@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Calendar, Clock, User, ArrowRight } from "lucide-react"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 import { cn } from "@/lib/utils"
-import { getAllContentSlugsForLocale, getCMSContentBySlugForLocale } from "@leadcms/sdk"
+import { getAllContentForLocale } from "@leadcms/sdk"
 import { BlogCoverGenerator } from "@/components/blog/blog-cover-generator"
 import { AlertCircle, CheckCircle, Info, AlertTriangle, Lightbulb } from "lucide-react"
 
@@ -304,28 +304,23 @@ export function BlogIndexHero({
   let featuredPost: BlogPost | null = null
 
   if (showFeaturedPost) {
-    // Get featured blog post
-    const blogSlugs = getAllContentSlugsForLocale(locale, ['blog-article'])
-    const blogPosts: BlogPost[] = blogSlugs
-      .map((slug: string) => {
-        const postContent = getCMSContentBySlugForLocale(slug, locale)
-        if (!postContent || postContent.type !== 'blog-article') return null
-
-        return {
-          slug: postContent.slug,
-          title: postContent.title || '',
-          description: postContent.description || '',
-          excerpt: (postContent.excerpt as string | undefined) || postContent.description || '',
-          author: postContent.author,
-          publishedAt: postContent.publishedAt || postContent.createdAt,
-          category: postContent.category,
-          tags: postContent.tags as string[] | undefined,
-          featured: postContent.featured as boolean | undefined,
-          coverImageUrl: postContent.coverImageUrl as string | undefined,
-          body: postContent.body,
-        } as BlogPost
-      })
-      .filter((post: BlogPost | null): post is BlogPost => post !== null)
+    // ✨ Optimized: Single function call instead of 1 + N calls
+    const blogContents = getAllContentForLocale(locale, ['blog-article'])
+    const blogPosts: BlogPost[] = blogContents
+      .filter((postContent: any) => postContent && postContent.type === 'blog-article')
+      .map((postContent: any) => ({
+        slug: postContent.slug,
+        title: postContent.title || '',
+        description: postContent.description || '',
+        excerpt: (postContent.excerpt as string | undefined) || postContent.description || '',
+        author: postContent.author,
+        publishedAt: postContent.publishedAt || postContent.createdAt,
+        category: postContent.category,
+        tags: postContent.tags as string[] | undefined,
+        featured: postContent.featured as boolean | undefined,
+        coverImageUrl: postContent.coverImageUrl as string | undefined,
+        body: postContent.body,
+      } as BlogPost))
       .sort((a: BlogPost, b: BlogPost) => {
         // Sort featured posts first, then by published date
         if (a.featured && !b.featured) return -1
@@ -442,12 +437,14 @@ interface BlogArticlesSectionProps {
   title?: string
   columns?: 1 | 2 | 3
   locale?: string
+  userUid?: string | null
 }
 
 export function BlogArticlesSection({
   title = "Articles",
   columns = 3,
   locale,
+  userUid,
 }: BlogArticlesSectionProps) {
   interface BlogPost {
     slug: string
@@ -463,28 +460,24 @@ export function BlogArticlesSection({
     body: string
   }
 
-  // Get all blog posts
-  const blogSlugs = getAllContentSlugsForLocale(locale, ['blog-article'])
-  const blogPosts: BlogPost[] = blogSlugs
-    .map((slug: string) => {
-      const postContent = getCMSContentBySlugForLocale(slug, locale)
-      if (!postContent || postContent.type !== 'blog-article') return null
-
-      return {
-        slug: postContent.slug,
-        title: postContent.title || '',
-        description: postContent.description || '',
-        excerpt: (postContent.excerpt as string | undefined) || postContent.description || '',
-        author: postContent.author,
-        publishedAt: postContent.publishedAt || postContent.createdAt,
-        category: postContent.category,
-        tags: postContent.tags as string[] | undefined,
-        featured: postContent.featured as boolean | undefined,
-        coverImageUrl: postContent.coverImageUrl as string | undefined,
-        body: postContent.body,
-      } as BlogPost
-    })
-    .filter((post: BlogPost | null): post is BlogPost => post !== null)
+  // ✨ Optimized: Single function call instead of 1 + N calls
+  // userUid enables draft content when provided
+  const blogContents = getAllContentForLocale(locale, ['blog-article'], userUid as any)
+  const blogPosts: BlogPost[] = blogContents
+    .filter((postContent: any) => postContent && postContent.type === 'blog-article')
+    .map((postContent: any) => ({
+      slug: postContent.slug,
+      title: postContent.title || '',
+      description: postContent.description || '',
+      excerpt: (postContent.excerpt as string | undefined) || postContent.description || '',
+      author: postContent.author,
+      publishedAt: postContent.publishedAt || postContent.createdAt,
+      category: postContent.category,
+      tags: postContent.tags as string[] | undefined,
+      featured: postContent.featured as boolean | undefined,
+      coverImageUrl: postContent.coverImageUrl as string | undefined,
+      body: postContent.body,
+    } as BlogPost))
     .sort((a: BlogPost, b: BlogPost) => {
       // Sort featured posts first, then by published date
       if (a.featured && !b.featured) return -1

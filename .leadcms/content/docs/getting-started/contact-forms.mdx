@@ -1,0 +1,87 @@
+---
+title: Contact Forms
+description: >-
+  Implement contact forms that feed directly into LeadCMS’s built‑in CRM.
+  Learn how the Site plugin processes submissions, creates leads, and sends automated emails, and discover how to customise the built‑in templates or extend the workflow with your own plugin.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/getting-started/contact-forms
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-09-09T18:30:00Z'
+group: Getting Started
+order: 3
+---
+
+# Contact Forms
+
+LeadCMS is more than a headless CMS – it also includes a full **CRM** for tracking leads and managing customer interactions. The built‑in **Site plugin** bridges the gap between your website and the CRM by handling contact form submissions, creating or updating contact records, and sending automated emails. This section explains how contact forms work in LeadCMS and how to integrate them into your website.
+
+## How contact forms work
+
+The **Site plugin** provides a standard workflow for contact forms:
+
+- **Form submission**: When a visitor submits a form on your site, the front‑end sends a `POST` request to your LeadCMS instance (e.g. `/api/contact-us`). The request includes the visitor’s name, email, message, language and optional attachment.
+- **Lead creation and enrichment**: The plugin automatically creates a contact record (lead) in the CRM or updates an existing one based on the email address. Additional data such as first name, last name, company and time zone are saved for further segmentation and lead scoring.
+- **Email notifications**: Two emails are sent:
+  - **Contact_Us** – An internal notification to your sales or support team with all form data and any attachment. The recipients are configured in the plugin settings.
+  - **Acknowledgment** – A confirmation email to the submitter, personalised with their first name and a friendly message.
+- **Multi‑language support**: The plugin uses the visitor’s language to select the appropriate email templates, ensuring your communications are localised.
+
+Because the Site plugin is part of LeadCMS core, you don’t need to write server‑side code to handle submissions. You only need to implement a front‑end form and configure the plugin.
+
+## Contact forms in the portfolio demo
+
+The portfolio demo includes a ready‑made contact form component. It posts form data to your LeadCMS instance using the `NEXT_PUBLIC_LEADCMS_URL` environment variable. Here’s how it works:
+
+<Steps>
+  <Step title="Add the contact form component">
+    In the demo, the `ContactSection` MDX component wraps a `ContactForm` component. You can reuse this component or build your own. When the user submits the form, it sends a `POST` request to `${NEXT_PUBLIC_LEADCMS_URL}/api/contact-us` with the visitor’s details. Ensure `NEXT_PUBLIC_LEADCMS_URL` points to your LeadCMS instance.
+  </Step>
+  <Step title="Configure recipients and support email">
+    The Site plugin reads recipients from environment variables. Add these to your CMS deployment (see `.env` in your LeadCMS install):
+    ```bash
+    # Who receives Contact_Us emails
+    CONTACTUS__TO__0=sales@example.com
+    CONTACTUS__TO__1=support@example.com
+
+    # From address used in notifications and acknowledgments
+    SUPPORTEMAIL=support@example.com
+
+    # Base URL of your website (used in templates)
+    SITEURL=https://your-site.com
+    ```
+  </Step>
+  <Step title="Customise email templates">
+    To personalise the notification and acknowledgment emails, edit the templates in **LeadCMS Admin UI → Marketing → Email Templates**. You’ll see templates named **Contact_Us** and **Acknowledgment**. Update the subject, sender details and HTML body to match your branding. Variables such as `{firstName}`, `{lastName}`, `{company}`, `{subject}` and `{message}` are available for substitution. When you save changes, new submissions will use your customised templates.
+  </Step>
+</Steps>
+
+<Callout type="info" title="Internationalisation">
+LeadCMS supports multi‑language email templates. To add a new language, create a template with the same name (e.g. `Contact_Us`) and set the **Language** field accordingly. The Site plugin will automatically choose the template matching the visitor’s language code.
+</Callout>
+
+## Extending or replacing the workflow
+
+The standard Site plugin covers most contact form scenarios. However, if you need custom logic – such as saving submissions to an external system, sending Slack notifications or adding bespoke validation – you can develop your own plugin. Custom plugins can expose their own API endpoints, process form data in any way and send emails through custom templates. See the **Plugins** section for guidance on building and registering a new plugin.
+
+## Next steps
+
+With contact forms integrated, you can begin capturing and managing leads directly within LeadCMS. Continue by exploring:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Plugins"
+    description="Learn how to install and develop plugins to extend LeadCMS"
+    href="/docs/plugins/overview"
+  />
+  <FeatureCard
+    title="Preview"
+    description="Enable live preview of content changes in your website"
+    href="/docs/preview/overview"
+  />
+</FeatureGrid>

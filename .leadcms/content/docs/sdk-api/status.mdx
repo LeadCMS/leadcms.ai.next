@@ -1,0 +1,93 @@
+---
+title: Status
+description: >-
+  Use the `status` command to preview changes between your local files and the remote LeadCMS instance.  Learn how to interpret the output, filter by ID or slug and prepare for a clean push.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/status
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-09-10T18:30:00Z'
+group: SDK & API
+order: 4
+---
+
+# Status
+
+Before pushing your local changes back to LeadCMS, it's important to understand what will be created, updated or conflicted.  The `status` command provides a dry‑run view of the synchronisation state.  It compares your local MDX/JSON files with the remote CMS and categorises the results without making any changes.
+
+## Running the command
+
+To view the overall status of your project, run:
+
+```bash
+npx leadcms status
+```
+
+This reads all local content files and fetches the latest remote content.  The output is grouped into sections similar to `git status`:
+
+- **New file** – Local files that do not exist in LeadCMS.  These will be created when you push.
+- **Modified** – Local files with changes compared to the remote version.  These will be updated on push.
+- **Renamed** – Local files whose slug has changed since the last push.  The remote content will be renamed accordingly.
+- **Type change** – Local files whose `type` frontmatter value has changed.  The remote content will be updated to the new type.
+- **Conflict** – Remote content that has been updated after your last pull (e.g. someone edited the same content in the CMS).  Conflicts must be resolved before pushing unless you use `--force`.
+
+If the command outputs **No changes detected**, your local repository is in sync with LeadCMS.
+
+## Filtering the status
+
+You can check the status for a single piece of content by specifying an ID or slug.  This is useful when you only want to sync a particular file:
+
+```bash
+# Check status for a content item by slug
+npx leadcms status --slug about-us
+
+# Check status for a content item by ID
+npx leadcms status --id 42
+```
+
+When filtering, the command shows a detailed diff preview for the targeted file.
+
+<Callout type="warning" title="Conflicts and updates">
+If a conflict is reported, run `npx leadcms pull` to retrieve the latest changes from LeadCMS, resolve any merge issues in your local files and then run `npx leadcms push` again.  You can override conflicts with `--force`, but be aware that this will overwrite remote changes.
+</Callout>
+
+## Detailed previews
+
+You can display a diff of the content changes by adding the `--preview` flag:
+
+```bash
+npx leadcms status --preview
+```
+
+This shows a line‑by‑line comparison of your local file against the remote version for each modified, renamed or type‑changed item.  Use this to review changes before deciding to push.
+
+## Best practices
+
+- **Run status before every push.**  Checking status ensures you understand what will happen when you push and helps you avoid unexpected changes.
+- **Pull first.**  Always run `npx leadcms pull` before `status` to ensure your local repository is up to date.  This reduces the chance of conflicts.
+- **Resolve conflicts locally.**  When conflicts are reported, merge the changes manually in your editor.  Only use `--force` if you are certain you want to override remote updates.
+- **Use filters for targeted updates.**  If you are working on a single page or post, filter by slug or ID to see exactly what will change.
+
+The `status` command is a lightweight way to audit your content changes and maintain a clean, conflict‑free workflow.
+
+## Next steps
+
+With status checks mastered, learn about pushing changes and content modeling:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Push Content"
+    description="Push your local changes back to LeadCMS after reviewing status"
+    href="/docs/sdk-api/push-content"
+  />
+  <FeatureCard
+    title="Content Types"
+    description="Learn how to design and model your content structure"
+    href="/docs/modeling/content-types"
+  />
+</FeatureGrid>

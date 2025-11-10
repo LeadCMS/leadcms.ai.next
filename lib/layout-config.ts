@@ -62,9 +62,11 @@ export interface LayoutConfig {
  * Load layout configuration for a specific locale at build time
  * Fails the build if header or footer configuration is not present
  */
-export function getLayoutConfig(locale?: string): LayoutConfig {
-  const headerConfig = getHeaderConfig(locale) as HeaderConfig;
-  const footerConfig = getFooterConfig(locale) as FooterConfig;
+export function getLayoutConfig(locale?: string, userUid?: string | null): LayoutConfig {
+  // For now, header and footer configs don't typically support userUid/drafts
+  // but we're keeping the parameter for consistency and future support
+  const headerConfig = getHeaderConfig(locale, userUid) as HeaderConfig;
+  const footerConfig = getFooterConfig(locale, userUid) as FooterConfig;
 
   if (!headerConfig) {
     throw new Error(`Header configuration not found for locale: ${locale}. Build failed.`);

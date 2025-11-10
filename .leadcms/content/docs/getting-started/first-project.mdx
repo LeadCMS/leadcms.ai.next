@@ -1,8 +1,12 @@
 ---
+id: 71
+createdAt: '2025-11-10T15:50:52.373813Z'
+updatedAt: '2025-11-10T16:19:05.98415Z'
 title: First Project
 description: >-
   Kick off your first LeadCMS site locally using the Next.js portfolio demo.
-  Learn how to clone the repository, run it without LeadCMS, initialise the SDK, push content and work with your own CMS instance.
+  Learn how to clone the repository, run it without LeadCMS, initialise the SDK,
+  push content and work with your own CMS instance.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs/getting-started/first-project
@@ -191,21 +195,21 @@ Two complementary workflows coexist in a LeadCMS project:
 - **Developer flow:** Developers typically work in a code editor (e.g. VS Code) and maintain both the code and the content files locally. They can add new pages, change templates and update MDX/JSON files. When ready, they use the CLI to push changes to LeadCMS (`pnpm exec leadcms push`), ensuring the CMS stays in sync. This enables version control of content and allows offline work.
 - **Content editor flow:** Content editors use the LeadCMS Admin UI to create and edit content. Changes made in the CMS are downloaded via `pnpm exec leadcms pull` or automatically through `pnpm exec leadcms watch`. The next build or deployment will incorporate these updates. Editors never need to touch the code repository.
 
-Both flows support multilingual content, draft handling and preview links. For details on preview mode, see the [Preview Setup](/docs/preview/setup) documentation.
+Both flows support multilingual content, draft handling and preview links. For details on preview mode, see the [Preview Setup](/docs/preview/setup/) documentation.
 
 ## Next steps
 
-You’ve successfully connected your first project to LeadCMS. Continue your journey:
+You've successfully connected your first project to LeadCMS. Continue your journey:
 
 <FeatureGrid columns={2}>
   <FeatureCard
-    title="Next.js Quickstart"
-    description="Dive deeper into the Next.js integration: routing, dynamic pages and SEO"
-    href="/docs/getting-started/nextjs-quickstart"
+    title="SDK Setup"
+    description="Dive deeper into the SDK: CLI basics, content fetching and API usage"
+    href="/docs/sdk-api/setup/"
   />
   <FeatureCard
-    title="Modeling"
+    title="Content Types"
     description="Learn how to design content types, fields, media and roles"
-    href="/docs/modeling/types"
+    href="/docs/modeling/content-types/"
   />
 </FeatureGrid>

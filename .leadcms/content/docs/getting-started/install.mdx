@@ -38,6 +38,26 @@ Before installing LeadCMS, ensure your machine meets these minimum requirements:
 
 These requirements cover running the LeadCMS core application and its default PostgreSQL database in containers. No additional services like Elasticsearch are required for a basic installation.
 
+## Prerequisites
+
+<OSTabs>
+  <OSTab os="Linux">
+    - [Docker](https://www.docker.com/products/docker-desktop) installed and running
+    - [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+    - Terminal access with bash/zsh
+  </OSTab>
+  <OSTab os="macOS">
+    - [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop) installed and running
+    - [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+    - Terminal access
+  </OSTab>
+  <OSTab os="Windows">
+    - [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop) installed and running
+    - [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+    - [PowerShell](https://docs.microsoft.com/en-us/powershell/) (recommended)
+  </OSTab>
+</OSTabs>
+
 ## Quick start
 
 Get LeadCMS running in minutes:
@@ -50,15 +70,29 @@ Get LeadCMS running in minutes:
     ```
   </Step>
   <Step title="Generate environment variables">
-    ```bash
-    # Linux/macOS
-    chmod +x generate-env.sh
-    ./generate-env.sh
+    <OSTabs>
+      <OSTab os="Linux">
+        ```bash
+        chmod +x generate-env.sh
+        ./generate-env.sh
+        ```
+      </OSTab>
+      <OSTab os="macOS">
+        ```bash
+        chmod +x generate-env.sh
+        ./generate-env.sh
+        ```
+      </OSTab>
+      <OSTab os="Windows">
+        ```powershell
+        # Windows PowerShell
+        .\generate-env.ps1
+        ```
 
-    # Windows PowerShell
-    .\generate-env.ps1
-    ```
-    This script reads `.env.sample`, generates secure secrets and writes a new `.env` file. If a `.env` file already exists, you’ll be asked before overwriting it.
+        **Note:** If you get the error "cannot be loaded because running scripts is disabled", first run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` to allow local scripts. This allows unsigned local scripts while requiring downloaded scripts to be signed.
+      </OSTab>
+    </OSTabs>
+    This script reads `.env.sample`, generates secure secrets and writes a new `.env` file. If a `.env` file already exists, you'll be asked before overwriting it.
   </Step>
   <Step title="Start the stack with Docker Compose">
     ```bash

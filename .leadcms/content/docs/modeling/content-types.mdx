@@ -50,11 +50,30 @@ Following these best practices will help you build a scalable schema that suppor
 
 ## Creating content types via the CLI
 
-If you’re working locally with the **content‑first workflow**, the simplest way to create a new type is to let the CLI do it for you. Write your MDX or JSON file in `.leadcms/content/` with a `type` that doesn’t exist yet, then run:
+If you're working locally with the **content‑first workflow**, the simplest way to create a new type is to let the CLI do it for you. Write your MDX or JSON file in `.leadcms/content/` with a `type` that doesn't exist yet, then run:
 
-```bash
-npx leadcms push
-```
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms push
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms push
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms push
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms push
+    ```
+  </CodeTab>
+</CodeTabs>
 
 The push command will detect unknown types and prompt you to create them in your LeadCMS instance. You’ll be asked to choose a **content format** (MDX or JSON) and whether the type **supports cover images** or **supports comments**. After confirming, the CLI creates the new type and uploads your content.
 
@@ -67,11 +86,9 @@ You can also create types through the LeadCMS web interface. This is useful for 
 <Steps>
   <Step title="Open the New Content menu">
     In the Admin UI, go to **Content → Add Content**. Choose an existing type from the drop‑down or select **Add Custom Type** to create a new one.
-    <Image src="{{file:file-2RTD52n39Z3LhJpCQjbwcj}}" alt="Selecting Add Custom Type in the content type picker" width="80%" />
   </Step>
   <Step title="Define the type details">
     In the **Create New Content Type** dialog, enter a **Content Type Name**. The ID field will auto‑generate based on the name and will be used in your MDX/JSON files (as the `type` value). Choose the **Content Format** (MDX for articles or JSON for configurations) and toggle **Supports Cover Image** or **Supports Comments** as needed.
-    <Image src="{{file:file-CnZkJPp2eQGAd8gsQgDcgn}}" alt="Define a new content type with format and features" width="80%" />
   </Step>
   <Step title="Save the new type">
     Click **Create** to add the type. You can now create entries of this type from the **Add Content** screen, or push local files with a matching `type` using the CLI.

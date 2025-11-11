@@ -37,6 +37,24 @@ import {
 } from "@/components/ui/micro-interactions"
 import { MermaidDiagram } from "@/components/ui/mermaid-diagram"
 
+// Tab controls for OS and custom tabs
+import { CodeTabs, CodeTab } from "@/components/mdx/code-tabs"
+import { OSTabs, OSTab } from "@/components/mdx/os-tabs"
+import { CodeBlockWithCopy } from "@/components/mdx/code-block-with-copy"
+
+// Documentation components
+import {
+  Callout,
+  CodeBlock,
+  FileTree,
+  FileTreeItem,
+  Steps,
+  Step,
+  ImageGallery,
+  FeatureCard,
+  FeatureGrid,
+} from "@/components/mdx/doc-components"
+
 // UI components and icons for MDX use
 const uiComponents = {
   Button,
@@ -83,6 +101,21 @@ const uiComponents = {
   InteractiveLink,
   FloatingLabelInput,
   MermaidDiagram,
+  // Tab controls
+  CodeTabs,
+  CodeTab,
+  OSTabs,
+  OSTab,
+  // Documentation components
+  Callout,
+  CodeBlock,
+  FileTree,
+  FileTreeItem,
+  Steps,
+  Step,
+  ImageGallery,
+  FeatureCard,
+  FeatureGrid,
 }
 
 // Use React's built-in HTML element prop types instead of custom interfaces
@@ -186,12 +219,7 @@ const baseComponents = {
       {children}
     </blockquote>
   ),
-  pre: (props: PreProps) => (
-    <pre
-      className="rounded-lg bg-black text-green-400 p-6 overflow-x-auto my-8 text-sm whitespace-pre-wrap break-words max-w-full"
-      {...props}
-    />
-  ),
+  pre: (props: PreProps) => <CodeBlockWithCopy {...props} />,
   code: (props: CodeProps) => (
     <code
       className="relative rounded bg-muted px-[0.4em] py-[0.3em] font-mono text-base text-primary break-all whitespace-pre-wrap max-w-full inline-block"

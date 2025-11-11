@@ -30,9 +30,23 @@ The provided `docker-compose.yml` is a sample that demonstrates how to run LeadC
 
 ## Prerequisites
 
-- [Docker](https://www.docker.com/products/docker-desktop) installed and running
-- [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
-- (Optional) [PowerShell](https://docs.microsoft.com/en-us/powershell/) for Windows users
+<OSTabs>
+  <OSTab os="Linux">
+    - [Docker](https://www.docker.com/products/docker-desktop) installed and running
+    - [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+    - Terminal access with bash/zsh
+  </OSTab>
+  <OSTab os="macOS">
+    - [Docker Desktop for Mac](https://www.docker.com/products/docker-desktop) installed and running
+    - [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+    - Terminal access
+  </OSTab>
+  <OSTab os="Windows">
+    - [Docker Desktop for Windows](https://www.docker.com/products/docker-desktop) installed and running
+    - [Docker Compose](https://docs.docker.com/compose/) (included with Docker Desktop)
+    - [PowerShell](https://docs.microsoft.com/en-us/powershell/) (recommended)
+  </OSTab>
+</OSTabs>
 
 ## 1. Clone the Deployment Repository
 
@@ -45,22 +59,30 @@ cd leadcms.deploy
 
 LeadCMS uses a `.env` file for configuration. You **must** generate this file before starting the containers.
 
-### On Linux/macOS
+<OSTabs>
+  <OSTab os="Linux">
+    ```bash
+    # Make the script executable and run it
+    chmod +x generate-env.sh
+    ./generate-env.sh
+    ```
+  </OSTab>
+  <OSTab os="macOS">
+    ```bash
+    # Make the script executable and run it
+    chmod +x generate-env.sh
+    ./generate-env.sh
+    ```
+  </OSTab>
+  <OSTab os="Windows">
+    ```powershell
+    # Windows PowerShell
+    .\generate-env.ps1
+    ```
 
-Run the provided shell script:
-
-```bash
-chmod +x generate-env.sh
-./generate-env.sh
-```
-
-### On Windows
-
-Run the PowerShell script:
-
-```powershell
-.\generate-env.ps1
-```
+    **Note:** If you get the error "cannot be loaded because running scripts is disabled", first run `Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser` to allow local scripts. This allows unsigned local scripts while requiring downloaded scripts to be signed.
+  </OSTab>
+</OSTabs>
 
 The script will:
 - Read `.env.sample`

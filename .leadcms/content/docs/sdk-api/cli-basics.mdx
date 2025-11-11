@@ -20,7 +20,7 @@ order: 2
 
 # CLI Basics
 
-The `leadcms` command‑line interface provides a set of tools to initialise your project, synchronise content, generate deployment templates and more.  All commands can be run with `npx leadcms <command>` if the SDK is installed locally or globally.  Use `--help` on any command to see its options.
+The `leadcms` command‑line interface provides a set of tools to initialise your project, synchronise content, generate deployment templates and more.  All commands can be run through your package manager if the SDK is installed locally or globally.  Use `--help` on any command to see its options.
 
 ## Core commands
 
@@ -39,9 +39,28 @@ The `leadcms` command‑line interface provides a set of tools to initialise you
 
 Run any command with `--help` to see its options.  For example:
 
-```bash
-npx leadcms push --help
-```
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms push --help
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms push --help
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms push --help
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms push --help
+    ```
+  </CodeTab>
+</CodeTabs>
 
 Outputs detailed descriptions of parameters such as `--dry-run`, `--force`, `--slug`, `--id`, and `--preview`.
 
@@ -49,12 +68,89 @@ Outputs detailed descriptions of parameters such as `--dry-run`, `--force`, `--s
 
 In most projects your CLI workflow follows this pattern:
 
-1. **Initialise** – Run `npx leadcms init` once per project to create a `.env` file and optional config file.
-2. **Authenticate** – Run `npx leadcms login` if you need to push changes back to the CMS.
-3. **Pull** – Use `npx leadcms pull` (or `pull-content`, `pull-media`, `pull-comments`) to populate and keep your local files in sync.
+1. **Initialise** – Run `leadcms init` once per project to create a `.env` file and optional config file.
+2. **Authenticate** – Run `leadcms login` if you need to push changes back to the CMS.
+3. **Pull** – Use `leadcms pull` (or `pull-content`, `pull-media`, `pull-comments`) to populate and keep your local files in sync.
 4. **Work offline** – Edit MDX/JSON files, add new content, update slugs and structure using your editor.
-5. **Check status** – Run `npx leadcms status` to see what will change and resolve any conflicts.
-6. **Push** – Run `npx leadcms push` to apply your local updates to LeadCMS.  Use `--dry-run` or `--force` options as needed.
+5. **Check status** – Run `leadcms status` to see what will change and resolve any conflicts.
+6. **Push** – Run `leadcms push` to apply your local updates to LeadCMS.  Use `--dry-run` or `--force` options as needed.
+
+**Common CLI Commands:**
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    # Initialize project
+    npx leadcms init
+
+    # Authenticate for write access
+    npx leadcms login
+
+    # Pull all content, media, and comments
+    npx leadcms pull
+
+    # Check status before pushing
+    npx leadcms status
+
+    # Push local changes to CMS
+    npx leadcms push
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    # Initialize project
+    pnpm exec leadcms init
+
+    # Authenticate for write access
+    pnpm exec leadcms login
+
+    # Pull all content, media, and comments
+    pnpm exec leadcms pull
+
+    # Check status before pushing
+    pnpm exec leadcms status
+
+    # Push local changes to CMS
+    pnpm exec leadcms push
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    # Initialize project
+    yarn leadcms init
+
+    # Authenticate for write access
+    yarn leadcms login
+
+    # Pull all content, media, and comments
+    yarn leadcms pull
+
+    # Check status before pushing
+    yarn leadcms status
+
+    # Push local changes to CMS
+    yarn leadcms push
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    # Initialize project
+    bunx leadcms init
+
+    # Authenticate for write access
+    bunx leadcms login
+
+    # Pull all content, media, and comments
+    bunx leadcms pull
+
+    # Check status before pushing
+    bunx leadcms status
+
+    # Push local changes to CMS
+    bunx leadcms push
+    ```
+  </CodeTab>
+</CodeTabs>
 
 Additional commands like `watch` and `docker` support previewing changes in real time and creating deployment artefacts.  See the [Preview Setup](/docs/preview/setup/) and [deployment guides](/docs/deploy/static-export/) for more details.
 

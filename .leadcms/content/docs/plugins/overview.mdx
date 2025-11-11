@@ -1,7 +1,7 @@
 ---
 id: 48
 createdAt: '2025-09-10T09:24:01.540112Z'
-updatedAt: '2025-11-10T17:49:12.963683Z'
+updatedAt: '2025-11-11T07:01:16.14808Z'
 title: Plugins Overview
 description: >-
   Understanding LeadCMS modular plugin architecture - specialized components
@@ -14,7 +14,7 @@ category: Docs
 tags: []
 allowComments: true
 publishedAt: '2025-09-09T18:30:00Z'
-group: Getting Started
+group: Plugins
 order: 1
 ---
 
@@ -26,10 +26,10 @@ LeadCMS uses a modular plugin architecture that allows extending functionality t
 
 LeadCMS plugins are dynamically loaded modules that extend the core functionality of the system. Each plugin can provide:
 
-- **Additional API endpoints and services** - Extend the REST API with custom functionality
-- **Background tasks and scheduled jobs** - Automated processing and data synchronization
-- **Integration with external services** - Connect with third-party APIs and services
-- **Custom middleware and application features** - Add specialized business logic
+* **Additional API endpoints and services** - Extend the REST API with custom functionality
+* **Background tasks and scheduled jobs** - Automated processing and data synchronization
+* **Integration with external services** - Connect with third-party APIs and services
+* **Custom middleware and application features** - Add specialized business logic
 
 Plugins are configured through environment variables and settings files, allowing for flexible deployment configurations.
 
@@ -38,36 +38,17 @@ Plugins are configured through environment variables and settings files, allowin
 LeadCMS provides several powerful plugins to extend functionality. Each plugin is designed to integrate seamlessly with the core system and can be configured independently.
 
 <FeatureGrid columns={2}>
-  <FeatureCard
-    title="🤖 AI Plugin"
-    description="OpenAI integration for content generation, translation, and image creation with GPT models and DALL-E"
-    href="/docs/plugins/ai/"
-  />
-  <FeatureCard
-    title="📱 SMS Plugin"
-    description="Multi-gateway SMS delivery with country-specific routing through Amazon SNS, SMSC, Twilio, and more"
-    href="/docs/plugins/sms/"
-  />
-  <FeatureCard
-    title="📧 SendGrid Plugin"
-    description="High-volume email delivery with real-time tracking, analytics, and webhook processing"
-    href="/docs/plugins/sendgrid/"
-  />
-  <FeatureCard
-    title="📬 Email Sync Plugin"
-    description="IMAP email synchronization for lead management and communication tracking"
-    href="/docs/plugins/email-sync/"
-  />
-  <FeatureCard
-    title="🌐 Site Plugin"
-    description="Website functionality with contact forms, newsletter subscriptions, and lead capture"
-    href="/docs/plugins/site/"
-  />
-  <FeatureCard
-    title="🔄 Reverse Proxy Plugin"
-    description="Request routing and forwarding for external services like Elasticsearch and Kibana"
-    href="/docs/plugins/reverse-proxy/"
-  />
+  <FeatureCard title="🤖 AI Plugin" description="OpenAI integration for content generation, translation, and image creation with GPT models and DALL-E" href="/docs/plugins/ai/" />
+
+  <FeatureCard title="📱 SMS Plugin" description="Multi-gateway SMS delivery with country-specific routing through Amazon SNS, SMSC, Twilio, and more" href="/docs/plugins/sms/" />
+
+  <FeatureCard title="📧 SendGrid Plugin" description="High-volume email delivery with real-time tracking, analytics, and webhook processing" href="/docs/plugins/sendgrid/" />
+
+  <FeatureCard title="📬 Email Sync Plugin" description="IMAP email synchronization for lead management and communication tracking" href="/docs/plugins/email-sync/" />
+
+  <FeatureCard title="🌐 Site Plugin" description="Website functionality with contact forms, newsletter subscriptions, and lead capture" href="/docs/plugins/site/" />
+
+  <FeatureCard title="🔄 Reverse Proxy Plugin" description="Request routing and forwarding for external services like Elasticsearch and Kibana" href="/docs/plugins/reverse-proxy/" />
 </FeatureGrid>
 
 ## Plugin Management
@@ -93,15 +74,19 @@ PLUGINS__6=LeadCMS.Plugin.ReverseProxy
   <Step title="Choose Required Plugins">
     Select plugins based on your business needs and integration requirements.
   </Step>
+
   <Step title="Configure Environment Variables">
     Set up all required API keys, secrets, and configuration settings.
   </Step>
+
   <Step title="Enable Plugins">
     Add selected plugins to the PLUGINS configuration array.
   </Step>
+
   <Step title="Test Integration">
     Verify each plugin works correctly in your environment.
   </Step>
+
   <Step title="Monitor Performance">
     Set up logging and monitoring for plugin activities.
   </Step>
@@ -112,9 +97,5 @@ For specific implementation details and advanced configuration options, refer to
 ## Next Steps
 
 <FeatureGrid columns={2}>
-  <FeatureCard
-    title="Deploying"
-    description="Learn how to deploy LeadCMS with your custom plugins to production"
-    href="/docs/ops/deploying/"
-  />
+  <FeatureCard title="Deploying" description="Learn how to deploy LeadCMS with your custom plugins to production" href="/docs/ops/deploying/" />
 </FeatureGrid>

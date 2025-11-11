@@ -39,7 +39,7 @@ Start by cloning the sample repository to your machine. This template contains a
     ```
   </Step>
   <Step title="Install pnpm (if not already installed)">
-    First, install pnpm - a fast, disk space efficient package manager that's an alternative to npm. It's better than npm because it uses symlinks to avoid duplicating dependencies, resulting in faster installs and less disk usage.
+    First, install **pnpm** - a fast, disk space efficient package manager that's an alternative to npm. It's better than npm because it uses symlinks to avoid duplicating dependencies, resulting in faster installs and less disk usage.
     ```bash
     npm install -g pnpm
     ```
@@ -88,7 +88,7 @@ Next, connect your project to a LeadCMS instance. The SDK provides an interactiv
     ```bash
     pnpm exec leadcms init
     ```
-    This command prompts you for your LeadCMS URL (e.g. `https://localhost:8080` if you’re running LeadCMS locally). It auto‑detects the default language and creates a `.env` file with `LEADCMS_URL` and `LEADCMS_DEFAULT_LANGUAGE`. You can skip authentication for read‑only mode, but to push content you’ll need an API key, which the wizard can store securely in `.env`.
+    This command prompts you for your LeadCMS URL (e.g. `https://localhost:8080` if you're running LeadCMS locally). It auto‑detects the default language and creates a `.env` file with `LEADCMS_URL` and `LEADCMS_DEFAULT_LANGUAGE`. You can skip authentication for read‑only mode, but to push content you'll need an API key, which the wizard can store securely in `.env`.
   </Step>
   <Step title="Authenticate for content pushing">
     Authentication is optional for many use cases - if you only need to pull public content to render your site, you can skip this step. However, since we'll be pushing the portfolio content to your LeadCMS instance, authentication is required.
@@ -156,7 +156,7 @@ Now that your content is stored in LeadCMS, you can use the default dev script. 
     ```bash
     pnpm run dev
     ```
-    The script runs `pnpm exec leadcms pull` to sync content from your CMS and then starts `next dev`. If the local and remote content are already in sync, it simply starts the server. Open `http://localhost:3000` again - the site should look identical to before, but it's now sourcing content from LeadCMS.
+    The script runs `leadcms pull` to sync content from your CMS and then starts the dev server. If the local and remote content are already in sync, it simply starts the server. Open `http://localhost:3000` again - the site should look identical to before, but it's now sourcing content from LeadCMS.
   </Step>
 </Steps>
 

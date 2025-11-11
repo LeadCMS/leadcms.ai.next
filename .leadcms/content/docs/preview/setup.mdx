@@ -56,10 +56,32 @@ To build and run your preview server:
 
 <Steps>
   <Step title="Generate preview files with leadcms docker">
-    ```bash
-    # From your project root
-    npx leadcms docker
-    ```
+    <CodeTabs defaultTab="pnpm" group="package-manager">
+      <CodeTab label="npm">
+        ```bash
+        # From your project root
+        npx leadcms docker
+        ```
+      </CodeTab>
+      <CodeTab label="pnpm">
+        ```bash
+        # From your project root
+        pnpm exec leadcms docker
+        ```
+      </CodeTab>
+      <CodeTab label="yarn">
+        ```bash
+        # From your project root
+        yarn leadcms docker
+        ```
+      </CodeTab>
+      <CodeTab label="bun">
+        ```bash
+        # From your project root
+        bunx leadcms docker
+        ```
+      </CodeTab>
+    </CodeTabs>
     This command creates a `preview/` folder with a Dockerfile and configuration files. You can customise the Dockerfile if needed.
   </Step>
   <Step title="Build the preview image">

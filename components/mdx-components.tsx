@@ -69,6 +69,8 @@ import {
 } from "./mdx/blog-components"
 import { ContactUs } from "./contact-us"
 import { MermaidDiagram } from "./ui/mermaid-diagram"
+import { CodeTabs, CodeTab } from "./mdx/code-tabs"
+import { OSTabs, OSTab } from "./mdx/os-tabs"
 
 /**
  * Registry of all available MDX components with userUid context support.
@@ -167,6 +169,11 @@ export function useMDXComponents(components: Record<string, any> = {}): MDXCompo
     ContactUs,
     // Diagrams
     MermaidDiagram,
+    // Tab controls
+    CodeTabs,
+    CodeTab,
+    OSTabs,
+    OSTab,
     ...otherComponents,
   }
 }

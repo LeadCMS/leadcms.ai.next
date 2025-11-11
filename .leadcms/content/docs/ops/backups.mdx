@@ -53,22 +53,62 @@ LeadCMS backups should include:
 
 The backup scripts are included in the LeadCMS deploy repository. Ensure you have them available:
 
-```bash
-# If you haven't already cloned the deploy repository
-git clone https://github.com/LeadCMS/leadcms.deploy.git
-cd leadcms.deploy
+<OSTabs>
+  <OSTab os="Linux">
+    ```bash
+    # If you haven't already cloned the deploy repository
+    git clone https://github.com/LeadCMS/leadcms.deploy.git
+    cd leadcms.deploy
 
-# The repository includes these backup scripts:
-# - pg-backup.sh
-# - pg-restore.sh
-# - pg-restore-media.sh
+    # The repository includes these backup scripts:
+    # - pg-backup.sh
+    # - pg-restore.sh
+    # - pg-restore-media.sh
 
-# Make scripts executable
-chmod +x pg-backup.sh pg-restore.sh pg-restore-media.sh
+    # Make scripts executable
+    chmod +x pg-backup.sh pg-restore.sh pg-restore-media.sh
 
-# Ensure .env file exists with database credentials
-ls -la .env
-```
+    # Ensure .env file exists with database credentials
+    ls -la .env
+    ```
+  </OSTab>
+  <OSTab os="macOS">
+    ```bash
+    # If you haven't already cloned the deploy repository
+    git clone https://github.com/LeadCMS/leadcms.deploy.git
+    cd leadcms.deploy
+
+    # The repository includes these backup scripts:
+    # - pg-backup.sh
+    # - pg-restore.sh
+    # - pg-restore-media.sh
+
+    # Make scripts executable
+    chmod +x pg-backup.sh pg-restore.sh pg-restore-media.sh
+
+    # Ensure .env file exists with database credentials
+    ls -la .env
+    ```
+  </OSTab>
+  <OSTab os="Windows">
+    ```powershell
+    # If you haven't already cloned the deploy repository
+    git clone https://github.com/LeadCMS/leadcms.deploy.git
+    cd leadcms.deploy
+
+    # The repository includes these backup scripts:
+    # - pg-backup.sh (requires WSL or Git Bash)
+    # - pg-restore.sh (requires WSL or Git Bash)
+    # - pg-restore-media.sh (requires WSL or Git Bash)
+
+    # Note: Scripts are shell scripts that require bash environment
+    # Use WSL, Git Bash, or PowerShell with bash support
+
+    # Ensure .env file exists with database credentials
+    dir .env
+    ```
+  </OSTab>
+</OSTabs>
 
 ### Environment Variables
 

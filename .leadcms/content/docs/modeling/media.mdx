@@ -43,7 +43,7 @@ The images uploaded to LeadCMS serve as your **source of truth** - the original,
 
 Whether you optimize during build time or upload pre-optimized files, these guidelines will help maintain good performance:
 
-- **Compress images before uploading.** Aim for files under **500 KB** for JPEG/PNG/WebP and under **2 MB** for AVIF. Videos should stay under **10 MB** and PDFs under **20 MB** (default limits can be customised in your `.env`, but increasing them is not recommended for performance).
+- **Compress images before uploading.** Aim for files under **500 KB** for JPEG/PNG/WebP and AVIF. Videos should stay under **10 MB** and PDFs under **20 MB** (default limits can be customised in your `.env`, but increasing them is not recommended for performance).
 - **Use modern formats.** Prefer **AVIF** for maximum compression or **WebP** for broad browser support. JPEG and PNG should only be used when necessary (for legacy browsers or lossless graphics).
 - **Resize images to actual display size.** Don't upload 4 K photos if they will be displayed at 800 × 600 px.
 - **Choose the right quality.** For hero images, a quality setting of 85–90 is appropriate; for thumbnails or backgrounds, 60–75 is sufficient.
@@ -74,7 +74,48 @@ Direct media pushing from local files is planned for future versions of the Lead
   </Step>
 </Steps>
 
-After uploading, run `npx leadcms pull-media` or `npx leadcms pull` to download the media files into your repository. They will be saved into your configured `mediaDir` (default `public/media`), ready to be served by your site.
+After uploading, run the pull command to download the media files into your repository:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    # Pull media only
+    npx leadcms pull-media
+
+    # Or pull everything (content + media)
+    npx leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    # Pull media only
+    pnpm exec leadcms pull-media
+
+    # Or pull everything (content + media)
+    pnpm exec leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    # Pull media only
+    yarn leadcms pull-media
+
+    # Or pull everything (content + media)
+    yarn leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    # Pull media only
+    bunx leadcms pull-media
+
+    # Or pull everything (content + media)
+    bunx leadcms pull
+    ```
+  </CodeTab>
+</CodeTabs>
+
+The files will be saved into your configured `mediaDir` (default `public/media`), ready to be served by your site.
 
 ## Organising media
 
@@ -118,7 +159,30 @@ We help companies scale their businesses.
 ```
 
 After a pull, the files `hero.jpg` and `team.jpg` will exist in `public/media/services/consulting/` and the content will render correctly.
-If you edit the image inside the Admin UI, the SDK will update the file accordingly when you run `npx leadcms pull` again.
+If you edit the image inside the Admin UI, the SDK will update the file accordingly when you run the pull command again.
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull
+    ```
+  </CodeTab>
+</CodeTabs>
 
 ## Optimization approaches
 

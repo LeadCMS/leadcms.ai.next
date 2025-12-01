@@ -428,3 +428,19 @@ html {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 }
+
+.grecaptcha-badge { 
+  visibility: hidden; 
+}
+
+div[style*="z-index: 2000000000"], 
+div[style*="z-index:2000000000"] {
+  max-width: none !important;
+  box-sizing: content-box !important;
+  top: 50% !important;
+  left: 50% !important;
+  margin: 0 !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translate(-50%, -50%) !important;
+}

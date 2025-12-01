@@ -1,11 +1,12 @@
 "use client"
 
 import * as React from "react"
-import { useState } from "react"
+import { useState, useRef, useEffect } from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
+import ReCAPTCHA from "react-google-recaptcha"
 
 interface FormData {
   firstName: string
@@ -83,33 +84,30 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
     errorMessage: "",
   })
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ) => {
-    const { id, value } = e.target
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null)
+  const recaptchaSiteKey = getEnvVar("NEXT_PUBLIC_RECAPTCHA_KEY")
+  const defaultError = "Something went wrong. Please try again."
+  const genericRecaptchaError = recaptchaSiteKey
+    ? "Failed to verify you are human. Please try again."
+    : defaultError
 
-    setFormData((prev) => ({
-      ...prev,
-      [id === "first-name" ? "firstName" : id === "last-name" ? "lastName" : id]: value,
-    }))
-  }
+  useEffect(() => {
+    if (!recaptchaSiteKey || !formState.isSubmitting) return
+    const timeout = setTimeout(() => {
+      setFormState((state) => ({
+        ...state,
+        isSubmitting: false,
+        isError: true,
+        errorMessage: "reCAPTCHA timed out. Please try again.",
+      }))
+    }, 60000)
+    return () => clearTimeout(timeout)
+  }, [formState.isSubmitting, recaptchaSiteKey])
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    setFormState({
-      isSubmitting: true,
-      isSuccess: false,
-      isError: false,
-      errorMessage: "",
-    })
-
+  async function submitContactUsForm(recaptchaToken?: string) {
     try {
       const apiUrl = getEnvVar("NEXT_PUBLIC_LEADCMS_URL")
-
-      if (!apiUrl) {
-        throw new Error("API URL not configured. Please check environment variables.")
-      }
+      if (!apiUrl) throw new Error("API URL not configured.")
 
       const formDataToSubmit = new FormData()
       formDataToSubmit.append("file", "")
@@ -120,6 +118,9 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
       formDataToSubmit.append("message", formData.message)
       formDataToSubmit.append("email", formData.email)
       formDataToSubmit.append("language", navigator.language || "en")
+      if (recaptchaToken) {
+        formDataToSubmit.append("recaptchaToken", recaptchaToken)
+      }
 
       const response = await fetch(`${apiUrl}/api/contact-us`, {
         method: "POST",
@@ -127,7 +128,7 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
       })
 
       if (!response.ok) {
-        throw new Error(`Server responded with ${response.status}`)
+        throw new Error()
       }
 
       setFormState({
@@ -137,7 +138,6 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
         errorMessage: "",
       })
 
-      // Reset form after successful submission
       setFormData({
         firstName: "",
         lastName: "",
@@ -146,23 +146,83 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
         subject: "",
         message: "",
       })
-    } catch (error) {
+    } catch {
       setFormState({
         isSubmitting: false,
         isSuccess: false,
         isError: true,
-        errorMessage: error instanceof Error ? error.message : "An unknown error occurred",
+        errorMessage: genericRecaptchaError,
+      })
+    } finally {
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset()
+      }
+    }
+  }
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setFormState({
+      isSubmitting: true,
+      isSuccess: false,
+      isError: false,
+      errorMessage: "",
+    })
+
+    if (!recaptchaSiteKey) {
+      submitContactUsForm()
+    } else if (recaptchaRef.current) {
+      recaptchaRef.current.execute()
+    } else {
+      setFormState({
+        isSubmitting: false,
+        isSuccess: false,
+        isError: true,
+        errorMessage: genericRecaptchaError,
       })
     }
+  }
+
+  const handleRecaptchaChange = (token: string | null) => {
+    if (!token) {
+      setFormState({
+        isSubmitting: false,
+        isSuccess: false,
+        isError: true,
+        errorMessage: genericRecaptchaError,
+      })
+      return
+    }
+    submitContactUsForm(token)
+  }
+
+  const handleRecaptchaExpired = () => {
+    setFormState({
+      isSubmitting: false,
+      isSuccess: false,
+      isError: true,
+      errorMessage: genericRecaptchaError,
+    })
+    if (recaptchaRef.current) {
+      recaptchaRef.current.reset()
+    }
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { id, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [id === "first-name" ? "firstName" : id === "last-name" ? "lastName" : id]: value,
+    }))
   }
 
   return (
     <Card className="w-full max-w-full">
       <CardHeader>
         <CardTitle>{text.title}</CardTitle>
-        <CardDescription>
-          {text.description}
-        </CardDescription>
+        <CardDescription>{text.description}</CardDescription>
       </CardHeader>
       <CardContent className="w-full">
         {formState.isSuccess ? (
@@ -273,7 +333,39 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
                 onChange={handleChange}
                 required
               ></textarea>
+              {recaptchaSiteKey && (
+                <ReCAPTCHA
+                  ref={recaptchaRef}
+                  sitekey={recaptchaSiteKey}
+                  size="invisible"
+                  onChange={handleRecaptchaChange}
+                  onExpired={handleRecaptchaExpired}
+                />
+              )}
             </div>
+            {recaptchaSiteKey && (
+              <p className="text-xs text-muted-foreground mt-3">
+                This site is protected by reCAPTCHA and the Google{" "}
+                <a
+                  href="https://policies.google.com/privacy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-blue-600"
+                >
+                  Privacy Policy
+                </a>{" "}
+                and{" "}
+                <a
+                  href="https://policies.google.com/terms"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline text-blue-600"
+                >
+                  Terms of Service
+                </a>{" "}
+                apply.
+              </p>
+            )}
             <Button type="submit" className="w-full" disabled={formState.isSubmitting}>
               {formState.isSubmitting ? text.buttons.sending : text.buttons.send}
             </Button>

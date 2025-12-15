@@ -61,9 +61,15 @@ The portfolio demo embraces a content‑first philosophy: content files (MDX/JSO
 
 ## Run locally without LeadCMS
 
-Before connecting to your CMS instance, verify that the site runs using the local content. Instead of the default `pnpm run dev` command (which fetches remote content and will fail without a `.env` file), use the Next.js CLI directly:
+Before connecting to your CMS instance, verify that the site runs using the local content. Instead of the default `pnpm run dev` command (which fetches remote content and will fail without a API KEY), initialize the LeadCMS SDK and use the Next.js CLI directly:
 
 <Steps>
+ <Step title="Run the init command">
+    ```bash
+    pnpm exec leadcms init
+    ```
+    This command prompts you for your LeadCMS URL (e.g. https://localhost:8080 since you'll be running LeadCMS locally). Skip authentication and use read‑only mode for now, but to push content you'll need an API key, which can be added later on to the .env.
+  </Step>
   <Step title="Start the dev server">
     ```bash
     pnpm exec next dev --webpack

@@ -1,13 +1,13 @@
 ---
 id: 86
 createdAt: '2026-02-02T04:59:00.466213Z'
-updatedAt: '2026-02-02T05:19:05.736621Z'
+updatedAt: '2026-02-04T10:04:32.179021Z'
 title: Get a 100% Lighthouse Score with LeadCMS Media Optimization
 description: >-
   Learn how to ship a lightning-fast website by using LeadCMS media library
   features like AVIF/WebP conversion, automatic resizing, and built-in image
   optimization.
-coverImageUrl: /media/blog/media-management/cover.avif
+coverImageUrl: /media/blog/media-management/cover-cover-20260204-095325.avif
 coverImageAlt: Get a 100% Lighthouse Score with LeadCMS Media Optimization
 slug: blog/100-lighthouse-score-with-image-optimization
 type: blog-article
@@ -21,13 +21,16 @@ tags:
   - Lighthouse
 allowComments: false
 source: 'AI Generated - Model: gpt-5.2, Tokens: 19493'
+publishedAt: '2026-02-03T18:30:00Z'
 ---
 
 A fast website is usually won or lost in one place: **images**. Oversized files, wrong formats, and inconsistent dimensions can tank your Lighthouse score even if your code is perfect.
 
 **LeadCMS** solves this at the source. With the new Media Library features and built-in image optimization, you can upload images once and let the platform automatically produce web-ready assets that load quickly, stay sharp, and keep your pages consistently performant.
 
-In this article, we'll cover the practical setup and day-to-day workflow that helps teams reliably build **very fast websites** and aim for **100% Lighthouse** performance scores.
+In this article, we'll cover the practical setup and day-to-day workflow that helps teams reliably build **very fast websites** and aim for **100% Lighthouse** performance scores, well, may be not exacly 100%, but close:
+
+![Almost 100% Lighthouse scrore is possible](/media/blog/media-management/great-lighthouse-score.avif)
 
 ## Why Images Are the #1 Performance Lever
 
@@ -50,7 +53,18 @@ LeadCMS can automatically optimize images as they are uploaded. This includes:
 
 This is configured in the **Settings** panel.
 
-![Media optimization settings in LeadCMS](/media/blog/media-management/leadcms-media-settings.avif)
+![Media optimization settings in LeadCMS](/media/blog/media-management/leadcms-media-settings.png)
+
+Settings now include:
+
+- **File Management**: maximum file size for uploads (KB)
+- **Optimization Settings**:
+  - Auto-Optimize on Upload (manual optimization in Media Preview is always available)
+  - Maximum Dimensions (width/height)
+  - Format & Quality (target format like AVIF and quality %)
+- **Cover Image Settings**:
+  - Auto-resize cover images
+  - Cover dimensions (used for both AI generation and automatic resizing)
 
 A solid default for most sites is:
 
@@ -122,9 +136,33 @@ In practice, this helps when:
 - Your design has changed and you want stricter max dimensions
 - You want to reduce the weight of LCP images on key pages
 
-![Optimize and resize actions in LeadCMS](/media/blog/media-management/new-media-optimise-and-resize-feature.avif)
+![Optimize and resize actions in LeadCMS](/media/blog/media-management/media-optimise-resize-reset.avif)
 
 This matters because the fastest sites are maintained - not “optimized once”. LeadCMS lets you continuously improve performance without rebuilding your entire asset pipeline.
+
+## Step 7: Reset an Image Back to the Original
+
+Sometimes you need to undo a change. LeadCMS includes a **Reset** action that lets you revert an image back to its original uploaded file.
+
+This is useful when:
+
+- You optimized with the wrong settings and want to start over
+- You resized too aggressively
+- You want to restore the original format/quality before trying a different optimization setup
+
+## Step 8: Optimize/Reset an Entire Folder (Optional Subfolders)
+
+When you update your optimization rules (format, quality, or max dimensions), you may want to apply them consistently across a section of the site.
+
+LeadCMS lets you **optimize** or **reset** all images within a folder, with the option to **include subfolders**.
+
+![Folder optimize/reset actions in LeadCMS](/media/blog/media-management/optimize-and-reset-per-folder.avif)
+
+Before running a folder action, you’ll see a confirmation step where you can decide whether to include nested folders.
+
+![Folder optimization confirmation dialog](/media/blog/media-management/per-folder-optimisation-confirmation.avif)
+
+This is especially helpful for large sites where media is organized by page, feature, or campaign folders.
 
 ## What This Looks Like in a “100% Lighthouse” Workflow
 
@@ -136,7 +174,9 @@ A simple workflow that works well for most teams:
    - Verify size and dimensions in Details
    - Resize if needed
    - Optimize if the file looks too heavy
-4. Keep an eye on the media list for “large” outliers over time
+4. When settings change, **optimize a folder** (optionally including subfolders) to re-apply your latest rules
+5. If anything goes wrong, use **Reset** to return an image (or a folder) back to the original
+6. Keep an eye on the media list for “large” outliers over time
 
 The result: faster pages, fewer performance regressions, and a CMS workflow that supports speed by default.
 
@@ -155,11 +195,9 @@ LeadCMS helps you build super fast sites by combining **content management** and
 
 If you're ready to make performance the default:
 
-- Turn on **Media Optimization** in Settings
-- Choose **AVIF** as preferred format
+- Turn on **Media Optimization** in Settings and review file size, optimization, and cover image handling
+- Choose **AVIF** as preferred format and set a sensible **quality %**
 - Set realistic maximum dimensions for your design system
 - Use **Preview/Details** to validate results and catch heavy files early
-
----
-
-If you'd like, we can follow up with a practical checklist for your specific front-end setup (Next.js, Astro, etc.) and what to look for in Lighthouse when you’re tuning LCP and image loading behavior.
+- Use **Optimize** for existing images (or per-folder) after you change settings
+- Use **Reset** anytime you need to revert back to the original

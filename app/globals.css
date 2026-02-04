@@ -121,7 +121,12 @@ body {
 
   /* Gradient text effect */
   .gradient-text {
-    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary)) 40%, hsl(var(--secondary)));
+    background: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--primary)) 40%,
+      hsl(var(--secondary))
+    );
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -159,12 +164,16 @@ body {
 
   /* Hover effects */
   .hover-lift {
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .hover-lift:hover {
     transform: translateY(-8px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.1),
+      0 10px 10px -5px rgba(0, 0, 0, 0.04);
   }
 
   .hover-glow:hover {
@@ -288,7 +297,8 @@ body {
 }
 
 @keyframes float {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0px);
   }
   50% {
@@ -301,12 +311,15 @@ body {
     box-shadow: 0 0 5px hsl(var(--primary) / 0.5);
   }
   to {
-    box-shadow: 0 0 20px hsl(var(--primary) / 0.8), 0 0 30px hsl(var(--primary) / 0.4);
+    box-shadow:
+      0 0 20px hsl(var(--primary) / 0.8),
+      0 0 30px hsl(var(--primary) / 0.4);
   }
 }
 
 @keyframes gradientShift {
-  0%, 100% {
+  0%,
+  100% {
     background-position: 0% 50%;
   }
   50% {
@@ -314,12 +327,39 @@ body {
   }
 }
 
+/* Blog article image improvements */
+/* Prevent images from stretching to full prose width */
+.prose img {
+  width: auto !important;
+  max-width: 100% !important;
+  height: auto !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Images inside figure elements */
+.prose figure {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.prose figure img {
+  display: inline-block;
+  width: auto;
+  max-width: 100%;
+}
+
+.prose figcaption {
+  margin-top: 0.75rem;
+  font-size: 0.875rem;
+  color: hsl(var(--muted-foreground));
+  font-style: italic;
+}
+
 /* Smooth scroll behavior */
 html {
   scroll-behavior: smooth;
 }
-
-
 
 @layer base {
   :root {

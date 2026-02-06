@@ -1,8 +1,10 @@
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
+import type { ComponentPropsWithoutRef } from "react"
 import type { CMSContentTemplateProps } from "@leadcms/sdk"
 import { useMDXComponents } from "@/components/mdx-components"
 import { DocTableOfContents } from "@/components/doc-table-of-contents"
 import { Badge } from "@/components/ui/badge"
+import { ImageLightboxProvider, LightboxImage } from "@/components/ui/image-lightbox"
 import { Calendar, Clock, User } from "lucide-react"
 
 export default function BlogTemplate({
@@ -17,7 +19,10 @@ export default function BlogTemplate({
   }
 
   // Blog pages need components that include all MDX and blog-specific components
-  const components = useMDXComponents({ userUid })
+  const components = useMDXComponents({
+    userUid,
+    img: (props: ComponentPropsWithoutRef<"img">) => <LightboxImage {...props} />,
+  })
 
   // Extract metadata
   const author = content.author
@@ -140,8 +145,9 @@ export default function BlogTemplate({
               <div className="grid grid-cols-1 xl:grid-cols-[minmax(0,1fr)_320px] gap-12">
                 {/* Main Article Content - Balanced width for readability */}
                 <div className="min-w-0 max-w-3xl">
-                  <article
-                    className="
+                  <ImageLightboxProvider>
+                    <article
+                      className="
                     prose prose-lg dark:prose-invert
                     prose-headings:scroll-mt-20
                     prose-headings:font-semibold
@@ -156,9 +162,10 @@ export default function BlogTemplate({
                     prose-code:text-sm prose-code:bg-muted prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded
                     prose-pre:bg-muted prose-pre:border
                   "
-                  >
-                    <MDXRemote source={content.body} options={options} components={components} />
-                  </article>
+                    >
+                      <MDXRemote source={content.body} options={options} components={components} />
+                    </article>
+                  </ImageLightboxProvider>
 
                   {/* Article footer - Tags and sharing */}
                   <div className="mt-12 pt-8 border-t">

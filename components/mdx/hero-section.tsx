@@ -108,11 +108,11 @@ export const HeroPreview: React.FC<HeroPreviewProps> = ({ image, label }) => (
   <ScaleIn delay={0.5} className="relative max-w-2xl lg:max-w-none">
     <div className="relative w-full max-w-full overflow-hidden rounded-xl border bg-background shadow-xl flex flex-col backdrop-blur-sm">
       {label && (
-        <div className="h-8 bg-muted rounded-t-lg flex items-center gap-2 px-3">
+        <div className="h-8 bg-muted/80 rounded-t-lg flex items-center gap-2 px-3">
           <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
           <div className="w-3 h-3 rounded-full bg-yellow-500 animate-pulse delay-100"></div>
           <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse delay-200"></div>
-          <div className="text-xs text-muted-foreground ml-2">{label}</div>
+          <div className="text-xs text-foreground/70 ml-2">{label}</div>
         </div>
       )}
       <img

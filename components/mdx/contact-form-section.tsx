@@ -51,12 +51,12 @@ export const ContactFormServiceList: React.FC<ContactFormServiceListProps> = ({ 
       <StaggerContainer delay={0.3}>
         <ul className="space-y-3">
           {items.map((service, i) => (
-            <StaggerItem key={i}>
-              <li className="flex items-center group">
+            <li key={i} className="flex items-center group">
+              <StaggerItem className="flex items-center">
                 <CheckCircle className="mr-3 h-5 w-5 text-primary transition-transform duration-300 group-hover:scale-110" />
                 <span>{service}</span>
-              </li>
-            </StaggerItem>
+              </StaggerItem>
+            </li>
           ))}
         </ul>
       </StaggerContainer>

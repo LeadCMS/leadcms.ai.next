@@ -372,7 +372,7 @@ html {
 
     /* Updated primary to match primary400 */
     --primary: 217 100% 61%;
-    --primary-foreground: 0 0% 98%;
+    --primary-foreground: 0 0% 10%;
 
     /* Updated secondary to match secondary500 */
     --secondary: 216 40% 8%;

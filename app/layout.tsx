@@ -39,9 +39,7 @@ html {
       </head>
       <body>
         <ScrollProgress />
-        <main id="main-content">
-          {children}
-        </main>
+        <main id="main-content">{children}</main>
       </body>
     </html>
   )

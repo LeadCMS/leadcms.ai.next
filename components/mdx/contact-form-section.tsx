@@ -18,7 +18,10 @@ export interface ContactFormProps {
   children: React.ReactNode
 }
 
-export const ContactFormServiceList: React.FC<ContactFormServiceListProps> = ({ title, children }) => {
+export const ContactFormServiceList: React.FC<ContactFormServiceListProps> = ({
+  title,
+  children,
+}) => {
   // Extract items from the MDX-parsed <ul><li> structure
   const items: string[] = []
 
@@ -90,9 +93,7 @@ export const ContactFormSection: React.FC<ContactFormSectionProps> = ({
               <div>
                 <h2 className="text-3xl font-bold tracking-tighter">{title}</h2>
                 <p className="mt-4 text-lg text-muted-foreground">{description}</p>
-                <div className="mt-8">
-                  {serviceList}
-                </div>
+                <div className="mt-8">{serviceList}</div>
               </div>
             </FadeIn>
             <ScaleIn direction="right" delay={0.4}>

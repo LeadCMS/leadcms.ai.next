@@ -1,7 +1,7 @@
 ---
 id: 67
 createdAt: '2025-11-09T17:51:13.605285Z'
-updatedAt: '2026-02-06T07:20:34.79551Z'
+updatedAt: '2026-02-06T11:48:53.231447Z'
 title: How to Optimize Images Under 500KB - Complete Guide for Content Editors
 description: >-
   Upload and optimize images in LeadCMS to avoid file size errors and keep pages
@@ -247,39 +247,31 @@ A well-optimized image that loads quickly will consistently outperform a perfect
   Following this guide helps eliminate "file too large" errors and keeps your website consistently fast. Upload images through the Media Library, verify in Details, then resize/optimize as needed.
 </Callout>
 
-## Frequently Asked Questions
+<FAQSection title="Frequently Asked Questions">
+  <FAQItem question="Why does LeadCMS have a 500KB file size limit?">
+    The 500KB limit is based on performance testing. Images under this size are much less likely to slow down mobile users and hurt key metrics like LCP.
+  </FAQItem>
 
-### Why does LeadCMS have a 500KB file size limit?
+  <FAQItem question="Will compressing my images make them look bad?">
+    Not if you verify the output. With LeadCMS, you can check the result and confirm the file size and dimensions before using an image in content.
+  </FAQItem>
 
-The 500KB limit is based on performance testing. Images under this size are much less likely to slow down mobile users and hurt key metrics like LCP.
+  <FAQItem question="What's the difference between JPEG, PNG, WebP, and AVIF?">
+    JPEG is common for photos with no transparency. PNG is best for transparency and lossless graphics but often produces larger files. WebP offers modern, smaller files with good quality and wide support. AVIF is the newest format with excellent compression and quality.
+  </FAQItem>
 
-### Will compressing my images make them look bad?
+  <FAQItem question="Can I increase the file size limit in LeadCMS?">
+    While it may be possible depending on your setup, increasing the limit often leads to performance regressions over time. A better approach is to use Media optimisation settings and resize/optimise within the Media Library.
+  </FAQItem>
 
-Not if you verify the output. With LeadCMS, you can check the result and confirm the file size and dimensions before using an image in content.
+  <FAQItem question="What if my image is still too large after optimization?">
+    Try these steps in order: resize to smaller dimensions (match the design's display size), use a more efficient format (AVIF or WebP), lower the quality setting slightly, and re-check the result in Media Details.
+  </FAQItem>
 
-### What's the difference between JPEG, PNG, WebP, and AVIF?
-
-- **JPEG**: Common for photos; no transparency
-- **PNG**: Best for transparency and lossless graphics; often larger files
-- **WebP**: Modern, smaller files with good quality; widely supported
-- **AVIF**: Newer format with excellent compression and quality
-
-### Can I increase the file size limit in LeadCMS?
-
-While it may be possible depending on your setup, increasing the limit often leads to performance regressions over time. A better approach is to use Media optimisation settings and resize/optimise within the Media Library.
-
-### What if my image is still too large after optimization?
-
-Try these steps in order:
-
-1. Resize to smaller dimensions (match the design's display size)
-2. Use a more efficient format (AVIF or WebP)
-3. Lower the quality setting slightly
-4. Re-check the result in Media Details
-
-### How do I optimize images for retina displays?
-
-Upload images at up to 2× the display size for sharpness, then use LeadCMS optimisation and resizing to keep file sizes low. Always verify the final **Current size** in Details.
+  <FAQItem question="How do I optimize images for retina displays?">
+    Upload images at up to 2× the display size for sharpness, then use LeadCMS optimisation and resizing to keep file sizes low. Always verify the final Current size in Details.
+  </FAQItem>
+</FAQSection>
 
 <Callout type="tip" title="Pro Tip">
   Keep your Media settings consistent (format, max dimensions, quality). When you change them, use folder optimisation to apply the new rules across a section of the site.

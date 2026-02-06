@@ -1,0 +1,247 @@
+{
+  "pricing": {
+    "currency": "USD",
+    "currencySymbol": "$",
+    "websiteTypes": [
+      {
+        "id": "saas-product",
+        "label": "SaaS Product",
+        "baseCost": 3500,
+        "complexity": "very-high",
+        "description": "Product landing with features, pricing, and docs"
+      },
+      {
+        "id": "corporate",
+        "label": "Corporate Website",
+        "baseCost": 2000,
+        "complexity": "mid",
+        "description": "Company site with about, services, and team pages"
+      },
+      {
+        "id": "portfolio",
+        "label": "Portfolio / Agency",
+        "baseCost": 2500,
+        "complexity": "high",
+        "description": "Showcasing work, case studies, and client projects"
+      },
+      {
+        "id": "blog-media",
+        "label": "Blog / Media",
+        "baseCost": 1500,
+        "complexity": "low",
+        "description": "Content-heavy publication or media portal"
+      },
+      {
+        "id": "documentation",
+        "label": "Documentation Portal",
+        "baseCost": 2000,
+        "complexity": "mid",
+        "description": "Technical docs, knowledge base, and API references"
+      }
+    ],
+    "designOptions": [
+      {
+        "id": "ai-generated",
+        "label": "AI Generated",
+        "cost": 300,
+        "complexity": "low",
+        "description": "AI-powered design generation with quick turnaround"
+      },
+      {
+        "id": "template-based",
+        "label": "Template Based",
+        "cost": 1000,
+        "complexity": "mid",
+        "description": "Professional template customized to your brand"
+      },
+      {
+        "id": "professional",
+        "label": "Human Made, Unique & Professional",
+        "cost": 4000,
+        "complexity": "very-high",
+        "description": "Custom design crafted by professional designers"
+      }
+    ],
+    "features": [
+      {
+        "id": "main-landing",
+        "label": "Main Landing Page",
+        "cost": 0,
+        "complexity": "low",
+        "alwaysEnabled": true,
+        "description": "Core homepage with hero, benefits, and conversion-focused layout"
+      },
+      {
+        "id": "multi-landing",
+        "label": "Multi-Landing Support",
+        "cost": 800,
+        "complexity": "high",
+        "alwaysEnabled": false,
+        "description": "Multiple landing pages for campaigns, segments, or ads"
+      },
+      {
+        "id": "blog",
+        "label": "Blog",
+        "cost": 600,
+        "complexity": "mid",
+        "alwaysEnabled": false,
+        "description": "SEO-ready blog with categories, tags, and editor workflow"
+      },
+      {
+        "id": "contact-form",
+        "label": "Contact Us Form",
+        "cost": 200,
+        "complexity": "low",
+        "alwaysEnabled": false,
+        "description": "Lead capture form with validation and email routing"
+      },
+      {
+        "id": "multi-language",
+        "label": "Multi-Language Support",
+        "cost": 1200,
+        "complexity": "very-high",
+        "alwaysEnabled": false,
+        "description": "Localized content, language switcher, and i18n setup"
+      }
+    ],
+    "customPages": {
+      "label": "Other Custom Pages",
+      "costPerUnit": 300,
+      "complexity": "low",
+      "description": "Additional pages beyond the main landing"
+    },
+    "integrations": {
+      "label": "Third-Party Integrations",
+      "costPerUnit": 400,
+      "complexity": "high",
+      "description": "Payment gateways, analytics, CRM connectors, etc."
+    },
+    "contentWriting": {
+      "label": "Content Writing",
+      "costPerUnit": 50,
+      "complexity": "low",
+      "description": "Blog posts, landing pages, and other written content"
+    },
+    "deployment": {
+      "cloud": {
+        "label": "Cloud (Managed)",
+        "setupCost": 500,
+        "monthlyCost": 49,
+        "complexity": "low",
+        "description": "Fully managed hosting with updates, monitoring, and backups"
+      },
+      "onPremisesDiy": {
+        "label": "On-Premises (DIY)",
+        "cost": 0,
+        "complexity": "very-high",
+        "description": "Deploy on your own infrastructure with your internal team"
+      },
+      "onPremisesManaged": {
+        "label": "On-Premises (Managed by our team)",
+        "cost": 2500,
+        "complexity": "mid",
+        "description": "We deploy and manage on your servers with ongoing support"
+      }
+    },
+    "platform": {
+      "base": {
+        "label": "LeadCMS Integration",
+        "cost": 0,
+        "complexity": "low",
+        "description": "Core LeadCMS setup, content models, and initial wiring"
+      },
+      "cms": {
+        "label": "AI-Powered Content Management (CMS)",
+        "cost": 0,
+        "complexity": "low",
+        "alwaysIncluded": true,
+        "description": "AI-assisted content editing, workflows, and publishing"
+      },
+      "setupServices": [
+        {
+          "id": "crm-pipelines",
+          "label": "Sales Pipelines & Lead Forms",
+          "description": "Configure sales pipelines, lead capture forms, and CRM workflows",
+          "costPerUnit": 200,
+          "unitLabel": "pipelines/forms",
+          "complexity": "mid"
+        },
+        {
+          "id": "email-automations",
+          "label": "Email Automation Workflows",
+          "description": "Set up automated email sequences and marketing campaigns",
+          "costPerUnit": 150,
+          "unitLabel": "automations",
+          "complexity": "mid"
+        }
+      ]
+    }
+  },
+  "complexity": {
+    "labels": {
+      "low": "Low",
+      "mid": "Medium",
+      "high": "High",
+      "very-high": "Very High"
+    },
+    "colors": {
+      "low": "green",
+      "mid": "yellow",
+      "high": "orange",
+      "very-high": "red"
+    }
+  },
+  "labels": {
+    "title": "Website Cost Calculator",
+    "subtitle": "Get an instant estimate for your LeadCMS-powered website",
+    "sections": {
+      "websiteType": "Website Type",
+      "design": "Design",
+      "features": "Features",
+      "additionalServices": "Additional Services",
+      "deployment": "Deployment",
+      "platform": "LeadCMS Platform"
+    },
+    "buttons": {
+      "calculate": "Calculate Cost",
+      "calculating": "Calculating...",
+      "unlock": "Unlock Your Estimate",
+      "submitting": "Submitting...",
+      "recalculate": "Recalculate"
+    },
+    "result": {
+      "title": "Your Estimated Cost",
+      "oneTime": "One-time Cost",
+      "monthly": "Monthly Cost",
+      "unlockMessage": "Enter your details to see the full estimate",
+      "unlockDescription": "We'll send you a detailed breakdown with the estimate",
+      "disclaimer": "This is an estimate. Final pricing may vary based on specific project requirements.",
+      "thankYouPrefix": "Thank you",
+      "thankYouSuffix": "We'll send a detailed breakdown to"
+    },
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone (optional)",
+      "company": "Company",
+      "namePlaceholder": "Enter your full name",
+      "emailPlaceholder": "Enter your email address",
+      "phonePlaceholder": "Enter your phone number",
+      "companyPlaceholder": "Enter your company name"
+    }
+  },
+  "id": 97,
+  "createdAt": "2026-02-06T11:48:52.627633Z",
+  "title": "Site Calculator Configuration",
+  "description": "Pricing weights and labels for the website cost calculator component. Manage all calculator variables here.",
+  "coverImageUrl": "/media/common/calculator-config.jpg",
+  "coverImageAlt": "Website cost calculator configuration",
+  "slug": "site-calculator-config",
+  "type": "component",
+  "author": "LeadCMS Team",
+  "language": "en",
+  "category": "",
+  "tags": [],
+  "allowComments": false,
+  "publishedAt": "2026-02-06T00:00:00Z"
+}

@@ -10,6 +10,7 @@ import {
   BarChart,
   Book,
   Building,
+  Calculator,
   Calendar,
   Check,
   CheckCircle,
@@ -18,11 +19,11 @@ import {
   ChevronUp,
   Circle,
   Clock,
+  Cloud,
   Code,
   Database,
   DollarSign,
   Download,
-  Eye,
   FileText,
   FolderTree,
   GitBranch,
@@ -31,6 +32,7 @@ import {
   Headphones,
   HelpCircle,
   Info,
+  Layers,
   Lightbulb,
   List,
   Loader2,
@@ -59,7 +61,7 @@ import {
   Zap
 } from 'lucide-react'
 
-export type IconName = 'AlertCircle' | 'AlertTriangle' | 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'BarChart' | 'Book' | 'Building' | 'Calendar' | 'Check' | 'CheckCircle' | 'ChevronDown' | 'ChevronRight' | 'ChevronUp' | 'Circle' | 'Clock' | 'Code' | 'Database' | 'DollarSign' | 'Download' | 'Eye' | 'FileText' | 'FolderTree' | 'GitBranch' | 'Github' | 'Globe' | 'Headphones' | 'HelpCircle' | 'Info' | 'Lightbulb' | 'List' | 'Loader2' | 'Lock' | 'Mail' | 'MapPin' | 'Menu' | 'MessageCircle' | 'MessageSquare' | 'MoreHorizontal' | 'MousePointer' | 'Package' | 'Phone' | 'Rocket' | 'Send' | 'Server' | 'Settings' | 'Share2' | 'Shield' | 'ShieldCheck' | 'Tags' | 'Type' | 'User' | 'Users' | 'X' | 'Zap'
+export type IconName = 'AlertCircle' | 'AlertTriangle' | 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'BarChart' | 'Book' | 'Building' | 'Calculator' | 'Calendar' | 'Check' | 'CheckCircle' | 'ChevronDown' | 'ChevronRight' | 'ChevronUp' | 'Circle' | 'Clock' | 'Cloud' | 'Code' | 'Database' | 'DollarSign' | 'Download' | 'FileText' | 'FolderTree' | 'GitBranch' | 'Github' | 'Globe' | 'Headphones' | 'HelpCircle' | 'Info' | 'Layers' | 'Lightbulb' | 'List' | 'Loader2' | 'Lock' | 'Mail' | 'MapPin' | 'Menu' | 'MessageCircle' | 'MessageSquare' | 'MoreHorizontal' | 'MousePointer' | 'Package' | 'Phone' | 'Rocket' | 'Send' | 'Server' | 'Settings' | 'Share2' | 'Shield' | 'ShieldCheck' | 'Tags' | 'Type' | 'User' | 'Users' | 'X' | 'Zap'
 
 export const ICON_REGISTRY = {
   AlertCircle: AlertCircle,
@@ -70,6 +72,7 @@ export const ICON_REGISTRY = {
   BarChart: BarChart,
   Book: Book,
   Building: Building,
+  Calculator: Calculator,
   Calendar: Calendar,
   Check: Check,
   CheckCircle: CheckCircle,
@@ -78,11 +81,11 @@ export const ICON_REGISTRY = {
   ChevronUp: ChevronUp,
   Circle: Circle,
   Clock: Clock,
+  Cloud: Cloud,
   Code: Code,
   Database: Database,
   DollarSign: DollarSign,
   Download: Download,
-  Eye: Eye,
   FileText: FileText,
   FolderTree: FolderTree,
   GitBranch: GitBranch,
@@ -91,6 +94,7 @@ export const ICON_REGISTRY = {
   Headphones: Headphones,
   HelpCircle: HelpCircle,
   Info: Info,
+  Layers: Layers,
   Lightbulb: Lightbulb,
   List: List,
   Loader2: Loader2,

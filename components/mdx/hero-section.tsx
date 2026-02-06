@@ -57,9 +57,7 @@ export const HeroDescription: React.FC<HeroDescriptionProps> = ({ children }) =>
 
   return (
     <FadeIn direction="up" delay={0.3}>
-      <p className="mt-6 text-lg text-muted-foreground max-w-lg leading-relaxed">
-        {textContent}
-      </p>
+      <p className="mt-6 text-lg text-muted-foreground max-w-lg leading-relaxed">{textContent}</p>
     </FadeIn>
   )
 }
@@ -69,7 +67,7 @@ export const HeroButton: React.FC<HeroButtonProps> = ({
   variant = "default",
   icon,
   external = false,
-  children
+  children,
 }) => {
   const isExternal = external || href.startsWith("http")
   const textContent = getTextContent(children)
@@ -91,17 +89,13 @@ export const HeroButton: React.FC<HeroButtonProps> = ({
       {buttonElement}
     </a>
   ) : (
-    <Link href={href}>
-      {buttonElement}
-    </Link>
+    <Link href={href}>{buttonElement}</Link>
   )
 }
 
 export const HeroButtons: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <FadeIn direction="up" delay={0.4}>
-    <div className="flex flex-wrap gap-4 mt-8">
-      {children}
-    </div>
+    <div className="flex flex-wrap gap-4 mt-8">{children}</div>
   </FadeIn>
 )
 
@@ -110,40 +104,51 @@ export interface HeroPreviewProps {
   label?: string
 }
 
-export const HeroPreview: React.FC<HeroPreviewProps> = ({ image, label = "Dashboard" }) => (
+export const HeroPreview: React.FC<HeroPreviewProps> = ({ image, label }) => (
   <ScaleIn delay={0.5} className="relative max-w-2xl lg:max-w-none">
     <div className="relative w-full max-w-full overflow-hidden rounded-xl border bg-background shadow-xl flex flex-col backdrop-blur-sm">
-      <div className="h-8 bg-muted rounded-t-lg flex items-center gap-2 px-3">
-        <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
-        <div className="w-3 h-3 rounded-full bg-yellow-500 animate-pulse delay-100"></div>
-        <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse delay-200"></div>
-        <div className="text-xs text-muted-foreground ml-2">{label}</div>
-      </div>
+      {label && (
+        <div className="h-8 bg-muted rounded-t-lg flex items-center gap-2 px-3">
+          <div className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></div>
+          <div className="w-3 h-3 rounded-full bg-yellow-500 animate-pulse delay-100"></div>
+          <div className="w-3 h-3 rounded-full bg-green-500 animate-pulse delay-200"></div>
+          <div className="text-xs text-muted-foreground ml-2">{label}</div>
+        </div>
+      )}
       <img
         src={image || "/placeholder.svg"}
-        alt={label}
-        className="w-full rounded-b-xl"
+        alt={label || "Preview"}
+        className={label ? "w-full rounded-b-xl" : "w-full rounded-xl"}
       />
     </div>
-    <FloatingElement intensity={0.5} duration={4} className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-full z-[-1] blur-xl">
+    <FloatingElement
+      intensity={0.5}
+      duration={4}
+      className="absolute -bottom-4 -right-4 w-24 h-24 bg-primary/10 rounded-full z-[-1] blur-xl"
+    >
       <div />
     </FloatingElement>
-    <FloatingElement intensity={0.3} duration={6} className="absolute -top-4 -left-4 w-32 h-32 bg-primary/10 rounded-full z-[-1] blur-xl">
+    <FloatingElement
+      intensity={0.3}
+      duration={6}
+      className="absolute -top-4 -left-4 w-32 h-32 bg-primary/10 rounded-full z-[-1] blur-xl"
+    >
       <div />
     </FloatingElement>
-    <FloatingElement intensity={0.4} duration={5} className="absolute top-1/2 -right-8 w-16 h-16 bg-accent/10 rounded-full z-[-1] blur-lg">
+    <FloatingElement
+      intensity={0.4}
+      duration={5}
+      className="absolute top-1/2 -right-8 w-16 h-16 bg-accent/10 rounded-full z-[-1] blur-lg"
+    >
       <div />
     </FloatingElement>
   </ScaleIn>
 )
 
-export const HeroSection: React.FC<HeroSectionProps> = ({
-  title,
-  description,
-  children,
-}) => {
-  let titleText = typeof title === 'string' ? title : title ? getTextContent(title) : null
-  let descriptionText = typeof description === 'string' ? description : description ? getTextContent(description) : null
+export const HeroSection: React.FC<HeroSectionProps> = ({ title, description, children }) => {
+  let titleText = typeof title === "string" ? title : title ? getTextContent(title) : null
+  let descriptionText =
+    typeof description === "string" ? description : description ? getTextContent(description) : null
 
   const childArray = React.Children.toArray(children)
 
@@ -165,25 +170,27 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }
 
   let badgeChild: React.ReactElement | null = null
-  const previewChild = childArray.find(child => matchesComponent(child, HeroPreview, 'HeroPreview'))
+  const previewChild = childArray.find((child) =>
+    matchesComponent(child, HeroPreview, "HeroPreview")
+  )
   const contentChildren: React.ReactNode[] = []
 
-  childArray.forEach(child => {
-    if (matchesComponent(child, HeroPreview, 'HeroPreview')) {
+  childArray.forEach((child) => {
+    if (matchesComponent(child, HeroPreview, "HeroPreview")) {
       return
     }
 
-    if (!badgeChild && matchesComponent(child, HeroBadge, 'HeroBadge')) {
+    if (!badgeChild && matchesComponent(child, HeroBadge, "HeroBadge")) {
       badgeChild = child
       return
     }
 
-    if (!titleText && matchesComponent(child, HeroTitle, 'HeroTitle')) {
+    if (!titleText && matchesComponent(child, HeroTitle, "HeroTitle")) {
       titleText = getTextContent((child.props as any)?.children ?? child)
       return
     }
 
-    if (!descriptionText && matchesComponent(child, HeroDescription, 'HeroDescription')) {
+    if (!descriptionText && matchesComponent(child, HeroDescription, "HeroDescription")) {
       descriptionText = getTextContent((child.props as any)?.children ?? child)
       return
     }
@@ -199,7 +206,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
 
       <div className="relative w-full px-4 sm:px-6 lg:px-8">
         <div className="max-w-[1750px] mx-auto">
-          <div className={`grid gap-12 items-center lg:gap-16 ${previewChild ? 'lg:grid-cols-2' : ''}`}>
+          <div
+            className={`grid gap-12 items-center lg:gap-16 ${previewChild ? "lg:grid-cols-2" : ""}`}
+          >
             <div className="flex flex-col items-start max-w-2xl">
               {badgeChild}
               {titleText && (

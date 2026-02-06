@@ -7,6 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Badge } from "@/components/ui/badge"
 import * as LucideIcons from "lucide-react"
 import { ContactUs } from "@/components/contact-us"
+import { SiteCalculator } from "@/components/site-calculator"
+import { FAQSection, FAQItem, ContentSection } from "@/components/mdx/faq-section"
 import { MDXComponents } from "next-mdx-remote-client/rsc"
 
 // Modern animated components
@@ -23,7 +25,7 @@ import {
   FloatingElement,
   HoverLift,
   Pulse,
-  TypeWriter
+  TypeWriter,
 } from "@/components/ui/animated-elements"
 import { Parallax, ScrollReveal, BackgroundParallax } from "@/components/ui/parallax"
 import { ModernShowcase } from "@/components/mdx/modern-showcase"
@@ -33,7 +35,7 @@ import { ModernLayoutWrapper } from "@/components/ui/modern-layout-wrapper"
 import {
   MicroInteractionButton,
   InteractiveLink,
-  FloatingLabelInput
+  FloatingLabelInput,
 } from "@/components/ui/micro-interactions"
 import { MermaidDiagram } from "@/components/ui/mermaid-diagram"
 
@@ -70,6 +72,10 @@ const uiComponents = {
   TabsTrigger,
   Badge,
   ContactUs,
+  SiteCalculator,
+  FAQSection,
+  FAQItem,
+  ContentSection,
   // Modern animated components
   AnimatedButton,
   AnimatedCard,
@@ -183,7 +189,7 @@ const baseComponents = {
   ),
   a: ({ children, href, ...props }: AnchorProps) => {
     // Check if the link is external (starts with http:// or https://)
-    const isExternal = href && (href.startsWith('http://') || href.startsWith('https://'))
+    const isExternal = href && (href.startsWith("http://") || href.startsWith("https://"))
 
     return (
       <a
@@ -191,7 +197,7 @@ const baseComponents = {
         href={href}
         {...(isExternal && {
           target: "_blank",
-          rel: "nofollow noopener noreferrer"
+          rel: "nofollow noopener noreferrer",
         })}
         {...props}
       >

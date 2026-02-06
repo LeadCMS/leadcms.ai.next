@@ -8,7 +8,7 @@ import {
   HeroDescription,
   HeroButton,
   HeroButtons,
-  HeroPreview
+  HeroPreview,
 } from "./mdx/hero-section"
 import {
   FeaturesSection,
@@ -18,10 +18,20 @@ import {
   FeaturesSectionCards,
   FeaturesCard,
   FeaturesCardWithBullets,
-  FeatureBullet
+  FeatureBullet,
 } from "./mdx/features-section"
-import { WhySection, WhySectionTitle, WhySectionDescription, WhyReasonCard } from "./mdx/why-section"
-import { CapabilitiesSection, CapabilitiesSectionTitle, CapabilitiesSectionDescription, CapabilityCard } from "./mdx/capabilities-section"
+import {
+  WhySection,
+  WhySectionTitle,
+  WhySectionDescription,
+  WhyReasonCard,
+} from "./mdx/why-section"
+import {
+  CapabilitiesSection,
+  CapabilitiesSectionTitle,
+  CapabilitiesSectionDescription,
+  CapabilityCard,
+} from "./mdx/capabilities-section"
 import { DeploySection, DeployCommands, DeployCards, DeployButton } from "./mdx/deploy-section"
 import { ServicesSection, ServiceCard, ServiceList, ServiceButton } from "./mdx/services-section"
 import { CTASection, CTAButton } from "./mdx/cta-section"
@@ -68,6 +78,8 @@ import {
   BlogCallout,
 } from "./mdx/blog-components"
 import { ContactUs } from "./contact-us"
+import { SiteCalculator } from "./site-calculator"
+import { FAQSection, FAQItem, ContentSection } from "./mdx/faq-section"
 import { MermaidDiagram } from "./ui/mermaid-diagram"
 import { CodeTabs, CodeTab } from "./mdx/code-tabs"
 import { OSTabs, OSTab } from "./mdx/os-tabs"
@@ -93,8 +105,8 @@ export function useMDXComponents(components: Record<string, any> = {}): MDXCompo
     HeroTitle,
     HeroDescription,
     HeroButton,
-  HeroButtons,
-  HeroPreview,
+    HeroButtons,
+    HeroPreview,
     FeaturesSection,
     FeaturesSectionTitle,
     FeaturesSectionDescription,
@@ -167,6 +179,12 @@ export function useMDXComponents(components: Record<string, any> = {}): MDXCompo
     BlogCallout,
     // Contact form
     ContactUs,
+    // Site calculator
+    SiteCalculator,
+    // FAQ & content wrapper
+    FAQSection,
+    FAQItem,
+    ContentSection,
     // Diagrams
     MermaidDiagram,
     // Tab controls

@@ -6,6 +6,7 @@ import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/com
 import { Button } from "@/components/ui/button"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
+import { useLocale } from "@/lib/locale-context"
 
 interface FormData {
   firstName: string
@@ -67,6 +68,7 @@ interface ContactUsLocalizedProps {
 }
 
 export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
+  const locale = useLocale()
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -111,6 +113,9 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
         throw new Error("API URL not configured. Please check environment variables.")
       }
 
+      const pageUrl = typeof window !== "undefined" ? window.location.href : ""
+      const timeZoneOffset = String(new Date().getTimezoneOffset())
+
       const formDataToSubmit = new FormData()
       formDataToSubmit.append("file", "")
       formDataToSubmit.append("firstName", formData.firstName)
@@ -119,7 +124,9 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
       formDataToSubmit.append("subject", formData.subject || "Contact Form Submission")
       formDataToSubmit.append("message", formData.message)
       formDataToSubmit.append("email", formData.email)
-      formDataToSubmit.append("language", navigator.language || "en")
+      formDataToSubmit.append("language", locale)
+      formDataToSubmit.append("timeZoneOffset", timeZoneOffset)
+      formDataToSubmit.append("pageUrl", pageUrl)
 
       const response = await fetch(`${apiUrl}/api/contact-us`, {
         method: "POST",

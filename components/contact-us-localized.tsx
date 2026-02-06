@@ -167,9 +167,7 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
     <Card className="w-full max-w-full">
       <CardHeader>
         <CardTitle>{text.title}</CardTitle>
-        <CardDescription>
-          {text.description}
-        </CardDescription>
+        <CardDescription>{text.description}</CardDescription>
       </CardHeader>
       <CardContent className="w-full">
         {formState.isSuccess ? (

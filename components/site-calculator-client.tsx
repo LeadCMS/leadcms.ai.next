@@ -3,12 +3,12 @@
 import React, { useState, useCallback, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Calculator,
-  Lock,
   CheckCircle,
   AlertCircle,
   Cloud,
@@ -18,6 +18,7 @@ import {
   Palette,
   Layers,
   Settings,
+  Send,
 } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
 import { cn } from "@/lib/utils"
@@ -44,6 +45,8 @@ interface ContactFormData {
   email: string
   phone: string
   company: string
+  projectDescription: string
+  requestQuote: boolean
 }
 
 type Step = "configure" | "result"
@@ -149,6 +152,8 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     email: "",
     phone: "",
     company: "",
+    projectDescription: "",
+    requestQuote: false,
   })
 
   // ── State helpers ────────────────────────────────────────────────────────
@@ -283,13 +288,25 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
       lines.push(`Estimated Monthly Cost: ${s}${monthly.toLocaleString()}`)
     }
 
+    if (contactForm.projectDescription.trim()) {
+      lines.push("", "Project Description:")
+      lines.push(contactForm.projectDescription.trim())
+    }
+
+    if (contactForm.requestQuote) {
+      lines.push(
+        "",
+        "⚡ Quote Requested: The customer has requested a concrete quote from the team."
+      )
+    }
+
     lines.push(
       "",
       "Note: This estimate is based on our experience and industry standards. Final pricing may vary based on specific project requirements and complexity. This is not a binding offer or public commitment."
     )
 
     return lines.join("\n")
-  }, [state, pricing, calculateTotals, s])
+  }, [state, pricing, calculateTotals, s, contactForm.projectDescription, contactForm.requestQuote])
 
   // ── Quote breakdown for UI display ───────────────────────────────────────
 
@@ -1021,7 +1038,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
             <div
               className={cn(
                 "rounded-xl border bg-card/70 backdrop-blur-sm overflow-hidden transition-all duration-700 shadow-sm",
-                !isUnlocked && "blur-md select-none"
+                !isUnlocked && "blur-md select-none hidden md:block"
               )}
             >
               {/* Group items by category */}
@@ -1105,17 +1122,32 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
 
             {/* Unlock form overlay */}
             {!isUnlocked && (
-              <div className="absolute inset-0 flex items-center justify-center bg-background/70 backdrop-blur-[3px] rounded-xl">
-                <div className="w-full max-w-lg mx-4 border rounded-xl p-6 bg-card shadow-xl">
-                  <div className="text-center mb-4">
-                    <Lock className="h-6 w-6 mx-auto mb-2 text-primary" />
-                    <h3 className="text-lg font-semibold">See Your Full Estimate</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                      Enter your details to unlock the complete breakdown and receive a copy by
-                      email
+              <div className="relative md:absolute md:inset-0 flex items-center justify-center md:bg-background/70 md:backdrop-blur-[3px] rounded-xl">
+                <div className="w-full max-w-xl mx-4 border rounded-xl p-6 bg-card shadow-xl md:max-h-[90vh] md:overflow-y-auto">
+                  {/* Approximate cost highlight */}
+                  <div className="text-center mb-5">
+                    <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 mb-3">
+                      <Calculator className="h-6 w-6 text-primary" />
+                    </div>
+                    <h3 className="text-lg font-semibold">Your Estimated Cost</h3>
+                    <div className="mt-2 flex items-center justify-center gap-3 flex-wrap">
+                      <span className="text-3xl font-bold text-primary">
+                        {formatPrice(totalOneTime, s)}
+                      </span>
+                      {totalMonthly > 0 && (
+                        <span className="text-lg text-muted-foreground">
+                          + {formatPrice(totalMonthly, s)}
+                          <span className="text-sm">/mo</span>
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-3 max-w-md mx-auto">
+                      Ready to proceed? Provide your details and a brief description of the website
+                      you&apos;re looking to build to see a detailed price breakdown.
                     </p>
                   </div>
 
+                  {/* Contact details */}
                   <div className="grid gap-4 sm:grid-cols-2">
                     <div>
                       <Label htmlFor="unlock-name" className="text-sm">
@@ -1179,6 +1211,52 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                     </div>
                   </div>
 
+                  {/* Project description */}
+                  <div className="mt-4">
+                    <Label htmlFor="unlock-project-desc" className="text-sm">
+                      Brief Project Description
+                    </Label>
+                    <Textarea
+                      id="unlock-project-desc"
+                      placeholder="Tell us about the website you'd like to build — its purpose, key pages, target audience, any special features..."
+                      value={contactForm.projectDescription}
+                      onChange={(e) =>
+                        setContactForm((prev) => ({ ...prev, projectDescription: e.target.value }))
+                      }
+                      className="mt-1.5 min-h-[80px]"
+                      rows={3}
+                    />
+                  </div>
+
+                  {/* Request quote checkbox */}
+                  <div
+                    className="mt-4 flex items-start gap-2.5 rounded-lg border border-primary/30 bg-primary/5 p-3 cursor-pointer"
+                    onClick={() =>
+                      setContactForm((prev) => ({ ...prev, requestQuote: !prev.requestQuote }))
+                    }
+                  >
+                    <Checkbox
+                      id="unlock-request-quote"
+                      checked={contactForm.requestQuote}
+                      onCheckedChange={(checked) =>
+                        setContactForm((prev) => ({ ...prev, requestQuote: !!checked }))
+                      }
+                      className="h-4 w-4 mt-0.5"
+                    />
+                    <div>
+                      <Label
+                        htmlFor="unlock-request-quote"
+                        className="text-sm font-medium cursor-pointer"
+                      >
+                        I&apos;d like your team to reach out with a concrete quote
+                      </Label>
+                      <p className="text-xs text-muted-foreground mt-0.5">
+                        Our team will review your requirements and get back to you with a tailored
+                        proposal.
+                      </p>
+                    </div>
+                  </div>
+
                   {submitError && (
                     <div className="mt-4 bg-destructive/10 p-3 rounded-md flex items-start gap-2 text-destructive">
                       <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
@@ -1199,8 +1277,8 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                       </>
                     ) : (
                       <>
-                        <Lock className="mr-2 h-4 w-4" />
-                        {labels.buttons.unlock}
+                        <Send className="mr-2 h-4 w-4" />
+                        See Detailed Breakdown
                       </>
                     )}
                   </Button>
@@ -1229,6 +1307,11 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
               <p className="text-sm text-green-700 dark:text-green-300 mt-1">
                 {labels.result.thankYouSuffix} {contactForm.email}.
               </p>
+              {contactForm.requestQuote && (
+                <p className="text-sm text-green-700 dark:text-green-300 mt-2">
+                  Our team will review your requirements and reach out with a concrete quote.
+                </p>
+              )}
             </div>
           )}
 

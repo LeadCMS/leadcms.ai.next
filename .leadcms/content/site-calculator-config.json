@@ -234,8 +234,6 @@
   "createdAt": "2026-02-06T11:48:52.627633Z",
   "title": "Site Calculator Configuration",
   "description": "Pricing weights and labels for the website cost calculator component. Manage all calculator variables here.",
-  "coverImageUrl": "/media/common/calculator-config.jpg",
-  "coverImageAlt": "Website cost calculator configuration",
   "slug": "site-calculator-config",
   "type": "component",
   "author": "LeadCMS Team",

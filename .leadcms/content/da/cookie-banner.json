@@ -1,0 +1,22 @@
+{
+  "cookieBanner": {
+    "message": "We use cookies to improve your experience and measure site usage. Learn more in our",
+    "policyLinkLabel": "Privacy Policy",
+    "policyLinkHref": "/legal/privacy",
+    "acceptLabel": "Accept",
+    "declineLabel": "Decline",
+    "gtagid": "G-P32PYST5B6"
+  },
+  "id": 106,
+  "createdAt": "2026-02-10T13:34:55.99839Z",
+  "title": "Cookie Banner Configuration",
+  "description": "Configuration for the cookie consent banner and analytics tracking settings.",
+  "slug": "cookie-banner",
+  "type": "component",
+  "author": "LeadCMS",
+  "language": "da",
+  "category": "",
+  "tags": [],
+  "allowComments": false,
+  "publishedAt": "2026-02-10T00:00:00Z"
+}

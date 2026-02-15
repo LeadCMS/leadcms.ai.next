@@ -1,12 +1,12 @@
 ---
 id: 57
 createdAt: '2025-10-24T13:33:51.723319Z'
-updatedAt: '2026-02-08T19:32:17.372174Z'
-title: 'Introducing a Free, Open-Source Headless CMS & CRM with AI'
+updatedAt: '2026-02-11T06:05:48.431514Z'
+title: 'Introducing LeadCMS: Open Source Headless CMS and CRM with AI'
 description: >-
-  Discover LeadCMS: a revolutionary free, open-source platform that combines
-  headless CMS and CRM with AI-powered content generation. Built for modern
-  developers who want full control over content and customer data.
+  Meet LeadCMS, a free MIT-licensed headless CMS and CRM for Jamstack teams,
+  with AI content generation, live preview, Git-style workflows, and Docker
+  deploys.
 coverImageUrl: >-
   /media/blog/introducing-leadcms/introducing-leadcms-cover-20260206-065907-cover-20260206-065952.avif
 coverImageAlt: 'Introducing a Free, Open-Source Headless CMS & CRM with AI'
@@ -19,13 +19,15 @@ category: Announcement
 tags:
   - AI First CMS
   - Open-Source CMS
-  - Free CMS
   - Headless CMS
+  - CRM
 allowComments: false
 publishedAt: '2025-10-22T18:30:00Z'
 ---
 
 **LeadCMS** is a new kind of content management platform: a free, open source headless CMS that comes bundled with a full-featured CRM and AI-powered automations. It's built for modern developers and tech-savvy teams who want full control over their content and customer data. In this inaugural post, we'd like to share why we started this journey, what LeadCMS offers, and where it's headed.
+
+![LeadCMS content management](/media/blog/introducing-leadcms/leadcms-conent-management.avif)
 
 ## Why We Built LeadCMS
 
@@ -45,6 +47,8 @@ This shared pattern highlighted the opportunity for a unified, reusable solution
 
 Equally important, we saw how AI was transforming content creation. Writing and maintaining marketing pages or documentation by hand was slow and labor-intensive. Why not leverage modern AI tools to **generate and refine content in seconds**? In 2025, using AI for text generation and editing is a must-have productivity boost, especially when combined with a flexible content format like Markdown. This realization became a core principle of LeadCMS: _an AI-first CMS built to streamline site development and content production_. We wanted to **automate away the busywork** of site building and let teams focus on their product.
 
+Another pattern became clear as our sites scaled: Jamstack and modern frameworks (Next.js, Astro, Gatsby, and others) deliver great performance, but content teams still need a fast feedback loop. LeadCMS focuses on that workflow: API-first content, predictable templates, and a writer-friendly UI that does not sacrifice developer control.
+
 ## The Best of Both Worlds: Headless CMS + Integrated CRM
 
 LeadCMS uniquely combines two powerful systems in one platform, so you don't have to bolt together separate products:
@@ -53,13 +57,21 @@ LeadCMS uniquely combines two powerful systems in one platform, so you don't hav
 
 A modern content management system for creating and structuring content, decoupled from any specific front-end. You can build ultra-fast websites with frameworks like Next.js, Astro, Gatsby, or anything you choose. Content is stored in a structured way (with support for Markdown and Git version control) and delivered via API. This means your marketing pages, documentation, blogs, etc., are all managed in one place with full version history and can be rendered on any site or app.
 
-LeadCMS was built with developers in mind, offering **Git-based content management** and an **API-first architecture** for maximum flexibility. It's **framework-agnostic** but a particularly great fit as a **Next.js CMS**, since it supports static site generation and high-performance dynamic content out of the box. Multi-language content, custom content models, and robust content versioning are supported from day one.
+LeadCMS was built with developers in mind, offering **Git-based content management** and an **API-first architecture** for maximum flexibility. It's **framework-agnostic** and works with any static site generator or custom frontend, using REST APIs and the official JavaScript/TypeScript SDK. Multi-language content, custom content models, and robust content versioning are supported from day one.
+
+The CMS is designed around structured content types, Markdown and MDX, and predictable templates. That combination makes AI output practical: the model can generate content that matches the exact structure your site can render, instead of producing generic text that needs manual cleanup.
+
+![Generate a landing page with AI in LeadCMS](/media/blog/introducing-leadcms/leadcms-generate-landing-page-with-ai.avif)
 
 ### Integrated CRM
 
 Alongside the CMS, LeadCMS includes a built-in customer relationship management system tailored for software businesses. You can **track the entire customer journey** - from a visitor's first website click, to signing up for a free trial, to becoming a paying customer - all within the same platform. No more siloed data or clunky integrations: the CMS and CRM share one database and interface.
 
-LeadCMS provides **contact and lead management**, deal pipelines with customizable stages, and tools for managing licenses or subscriptions (e.g. automating free trial activation and license key generation for software sales). It even enables **sales automation** workflows: trigger emails or in-app actions based on user behavior, score leads automatically, and log all interactions in one place. The result is a unified dashboard where your content and customer data live together, giving you a 360° view of your site's performance and your leads.
+LeadCMS provides **contact and lead management**, deal pipelines with customizable stages, and tools for managing licenses or subscriptions (for example, automating free trial activation and license key generation for software sales). It also enables **sales automation** workflows: trigger emails or in-app actions based on user behavior, score leads automatically, and log all interactions in one place. The result is a unified dashboard where your content and customer data live together, giving you a 360° view of your site's performance and your leads.
+
+![LeadCMS contacts management](/media/blog/introducing-leadcms/leadcms-contacts-management.avif)
+
+![LeadCMS accounts management](/media/blog/introducing-leadcms/leadcms-accounts-management.avif)
 
 By having CMS and CRM in one open-source platform, teams avoid duplicate data and manual syncing. Marketing and sales work off the **same unified system**, which improves efficiency and accuracy. In short, LeadCMS lets you manage both your website content and your customer relationships in a single developer-friendly toolkit.
 
@@ -71,13 +83,15 @@ A key differentiator of LeadCMS is its **AI-powered features**. We built LeadCMS
 
 Use AI to generate draft content for pages or posts. For example, if you need a new landing page, you can select from your site's existing components and let the AI draft the text based on a prompt or reference content. This helps you spin up new pages in minutes, letting you quickly experiment with different positioning or messaging for different audiences. The AI can also suggest improvements or alternate wording for existing content, acting like an intelligent writing assistant **built into the CMS**.
 
+A practical detail matters here: LeadCMS is MD and MDX-first, so AI-generated output naturally matches what Jamstack sites already render. That means you keep a clean, reviewable content format, while still letting the Admin UI guide writers and keep everything consistent.
+
 ### One-Click Translations
 
 Write content once and have the AI translate it into multiple languages. LeadCMS's AI integration can preserve context and formatting while translating, making it easier to maintain a multi-lingual site. Reaching a global audience becomes much simpler when your CMS can handle the heavy lifting of localization.
 
 ### Image Generation
 
-Tired of hunting for stock images or waiting on designers? With AI, you can generate custom images (like blog post cover images or graphics for your landing pages) just by describing what you need. LeadCMS's AI plugin taps into image-generation models (e.g. DALL·E) to create illustrations and header images on the fly. This means your content creation process can be almost entirely AI-assisted - text and visuals.
+Tired of hunting for stock images or waiting on designers? With AI, you can generate custom images (like blog post cover images or graphics for your landing pages) just by describing what you need. LeadCMS's AI plugin taps into image-generation models to create illustrations and header images on the fly. This means your content creation process can be almost entirely AI-assisted - text and visuals.
 
 ### Intelligent Lead Scoring & Enrichment
 
@@ -191,4 +205,12 @@ If you're planning a large deployment or need custom features fast, we do offer 
 
 ---
 
-Thank you for reading and for your interest in LeadCMS. We built this platform to scratch our own itch and empower developers and product teams to build sites and manage customer relationships more effectively. We're incredibly excited about where this project is headed. If you've been looking for a **free CMS** that's open source, headless, _Next.js_-ready, and infused with **AI power**, we hope you'll give LeadCMS a try. Let us know what you build with it - together, we can shape the future of this AI-powered, developer-first CMS and CRM platform.
+Thank you for reading and for your interest in LeadCMS. We built this platform to scratch our own itch and empower developers and product teams to build sites and manage customer relationships more effectively. We're incredibly excited about where this project is headed. If you've been looking for a **free CMS** that's open source, headless, and infused with **AI power**, we hope you'll give LeadCMS a try. Let us know what you build with it - together, we can shape the future of this AI-powered, developer-first CMS and CRM platform.
+
+![LeadCMS live preview as you edit](/media/blog/introducing-leadcms/leadcms-live-preview-as-you-edit.avif)
+
+![LeadCMS media management](/media/blog/introducing-leadcms/leadcms-media-management.avif)
+
+![LeadCMS deployments management](/media/blog/introducing-leadcms/leadcms-deployments-management.avif)
+
+![LeadCMS content growth dashboard](/media/blog/introducing-leadcms/leadcms-content-growth-dashboard.avif)

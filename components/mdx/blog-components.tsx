@@ -1,5 +1,12 @@
 import React from "react"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Calendar, Clock, User, ArrowRight } from "lucide-react"
@@ -56,6 +63,15 @@ export function BlogCard({
         />
       </LocaleAwareLink>
       <CardHeader className="flex-1">
+        {tags && tags.length > 0 && (
+          <div className="flex flex-wrap gap-1.5 mb-2">
+            {tags.map((tag) => (
+              <Badge key={tag} variant="secondary" className="text-xs font-medium">
+                {tag}
+              </Badge>
+            ))}
+          </div>
+        )}
         <CardDescription className="line-clamp-3">{excerpt}</CardDescription>
       </CardHeader>
       <CardContent>
@@ -132,9 +148,16 @@ export function FeaturedArticle({
         </LocaleAwareLink>
         <div className="flex flex-col">
           <CardHeader className="pb-4">
-            <CardDescription className="text-base line-clamp-4">
-              {excerpt}
-            </CardDescription>
+            {tags && tags.length > 0 && (
+              <div className="flex flex-wrap gap-1.5 mb-2">
+                {tags.map((tag) => (
+                  <Badge key={tag} variant="secondary" className="text-xs font-medium">
+                    {tag}
+                  </Badge>
+                ))}
+              </div>
+            )}
+            <CardDescription className="text-base line-clamp-4">{excerpt}</CardDescription>
           </CardHeader>
           <CardContent className="flex-1">
             <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
@@ -177,11 +200,7 @@ export function BlogGrid({ children, columns = 3 }: BlogGridProps) {
     3: "grid-cols-1 md:grid-cols-2 lg:grid-cols-3",
   }
 
-  return (
-    <div className={cn("grid gap-6", gridClasses[columns])}>
-      {children}
-    </div>
-  )
+  return <div className={cn("grid gap-6", gridClasses[columns])}>{children}</div>
 }
 
 // Blog Header Component
@@ -305,22 +324,25 @@ export function BlogIndexHero({
 
   if (showFeaturedPost) {
     // ✨ Optimized: Single function call instead of 1 + N calls
-    const blogContents = getAllContentForLocale(locale, ['blog-article'])
+    const blogContents = getAllContentForLocale(locale, ["blog-article"])
     const blogPosts: BlogPost[] = blogContents
-      .filter((postContent: any) => postContent && postContent.type === 'blog-article')
-      .map((postContent: any) => ({
-        slug: postContent.slug,
-        title: postContent.title || '',
-        description: postContent.description || '',
-        excerpt: (postContent.excerpt as string | undefined) || postContent.description || '',
-        author: postContent.author,
-        publishedAt: postContent.publishedAt || postContent.createdAt,
-        category: postContent.category,
-        tags: postContent.tags as string[] | undefined,
-        featured: postContent.featured as boolean | undefined,
-        coverImageUrl: postContent.coverImageUrl as string | undefined,
-        body: postContent.body,
-      } as BlogPost))
+      .filter((postContent: any) => postContent && postContent.type === "blog-article")
+      .map(
+        (postContent: any) =>
+          ({
+            slug: postContent.slug,
+            title: postContent.title || "",
+            description: postContent.description || "",
+            excerpt: (postContent.excerpt as string | undefined) || postContent.description || "",
+            author: postContent.author,
+            publishedAt: postContent.publishedAt || postContent.createdAt,
+            category: postContent.category,
+            tags: postContent.tags as string[] | undefined,
+            featured: postContent.featured as boolean | undefined,
+            coverImageUrl: postContent.coverImageUrl as string | undefined,
+            body: postContent.body,
+          }) as BlogPost
+      )
       .sort((a: BlogPost, b: BlogPost) => {
         // Sort featured posts first, then by published date
         if (a.featured && !b.featured) return -1
@@ -342,7 +364,7 @@ export function BlogIndexHero({
         month: "long",
         day: "numeric",
       })
-    : ''
+    : ""
 
   return (
     <section className="relative w-full py-16 md:py-24 lg:py-32 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-blue-950/30 dark:via-indigo-950/30 dark:to-purple-950/30 overflow-hidden">
@@ -369,14 +391,24 @@ export function BlogIndexHero({
               {/* CTA Buttons */}
               <div className="flex flex-wrap gap-4 w-full lg:w-auto justify-center lg:justify-start">
                 <a href="#articles" className="flex-1 lg:flex-initial">
-                  <Button size="lg" className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300">
+                  <Button
+                    size="lg"
+                    className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                  >
                     View All Articles
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </a>
                 {featuredPost && (
-                  <LocaleAwareLink href={`/${featuredPost.slug}`} className="flex-1 lg:flex-initial">
-                    <Button size="lg" variant="outline" className="w-full border-2 hover:bg-muted/50">
+                  <LocaleAwareLink
+                    href={`/${featuredPost.slug}`}
+                    className="flex-1 lg:flex-initial"
+                  >
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="w-full border-2 hover:bg-muted/50"
+                    >
                       Read Featured Post
                     </Button>
                   </LocaleAwareLink>
@@ -400,6 +432,15 @@ export function BlogIndexHero({
                     />
                   </LocaleAwareLink>
                   <CardHeader>
+                    {featuredPost.tags && featuredPost.tags.length > 0 && (
+                      <div className="flex flex-wrap gap-1.5 mb-2">
+                        {featuredPost.tags.map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-xs font-medium">
+                            {tag}
+                          </Badge>
+                        ))}
+                      </div>
+                    )}
                     <CardDescription className="text-base line-clamp-3 mt-2">
                       {featuredPost.excerpt || featuredPost.description}
                     </CardDescription>
@@ -462,22 +503,25 @@ export function BlogArticlesSection({
 
   // ✨ Optimized: Single function call instead of 1 + N calls
   // userUid enables draft content when provided
-  const blogContents = getAllContentForLocale(locale, ['blog-article'], userUid as any)
+  const blogContents = getAllContentForLocale(locale, ["blog-article"], userUid as any)
   const blogPosts: BlogPost[] = blogContents
-    .filter((postContent: any) => postContent && postContent.type === 'blog-article')
-    .map((postContent: any) => ({
-      slug: postContent.slug,
-      title: postContent.title || '',
-      description: postContent.description || '',
-      excerpt: (postContent.excerpt as string | undefined) || postContent.description || '',
-      author: postContent.author,
-      publishedAt: postContent.publishedAt || postContent.createdAt,
-      category: postContent.category,
-      tags: postContent.tags as string[] | undefined,
-      featured: postContent.featured as boolean | undefined,
-      coverImageUrl: postContent.coverImageUrl as string | undefined,
-      body: postContent.body,
-    } as BlogPost))
+    .filter((postContent: any) => postContent && postContent.type === "blog-article")
+    .map(
+      (postContent: any) =>
+        ({
+          slug: postContent.slug,
+          title: postContent.title || "",
+          description: postContent.description || "",
+          excerpt: (postContent.excerpt as string | undefined) || postContent.description || "",
+          author: postContent.author,
+          publishedAt: postContent.publishedAt || postContent.createdAt,
+          category: postContent.category,
+          tags: postContent.tags as string[] | undefined,
+          featured: postContent.featured as boolean | undefined,
+          coverImageUrl: postContent.coverImageUrl as string | undefined,
+          body: postContent.body,
+        }) as BlogPost
+    )
     .sort((a: BlogPost, b: BlogPost) => {
       // Sort featured posts first, then by published date
       if (a.featured && !b.featured) return -1
@@ -554,10 +598,13 @@ export function BlogCallout({ type = "info", title, children }: BlogCalloutProps
   const styles = {
     note: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-100",
     tip: "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
-    warning: "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-100",
-    danger: "border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-100",
+    warning:
+      "border-yellow-200 bg-yellow-50 text-yellow-900 dark:border-yellow-800 dark:bg-yellow-950 dark:text-yellow-100",
+    danger:
+      "border-red-200 bg-red-50 text-red-900 dark:border-red-800 dark:bg-red-950 dark:text-red-100",
     info: "border-blue-200 bg-blue-50 text-blue-900 dark:border-blue-800 dark:bg-blue-950 dark:text-blue-100",
-    success: "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
+    success:
+      "border-green-200 bg-green-50 text-green-900 dark:border-green-800 dark:bg-green-950 dark:text-green-100",
   }
 
   const Icon = icons[type]

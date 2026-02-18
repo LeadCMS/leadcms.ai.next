@@ -53,10 +53,10 @@ export default function BlogTemplate({
         <section className="w-full border-b bg-muted/30">
           <div className="w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12 lg:py-16">
             <div className="max-w-6xl mx-auto">
-              <div className="grid lg:grid-cols-[1.15fr_0.85fr] gap-8 lg:gap-12 items-center">
+              <div className="grid lg:grid-cols-[0.85fr_1.15fr] gap-8 lg:gap-12 items-center">
                 {/* Left side - Cover Image */}
                 <div className="order-1">
-                  <div className="relative aspect-[16/10] overflow-hidden rounded-xl shadow-lg bg-muted">
+                  <div className="relative aspect-[3/2] overflow-hidden rounded-xl shadow-lg bg-muted">
                     {coverImageUrl ? (
                       <img
                         src={coverImageUrl}

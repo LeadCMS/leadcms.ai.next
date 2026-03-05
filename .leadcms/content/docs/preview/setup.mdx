@@ -1,12 +1,11 @@
 ---
 id: 76
 createdAt: '2025-11-10T15:50:53.94893Z'
-updatedAt: '2025-11-11T07:50:32.149174Z'
+updatedAt: '2026-03-05T13:21:38.373988Z'
 title: Preview Setup
 description: >-
-  Learn how to configure a live preview server for your LeadCMS‑powered site.
-  This guide covers the watch command, preview Docker image and how to connect
-  your site to the CMS in development.
+  Configure a live preview server for your LeadCMS site. Learn watch command,
+  Docker image setup and CMS connection in development.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs/preview/setup
@@ -36,7 +35,7 @@ When you run your project in development mode (e.g. `next dev` for Next.js or `a
 - Upon receiving an event, it downloads the affected content and writes the updated MDX/JSON files to your local `.leadcms/content` directory.
 - For temp user previews, it creates a new file named `{slug}-{userUid}.mdx` (or `.json`) with `draft: true` in the frontmatter. These temporary files enable per‑user live editing.
 
-The watcher logic is implemented in the SDK’s SSE watcher script【152248343170964†L37-L205】【152248343170964†L206-L324】. This script automatically reconnects on errors and respects your environment configuration. You don’t need to write any code yourself; you simply run `leadcms watch`.
+The watcher logic is implemented in the SDK’s SSE watcher script. This script automatically reconnects on errors and respects your environment configuration. You don’t need to write any code yourself; you simply run `leadcms watch`.
 
 ## Setting up a preview server with Docker
 
@@ -45,12 +44,12 @@ Although you can run the watch command manually on your machine, the simplest wa
 Inside the generated `preview/Dockerfile` you’ll see that it:
 
 - Uses Node 20 on Alpine and installs **nginx** and **supervisor** for multi‑service management.
-- Accepts build arguments for `LEADCMS_URL`, `LEADCMS_API_KEY` and `LEADCMS_DEFAULT_LANGUAGE` and exports them as environment variables【71477882830231†L27-L35】.
-- Installs your project dependencies (using npm or pnpm) and copies your code into the container【808081300895072†L27-L45】.
+- Accepts build arguments for `LEADCMS_URL`, `LEADCMS_API_KEY` and `LEADCMS_DEFAULT_LANGUAGE` and exports them as environment variable.
+- Installs your project dependencies (using npm or pnpm) and copies your code into the container.
 - Copies the `preview/nginx.conf` and `preview/supervisord.conf` files, which configure the reverse proxy and run multiple processes.
-- Creates a `start.sh` script that fetches initial content using `leadcms pull` and then starts supervisor【808081300895072†L56-L65】.
+- Creates a `start.sh` script that fetches initial content using `leadcms pull` and then starts supervisor.
 
-The **nginx.conf** proxies all HTTP and WebSocket requests to your development server on port 3000. It enables hot reload for frameworks like Next.js and Astro and sets CORS headers for cross‑origin requests【594655418659028†L28-L43】【594655418659028†L78-L100】. The **supervisord.conf** starts three services: the dev server (`npm run livepreview`), **nginx**, and the LeadCMS SSE watcher (`npx leadcms watch`)【262007605042821†L6-L33】【262007605042821†L47-L63】.
+The **nginx.conf** proxies all HTTP and WebSocket requests to your development server on port 3000. It enables hot reload for frameworks like Next.js and Astro and sets CORS headers for cross‑origin requests. The **supervisord.conf** starts three services: the dev server (`npm run livepreview`), **nginx**, and the LeadCMS SSE watcher (`npx leadcms watch`).
 
 To build and run your preview server:
 

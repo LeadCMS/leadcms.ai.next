@@ -1,0 +1,494 @@
+---
+id: 114
+createdAt: '2026-03-05T13:20:43.210081Z'
+title: 'CMS as Code: Manage Your Website Content Like Source Code'
+description: >-
+  Learn how a CMS as Code approach lets you store, version, and deploy website
+  content using Git workflows, CLI tools, and AI-powered editors like GitHub
+  Copilot.
+coverImageUrl: ''
+coverImageAlt: CMS as Code workflow with Git and CLI
+slug: blog/cms-as-code-manage-website-content-like-source-code
+type: blog-article
+author: LeadCMS Team
+language: en
+category: Development
+tags:
+  - CMS as Code
+  - Content as Code
+  - Headless CMS
+allowComments: true
+---
+
+Every modern software team versions their source code, infrastructure definitions, and deployment configurations in Git. But when it comes to website content, most teams still rely on a browser-based admin panel, a database they cannot inspect locally, and a backup strategy that amounts to hoping the hosting provider does not lose anything.
+
+**CMS as Code** changes that. It means your content — articles, pages, media files, email templates, settings, even user comments — lives in your repository as plain files, versioned alongside your application code, editable with any tool you already use.
+
+This is not a future concept. It is how [LeadCMS](https://leadcms.ai) works today.
+
+<!-- screenshot-placeholder: hero image showing a split view — VS Code with MDX content on the left, the rendered website on the right -->
+
+## What Is CMS as Code?
+
+CMS as Code is an approach where all content managed by your CMS is represented as files in your project repository. Instead of content living exclusively inside an opaque database accessible only through a web UI, it is pulled down to your filesystem as structured, human-readable files that you can:
+
+- **Read and edit** in any IDE or text editor
+- **Commit and branch** with Git
+- **Review** in pull requests
+- **Search** with grep, ripgrep, or your editor's global search
+- **Generate and refine** with AI tools like GitHub Copilot, Cursor, or ChatGPT
+- **Diff and merge** just like source code
+- **Deploy** back to your CMS with a single CLI command
+
+If you have ever wished you could `git diff` your website content or open a pull request to review a blog post, CMS as Code is the workflow you are looking for.
+
+## Why Traditional CMS Workflows Fall Short
+
+Most headless CMS platforms provide a REST or GraphQL API and a web-based dashboard. Content lives in a managed database. This model works well enough for small teams and simple sites, but it creates friction as projects grow:
+
+| Problem | Impact |
+|---|---|
+| **Content locked in a database** | Cannot search, diff, or batch-edit locally |
+| **No version history beyond undo** | Accidental deletions are permanent unless you maintain database backups |
+| **Single editing interface** | Editors are limited to the CMS admin panel; developers cannot use their preferred tools |
+| **Environment parity is hard** | Reproducing production content locally requires database dumps, API scripting, or manual re-entry |
+| **AI tools cannot access content** | LLMs and code assistants cannot read or edit content that only exists behind an API |
+| **No code review for content changes** | Typos, broken links, and formatting issues ship without review |
+
+CMS as Code removes these constraints. Content becomes a first-class part of your codebase.
+
+## How LeadCMS Implements CMS as Code
+
+LeadCMS provides a TypeScript CLI and SDK that syncs every entity in your CMS to your local filesystem and back. Here is what that looks like in practice.
+
+### Everything Is a File
+
+When you run `leadcms pull`, the SDK downloads your entire CMS into structured directories:
+
+```
+your-project/
+├── .leadcms/
+│   ├── content/
+│   │   ├── getting-started.mdx          # Default language
+│   │   ├── about.mdx
+│   │   ├── da/                          # Danish translations
+│   │   │   ├── getting-started.mdx
+│   │   │   └── about.mdx
+│   │   └── ru/                          # Russian translations
+│   │       └── getting-started.mdx
+│   ├── comments/
+│   │   └── blog-article/
+│   │       └── 42.json                  # Comments for article #42
+│   ├── email-templates/
+│   │   ├── welcome-email.mdx
+│   │   └── password-reset.mdx
+│   └── settings/
+│       └── site-config.json
+├── public/
+│   └── media/
+│       ├── hero.avif
+│       └── blog/
+│           └── cover.avif
+├── leadcms.config.json
+└── .env
+```
+
+Content files use **MDX** (Markdown with YAML frontmatter) for prose content and **JSON** for structured data like navigation configs or site settings. The format is determined by the content type defined in your CMS.
+
+An MDX content file looks exactly like what you would write in any Markdown-based static site:
+
+```mdx
+---
+title: Getting Started with LeadCMS
+description: A quick guide to setting up your first project.
+slug: getting-started
+type: article
+author: LeadCMS Team
+language: en
+tags:
+  - quickstart
+  - tutorial
+coverImageUrl: /media/getting-started/cover.avif
+publishedAt: '2026-01-15T10:00:00Z'
+---
+
+Welcome to LeadCMS. This guide walks you through creating
+your first project, pulling content, and deploying your site.
+
+## Installation
+
+Install the SDK globally or as a project dependency:
+
+\`\`\`bash
+npm install @leadcms/sdk
+\`\`\`
+```
+
+These are plain text files. No proprietary format, no binary blobs, no vendor lock-in.
+
+### Git Is Your Content Version Control
+
+Once content lives as files, Git does what it does best:
+
+```bash
+# See what changed since the last pull
+git diff .leadcms/content/
+
+# Review content changes in a pull request
+git add .leadcms/content/about.mdx
+git commit -m "Update about page copy"
+git push origin main
+
+# Revert a bad content change
+git revert HEAD
+
+# See who changed what and when
+git log --oneline .leadcms/content/about.mdx
+```
+
+Every content change gets a commit hash, an author, a timestamp, and a message. Your entire content history is preserved in Git — no separate backup system needed.
+
+<!-- screenshot-placeholder: terminal showing `git log` output for a content file with multiple commits from different authors -->
+
+### Edit Content with Any Tool
+
+Since content is MDX and JSON, you can edit it with whatever tool fits the task:
+
+<FeatureGrid columns={3}>
+  <FeatureCard title="IDEs & Editors" description="VS Code, WebStorm, Vim, or any editor with Markdown support." icon="Code">
+    - Syntax highlighting for MDX
+    - Frontmatter validation
+    - Live Markdown preview
+    - Multi-file search and replace
+  </FeatureCard>
+
+  <FeatureCard title="AI Assistants" description="GitHub Copilot, Cursor, Claude, ChatGPT — all work natively with MDX." icon="Zap">
+    - Generate blog posts from prompts
+    - Translate content to new languages
+    - Refactor and improve existing copy
+    - Batch-update metadata across files
+  </FeatureCard>
+
+  <FeatureCard title="CLI & Scripts" description="Automate content operations with shell scripts and CI/CD pipelines." icon="Terminal">
+    - Batch content updates with sed or jq
+    - Lint Markdown with markdownlint
+    - Validate frontmatter with custom scripts
+    - Automate translations in CI
+  </FeatureCard>
+</FeatureGrid>
+
+This is a fundamental advantage over browser-only editing. When your content is code, every tool in the developer ecosystem works with it.
+
+## The Sync Workflow: Pull, Edit, Push
+
+LeadCMS treats your remote CMS instance like a Git remote. The mental model is familiar to any developer:
+
+| Git | LeadCMS CLI | What It Does |
+|---|---|---|
+| `git pull` | `leadcms pull` | Download latest content from the CMS |
+| `git status` | `leadcms status` | Show what changed locally vs. remotely |
+| `git push` | `leadcms push` | Upload local changes to the CMS |
+| `git diff` | `leadcms status --preview` | Show line-by-line content diffs |
+| `git reset` | `leadcms pull --reset` | Discard local state, fresh pull from CMS |
+
+### Pull: Download Everything
+
+```bash
+# Pull all entities: content, media, comments, email templates, settings
+leadcms pull
+
+# Pull only content
+leadcms pull-content
+
+# Pull a specific article by slug
+leadcms pull-content --slug getting-started
+
+# Start fresh — delete all local files and re-download
+leadcms pull --reset
+```
+
+The pull uses **incremental sync** — only changes since your last pull are downloaded, making subsequent pulls fast even for large sites.
+
+### Status: See What Changed
+
+```bash
+leadcms status
+```
+
+The output uses a familiar git-style format:
+
+```
+Content changes (3 files):
+        new file:   article      [en]   getting-started
+        modified:   article      [en]   about-us
+        renamed:    page         [da]   om-os -> about-us
+
+Email template changes (1 file):
+        modified:   welcome-email
+
+Settings changes (1 file):
+        modified:   site-config
+```
+
+Add `--preview` to see line-by-line diffs for content, or `--delete` to preview what would be removed from the CMS.
+
+<!-- screenshot-placeholder: terminal showing colorized `leadcms status` output with new, modified, and renamed files -->
+
+### Push: Deploy Your Changes
+
+```bash
+# Preview what would happen (no changes made)
+leadcms push --dry-run
+
+# Push everything to the CMS
+leadcms push
+
+# Push only content, skip media and templates
+leadcms push-content
+
+# Force push, overriding remote changes
+leadcms push --force
+```
+
+The push workflow detects conflicts — if someone edited content in the CMS admin panel while you were editing it locally, the SDK warns you before overwriting. The `--dry-run` flag shows the exact API calls that would be made, letting you verify before committing.
+
+## Three-Way Merge: Git-Style Conflict Resolution
+
+One of the most powerful features of the LeadCMS SDK is its **three-way merge** system. When you pull changes and both the local file and the remote version have been modified since the last sync, the SDK does not simply overwrite your work. Instead, it merges changes intelligently — exactly like Git.
+
+### How It Works
+
+1. **Base snapshot**: The server provides the state of the content at your last sync point
+2. **Local version**: Your current file on disk
+3. **Remote version**: The latest version from the CMS
+
+The SDK compares all three and:
+- If only the remote changed → updates your file automatically
+- If only you changed locally → keeps your version
+- If both changed in different sections → merges both sets of changes
+- If both changed the same section → presents a conflict for manual resolution
+
+### Conflict Markers
+
+When a true conflict occurs, the SDK writes standard conflict markers into the file — the same format Git uses:
+
+```mdx
+<<<<<<< local
+Your locally edited paragraph goes here.
+=======
+The paragraph as edited by someone else in the CMS.
+>>>>>>> remote
+```
+
+You resolve it the same way you resolve a Git merge conflict: edit the file, remove the markers, keep the version you want. Then push.
+
+This merge strategy works for both MDX content (line-based merge) and JSON content (field-level structural merge), so settings and structured data get the same conflict handling.
+
+## Local Development Without Production Data Risks
+
+One of the biggest practical benefits of CMS as Code is **local environment parity**. Instead of connecting your development environment to a production CMS — risking accidental edits to live content — you can spin up a completely isolated local stack.
+
+<Steps>
+  <Step title="Pull your production content into a Git repository">
+    ```bash
+    leadcms pull
+    git add .leadcms/ public/media/
+    git commit -m "Snapshot production content"
+    ```
+  </Step>
+
+  <Step title="Start a local LeadCMS instance">
+    The SDK includes Docker templates for running LeadCMS locally:
+    ```bash
+    leadcms docker
+    docker-compose up -d
+    ```
+  </Step>
+
+  <Step title="Push your content into the local instance">
+    Point your config at the local instance and push:
+    ```bash
+    LEADCMS_URL=http://localhost:5000 leadcms push
+    ```
+    Your local CMS now has all your production content in its own database.
+  </Step>
+
+  <Step title="Develop and test freely">
+    Edit content, try new layouts, test migrations — nothing touches production. When you are done, push changes back to production.
+  </Step>
+</Steps>
+
+No database dumps. No SQL scripts. No risk of corrupting production data. Just `pull`, `push`, and a local Docker container.
+
+<!-- screenshot-placeholder: diagram showing the flow: Production CMS → pull → Git repo → push → Local CMS (Docker) -->
+
+## AI-Native Content Editing
+
+When content is stored as MDX files, every AI tool that understands Markdown becomes a content editor. This is not a theoretical benefit — it is a workflow multiplier.
+
+### GitHub Copilot and IDE Assistants
+
+Open an MDX file in VS Code or any editor with Copilot enabled and you can:
+
+- **Ask Copilot to write a new section** directly in the file
+- **Refactor content** — "Make this paragraph more concise" or "Add a call-to-action"
+- **Generate translations** — "Translate this article to Danish" and save it to the `da/` locale directory
+- **Update frontmatter** — "Add SEO-optimized tags to all blog posts in this directory"
+
+Because the files are in your workspace, Copilot has full context: it can see your content structure, understand your frontmatter schema, reference other articles, and maintain consistency.
+
+### Batch Operations with LLMs
+
+Need to update 50 blog posts at once? Write a script that feeds each MDX file to an LLM API, applies the changes, and saves the result. Then `git diff` the output, review it, and `leadcms push`.
+
+```bash
+# Example: use an LLM to add meta descriptions to all posts missing one
+for file in .leadcms/content/*.mdx; do
+  if ! grep -q "^description:" "$file"; then
+    # Feed to LLM, get description, update frontmatter
+    echo "Updated: $file"
+  fi
+done
+
+leadcms push --dry-run  # Review changes before pushing
+```
+
+This kind of automation is impossible when content is locked behind a web UI.
+
+<!-- screenshot-placeholder: VS Code showing Copilot inline suggestion completing an MDX blog post -->
+
+## Content as a Backup Strategy
+
+Every `leadcms pull` followed by a `git commit` creates a point-in-time snapshot of your entire CMS. Over time, your Git history becomes a comprehensive backup:
+
+- **Full content history**: Every article revision, every settings change, every media file
+- **Granular recovery**: Restore a single article from two weeks ago without touching anything else
+- **Branch-based staging**: Create a Git branch, make experimental content changes, merge only if they work
+- **Disaster recovery**: If your CMS database is lost, `leadcms push` restores everything from your repository
+
+This is not a replacement for database backups — it is an additional layer of protection that happens naturally as part of your development workflow.
+
+<Callout type="tip" title="Automate content snapshots">
+  Add `leadcms pull && git add .leadcms/ && git commit -m "Content snapshot $(date +%F)"` to a daily cron job or a scheduled CI pipeline. Your content history builds itself.
+</Callout>
+
+## Multi-Language Content Management
+
+Localized content follows a directory-based structure that mirrors how most static site generators handle i18n:
+
+```
+.leadcms/content/
+├── about.mdx               # English (default)
+├── pricing.mdx
+├── da/                      # Danish
+│   ├── about.mdx
+│   └── pricing.mdx
+├── ru/                      # Russian
+│   └── about.mdx
+└── pt-BR/                   # Brazilian Portuguese
+    └── about.mdx
+```
+
+Each locale gets its own subdirectory. Translation files share the same slug as their default-language counterpart, linked by a `translationKey` in the frontmatter. This makes it straightforward to:
+
+- See which articles are translated and which are not
+- Send an entire locale directory to a translation service
+- Use AI to generate initial translations from the default language
+- Review translation diffs in pull requests
+
+## CI/CD Integration
+
+CMS as Code fits naturally into continuous delivery pipelines. Content changes go through the same pipeline as code changes: commit, test, build, deploy.
+
+```yaml
+# Example GitHub Actions workflow
+name: Build & Deploy
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull latest content
+        run: npx @leadcms/sdk pull
+        env:
+          LEADCMS_URL: ${{ secrets.LEADCMS_URL }}
+
+      - name: Build site
+        run: npm run build
+
+      - name: Deploy
+        run: npm run deploy
+```
+
+The SDK supports **anonymous mode** for read-only operations. Your CI pipeline can pull content without an API key, making build pipelines simple and secure. Write operations like `push` require authentication via `LEADCMS_API_KEY`.
+
+For Docker deployments, the `leadcms generate-env` command creates a runtime environment config file, enabling the same container image to be deployed to different environments (staging, production) with different CMS URLs — no rebuild required.
+
+## CMS as Code vs. Traditional CMS Workflows
+
+<FeatureGrid columns={2}>
+  <FeatureCard title="Traditional CMS" description="Content lives in a database, edited through a web UI." icon="Cloud">
+    - Database-dependent environment setup
+    - Web-only editing interface
+    - Manual backup strategies required
+    - Limited automation capabilities
+    - No code review for content changes
+    - AI tools cannot access content directly
+  </FeatureCard>
+
+  <FeatureCard title="CMS as Code" description="Content lives as files, synced between your repo and the CMS." icon="GitBranch">
+    - File-based, works with any tool
+    - Full Git history and branching
+    - Automatic backups via commits
+    - Scriptable and automatable
+    - Pull request reviews for content
+    - AI assistants work natively with MDX
+  </FeatureCard>
+</FeatureGrid>
+
+CMS as Code does not replace the CMS admin panel. Non-technical editors can still use the LeadCMS web interface to create and edit content. The CLI syncs changes bidirectionally — edits made in the browser are pulled down, edits made in files are pushed up. Both workflows coexist.
+
+## Getting Started
+
+Setting up CMS as Code with LeadCMS takes a few minutes:
+
+```bash
+# Install the SDK
+npm install @leadcms/sdk
+
+# Interactive setup — configures your CMS URL, API key, and directories
+npx leadcms init
+
+# Pull all content into your repository
+npx leadcms pull
+
+# Commit the initial snapshot
+git add .leadcms/ public/media/ leadcms.config.json
+git commit -m "Initial content snapshot"
+```
+
+From this point on, your content is code. Edit it locally, review it in pull requests, push it to your CMS, and let Git handle the history.
+
+<Callout type="info" title="Works with any framework">
+  LeadCMS SDK is framework-agnostic. Whether you use Next.js, Astro, Gatsby, Nuxt, or vanilla HTML — the CLI and sync workflow work the same way.
+</Callout>
+
+## Summary
+
+CMS as Code is not just a developer convenience — it is a fundamental shift in how content teams work. When your content is stored as files and versioned with Git:
+
+- **Developers** edit content in their IDE with AI assistance, review changes in pull requests, and automate workflows with scripts
+- **Content teams** continue using the CMS web interface, with their changes automatically synced back to the repository
+- **DevOps teams** include content in CI/CD pipelines, use the same deployment patterns for code and content, and get backup for free
+- **Everyone** benefits from a single source of truth, full history, and the ability to reproduce any environment from scratch
+
+The question is not whether your content should be in Git. It is why it is not there already.
+
+---
+
+*Ready to try CMS as Code? Check out the [LeadCMS SDK documentation](/docs/sdk-api/cli-basics) or [set up your first project](/docs/getting-started/first-project) in minutes.*

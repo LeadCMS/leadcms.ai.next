@@ -1,12 +1,11 @@
 ---
 id: 85
 createdAt: '2025-11-10T16:02:13.928143Z'
-updatedAt: '2025-11-10T16:19:09.589474Z'
+updatedAt: '2026-03-05T11:58:33.557626Z'
 title: Status Command
 description: >-
-  Use the `status` command to preview changes between your local files and the
-  remote LeadCMS instance.  Learn how to interpret the output, filter by ID or
-  slug and prepare for a clean push.
+  Preview changes between local files and remote LeadCMS. Interpret output,
+  filter results and prepare for a clean push.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs/sdk-api/status
@@ -23,7 +22,7 @@ order: 4
 
 # Status
 
-Before pushing your local changes back to LeadCMS, it's important to understand what will be created, updated or conflicted.  The `status` command provides a dry‑run view of the synchronisation state.  It compares your local MDX/JSON files with the remote CMS and categorises the results without making any changes.
+Before pushing local changes back to LeadCMS, it's important to understand what will be created, updated or conflicted.  The `status` commands provide a dry‑run view of synchronisation state without making changes.
 
 ## Running the command
 
@@ -33,7 +32,7 @@ To view the overall status of your project, run:
 npx leadcms status
 ```
 
-This reads all local content files and fetches the latest remote content.  The output is grouped into sections similar to `git status`:
+This command provides a unified status across content, media, email templates and settings.  For content, output is grouped into sections similar to `git status`:
 
 - **New file** – Local files that do not exist in LeadCMS.  These will be created when you push.
 - **Modified** – Local files with changes compared to the remote version.  These will be updated on push.
@@ -43,16 +42,25 @@ This reads all local content files and fetches the latest remote content.  The o
 
 If the command outputs **No changes detected**, your local repository is in sync with LeadCMS.
 
+## Scoped status commands
+
+Use scoped commands when you want status for one entity type:
+
+- `npx leadcms status-content`
+- `npx leadcms status-media`
+- `npx leadcms status-email-templates`
+- `npx leadcms status-settings`
+
 ## Filtering the status
 
-You can check the status for a single piece of content by specifying an ID or slug.  This is useful when you only want to sync a particular file:
+You can check status for a single content item by specifying an ID or slug on `status-content`:
 
 ```bash
 # Check status for a content item by slug
-npx leadcms status --slug about-us
+npx leadcms status-content --slug about-us
 
 # Check status for a content item by ID
-npx leadcms status --id 42
+npx leadcms status-content --id 42
 ```
 
 When filtering, the command shows a detailed diff preview for the targeted file.
@@ -63,10 +71,10 @@ If a conflict is reported, run `npx leadcms pull` to retrieve the latest changes
 
 ## Detailed previews
 
-You can display a diff of the content changes by adding the `--preview` flag:
+You can display a diff of content changes by adding the `--preview` flag to `status-content`:
 
 ```bash
-npx leadcms status --preview
+npx leadcms status-content --preview
 ```
 
 This shows a line‑by‑line comparison of your local file against the remote version for each modified, renamed or type‑changed item.  Use this to review changes before deciding to push.
@@ -75,6 +83,7 @@ This shows a line‑by‑line comparison of your local file against the remote v
 
 - **Run status before every push.**  Checking status ensures you understand what will happen when you push and helps you avoid unexpected changes.
 - **Pull first.**  Always run `npx leadcms pull` before `status` to ensure your local repository is up to date.  This reduces the chance of conflicts.
+- **Use scoped status for clarity.**  For detailed content diffs, prefer `status-content --preview`.
 - **Resolve conflicts locally.**  When conflicts are reported, merge the changes manually in your editor.  Only use `--force` if you are certain you want to override remote updates.
 - **Use filters for targeted updates.**  If you are working on a single page or post, filter by slug or ID to see exactly what will change.
 
@@ -94,5 +103,20 @@ With status checks mastered, learn about pushing changes and content modeling:
     title="Content Types"
     description="Learn how to design and model your content structure"
     href="/docs/modeling/content-types/"
+  />
+  <FeatureCard
+    title="Email Templates"
+    description="Check and push template changes with scoped status"
+    href="/docs/sdk-api/email-templates/"
+  />
+  <FeatureCard
+    title="Settings Sync"
+    description="Use status-settings for tracked configuration"
+    href="/docs/sdk-api/settings-sync/"
+  />
+  <FeatureCard
+    title="Media Sync"
+    description="Inspect media differences with status-media"
+    href="/docs/sdk-api/media-sync/"
   />
 </FeatureGrid>

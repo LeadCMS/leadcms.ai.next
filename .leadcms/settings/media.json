@@ -1,0 +1,9 @@
+{
+  "Cover.Dimensions": "600x400",
+  "Max.Dimensions": "1024x1024",
+  "Max.FileSize": "2400",
+  "PreferredFormat": "avif",
+  "EnableOptimisation": "true",
+  "EnableCoverResize": "false",
+  "Quality": "90"
+}

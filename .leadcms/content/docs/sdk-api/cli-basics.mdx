@@ -1,9 +1,11 @@
 ---
 id: 77
 createdAt: '2025-11-10T15:50:54.14426Z'
-updatedAt: '2025-11-11T07:50:32.369121Z'
+updatedAt: '2026-03-05T11:58:32.343095Z'
 title: "CLI\_Basics"
-description: "Learn the essential LeadCMS\_CLI commands available through the SDK.  This overview explains each command and when to use it without going into the detailed behaviour covered in other articles."
+description: >-
+  Learn essential LeadCMS CLI commands and when to use them. Overview of
+  available commands without detailed behavior explanations.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs/sdk-api/cli-basics
@@ -26,14 +28,18 @@ The `leadcms` command‑line interface provides a set of tools to initialise you
 
 - **`init`** – Interactive setup wizard.  Connects to your LeadCMS instance, detects languages, configures directories and creates a `.env` file.  See **SDK Setup** for details.
 - **`login`** – Authenticates the CLI for write access.  Opens a browser for device authentication (v1.2.88+) or guides you through manual token extraction on older versions.  Stores the API key in your `.env` file.
-- **`pull`** – Downloads all content, media and comments from LeadCMS into your local directories.  Uses incremental sync tokens to transfer only changed items on subsequent runs.  See **Pull Content** for more information.
-- **`pull-content`** – Downloads only content files (MDX/JSON) without media or comments.  Useful when you want to refresh text and metadata but not assets.
+- **`pull`** – Runs a full pull for all supported entities (settings, content, media, comments, email templates).  Uses incremental sync for fast updates on subsequent runs.
+- **`pull-content`** – Downloads content files (MDX/JSON).
 - **`pull-media`** – Downloads only media files into your configured media directory.  Run this after updating images in the CMS.
 - **`pull-comments`** – Downloads only comments.  Use when you have user feedback but no content changes.
-- **`status`** – Shows the difference between your local content and the remote CMS.  It lists new, modified, renamed, type‑changed and conflicted files without making changes.  See **Status** for details.
-- **`push`** – Synchronises your local content with LeadCMS.  Detects new files, updates and renames, and prompts for confirmation before applying changes.  Supports creating missing content types interactively.  See **Push Content** for details.
+- **`pull-email-templates`** / **`pull-settings`** – Pull email templates or tracked settings only (requires API key).
+- **`status`** – Unified status for content, media, email templates and settings.
+- **`status-content`**, **`status-media`**, **`status-email-templates`**, **`status-settings`** – Scoped status commands for one entity type.
+- **`push`** – Runs a full push flow (settings, content, email templates, media).
+- **`push-content`**, **`push-media`**, **`push-email-templates`**, **`push-settings`** – Push only one entity type.
 - **`watch`** – Watches your local files and pulls remote updates on the fly.  Use this to develop a live preview server that reflects changes in both directions.  See the [Preview Setup](/docs/preview/setup/) and [Deploy](/docs/deploy/static-export/) guides for configuration.
 - **`docker`** – Generates Docker files and templates for deploying your static site and preview environment.  Produces production and preview Dockerfiles, nginx configuration and helper scripts.
+- **`generate-env`** – Generates `public/__env.js` from `NEXT_PUBLIC_*` variables.
 - **`version`**/`-v`/`--version` – Displays the installed SDK version.
 - **`help`** – Shows general help or command‑specific usage information.
 
@@ -62,7 +68,7 @@ Run any command with `--help` to see its options.  For example:
   </CodeTab>
 </CodeTabs>
 
-Outputs detailed descriptions of parameters such as `--dry-run`, `--force`, `--slug`, `--id`, and `--preview`.
+Outputs detailed descriptions of parameters such as `--dry-run`, `--force`, `--reset`, `--delete`, `--slug`, and `--id`.
 
 ## Workflow overview
 
@@ -70,10 +76,10 @@ In most projects your CLI workflow follows this pattern:
 
 1. **Initialise** – Run `leadcms init` once per project to create a `.env` file and optional config file.
 2. **Authenticate** – Run `leadcms login` if you need to push changes back to the CMS.
-3. **Pull** – Use `leadcms pull` (or `pull-content`, `pull-media`, `pull-comments`) to populate and keep your local files in sync.
+3. **Pull** – Use `leadcms pull` for a full sync, or scoped pull commands (`pull-content`, `pull-media`, `pull-comments`, `pull-email-templates`, `pull-settings`) when needed.
 4. **Work offline** – Edit MDX/JSON files, add new content, update slugs and structure using your editor.
-5. **Check status** – Run `leadcms status` to see what will change and resolve any conflicts.
-6. **Push** – Run `leadcms push` to apply your local updates to LeadCMS.  Use `--dry-run` or `--force` options as needed.
+5. **Check status** – Run `leadcms status` for a unified view, or `leadcms status-content --preview` for a detailed content diff.
+6. **Push** – Run `leadcms push` to apply all local updates, or a scoped push command for a single entity type.  Use `--dry-run`, `--delete`, or `--force` as needed.
 
 **Common CLI Commands:**
 
@@ -86,7 +92,7 @@ In most projects your CLI workflow follows this pattern:
     # Authenticate for write access
     npx leadcms login
 
-    # Pull all content, media, and comments
+    # Pull all supported entities
     npx leadcms pull
 
     # Check status before pushing
@@ -104,7 +110,7 @@ In most projects your CLI workflow follows this pattern:
     # Authenticate for write access
     pnpm exec leadcms login
 
-    # Pull all content, media, and comments
+    # Pull all supported entities
     pnpm exec leadcms pull
 
     # Check status before pushing
@@ -122,7 +128,7 @@ In most projects your CLI workflow follows this pattern:
     # Authenticate for write access
     yarn leadcms login
 
-    # Pull all content, media, and comments
+    # Pull all supported entities
     yarn leadcms pull
 
     # Check status before pushing
@@ -140,7 +146,7 @@ In most projects your CLI workflow follows this pattern:
     # Authenticate for write access
     bunx leadcms login
 
-    # Pull all content, media, and comments
+    # Pull all supported entities
     bunx leadcms pull
 
     # Check status before pushing
@@ -168,5 +174,30 @@ Now that you understand the CLI basics, dive deeper into specific operations:
     title="Push Content"
     description="Learn how to push local changes back to LeadCMS safely"
     href="/docs/sdk-api/push-content/"
+  />
+  <FeatureCard
+    title="Email Templates"
+    description="Pull, inspect, and push email templates"
+    href="/docs/sdk-api/email-templates/"
+  />
+  <FeatureCard
+    title="Settings Sync"
+    description="Manage tracked settings with scoped commands"
+    href="/docs/sdk-api/settings-sync/"
+  />
+  <FeatureCard
+    title="Media Sync"
+    description="Use scoped media pull, status, and push workflows"
+    href="/docs/sdk-api/media-sync/"
+  />
+  <FeatureCard
+    title="Reset & Merge"
+    description="Understand scoped reset and three-way merge behavior"
+    href="/docs/sdk-api/reset-and-merge/"
+  />
+  <FeatureCard
+    title="Generate Env"
+    description="Create runtime __env.js from NEXT_PUBLIC_ variables"
+    href="/docs/sdk-api/generate-env/"
   />
 </FeatureGrid>

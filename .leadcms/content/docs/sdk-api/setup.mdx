@@ -1,12 +1,11 @@
 ---
 id: 84
 createdAt: '2025-11-10T16:02:13.731004Z'
-updatedAt: '2025-11-11T07:50:32.590829Z'
+updatedAt: '2026-03-05T11:58:33.202385Z'
 title: SDK Setup Guide
 description: >-
-  Configure your project to use the LeadCMS SDK and CLI. Learn how to install
-  the package, set up environment variables, run the interactive init wizard,
-  authenticate for write access and pull your initial content.
+  Install and configure the LeadCMS SDK and CLI. Set up environment, initialize
+  wizard, authenticate and pull initial content.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs/sdk-api/setup
@@ -101,9 +100,15 @@ LEADCMS_DEFAULT_LANGUAGE=en
 # Directories for downloaded content and media (defaults shown)
 LEADCMS_CONTENT_DIR=.leadcms/content
 LEADCMS_MEDIA_DIR=public/media
+LEADCMS_COMMENTS_DIR=.leadcms/comments
+LEADCMS_EMAIL_TEMPLATES_DIR=.leadcms/email-templates
+LEADCMS_SETTINGS_DIR=.leadcms/settings
 
-# Enable draft support (requires API key) – include unpublished content when pulling
+# Enable draft handling for local SDK reads in preview/dev workflows
 LEADCMS_ENABLE_DRAFTS=false
+
+# Optional preview override (`true` enables preview mode, `false` disables)
+LEADCMS_PREVIEW=false
 ```
 
 You can place these variables in a `.env` file at the root of your project.  The SDK will load them automatically using `dotenv`.  For security reasons we recommend storing credentials (such as the API key) only in environment variables, not in source‑controlled files.
@@ -114,10 +119,11 @@ If you need to override directory settings or the default language, you can crea
 
 ```json
 {
-  "defaultLanguage": "en",
   "contentDir": ".leadcms/content",
   "mediaDir": "public/media",
-  "enableDrafts": false
+  "commentsDir": ".leadcms/comments",
+  "emailTemplatesDir": ".leadcms/email-templates",
+  "settingsDir": ".leadcms/settings"
 }
 ```
 
@@ -155,7 +161,7 @@ During the wizard you will be prompted for:
 - **LeadCMS URL** – the base URL of your LeadCMS instance.
 - **Authentication** – optional; if you provide an API key, the wizard will skip authentication.  Without a key you can continue in read‑only mode, or choose to authenticate immediately (required for pushing content).
 - **Default language** – the wizard lists all languages configured on the CMS and lets you choose the default.  This corresponds to the `LEADCMS_DEFAULT_LANGUAGE` setting.
-- **Directories** – confirm or change the local folders for content, media and comments.  Press Enter to accept the defaults.
+- **Directories** – confirm or change local folders for content, media, comments, email templates and settings.  Press Enter to accept the defaults.
 
 At the end of the process the wizard writes a `.env` file populated with your URL, default language and API key (if provided).  If you selected custom directories, it also creates a `leadcms.config.json` file.
 
@@ -196,7 +202,7 @@ You only need to log in once per machine unless your token expires or you switch
 
 ## Download your content
 
-Once your project is initialised, download your content, media and comments with a single command:
+Once your project is initialised, run a full sync with a single command:
 
 <CodeTabs defaultTab="pnpm" group="package-manager">
   <CodeTab label="npm">
@@ -221,7 +227,7 @@ Once your project is initialised, download your content, media and comments with
   </CodeTab>
 </CodeTabs>
 
-This populates the local directories with the current state of your LeadCMS instance.  The SDK stores incremental sync tokens so subsequent pulls only download changed items, making updates fast even for large projects.  For more details on pull operations see the [Pull Content](/docs/sdk-api/pull-content/) article.
+This populates local directories with all supported entities available to your current access level (settings, content, media, comments, email templates).  The SDK stores incremental sync tokens so subsequent pulls only download changed items, making updates fast even for large projects.  For more details on pull operations see the [Pull Content](/docs/sdk-api/pull-content/) article.
 
 ## Next steps
 
@@ -237,5 +243,15 @@ With the SDK installed and configured, you're ready to explore its capabilities:
     title="Pull Content"
     description="Learn how to synchronize content, media and comments"
     href="/docs/sdk-api/pull-content/"
+  />
+  <FeatureCard
+    title="Email Templates"
+    description="Synchronize local and remote email templates"
+    href="/docs/sdk-api/email-templates/"
+  />
+  <FeatureCard
+    title="Settings Sync"
+    description="Manage tracked settings through CLI"
+    href="/docs/sdk-api/settings-sync/"
   />
 </FeatureGrid>

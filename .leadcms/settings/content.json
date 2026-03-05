@@ -1,0 +1,6 @@
+{
+  "MinTitleLength": "10",
+  "MaxTitleLength": "80",
+  "MinDescriptionLength": "20",
+  "MaxDescriptionLength": "160"
+}

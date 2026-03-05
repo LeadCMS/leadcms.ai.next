@@ -1,0 +1,117 @@
+---
+id: 110
+createdAt: '2026-03-05T11:57:10.831937Z'
+title: Generate Environment Runtime File
+description: >-
+  Learn how to use the leadcms generate-env command to create public/__env.js
+  from NEXT_PUBLIC_ variables for runtime environment configuration.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/generate-env
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-03-05T18:30:00Z'
+group: SDK & API
+order: 10
+---
+
+# Generate Environment Runtime File
+
+The `generate-env` command creates a runtime environment file at `public/__env.js`.
+
+This is useful when your frontend reads public environment values at runtime instead of baking all values at build-time.
+
+## Command
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms generate-env
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms generate-env
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms generate-env
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms generate-env
+    ```
+  </CodeTab>
+</CodeTabs>
+
+## What it does
+
+- Loads variables from `.env` and `.env.local`.
+- Filters keys by `NEXT_PUBLIC_` prefix.
+- Writes the result to `public/__env.js` in the form:
+
+```js
+window.__env = {
+  NEXT_PUBLIC_EXAMPLE: "value"
+};
+```
+
+## Typical usage
+
+Run it before starting or building your app when runtime env injection is required:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull
+    npx leadcms generate-env
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull
+    pnpm exec leadcms generate-env
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull
+    yarn leadcms generate-env
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull
+    bunx leadcms generate-env
+    ```
+  </CodeTab>
+</CodeTabs>
+
+In many projects, this is added to prebuild or deployment scripts.
+
+## Best practices
+
+- Keep secrets out of `NEXT_PUBLIC_` variables.
+- Regenerate `__env.js` when public env values change.
+- Commit or ignore `public/__env.js` according to your deployment strategy.
+
+## Next steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="CLI Basics"
+    description="See where generate-env fits into CLI workflows"
+    href="/docs/sdk-api/cli-basics/"
+  />
+  <FeatureCard
+    title="SDK Setup"
+    description="Review environment variable configuration"
+    href="/docs/sdk-api/setup/"
+  />
+</FeatureGrid>

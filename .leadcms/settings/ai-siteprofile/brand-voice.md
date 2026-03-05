@@ -1,0 +1,5 @@
+- Confident, clear, and professional; avoid hype and jargon without explanation.
+- Developer‑first and practical: emphasize outcomes, performance, and technical credibility.
+- Optimistic and helpful: guide readers with concise steps and actionable advice.
+- Direct and concise: short sentences, active voice, and scannable formatting.
+- Inclusive and global: avoid slang, keep terminology consistent, and use American English spelling.

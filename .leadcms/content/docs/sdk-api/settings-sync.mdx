@@ -1,0 +1,156 @@
+---
+id: 113
+createdAt: '2026-03-05T11:57:11.496106Z'
+title: Settings Sync
+description: >-
+  Learn how to manage tracked CMS settings with pull-settings, status-settings,
+  and push-settings, including name filters, dry runs, and force mode.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/settings-sync
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-03-05T18:30:00Z'
+group: SDK & API
+order: 7
+---
+
+# Settings Sync
+
+LeadCMS includes dedicated commands for syncing tracked settings between your local repository and your CMS instance.
+
+By default, settings are stored in `.leadcms/settings` unless overridden with `LEADCMS_SETTINGS_DIR`.
+
+## Commands overview
+
+- `pull-settings` – Pull tracked settings from LeadCMS.
+- `status-settings` – Compare local and remote tracked settings.
+- `push-settings` – Push local tracked settings to LeadCMS.
+
+## Pull settings
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull-settings
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull-settings
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull-settings
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull-settings
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--name <key>` – Pull only one setting key.
+- `--reset` – Clear local settings directory before pull.
+
+If no API key is configured, settings sync is skipped.
+
+## Check settings status
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms status-settings
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms status-settings
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms status-settings
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms status-settings
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Option:
+
+- `--name <key>` – Show status for one setting key.
+
+Status output groups settings by states like in-sync, modified, local-only, and remote-only.
+
+## Push settings
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms push-settings
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms push-settings
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms push-settings
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms push-settings
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--name <key>` – Push one setting key.
+- `--dry-run` – Preview what would be pushed.
+- `--force` – Push all tracked settings, including unchanged ones.
+
+## Recommended workflow
+
+1. Pull current settings: `leadcms pull-settings`
+2. Edit local setting files.
+3. Review diff: `leadcms status-settings`
+4. Validate safely: `leadcms push-settings --dry-run`
+5. Push: `leadcms push-settings`
+
+## Best practices
+
+- Keep settings in version control for auditability.
+- Use `--name` while iterating on one setting key.
+- Run `status-settings` before every push.
+- Use `--force` only when you intentionally want to re-apply unchanged values.
+
+## Next steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Email Templates"
+    description="Synchronize transactional and marketing templates"
+    href="/docs/sdk-api/email-templates/"
+  />
+  <FeatureCard
+    title="CLI Basics"
+    description="See how settings commands fit into the full workflow"
+    href="/docs/sdk-api/cli-basics/"
+  />
+</FeatureGrid>

@@ -1,0 +1,158 @@
+---
+id: 111
+createdAt: '2026-03-05T11:57:11.07468Z'
+title: Media Sync
+description: >-
+  Learn how to pull, check status, and push media files using LeadCMS CLI,
+  including scope filtering, dry-run previews, and delete synchronization.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/media-sync
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-03-05T18:30:00Z'
+group: SDK & API
+order: 8
+---
+
+# Media Sync
+
+Media sync commands let you keep local assets and LeadCMS media library aligned.
+
+By default, media is stored in `public/media` unless overridden with `LEADCMS_MEDIA_DIR`.
+
+## Pull media
+
+Pull only media files from LeadCMS:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull-media
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull-media
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull-media
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull-media
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--reset` – Clear local media state and perform a fresh pull.
+
+## Check media status
+
+Inspect local vs remote media differences:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms status-media
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms status-media
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms status-media
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms status-media
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--scope <scopeUid>` – Restrict status to one media scope.
+- `--delete` – Include delete operations.
+
+## Push media
+
+Push local media changes to LeadCMS:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms push-media
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms push-media
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms push-media
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms push-media
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--dry-run` – Preview operations without uploading/deleting.
+- `--force` – Skip confirmation prompt.
+- `--delete` – Delete remote files not present locally.
+- `--scope <scopeUid>` – Push only one scope.
+
+## Scope-based workflows
+
+Use scope filtering to isolate changes in large repositories:
+
+```bash
+# Preview one scope
+npx leadcms status-media --scope blog --delete
+
+# Push one scope safely
+npx leadcms push-media --scope blog --dry-run
+npx leadcms push-media --scope blog
+```
+
+## Best practices
+
+- Prefer scoped pushes for high-volume media libraries.
+- Always run a dry-run before using `--delete`.
+- Use `pull-media` after CMS-side uploads or reorganizations.
+- Treat pulled media as generated sync output, not as manually edited source.
+
+## Next steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Pull Content"
+    description="Understand full and selective pull workflows"
+    href="/docs/sdk-api/pull-content/"
+  />
+  <FeatureCard
+    title="Status"
+    description="Review all scoped status commands"
+    href="/docs/sdk-api/status/"
+  />
+</FeatureGrid>

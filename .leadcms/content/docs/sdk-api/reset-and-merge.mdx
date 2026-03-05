@@ -1,0 +1,175 @@
+---
+id: 112
+createdAt: '2026-03-05T11:57:11.286124Z'
+title: Reset and Merge Behavior
+description: >-
+  Understand how LeadCMS pull reset flags and three-way content merge work, when
+  to use force overwrite, and how to recover from stale local state.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/reset-and-merge
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-03-05T18:30:00Z'
+group: SDK & API
+order: 9
+---
+
+# Reset and Merge Behavior
+
+Modern LeadCMS pull commands support both **scoped reset** and **three-way merge** for content.
+
+## Reset flags
+
+Use reset when local files or sync tokens are stale and you need a clean baseline.
+
+### Full reset
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull --reset
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull --reset
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull --reset
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull --reset
+    ```
+  </CodeTab>
+</CodeTabs>
+
+This clears local state for supported pull entities and downloads fresh data.
+
+### Scoped reset
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull-content --reset
+    npx leadcms pull-media --reset
+    npx leadcms pull-comments --reset
+    npx leadcms pull-email-templates --reset
+    npx leadcms pull-settings --reset
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull-content --reset
+    pnpm exec leadcms pull-media --reset
+    pnpm exec leadcms pull-comments --reset
+    pnpm exec leadcms pull-email-templates --reset
+    pnpm exec leadcms pull-settings --reset
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull-content --reset
+    yarn leadcms pull-media --reset
+    yarn leadcms pull-comments --reset
+    yarn leadcms pull-email-templates --reset
+    yarn leadcms pull-settings --reset
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull-content --reset
+    bunx leadcms pull-media --reset
+    bunx leadcms pull-comments --reset
+    bunx leadcms pull-email-templates --reset
+    bunx leadcms pull-settings --reset
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Each command resets only its own entity scope.
+
+## Three-way content merge
+
+During incremental content pulls, the SDK can merge:
+
+- your local edits,
+- remote updates,
+- and server-provided base snapshots.
+
+This helps preserve local changes while pulling upstream edits.
+
+<Callout type="info" title="Server requirement">
+Three-way merge requires LeadCMS server support for base snapshots (`includeBase`) introduced in newer versions (v1.3.18-pre+). On older servers, pull still works but behaves as overwrite sync.
+</Callout>
+
+## Force overwrite
+
+If you want remote to always replace local content during pull:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull --force
+    # or
+    npx leadcms pull-content --force
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull --force
+    # or
+    pnpm exec leadcms pull-content --force
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull --force
+    # or
+    yarn leadcms pull-content --force
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull --force
+    # or
+    bunx leadcms pull-content --force
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Use this when you intentionally do not want merge/conflict handling.
+
+## Conflict markers
+
+When both local and remote modify overlapping parts of content, pull may create conflict markers in local files. Resolve these manually, then continue normal status/push workflow.
+
+## Recommended recovery workflow
+
+1. Try normal pull: `leadcms pull`
+2. If conflicts appear, resolve them locally.
+3. If local state is inconsistent, run scoped reset (or full reset).
+4. Re-run `status` and continue with push.
+
+## Next steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Pull Content"
+    description="Learn selective and full pull commands"
+    href="/docs/sdk-api/pull-content/"
+  />
+  <FeatureCard
+    title="Push Content"
+    description="Push local changes after merge or conflict resolution"
+    href="/docs/sdk-api/push-content/"
+  />
+</FeatureGrid>

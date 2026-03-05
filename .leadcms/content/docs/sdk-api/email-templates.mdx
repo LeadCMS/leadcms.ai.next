@@ -1,0 +1,167 @@
+---
+id: 109
+createdAt: '2026-03-05T11:57:10.58541Z'
+title: Email Templates Sync
+description: >-
+  Learn how to pull, check status, and push email templates with the LeadCMS
+  CLI. Covers targeting by ID or name, dry runs, delete mode, and best
+  practices.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/email-templates
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: false
+publishedAt: '2025-03-05T18:30:00Z'
+group: SDK & API
+order: 6
+---
+
+# Email Templates Sync
+
+LeadCMS supports email template synchronisation through dedicated CLI commands. This lets you keep template files in source control and safely sync changes to and from your instance.
+
+## Commands overview
+
+- `pull-email-templates` – Pull remote templates into your local `emailTemplatesDir`.
+- `status-email-templates` – Compare local templates with remote templates.
+- `push-email-templates` – Push local template changes to LeadCMS.
+
+By default, templates are stored in `.leadcms/email-templates` unless overridden with `LEADCMS_EMAIL_TEMPLATES_DIR`.
+
+## Pull email templates
+
+Use this command to download templates from LeadCMS:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms pull-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms pull-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms pull-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms pull-email-templates
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Useful options:
+
+- `--id <template-id>` – Pull only one template by ID.
+- `--reset` – Clear local email template state and perform a fresh pull.
+
+<Callout type="info" title="Authentication">
+Email template sync requires authentication for write operations. For pull/status, behavior depends on your instance permissions and API key setup.
+</Callout>
+
+## Check template status
+
+Before pushing, inspect changes:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms status-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms status-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms status-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms status-email-templates
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--id <template-id>` – Show status for one template.
+- `--preview` – Show more detailed metadata preview for each change.
+- `--delete` – Include delete operations in output.
+
+## Push template changes
+
+Push local template updates back to LeadCMS:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    npx leadcms push-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    pnpm exec leadcms push-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    yarn leadcms push-email-templates
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    bunx leadcms push-email-templates
+    ```
+  </CodeTab>
+</CodeTabs>
+
+Options:
+
+- `--dry-run` – Show what would be pushed without changing remote data.
+- `--force` – Skip confirmation/conflict prompts where applicable.
+- `--delete` – Delete remote templates that no longer exist locally.
+- `--id <template-id>` – Push only one template by ID.
+- `--name <name>` – Push only one template by name.
+
+## Recommended workflow
+
+1. Pull latest templates: `leadcms pull-email-templates`
+2. Edit local template files.
+3. Review changes: `leadcms status-email-templates --preview`
+4. Validate safely: `leadcms push-email-templates --dry-run`
+5. Apply changes: `leadcms push-email-templates`
+
+## Best practices
+
+- Pull before push to reduce conflicts.
+- Use `--dry-run` for large template batches.
+- Use targeted pushes (`--id` or `--name`) when debugging one template.
+- Use `--delete` carefully to avoid unintended removals.
+
+## Next steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="Settings Sync"
+    description="Learn how to synchronize tracked CMS settings"
+    href="/docs/sdk-api/settings-sync/"
+  />
+  <FeatureCard
+    title="Status"
+    description="Understand unified and scoped status commands"
+    href="/docs/sdk-api/status/"
+  />
+</FeatureGrid>

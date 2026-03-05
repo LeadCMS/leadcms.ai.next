@@ -1,11 +1,11 @@
 ---
 id: 75
 createdAt: '2025-11-10T15:50:53.759445Z'
+updatedAt: '2026-03-05T11:58:32.064807Z'
 title: Live Preview
 description: >-
-  Discover how LeadCMS enables real‑time editing with user‑specific previews.
-  This article explains the current implementation and outlines a future vision
-  where preview logic is handled automatically by the SDK.
+  Enable real-time editing with user-specific previews in LeadCMS. Understand
+  current implementation and future SDK automation.
 coverImageUrl: ''
 coverImageAlt: ''
 slug: docs/preview/live-preview
@@ -18,47 +18,46 @@ allowComments: true
 publishedAt: '2025-11-06T00:00:00Z'
 group: Preview
 order: 3
+updatedAt: '2026-03-05T11:58:32.0648071Z'
 ---
 
 # Live Preview
 
-When editors update content in LeadCMS, they often want to see their changes reflected immediately on the site—even before saving or publishing. LeadCMS supports **live preview** (also called *temp user preview*) to provide this feedback. In this article we describe how live previews work today and outline a simplified, unified approach for the next SDK release.
+When editors update content in LeadCMS, they often want to see changes reflected immediately on the site—even before publishing. LeadCMS supports **live preview** (also called *temp user preview*) through watcher-driven local files and SDK preview mode.
 
 ## Current implementation
 
-Live preview is delivered through a combination of the LeadCMS SSE watcher and special naming conventions:
+Live preview is delivered through a combination of the LeadCMS SSE watcher, user-specific draft files and environment-based SDK behavior:
 
 - The **watch** command listens for `draft-updated` and `content-updated` events from the CMS. When an editor starts editing a page, the CMS sends a `draft-updated` event that includes a *user ID*.
-- The watcher generates a new file in your `.leadcms/content` folder with the name `{slug}-{userUid}.mdx` (or `.json` for JSON formats). It sets the frontmatter property `draft: true`. This file contains the unsaved changes and exists only locally【152248343170964†L37-L205】.
-- To render this file, the page component must extract the `userUid` from the slug and call `getCMSContentBySlugForLocale(slug, locale, includeDrafts, userUid)`. For lists, it must pass both `includeDrafts` and `userUid` when calling `getAllContentSlugsForLocale()`【97649375988743†L62-L78】.
+- The watcher creates/updates files in `.leadcms/content` using `{slug}-{userUid}` naming (MDX or JSON) and marks draft state in local content metadata.
+- SDK APIs no longer use `includeDrafts` boolean parameters. Draft visibility is controlled by environment (`NODE_ENV`/`LEADCMS_PREVIEW`) plus optional `userUid` for user-specific draft resolution.
 
-While this approach works, it requires developers to explicitly handle preview logic in every query. Forgetting to pass `includeDrafts` or `userUid` can lead to inconsistent previews and duplicate entries. Moreover, the additional slug logic complicates routing and makes generic components harder to reuse.
+Typical usage:
 
-## To‑be vision
+- Detail page queries: `getCMSContentBySlugForLocale(slug, locale, userUid?)`
+- List queries: `getAllContentSlugsForLocale(locale, contentTypes, userUid?)`
 
-We plan to simplify the live preview experience by moving preview logic entirely into the SDK. Instead of passing `includeDrafts` and `userUid` throughout your code, you will enable preview mode once and let the SDK handle the details.
+If the slug already includes a user GUID suffix (for example from a preview URL), the SDK detects it and resolves the matching user draft automatically, with fallback to base content when needed.
 
-Key improvements we envision:
+## How preview mode is enabled
 
-1. **Environment‑driven preview**: The SDK will detect `process.env.NODE_ENV === 'preview'` (or a dedicated `LEADCMS_PREVIEW` flag) and automatically include drafts and user previews in queries. Your page components will continue to call `getCMSContentBySlugForLocale(slug, locale)` and `getAllContentSlugsForLocale(locale, contentTypes)` without additional parameters. The SDK will decide whether to fetch published content, drafts or user‑specific previews.
+Preview mode is environment-driven in SDK v3+:
 
-2. **Unified slug handling**: User‑specific preview files will still be created with `{slug}-{userUid}`, but you won’t need to extract the user ID in your code. The SDK will parse the slug internally and load the appropriate file. For example, requesting `/blog/about-us-4fee1e45-0bb5-4118-82d8-e9d0db51dc4f/` will automatically serve the draft created by that user.
+- `NODE_ENV=development` enables preview behavior by default.
+- `LEADCMS_PREVIEW=true` explicitly enables preview mode.
+- `LEADCMS_PREVIEW=false` explicitly disables preview mode, even in development.
 
-3. **Safe enumeration**: Collections (like blog indexes) will continue to exclude drafts and user previews by default, even in preview mode. If you want to include drafts in a list, you will call an explicit function (e.g. `getAllContentSlugsForLocalePreview`) or pass an option. This prevents duplicate entries while still allowing editors to see unpublished work via direct links.
-
-4. **Simplified API**: Functions like `getCMSContentBySlugForLocaleWithDraftSupport` and `getAllContentSlugsForLocaleWithDraftSupport` will be deprecated. Instead, a unified API will always be used. Additional preview options can be configured globally or per call via an options object.
-
-5. **Automatic fallback**: In preview mode, if no user‑specific preview exists for a slug, the SDK will fall back to the latest draft or published version. This ensures that links continue to work even if a user closes the CMS without saving.
+This applies to local SDK reads (`getCMSContentBySlug*`, `getAllContentSlugs*`, route helpers), not to CLI `pull` endpoints.
 
 ## Running in preview mode
 
-To make the above vision possible, we will introduce a new environment that tells the SDK it is running in preview mode:
-
-- Set `NODE_ENV=preview` (or define `LEADCMS_PREVIEW=true`) when starting your preview server. The SDK will check this variable and adjust its behaviour automatically.
-- The preview Dockerfile and supervisor script already set `NODE_ENV=development`. In the new design you will set `NODE_ENV=preview` instead. The rest of the preview setup remains the same.
+- For local preview/dev servers, `NODE_ENV=development` is the standard setup.
+- If needed, force preview behavior with `LEADCMS_PREVIEW=true`.
+- To guarantee published-only reads in preview-like environments, set `LEADCMS_PREVIEW=false`.
 
 ## Summary
 
-Live preview makes it easy for editors to see their changes in real time. The current SDK implementation exposes `includeDrafts` and `userUid` parameters, which require additional boilerplate. In the upcoming version we aim to remove these parameters and make preview behaviour automatic. This unified approach will simplify your codebase and reduce the risk of errors.
+Live preview uses watcher-generated user draft files plus SDK preview mode detection. In modern SDK versions, `includeDrafts` boolean parameters are removed; preview behavior is environment-based, and user-specific draft resolution is handled through `userUid`/preview slug patterns with safe fallbacks.
 
 For details on draft handling and best practices, see the [Draft Preview](/docs/preview/draft-preview/) article. For instructions on configuring the watcher and preview server, see [Preview Setup](/docs/preview/setup/).

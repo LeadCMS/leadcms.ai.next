@@ -1,0 +1,3 @@
+- Developers and engineering teams building sites with Next.js, Gatsby, Astro, or similar modern frameworks.
+- Technical founders, startups, and agencies needing a cost‑effective, self‑hosted CMS/CRM stack.
+- Product and growth teams who want content, lead generation, and customer tracking in a single platform.

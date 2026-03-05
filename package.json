@@ -8,7 +8,7 @@
     "livepreview": "pnpm run dev",
     "generate:env": "node ./scripts/generate-env-js.mjs",
     "scan-icons": "node ./scripts/scan-icons.mjs",
-    "prebuild": "leadcms fetch && leadcms generate-env && pnpm run scan-icons",
+    "prebuild": "leadcms pull && leadcms generate-env && pnpm run scan-icons",
     "predev": "pnpm run prebuild",
     "prestart": "pnpm run prebuild",
     "build": "next build",

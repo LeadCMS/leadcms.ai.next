@@ -1,0 +1,310 @@
+---
+id: 115
+createdAt: '2026-03-11T05:32:40.044347Z'
+title: Comments Handling
+description: >-
+  Learn how LeadCMS stores, syncs, and exposes comments, including local file
+  structure, SDK read APIs, threaded trees, and rendering best practices.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/modeling/comments
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+tags: []
+allowComments: true
+publishedAt: '2025-11-06T00:00:00Z'
+group: Modeling
+order: 6
+---
+
+# Comments
+
+LeadCMS supports a **content-first comments workflow** similar to content and media sync.
+Comments are stored in LeadCMS, pulled into your repository as JSON files, and then read by the SDK from local files during build or runtime.
+
+This gives you a predictable workflow:
+
+1. **Sync comments from LeadCMS** with the CLI
+2. **Read comments locally** through the SDK
+3. **Render flat or threaded comment UIs** in your site
+
+At the moment, the public SDK surface is focused on **reading synchronized comments**. This is enough for most static site, SSR and preview scenarios.
+
+Comment synchronization is always anonymous. LeadCMS SDK does not send authentication when pulling comments, so the synchronized files contain only public comment data intended to be visible to clients.
+
+## How comments are stored locally
+
+By default, comments are stored in the `.leadcms/comments/` directory.
+The exact path depends on the comment language and the entity the comments belong to.
+
+Typical structure:
+
+```text
+.leadcms/comments/
+  en/
+    content/
+      91.json
+  en-US/
+    content/
+      91.json
+  ru/
+    content/
+      91.json
+```
+
+Each file contains all comments for one entity.
+For content comments, the file name is the **content ID**, not the slug.
+The SDK resolves that automatically for the content-specific helpers, so you can pass either a numeric content ID or a content slug when reading content comments.
+
+For example, comments for content item `91` in English are stored in:
+
+```text
+.leadcms/comments/en/content/91.json
+```
+
+## Syncing comments
+
+To work with comments locally, pull them from LeadCMS first:
+
+<CodeTabs defaultTab="pnpm" group="package-manager">
+  <CodeTab label="npm">
+    ```bash
+    # Pull only comments
+    npx leadcms pull-comments
+
+    # Or pull everything
+    npx leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="pnpm">
+    ```bash
+    # Pull only comments
+    pnpm exec leadcms pull-comments
+
+    # Or pull everything
+    pnpm exec leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="yarn">
+    ```bash
+    # Pull only comments
+    yarn leadcms pull-comments
+
+    # Or pull everything
+    yarn leadcms pull
+    ```
+  </CodeTab>
+  <CodeTab label="bun">
+    ```bash
+    # Pull only comments
+    bunx leadcms pull-comments
+
+    # Or pull everything
+    bunx leadcms pull
+    ```
+  </CodeTab>
+</CodeTabs>
+
+After the pull finishes, the SDK can read the synchronized files directly from your repository.
+
+## Reading comments with the SDK
+
+### Flat comments list
+
+Use `getCommentsForContent()` when you want all comments for a content item as a flat array:
+
+```ts
+import { getCommentsForContent } from '@leadcms/sdk'
+
+const comments = getCommentsForContent(91, 'en')
+const commentsBySlug = getCommentsForContent('pricing', 'en')
+```
+
+This is the most common entry point for page-level comment rendering.
+The helper accepts either the numeric content ID or the content slug.
+
+### Generic entity access
+
+If you need comments for a different entity type, use `getComments()`:
+
+```ts
+import { getComments } from '@leadcms/sdk'
+
+const comments = getComments('Content', 91, 'en')
+```
+
+This is useful when you work with a generic data layer and already know the `commentableType` and `commentableId`.
+
+### Strict variants
+
+The regular comment functions are intentionally forgiving:
+
+- missing file → empty array
+- invalid file → empty array
+
+If you want explicit failures in development, use the strict variants:
+
+```ts
+import {
+  getCommentsStrict,
+  getCommentsForContentStrict,
+} from '@leadcms/sdk'
+
+const comments1 = getCommentsStrict('Content', 91, 'en')
+const comments2 = getCommentsForContentStrict(91, 'en')
+const comments3 = getCommentsForContentStrict('pricing', 'en')
+```
+
+These throw descriptive errors if the file is missing or cannot be parsed.
+If you pass a slug that does not resolve to local content, the strict variant throws as well.
+
+## Building threaded comment trees
+
+For nested replies, use the tree helpers instead of grouping comments manually.
+
+```ts
+import { getCommentsTreeForContent } from '@leadcms/sdk'
+
+const tree = getCommentsTreeForContent(91, 'en', {
+  sortOrder: 'newest',
+  replySortOrder: 'oldest',
+})
+
+const treeBySlug = getCommentsTreeForContent('pricing', 'en')
+```
+
+The returned nodes include:
+
+- `children` – nested replies
+- `depth` – nesting depth
+- `isLeaf` – whether the node has replies
+- `threadCount` – total comments in the thread
+
+This makes it easy to build Reddit-style or forum-style interfaces.
+
+## Comment fields
+
+A synchronized comment typically includes fields like:
+
+- `id`
+- `parentId`
+- `authorName`
+- `avatarUrl`
+- `body`
+- `status`
+- `answerStatus`
+- `createdAt`
+- `updatedAt`
+- `commentableId`
+- `commentableType`
+- `language`
+- `tags`
+
+The moderation-related fields are especially useful:
+
+- **status** – current moderation status such as `Approved`, `NotApproved`, `Spam`, or `Answer`
+- **answerStatus** – answer workflow state such as `Unanswered`, `Answered`, or `Closed`
+
+These fields can be used to filter or style comments in your UI.
+When present, `avatarUrl` is the URL of the author's avatar image.
+It is server-provided read-only metadata and is not part of client-side create or update payloads.
+`authorEmail` is not preserved in synchronized comment files. It may be supplied only when creating a new comment, after which LeadCMS stores it server-side and the SDK refreshes comments anonymously.
+
+## Common usage patterns
+
+### Render a flat list
+
+```ts
+import { getCommentsForContent } from '@leadcms/sdk'
+
+const comments = getCommentsForContent(91, 'en')
+const sameComments = getCommentsForContent('pricing', 'en')
+
+for (const comment of comments) {
+  console.log(`${comment.authorName}: ${comment.body}`)
+}
+```
+
+### Show only approved comments
+
+```ts
+import { getCommentsForContent } from '@leadcms/sdk'
+
+const comments = getCommentsForContent(91, 'en')
+const approved = comments.filter((comment) => comment.status === 'Approved')
+```
+
+### Separate root comments and replies
+
+```ts
+import { getCommentsForContent } from '@leadcms/sdk'
+
+const comments = getCommentsForContent(91, 'en')
+
+const rootComments = comments.filter((comment) => !comment.parentId)
+const replies = comments.filter((comment) => comment.parentId)
+```
+
+## Comments and localization
+
+Comments are language-aware in the same way as content.
+If your project uses multiple locales, comments are stored and loaded per language.
+
+This means you should pass the current locale when reading comments:
+
+```ts
+const comments = getCommentsForContent(content.slug, locale)
+```
+
+That keeps your comment lists aligned with the language of the current page.
+
+## Privacy and personal data
+
+LeadCMS treats synchronized comments as a public read model.
+
+- **Comment pulls are always anonymous**. The SDK does not send an API key when running `pull-comments` or when refreshing comments after a write.
+- **Pulled files should contain only public comment data** that is safe to commit to your repository, including open-source repositories.
+- **`authorEmail` is write-only from the client perspective**. You may provide it when creating a new comment so LeadCMS can store it server-side.
+- **`authorEmail` is not preserved locally after sync**. Once the comment is pushed, the SDK refreshes comments anonymously and the stored JSON files no longer contain the email address.
+- **Render comments from synchronized files**, not from authenticated write responses, if you want to preserve the same public-data guarantees in your application.
+
+## Current workflow scope
+
+Today, LeadCMS offers a strong **read workflow** for comments through the public SDK and a **sync workflow** through the CLI.
+
+- **Public SDK read APIs** – available
+- **Threaded comment tree helpers** – available
+- **CLI sync (`pull-comments`)** – available
+- **Comment push/status CLI support** – available for local sync workflows
+- **Public SDK create/update/delete comment methods** – not yet part of the public SDK surface
+
+For most websites, this is enough to display synchronized comments and build comment interfaces without querying the CMS at runtime.
+
+## Best practices
+
+1. **Always pull comments before building** so your local files are up to date.
+2. **Use the content-specific helpers for slug support**. Generic entity helpers like `getComments()` still require a numeric entity ID.
+3. **Pass the active locale** when your site is multilingual.
+4. **Use tree helpers for replies** instead of reconstructing parent-child relations yourself.
+5. **Filter by moderation fields** like `status` and `answerStatus` in the UI if you only want approved or open discussions.
+6. **Treat local comment files as synchronized public data**, not hand-edited content, unless your workflow explicitly requires local editing.
+7. **Do not rely on `authorEmail` in pulled files**. Provide it only when creating a new comment, then let the anonymous refresh replace the local file.
+
+## Next steps
+
+With comments synchronized and readable through the SDK, you can continue with localization or preview workflows. Continue with:
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="i18n"
+    description="Localise content and related comment views across multiple languages"
+    href="/docs/modeling/i18n/"
+  />
+  <FeatureCard
+    title="Drafts & Previews"
+    description="Understand preview workflows and draft content behavior in LeadCMS"
+    href="/docs/modeling/drafts-and-temp-previews/"
+  />
+</FeatureGrid>

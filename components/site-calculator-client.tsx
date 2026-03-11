@@ -21,6 +21,8 @@ import {
   Send,
 } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
+import { useLocale } from "@/lib/locale-context"
+import { getPreferredLocale } from "@/lib/locale-utils"
 import { cn } from "@/lib/utils"
 import type { SiteCalculatorPricing, SiteCalculatorLabels } from "@/lib/site-calculator-config"
 
@@ -53,8 +55,14 @@ type Step = "configure" | "result"
 
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
-function formatPrice(amount: number, symbol: string = "$"): string {
-  return `${symbol}${amount.toLocaleString()}`
+function formatPrice(amount: number, pricing: SiteCalculatorPricing): string {
+  const convertedAmount = Math.round(amount * pricing.currencyRate)
+
+  return new Intl.NumberFormat(pricing.currencyLocale, {
+    style: "currency",
+    currency: pricing.currency,
+    maximumFractionDigits: 0,
+  }).format(convertedAmount)
 }
 
 // Quote line item for breakdown display
@@ -67,6 +75,15 @@ interface QuoteItem {
   amount: number
   isIncluded?: boolean
   isMonthly?: boolean
+}
+
+interface ContactSubmission {
+  name?: string
+  email?: string
+  phone?: string
+  company?: string
+  requestQuote?: boolean
+  message: string
 }
 
 // Complexity indicator component - shows visual bars
@@ -123,7 +140,12 @@ interface SiteCalculatorClientProps {
 
 export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientProps) {
   const resultRef = useRef<HTMLDivElement>(null)
-  const s = pricing.currencySymbol
+  const locale = useLocale()
+  const formatDisplayPrice = useCallback(
+    (amount: number) => formatPrice(amount, pricing),
+    [pricing]
+  )
+  const breakdownSections = labels.result.breakdownSections
 
   // ── State ────────────────────────────────────────────────────────────────
 
@@ -213,101 +235,6 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     return { oneTime, monthly }
   }, [state, pricing])
 
-  // ── Message summary ──────────────────────────────────────────────────────
-
-  const buildMessageSummary = useCallback(() => {
-    const lines: string[] = ["Website Cost Calculator Submission", ""]
-
-    const selectedType = pricing.websiteTypes.find((t) => t.id === state.websiteType)
-    if (selectedType) {
-      lines.push(
-        `Website Type: ${selectedType.label} (${s}${selectedType.baseCost.toLocaleString()})`
-      )
-    }
-
-    const selectedDesign = pricing.designOptions.find((d) => d.id === state.designOption)
-    if (selectedDesign) {
-      lines.push(`Design: ${selectedDesign.label} (${s}${selectedDesign.cost.toLocaleString()})`)
-    }
-
-    lines.push("", "Features:")
-    for (const feature of pricing.features) {
-      if (state.features[feature.id] || feature.alwaysEnabled) {
-        lines.push(
-          `  ✓ ${feature.label} (${feature.cost === 0 ? "Included" : s + feature.cost.toLocaleString()})`
-        )
-      }
-    }
-
-    if (state.customPagesCount > 0) {
-      const cost = state.customPagesCount * pricing.customPages.costPerUnit
-      lines.push(`  ✓ Custom Pages: ${state.customPagesCount} (${s}${cost.toLocaleString()})`)
-    }
-
-    if (state.integrationsCount > 0) {
-      const cost = state.integrationsCount * pricing.integrations.costPerUnit
-      lines.push(`\nIntegrations: ${state.integrationsCount} (${s}${cost.toLocaleString()})`)
-    }
-
-    if (state.contentWritingCount > 0) {
-      const cost = state.contentWritingCount * pricing.contentWriting.costPerUnit
-      lines.push(
-        `Content Writing: ${state.contentWritingCount} pages (${s}${cost.toLocaleString()})`
-      )
-    }
-
-    lines.push("")
-    if (state.deploymentType === "cloud") {
-      lines.push(
-        `Deployment: ${pricing.deployment.cloud.label} (${s}${pricing.deployment.cloud.setupCost.toLocaleString()} setup + ${s}${pricing.deployment.cloud.monthlyCost}/mo)`
-      )
-    } else if (state.onPremisesManaged) {
-      lines.push(
-        `Deployment: ${pricing.deployment.onPremisesManaged.label} (${s}${pricing.deployment.onPremisesManaged.cost.toLocaleString()})`
-      )
-    } else {
-      lines.push(`Deployment: ${pricing.deployment.onPremisesDiy.label} (Free)`)
-    }
-
-    lines.push("", "LeadCMS Platform:")
-    lines.push(`  ✓ ${pricing.platform.base.label} (Included)`)
-    lines.push(`  ✓ ${pricing.platform.cms.label} (Included)`)
-    for (const service of pricing.platform.setupServices) {
-      const count = state.setupServices[service.id] || 0
-      if (count > 0) {
-        const cost = count * service.costPerUnit
-        lines.push(
-          `  ✓ ${service.label}: ${count} ${service.unitLabel} (${s}${cost.toLocaleString()})`
-        )
-      }
-    }
-
-    const { oneTime, monthly } = calculateTotals()
-    lines.push("", `Estimated One-time Cost: ${s}${oneTime.toLocaleString()}`)
-    if (monthly > 0) {
-      lines.push(`Estimated Monthly Cost: ${s}${monthly.toLocaleString()}`)
-    }
-
-    if (contactForm.projectDescription.trim()) {
-      lines.push("", "Project Description:")
-      lines.push(contactForm.projectDescription.trim())
-    }
-
-    if (contactForm.requestQuote) {
-      lines.push(
-        "",
-        "⚡ Quote Requested: The customer has requested a concrete quote from the team."
-      )
-    }
-
-    lines.push(
-      "",
-      "Note: This estimate is based on our experience and industry standards. Final pricing may vary based on specific project requirements and complexity. This is not a binding offer or public commitment."
-    )
-
-    return lines.join("\n")
-  }, [state, pricing, calculateTotals, s, contactForm.projectDescription, contactForm.requestQuote])
-
   // ── Quote breakdown for UI display ───────────────────────────────────────
 
   const buildQuoteBreakdown = useCallback((): QuoteItem[] => {
@@ -317,7 +244,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     const selectedType = pricing.websiteTypes.find((t) => t.id === state.websiteType)
     if (selectedType) {
       items.push({
-        category: "Development",
+        category: breakdownSections.development,
         label: selectedType.label,
         description: selectedType.description,
         amount: selectedType.baseCost,
@@ -328,7 +255,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     const selectedDesign = pricing.designOptions.find((d) => d.id === state.designOption)
     if (selectedDesign) {
       items.push({
-        category: "Design",
+        category: breakdownSections.design,
         label: selectedDesign.label,
         description: selectedDesign.description,
         amount: selectedDesign.cost,
@@ -339,7 +266,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     for (const feature of pricing.features) {
       if (state.features[feature.id] || feature.alwaysEnabled) {
         items.push({
-          category: "Features",
+          category: breakdownSections.features,
           label: feature.label,
           amount: feature.cost,
           isIncluded: feature.cost === 0,
@@ -350,7 +277,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     // Custom Pages
     if (state.customPagesCount > 0) {
       items.push({
-        category: "Additional Services",
+        category: breakdownSections.additionalServices,
         label: pricing.customPages.label,
         description: pricing.customPages.description,
         quantity: state.customPagesCount,
@@ -362,7 +289,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     // Integrations
     if (state.integrationsCount > 0) {
       items.push({
-        category: "Additional Services",
+        category: breakdownSections.additionalServices,
         label: pricing.integrations.label,
         description: pricing.integrations.description,
         quantity: state.integrationsCount,
@@ -374,7 +301,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     // Content Writing
     if (state.contentWritingCount > 0) {
       items.push({
-        category: "Additional Services",
+        category: breakdownSections.additionalServices,
         label: pricing.contentWriting.label,
         description: pricing.contentWriting.description,
         quantity: state.contentWritingCount,
@@ -386,30 +313,30 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     // Deployment
     if (state.deploymentType === "cloud") {
       items.push({
-        category: "Deployment",
-        label: pricing.deployment.cloud.label,
-        description: "Fully managed hosting and maintenance",
+        category: breakdownSections.deployment,
+        label: `${pricing.deployment.cloud.label} · ${labels.result.oneTime}`,
+        description: pricing.deployment.cloud.description,
         amount: pricing.deployment.cloud.setupCost,
       })
       items.push({
-        category: "Deployment",
-        label: "Cloud Hosting",
-        description: "Managed hosting subscription",
+        category: breakdownSections.deployment,
+        label: `${pricing.deployment.cloud.label} · ${labels.result.monthly}`,
+        description: pricing.deployment.cloud.description,
         amount: pricing.deployment.cloud.monthlyCost,
         isMonthly: true,
       })
     } else if (state.onPremisesManaged) {
       items.push({
-        category: "Deployment",
+        category: breakdownSections.deployment,
         label: pricing.deployment.onPremisesManaged.label,
-        description: "Professional deployment on your infrastructure",
+        description: pricing.deployment.onPremisesManaged.description,
         amount: pricing.deployment.onPremisesManaged.cost,
       })
     } else {
       items.push({
-        category: "Deployment",
+        category: breakdownSections.deployment,
         label: pricing.deployment.onPremisesDiy.label,
-        description: "Deploy yourself using our documentation",
+        description: pricing.deployment.onPremisesDiy.description,
         amount: 0,
         isIncluded: true,
       })
@@ -417,13 +344,13 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
 
     // Platform
     items.push({
-      category: "LeadCMS Platform",
+      category: breakdownSections.platform,
       label: pricing.platform.base.label,
       amount: 0,
       isIncluded: true,
     })
     items.push({
-      category: "LeadCMS Platform",
+      category: breakdownSections.platform,
       label: pricing.platform.cms.label,
       amount: 0,
       isIncluded: true,
@@ -434,7 +361,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
       const count = state.setupServices[service.id] || 0
       if (count > 0) {
         items.push({
-          category: "LeadCMS Platform",
+          category: breakdownSections.platform,
           label: service.label,
           description: service.description,
           quantity: count,
@@ -445,31 +372,93 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     }
 
     return items
-  }, [state, pricing])
+  }, [state, pricing, breakdownSections, labels.result.monthly, labels.result.oneTime])
+
+  // ── Message summary ──────────────────────────────────────────────────────
+
+  const buildMessageSummary = useCallback(() => {
+    const lines: string[] = [labels.title, labels.result.breakdownDescription]
+    const quoteBreakdown = buildQuoteBreakdown()
+    const categories = [...new Set(quoteBreakdown.map((item) => item.category))]
+
+    for (const category of categories) {
+      lines.push("", `${category}:`)
+
+      for (const item of quoteBreakdown.filter((entry) => entry.category === category)) {
+        const amountLabel = item.isIncluded
+          ? labels.result.includedLabel
+          : `${formatDisplayPrice(item.amount)}${item.isMonthly ? labels.result.monthlyShortSuffix : ""}`
+
+        lines.push(`- ${item.label}: ${amountLabel}`)
+
+        if (item.quantity && item.unitPrice) {
+          lines.push(`  ${item.quantity} × ${formatDisplayPrice(item.unitPrice)}`)
+        }
+      }
+    }
+
+    const { oneTime, monthly } = calculateTotals()
+    lines.push("", `${labels.result.oneTime}: ${formatDisplayPrice(oneTime)}`)
+
+    if (monthly > 0) {
+      lines.push(
+        `${labels.result.monthly}: ${formatDisplayPrice(monthly)}${labels.result.monthlyShortSuffix}`
+      )
+    }
+
+    if (contactForm.projectDescription.trim()) {
+      lines.push("", `${labels.form.projectDescription}:`)
+      lines.push(contactForm.projectDescription.trim())
+    }
+
+    lines.push("", `${labels.result.disclaimerTitle} ${labels.result.fullDisclaimer}`)
+
+    return lines.join("\n")
+  }, [
+    labels,
+    buildQuoteBreakdown,
+    calculateTotals,
+    formatDisplayPrice,
+    contactForm.projectDescription,
+    contactForm.requestQuote,
+  ])
 
   // ── API submission ───────────────────────────────────────────────────────
 
   const submitToApi = useCallback(
-    async (firstName: string, email: string, company: string, message: string) => {
+    async ({ name, email, phone, company, requestQuote, message }: ContactSubmission) => {
       const apiUrl = getEnvVar("NEXT_PUBLIC_LEADCMS_URL")
       if (!apiUrl) {
         throw new Error("API URL not configured. Please check environment variables.")
       }
 
+      const language = getPreferredLocale(locale)
       const pageUrl = typeof window !== "undefined" ? window.location.href : ""
       const timeZoneOffset = String(new Date().getTimezoneOffset())
 
       const formData = new FormData()
-      formData.append("file", "")
-      formData.append("firstName", firstName)
-      formData.append("lastName", "")
-      formData.append("company", company)
       formData.append("subject", "Site Cost Calculator")
       formData.append("message", message)
-      formData.append("email", email)
-      formData.append("language", "en")
+      formData.append("language", language)
       formData.append("timeZoneOffset", timeZoneOffset)
       formData.append("pageUrl", pageUrl)
+      formData.append("ExtraData[RequestQuote]", requestQuote ? "yes" : "no")
+
+      if (name?.trim()) {
+        formData.append("Name", name.trim())
+      }
+
+      if (company?.trim()) {
+        formData.append("company", company.trim())
+      }
+
+      if (email?.trim()) {
+        formData.append("email", email.trim())
+      }
+
+      if (phone?.trim()) {
+        formData.append("phone", phone.trim())
+      }
 
       const response = await fetch(`${apiUrl}/api/contact-us`, {
         method: "POST",
@@ -480,7 +469,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
         throw new Error(`Server responded with ${response.status}`)
       }
     },
-    []
+    [locale]
   )
 
   // ── Handlers ─────────────────────────────────────────────────────────────
@@ -492,9 +481,9 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     try {
       const message = buildMessageSummary()
 
-      // Send anonymous lead first
+      // Register the calculation without manufacturing placeholder contact data.
       try {
-        await submitToApi("Undisclosed", "undisclosed@calculator.leadcms.ai", "", message)
+        await submitToApi({ message })
       } catch {
         console.warn("Initial submission failed, continuing with calculation")
       }
@@ -519,7 +508,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
   }
 
   const handleUnlock = async () => {
-    if (!contactForm.name || !contactForm.email) return
+    if (!contactForm.name.trim()) return
 
     setIsSubmitting(true)
     setSubmitError("")
@@ -527,7 +516,14 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
     try {
       const message = buildMessageSummary()
 
-      await submitToApi(contactForm.name, contactForm.email, contactForm.company, message)
+      await submitToApi({
+        name: contactForm.name,
+        email: contactForm.email,
+        phone: contactForm.phone,
+        company: contactForm.company,
+        requestQuote: contactForm.requestQuote,
+        message,
+      })
       setIsUnlocked(true)
     } catch (error) {
       setSubmitError(error instanceof Error ? error.message : "Submission failed")
@@ -1023,9 +1019,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
               <h2 className="text-2xl font-bold tracking-tight sm:text-3xl">
                 {labels.result.title}
               </h2>
-              <p className="text-muted-foreground mt-1">
-                Detailed breakdown of your website estimate
-              </p>
+              <p className="text-muted-foreground mt-1">{labels.result.breakdownDescription}</p>
             </div>
             <div className="hidden sm:flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10">
               <CheckCircle className="h-6 w-6 text-primary" />
@@ -1063,7 +1057,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                               <span className="text-sm font-medium">{item.label}</span>
                               {item.isMonthly && (
                                 <span className="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded">
-                                  Monthly
+                                  {labels.result.monthlyBadge}
                                 </span>
                               )}
                             </div>
@@ -1074,19 +1068,21 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                             )}
                             {item.quantity && item.unitPrice && (
                               <p className="text-xs text-muted-foreground mt-0.5">
-                                {item.quantity} × {formatPrice(item.unitPrice, s)}
+                                {item.quantity} × {formatDisplayPrice(item.unitPrice)}
                               </p>
                             )}
                           </div>
                           <div className="text-right">
                             {item.isIncluded ? (
-                              <span className="text-sm text-primary font-medium">Included</span>
+                              <span className="text-sm text-primary font-medium">
+                                {labels.result.includedLabel}
+                              </span>
                             ) : (
                               <span className="text-sm font-semibold">
-                                {formatPrice(item.amount, s)}
+                                {formatDisplayPrice(item.amount)}
                                 {item.isMonthly && (
                                   <span className="text-xs font-normal text-muted-foreground">
-                                    /mo
+                                    {labels.result.monthlyShortSuffix}
                                   </span>
                                 )}
                               </span>
@@ -1103,7 +1099,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                 <div className="flex items-center justify-between">
                   <span className="text-base font-semibold">{labels.result.oneTime}</span>
                   <span className="text-2xl font-bold text-primary">
-                    {formatPrice(totalOneTime, s)}
+                    {formatDisplayPrice(totalOneTime)}
                   </span>
                 </div>
                 {totalMonthly > 0 && (
@@ -1112,8 +1108,10 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                       {labels.result.monthly}
                     </span>
                     <span className="text-lg font-semibold">
-                      {formatPrice(totalMonthly, s)}
-                      <span className="text-sm font-normal text-muted-foreground">/month</span>
+                      {formatDisplayPrice(totalMonthly)}
+                      <span className="text-sm font-normal text-muted-foreground">
+                        {labels.result.monthlyLongSuffix}
+                      </span>
                     </span>
                   </div>
                 )}
@@ -1129,21 +1127,20 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                     <div className="inline-flex items-center justify-center h-12 w-12 rounded-full bg-primary/10 mb-3">
                       <Calculator className="h-6 w-6 text-primary" />
                     </div>
-                    <h3 className="text-lg font-semibold">Your Estimated Cost</h3>
+                    <h3 className="text-lg font-semibold">{labels.result.unlockCardTitle}</h3>
                     <div className="mt-2 flex items-center justify-center gap-3 flex-wrap">
                       <span className="text-3xl font-bold text-primary">
-                        {formatPrice(totalOneTime, s)}
+                        {formatDisplayPrice(totalOneTime)}
                       </span>
                       {totalMonthly > 0 && (
                         <span className="text-lg text-muted-foreground">
-                          + {formatPrice(totalMonthly, s)}
-                          <span className="text-sm">/mo</span>
+                          + {formatDisplayPrice(totalMonthly)}
+                          <span className="text-sm">{labels.result.monthlyShortSuffix}</span>
                         </span>
                       )}
                     </div>
                     <p className="text-sm text-muted-foreground mt-3 max-w-md mx-auto">
-                      Ready to proceed? Provide your details and a brief description of the website
-                      you&apos;re looking to build to see a detailed price breakdown.
+                      {labels.result.unlockCardDescription}
                     </p>
                   </div>
 
@@ -1214,11 +1211,11 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                   {/* Project description */}
                   <div className="mt-4">
                     <Label htmlFor="unlock-project-desc" className="text-sm">
-                      Brief Project Description
+                      {labels.form.projectDescription}
                     </Label>
                     <Textarea
                       id="unlock-project-desc"
-                      placeholder="Tell us about the website you'd like to build — its purpose, key pages, target audience, any special features..."
+                      placeholder={labels.form.projectDescriptionPlaceholder}
                       value={contactForm.projectDescription}
                       onChange={(e) =>
                         setContactForm((prev) => ({ ...prev, projectDescription: e.target.value }))
@@ -1229,12 +1226,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                   </div>
 
                   {/* Request quote checkbox */}
-                  <div
-                    className="mt-4 flex items-start gap-2.5 rounded-lg border border-primary/30 bg-primary/5 p-3 cursor-pointer"
-                    onClick={() =>
-                      setContactForm((prev) => ({ ...prev, requestQuote: !prev.requestQuote }))
-                    }
-                  >
+                  <div className="mt-4 flex items-start gap-2.5 rounded-lg border border-primary/30 bg-primary/5 p-3">
                     <Checkbox
                       id="unlock-request-quote"
                       checked={contactForm.requestQuote}
@@ -1243,18 +1235,12 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                       }
                       className="h-4 w-4 mt-0.5"
                     />
-                    <div>
-                      <Label
-                        htmlFor="unlock-request-quote"
-                        className="text-sm font-medium cursor-pointer"
-                      >
-                        I&apos;d like your team to reach out with a concrete quote
-                      </Label>
+                    <Label htmlFor="unlock-request-quote" className="cursor-pointer">
+                      <span className="text-sm font-medium">{labels.form.requestQuote}</span>
                       <p className="text-xs text-muted-foreground mt-0.5">
-                        Our team will review your requirements and get back to you with a tailored
-                        proposal.
+                        {labels.form.requestQuoteDescription}
                       </p>
-                    </div>
+                    </Label>
                   </div>
 
                   {submitError && (
@@ -1268,7 +1254,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                     size="lg"
                     className="w-full mt-6"
                     onClick={handleUnlock}
-                    disabled={isSubmitting || !contactForm.name || !contactForm.email}
+                    disabled={isSubmitting || !contactForm.name.trim() || !contactForm.email.trim()}
                   >
                     {isSubmitting ? (
                       <>
@@ -1278,7 +1264,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
                     ) : (
                       <>
                         <Send className="mr-2 h-4 w-4" />
-                        See Detailed Breakdown
+                        {labels.buttons.showDetailedBreakdown}
                       </>
                     )}
                   </Button>
@@ -1290,10 +1276,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
           {/* Disclaimer */}
           <div className="mt-4 p-3 rounded-lg bg-muted/30 border border-muted">
             <p className="text-xs text-muted-foreground leading-relaxed">
-              <strong>Important:</strong> This estimate is based on our experience and industry
-              standards. Final pricing may vary depending on specific requirements, project
-              complexity, and timeline. This is not a binding offer, public commitment, or contract.
-              Please contact us to discuss your project in detail and receive a formal proposal.
+              <strong>{labels.result.disclaimerTitle}</strong> {labels.result.fullDisclaimer}
             </p>
           </div>
 
@@ -1304,12 +1287,14 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
               <h3 className="text-lg font-semibold text-green-800 dark:text-green-200">
                 {labels.result.thankYouPrefix}, {contactForm.name}!
               </h3>
-              <p className="text-sm text-green-700 dark:text-green-300 mt-1">
-                {labels.result.thankYouSuffix} {contactForm.email}.
-              </p>
+              {contactForm.email.trim() && (
+                <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+                  {labels.result.thankYouSuffix} {contactForm.email}.
+                </p>
+              )}
               {contactForm.requestQuote && (
                 <p className="text-sm text-green-700 dark:text-green-300 mt-2">
-                  Our team will review your requirements and reach out with a concrete quote.
+                  {labels.result.requestQuoteConfirmation}
                 </p>
               )}
             </div>

@@ -3,17 +3,17 @@
 import * as React from "react"
 import { useState } from "react"
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
 import { ContactUsText } from "@/components/contact-us-localized"
+import { useLocale } from "@/lib/locale-context"
+import { getPreferredLocale } from "@/lib/locale-utils"
 import { FadeIn, StaggerContainer, StaggerItem, ScaleIn } from "@/components/ui/animated-elements"
 import { MicroInteractionButton, FloatingLabelInput } from "@/components/ui/micro-interactions"
 import { motion, AnimatePresence } from "framer-motion"
 
-interface FormData {
-  firstName: string
-  lastName: string
+interface ContactFormData {
+  name: string
   email: string
   company: string
   subject: string
@@ -32,9 +32,9 @@ interface ModernContactFormProps {
 }
 
 export const ModernContactForm: React.FC<ModernContactFormProps> = ({ text }) => {
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
+  const locale = useLocale()
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
     email: "",
     company: "",
     subject: "",
@@ -48,27 +48,38 @@ export const ModernContactForm: React.FC<ModernContactFormProps> = ({ text }) =>
     errorMessage: "",
   })
 
-  const handleInputChange = (field: keyof FormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+  const handleInputChange = (field: keyof ContactFormData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }))
     if (formState.isError) {
-      setFormState(prev => ({ ...prev, isError: false, errorMessage: "" }))
+      setFormState((prev) => ({ ...prev, isError: false, errorMessage: "" }))
     }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    setFormState(prev => ({ ...prev, isSubmitting: true, isError: false }))
+    setFormState((prev) => ({ ...prev, isSubmitting: true, isError: false }))
 
     try {
       const apiUrl = getEnvVar("NEXT_PUBLIC_LEADCMS_CONTACT_API") || "/api/contact"
+      const language = getPreferredLocale(locale)
+      const payload = Object.fromEntries(
+        Object.entries({
+          Name: formData.name,
+          email: formData.email,
+          company: formData.company,
+          subject: formData.subject,
+          message: formData.message,
+          language,
+        }).filter(([, value]) => value.trim() !== "")
+      )
 
       const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(payload),
       })
 
       if (!response.ok) {
@@ -83,8 +94,7 @@ export const ModernContactForm: React.FC<ModernContactFormProps> = ({ text }) =>
       })
 
       setFormData({
-        firstName: "",
-        lastName: "",
+        name: "",
         email: "",
         company: "",
         subject: "",
@@ -124,13 +134,11 @@ export const ModernContactForm: React.FC<ModernContactFormProps> = ({ text }) =>
                 >
                   <CheckCircle className="mx-auto h-16 w-16 text-green-500 mb-4" />
                 </motion.div>
-                <h3 className="text-xl font-semibold text-green-700 mb-2">
-                  {text.success.title}
-                </h3>
+                <h3 className="text-xl font-semibold text-green-700 mb-2">{text.success.title}</h3>
                 <p className="text-muted-foreground mb-6">{text.success.message}</p>
                 <MicroInteractionButton
                   animation="pulse"
-                  onClick={() => setFormState(prev => ({ ...prev, isSuccess: false }))}
+                  onClick={() => setFormState((prev) => ({ ...prev, isSuccess: false }))}
                   variant="outline"
                 >
                   {text.buttons.sendAnother}
@@ -144,29 +152,16 @@ export const ModernContactForm: React.FC<ModernContactFormProps> = ({ text }) =>
                 className="space-y-6"
               >
                 <StaggerContainer>
-                  <div className="grid gap-4 md:grid-cols-2">
-                    <StaggerItem>
-                      <FloatingLabelInput
-                        id="firstName"
-                        type="text"
-                        label={text.labels.firstName}
-                        value={formData.firstName}
-                        onChange={(e) => handleInputChange("firstName", e.target.value)}
-                        required
-                      />
-                    </StaggerItem>
-
-                    <StaggerItem>
-                      <FloatingLabelInput
-                        id="lastName"
-                        type="text"
-                        label={text.labels.lastName}
-                        value={formData.lastName}
-                        onChange={(e) => handleInputChange("lastName", e.target.value)}
-                        required
-                      />
-                    </StaggerItem>
-                  </div>
+                  <StaggerItem>
+                    <FloatingLabelInput
+                      id="name"
+                      type="text"
+                      label={text.labels.name}
+                      value={formData.name}
+                      onChange={(e) => handleInputChange("name", e.target.value)}
+                      required
+                    />
+                  </StaggerItem>
 
                   <StaggerItem>
                     <FloatingLabelInput
@@ -175,7 +170,6 @@ export const ModernContactForm: React.FC<ModernContactFormProps> = ({ text }) =>
                       label={text.labels.email}
                       value={formData.email}
                       onChange={(e) => handleInputChange("email", e.target.value)}
-                      required
                     />
                   </StaggerItem>
 

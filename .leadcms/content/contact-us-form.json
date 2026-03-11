@@ -3,16 +3,14 @@
     "title": "Contact Us",
     "description": "Fill out the form below and we'll get back to you as soon as possible.",
     "labels": {
-      "firstName": "First name",
-      "lastName": "Last name",
+      "name": "Name",
       "email": "Email",
       "company": "Company",
       "subject": "Subject",
       "message": "Message"
     },
     "placeholders": {
-      "firstName": "Enter your first name",
-      "lastName": "Enter your last name",
+      "name": "Enter your name",
       "email": "Enter your email",
       "company": "Enter your company name",
       "message": "Enter your message"
@@ -39,7 +37,7 @@
   },
   "id": 11,
   "createdAt": "2025-09-01T16:34:55.851894Z",
-  "updatedAt": "2025-09-01T18:21:28.065082Z",
+  "updatedAt": "2026-03-11T16:15:10.872626Z",
   "title": "Contact Form Text Configuration",
   "description": "Text content for the contact form component including labels, placeholders, buttons, and messages.",
   "coverImageUrl": "",

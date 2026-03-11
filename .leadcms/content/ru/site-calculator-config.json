@@ -1,0 +1,272 @@
+{
+  "pricing": {
+    "currency": "RUB",
+    "currencySymbol": "₽",
+    "websiteTypes": [
+      {
+        "id": "saas-product",
+        "label": "SaaS-продукт",
+        "baseCost": 3500,
+        "complexity": "very-high",
+        "description": "Продуктовый лендинг с возможностями, ценами и документацией"
+      },
+      {
+        "id": "corporate",
+        "label": "Корпоративный сайт",
+        "baseCost": 2000,
+        "complexity": "mid",
+        "description": "Сайт компании с разделами о команде, услугах и компании"
+      },
+      {
+        "id": "portfolio",
+        "label": "Портфолио / Агентство",
+        "baseCost": 2500,
+        "complexity": "high",
+        "description": "Презентация работ, кейсов и клиентских проектов"
+      },
+      {
+        "id": "blog-media",
+        "label": "Блог / Медиа",
+        "baseCost": 1500,
+        "complexity": "low",
+        "description": "Контентный сайт или медиа-портал"
+      },
+      {
+        "id": "documentation",
+        "label": "Портал документации",
+        "baseCost": 2000,
+        "complexity": "mid",
+        "description": "Техническая документация, база знаний и API-справочники"
+      }
+    ],
+    "designOptions": [
+      {
+        "id": "ai-generated",
+        "label": "Сгенерирован ИИ",
+        "cost": 300,
+        "complexity": "low",
+        "description": "Быстрый дизайн, созданный с помощью ИИ"
+      },
+      {
+        "id": "template-based",
+        "label": "На основе шаблона",
+        "cost": 1000,
+        "complexity": "mid",
+        "description": "Профессиональный шаблон, адаптированный под ваш бренд"
+      },
+      {
+        "id": "professional",
+        "label": "Уникальный профессиональный дизайн",
+        "cost": 4000,
+        "complexity": "very-high",
+        "description": "Индивидуальный дизайн от профессиональных дизайнеров"
+      }
+    ],
+    "features": [
+      {
+        "id": "main-landing",
+        "label": "Основной лендинг",
+        "cost": 0,
+        "complexity": "low",
+        "alwaysEnabled": true,
+        "description": "Главная страница с hero-блоком, преимуществами и конверсионной структурой"
+      },
+      {
+        "id": "multi-landing",
+        "label": "Поддержка нескольких лендингов",
+        "cost": 800,
+        "complexity": "high",
+        "alwaysEnabled": false,
+        "description": "Несколько лендингов для кампаний, сегментов или рекламы"
+      },
+      {
+        "id": "blog",
+        "label": "Блог",
+        "cost": 600,
+        "complexity": "mid",
+        "alwaysEnabled": false,
+        "description": "SEO-готовый блог с категориями, тегами и редакционным процессом"
+      },
+      {
+        "id": "contact-form",
+        "label": "Форма обратной связи",
+        "cost": 200,
+        "complexity": "low",
+        "alwaysEnabled": false,
+        "description": "Форма захвата лида с валидацией и маршрутизацией email"
+      },
+      {
+        "id": "multi-language",
+        "label": "Многоязычная поддержка",
+        "cost": 1200,
+        "complexity": "very-high",
+        "alwaysEnabled": false,
+        "description": "Локализованный контент, переключатель языка и настройка i18n"
+      }
+    ],
+    "customPages": {
+      "label": "Другие кастомные страницы",
+      "costPerUnit": 300,
+      "complexity": "low",
+      "description": "Дополнительные страницы помимо основного лендинга"
+    },
+    "integrations": {
+      "label": "Сторонние интеграции",
+      "costPerUnit": 400,
+      "complexity": "high",
+      "description": "Платёжные системы, аналитика, CRM-интеграции и другое"
+    },
+    "contentWriting": {
+      "label": "Написание контента",
+      "costPerUnit": 50,
+      "complexity": "low",
+      "description": "Статьи, лендинги и другой текстовый контент"
+    },
+    "deployment": {
+      "cloud": {
+        "label": "Облако (с управлением)",
+        "setupCost": 500,
+        "monthlyCost": 49,
+        "complexity": "low",
+        "description": "Полностью управляемый хостинг с обновлениями, мониторингом и бэкапами"
+      },
+      "onPremisesDiy": {
+        "label": "On-premises (DIY)",
+        "cost": 0,
+        "complexity": "very-high",
+        "description": "Развёртывание в вашей инфраструктуре силами вашей команды"
+      },
+      "onPremisesManaged": {
+        "label": "On-premises (управляется нашей командой)",
+        "cost": 2500,
+        "complexity": "mid",
+        "description": "Мы разворачиваем и сопровождаем проект на ваших серверах"
+      }
+    },
+    "platform": {
+      "base": {
+        "label": "Интеграция LeadCMS",
+        "cost": 0,
+        "complexity": "low",
+        "description": "Базовая настройка LeadCMS, модели контента и первичная интеграция"
+      },
+      "cms": {
+        "label": "Управление контентом с ИИ (CMS)",
+        "cost": 0,
+        "complexity": "low",
+        "alwaysIncluded": true,
+        "description": "Редактирование, процессы и публикация контента с поддержкой ИИ"
+      },
+      "setupServices": [
+        {
+          "id": "crm-pipelines",
+          "label": "Воронки продаж и лид-формы",
+          "description": "Настройка воронок продаж, форм захвата лидов и CRM-процессов",
+          "costPerUnit": 200,
+          "unitLabel": "воронок/форм",
+          "complexity": "mid"
+        },
+        {
+          "id": "email-automations",
+          "label": "Сценарии email-автоматизации",
+          "description": "Настройка автоматических email-последовательностей и маркетинговых кампаний",
+          "costPerUnit": 150,
+          "unitLabel": "автоматизаций",
+          "complexity": "mid"
+        }
+      ]
+    },
+    "currencyLocale": "ru-RU",
+    "currencyRate": 80
+  },
+  "complexity": {
+    "labels": {
+      "low": "Низкая",
+      "mid": "Средняя",
+      "high": "Высокая",
+      "very-high": "Очень высокая"
+    },
+    "colors": {
+      "low": "green",
+      "mid": "yellow",
+      "high": "orange",
+      "very-high": "red"
+    }
+  },
+  "labels": {
+    "title": "Калькулятор стоимости сайта",
+    "subtitle": "Получите мгновенную оценку стоимости сайта на LeadCMS",
+    "sections": {
+      "websiteType": "Тип сайта",
+      "design": "Дизайн",
+      "features": "Функции",
+      "additionalServices": "Дополнительные услуги",
+      "deployment": "Развертывание",
+      "platform": "Платформа LeadCMS"
+    },
+    "buttons": {
+      "calculate": "Рассчитать стоимость",
+      "calculating": "Идёт расчёт...",
+      "unlock": "Открыть оценку",
+      "submitting": "Отправка...",
+      "recalculate": "Пересчитать",
+      "showDetailedBreakdown": "Показать подробную разбивку"
+    },
+    "result": {
+      "title": "Ваша оценка стоимости",
+      "oneTime": "Единовременные затраты",
+      "monthly": "Ежемесячные затраты",
+      "unlockMessage": "Оставьте ваши данные, чтобы увидеть полную оценку",
+      "unlockDescription": "Мы отправим вам подробную разбивку по оценке",
+      "disclaimer": "Это ориентировочная оценка. Финальная стоимость может отличаться в зависимости от требований проекта.",
+      "thankYouPrefix": "Спасибо",
+      "thankYouSuffix": "Мы отправим подробную разбивку на",
+      "breakdownDescription": "Подробная разбивка стоимости вашего сайта",
+      "breakdownSections": {
+        "development": "Разработка",
+        "design": "Дизайн",
+        "features": "Функции",
+        "additionalServices": "Дополнительные услуги",
+        "deployment": "Развертывание",
+        "platform": "Платформа LeadCMS"
+      },
+      "monthlyBadge": "Ежемесячно",
+      "monthlyShortSuffix": "/мес",
+      "monthlyLongSuffix": "/месяц",
+      "includedLabel": "Включено",
+      "unlockCardTitle": "Ваша оценка стоимости",
+      "unlockCardDescription": "Готовы продолжить? Укажите ваши данные и краткое описание сайта, который вы хотите создать, чтобы увидеть подробную разбивку стоимости.",
+      "disclaimerTitle": "Важно:",
+      "fullDisclaimer": "Эта оценка основана на нашем опыте и отраслевой практике. Финальная стоимость может отличаться в зависимости от конкретных требований, сложности проекта и сроков. Это не является обязательной сметой, публичной офертой или договорным обязательством. Свяжитесь с нами, чтобы подробно обсудить проект и получить формальное предложение.",
+      "requestQuoteConfirmation": "Наша команда изучит ваши требования и свяжется с вами с конкретным предложением."
+    },
+    "form": {
+      "name": "Имя",
+      "email": "Электронная почта",
+      "phone": "Телефон (необязательно)",
+      "company": "Компания",
+      "namePlaceholder": "Введите ваше имя",
+      "emailPlaceholder": "Введите ваш email",
+      "phonePlaceholder": "Введите ваш телефон",
+      "companyPlaceholder": "Введите название компании",
+      "projectDescription": "Краткое описание проекта",
+      "projectDescriptionPlaceholder": "Расскажите о сайте, который вы хотите создать: его цель, ключевые страницы, целевую аудиторию и особые требования...",
+      "requestQuote": "Я хочу, чтобы ваша команда связалась со мной с конкретным предложением",
+      "requestQuoteDescription": "Наша команда изучит ваши требования и вернётся к вам с индивидуальным предложением."
+    }
+  },
+  "id": 116,
+  "createdAt": "2026-03-11T16:13:27.355357Z",
+  "title": "Конфигурация калькулятора стоимости сайта",
+  "description": "Цены и текстовые метки для русского варианта калькулятора стоимости сайта.",
+  "coverImageUrl": "",
+  "coverImageAlt": "",
+  "slug": "site-calculator-config",
+  "type": "component",
+  "author": "LeadCMS Team",
+  "language": "ru",
+  "category": "",
+  "tags": [],
+  "allowComments": false,
+  "publishedAt": "2026-03-11T00:00:00Z"
+}

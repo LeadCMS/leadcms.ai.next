@@ -7,10 +7,10 @@ import { Button } from "@/components/ui/button"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
 import { useLocale } from "@/lib/locale-context"
+import { getPreferredLocale } from "@/lib/locale-utils"
 
-interface FormData {
-  firstName: string
-  lastName: string
+interface ContactFormData {
+  name: string
   email: string
   company: string
   subject: string
@@ -28,16 +28,14 @@ export interface ContactUsText {
   title: string
   description: string
   labels: {
-    firstName: string
-    lastName: string
+    name: string
     email: string
     company: string
     subject: string
     message: string
   }
   placeholders: {
-    firstName: string
-    lastName: string
+    name: string
     email: string
     company: string
     message: string
@@ -69,9 +67,8 @@ interface ContactUsLocalizedProps {
 
 export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
   const locale = useLocale()
-  const [formData, setFormData] = useState<FormData>({
-    firstName: "",
-    lastName: "",
+  const [formData, setFormData] = useState<ContactFormData>({
+    name: "",
     email: "",
     company: "",
     subject: "",
@@ -92,8 +89,16 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
 
     setFormData((prev) => ({
       ...prev,
-      [id === "first-name" ? "firstName" : id === "last-name" ? "lastName" : id]: value,
+      [id]: value,
     }))
+  }
+
+  const appendIfPresent = (target: FormData, key: string, value: string) => {
+    const trimmedValue = value.trim()
+
+    if (trimmedValue) {
+      target.append(key, trimmedValue)
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -115,16 +120,15 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
 
       const pageUrl = typeof window !== "undefined" ? window.location.href : ""
       const timeZoneOffset = String(new Date().getTimezoneOffset())
+      const language = getPreferredLocale(locale)
 
       const formDataToSubmit = new FormData()
-      formDataToSubmit.append("file", "")
-      formDataToSubmit.append("firstName", formData.firstName)
-      formDataToSubmit.append("lastName", formData.lastName)
-      formDataToSubmit.append("company", formData.company)
+      appendIfPresent(formDataToSubmit, "Name", formData.name)
+      appendIfPresent(formDataToSubmit, "company", formData.company)
       formDataToSubmit.append("subject", formData.subject || "Contact Form Submission")
       formDataToSubmit.append("message", formData.message)
-      formDataToSubmit.append("email", formData.email)
-      formDataToSubmit.append("language", locale)
+      appendIfPresent(formDataToSubmit, "email", formData.email)
+      formDataToSubmit.append("language", language)
       formDataToSubmit.append("timeZoneOffset", timeZoneOffset)
       formDataToSubmit.append("pageUrl", pageUrl)
 
@@ -146,8 +150,7 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
 
       // Reset form after successful submission
       setFormData({
-        firstName: "",
-        lastName: "",
+        name: "",
         email: "",
         company: "",
         subject: "",
@@ -194,33 +197,18 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
               </div>
             )}
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <label htmlFor="first-name" className="text-sm font-medium leading-none">
-                  {text.labels.firstName}
-                </label>
-                <input
-                  id="first-name"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  placeholder={text.placeholders.firstName}
-                  value={formData.firstName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-              <div className="space-y-2">
-                <label htmlFor="last-name" className="text-sm font-medium leading-none">
-                  {text.labels.lastName}
-                </label>
-                <input
-                  id="last-name"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                  placeholder={text.placeholders.lastName}
-                  value={formData.lastName}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
+            <div className="space-y-2">
+              <label htmlFor="name" className="text-sm font-medium leading-none">
+                {text.labels.name}
+              </label>
+              <input
+                id="name"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                placeholder={text.placeholders.name}
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
             </div>
             <div className="space-y-2">
               <label htmlFor="email" className="text-sm font-medium leading-none">

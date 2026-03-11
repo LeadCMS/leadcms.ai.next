@@ -1,4 +1,4 @@
-import { MDXRemote } from "next-mdx-remote-client/rsc"
+import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import { useMDXComponents } from "@/components/mdx-components"
 import { TemplateProps } from "./index"
 
@@ -8,6 +8,9 @@ import { TemplateProps } from "./index"
  */
 export default function DefaultTemplate({ content, userUid }: TemplateProps) {
   const components = useMDXComponents({ userUid })
+  const options: MDXRemoteOptions = {
+    parseFrontmatter: true,
+  }
 
-  return <MDXRemote source={content.body} components={components} />
+  return <MDXRemote source={content.body} options={options} components={components} />
 }

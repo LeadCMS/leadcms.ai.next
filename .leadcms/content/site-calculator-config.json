@@ -175,7 +175,9 @@
           "complexity": "mid"
         }
       ]
-    }
+    },
+    "currencyLocale": "en-US",
+    "currencyRate": 1
   },
   "complexity": {
     "labels": {
@@ -207,7 +209,8 @@
       "calculating": "Calculating...",
       "unlock": "Unlock Your Estimate",
       "submitting": "Submitting...",
-      "recalculate": "Recalculate"
+      "recalculate": "Recalculate",
+      "showDetailedBreakdown": "See Detailed Breakdown"
     },
     "result": {
       "title": "Your Estimated Cost",
@@ -217,7 +220,25 @@
       "unlockDescription": "We'll send you a detailed breakdown with the estimate",
       "disclaimer": "This is an estimate. Final pricing may vary based on specific project requirements.",
       "thankYouPrefix": "Thank you",
-      "thankYouSuffix": "We'll send a detailed breakdown to"
+      "thankYouSuffix": "We'll send a detailed breakdown to",
+      "breakdownDescription": "Detailed breakdown of your website estimate",
+      "breakdownSections": {
+        "development": "Development",
+        "design": "Design",
+        "features": "Features",
+        "additionalServices": "Additional Services",
+        "deployment": "Deployment",
+        "platform": "LeadCMS Platform"
+      },
+      "monthlyBadge": "Monthly",
+      "monthlyShortSuffix": "/mo",
+      "monthlyLongSuffix": "/month",
+      "includedLabel": "Included",
+      "unlockCardTitle": "Your Estimated Cost",
+      "unlockCardDescription": "Ready to proceed? Provide your details and a brief description of the website you're looking to build to see a detailed price breakdown.",
+      "disclaimerTitle": "Important:",
+      "fullDisclaimer": "This estimate is based on our experience and industry standards. Final pricing may vary depending on specific requirements, project complexity, and timeline. This is not a binding offer, public commitment, or contract. Please contact us to discuss your project in detail and receive a formal proposal.",
+      "requestQuoteConfirmation": "Our team will review your requirements and reach out with a concrete quote."
     },
     "form": {
       "name": "Full Name",
@@ -227,12 +248,16 @@
       "namePlaceholder": "Enter your full name",
       "emailPlaceholder": "Enter your email address",
       "phonePlaceholder": "Enter your phone number",
-      "companyPlaceholder": "Enter your company name"
+      "companyPlaceholder": "Enter your company name",
+      "projectDescription": "Brief Project Description",
+      "projectDescriptionPlaceholder": "Tell us about the website you'd like to build - its purpose, key pages, target audience, any special features...",
+      "requestQuote": "I'd like your team to reach out with a concrete quote",
+      "requestQuoteDescription": "Our team will review your requirements and get back to you with a tailored proposal."
     }
   },
   "id": 97,
   "createdAt": "2026-02-06T11:48:52.627633Z",
-  "updatedAt": "2026-02-15T18:26:57.035187Z",
+  "updatedAt": "2026-03-11T16:13:31.123564Z",
   "title": "Site Calculator Configuration",
   "description": "Pricing weights and labels for the website cost calculator component. Manage all calculator variables here.",
   "slug": "site-calculator-config",

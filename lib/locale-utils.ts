@@ -9,6 +9,18 @@ export type LocaleCode = typeof AVAILABLE_LOCALES[number]
 // Default language from environment or fallback to 'en'
 export const DEFAULT_LANGUAGE = typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_LEADCMS_DEFAULT_LANGUAGE || "en"
 
+export function getPreferredLocale(fallbackLocale: string = DEFAULT_LANGUAGE): string {
+  if (typeof navigator === 'undefined') {
+    return fallbackLocale
+  }
+
+  if (navigator.languages?.length) {
+    return navigator.languages[0]
+  }
+
+  return navigator.language || fallbackLocale
+}
+
 /**
  * Get the current locale from a path
  */

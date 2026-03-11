@@ -54,6 +54,7 @@ import {
   Shield,
   ShieldCheck,
   Tags,
+  Terminal,
   Type,
   User,
   Users,
@@ -61,7 +62,7 @@ import {
   Zap
 } from 'lucide-react'
 
-export type IconName = 'AlertCircle' | 'AlertTriangle' | 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'BarChart' | 'Book' | 'Building' | 'Calculator' | 'Calendar' | 'Check' | 'CheckCircle' | 'ChevronDown' | 'ChevronRight' | 'ChevronUp' | 'Circle' | 'Clock' | 'Cloud' | 'Code' | 'Database' | 'DollarSign' | 'Download' | 'FileText' | 'FolderTree' | 'GitBranch' | 'Github' | 'Globe' | 'Headphones' | 'HelpCircle' | 'Info' | 'Layers' | 'Lightbulb' | 'List' | 'Loader2' | 'Lock' | 'Mail' | 'MapPin' | 'Menu' | 'MessageCircle' | 'MessageSquare' | 'MoreHorizontal' | 'MousePointer' | 'Package' | 'Phone' | 'Rocket' | 'Send' | 'Server' | 'Settings' | 'Share2' | 'Shield' | 'ShieldCheck' | 'Tags' | 'Type' | 'User' | 'Users' | 'X' | 'Zap'
+export type IconName = 'AlertCircle' | 'AlertTriangle' | 'ArrowLeft' | 'ArrowRight' | 'ArrowUp' | 'BarChart' | 'Book' | 'Building' | 'Calculator' | 'Calendar' | 'Check' | 'CheckCircle' | 'ChevronDown' | 'ChevronRight' | 'ChevronUp' | 'Circle' | 'Clock' | 'Cloud' | 'Code' | 'Database' | 'DollarSign' | 'Download' | 'FileText' | 'FolderTree' | 'GitBranch' | 'Github' | 'Globe' | 'Headphones' | 'HelpCircle' | 'Info' | 'Layers' | 'Lightbulb' | 'List' | 'Loader2' | 'Lock' | 'Mail' | 'MapPin' | 'Menu' | 'MessageCircle' | 'MessageSquare' | 'MoreHorizontal' | 'MousePointer' | 'Package' | 'Phone' | 'Rocket' | 'Send' | 'Server' | 'Settings' | 'Share2' | 'Shield' | 'ShieldCheck' | 'Tags' | 'Terminal' | 'Type' | 'User' | 'Users' | 'X' | 'Zap'
 
 export const ICON_REGISTRY = {
   AlertCircle: AlertCircle,
@@ -116,6 +117,7 @@ export const ICON_REGISTRY = {
   Shield: Shield,
   ShieldCheck: ShieldCheck,
   Tags: Tags,
+  Terminal: Terminal,
   Type: Type,
   User: User,
   Users: Users,

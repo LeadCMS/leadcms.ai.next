@@ -63,6 +63,16 @@ Options:
 
 If no API key is configured, settings sync is skipped.
 
+## Targeting a specific remote
+
+Settings commands support `--remote` / `-r` in multi‑remote setups:
+
+```bash
+npx leadcms pull-settings -r dev
+npx leadcms status-settings -r prod
+npx leadcms push-settings -r dev
+```
+
 ## Check settings status
 
 <CodeTabs defaultTab="pnpm" group="package-manager">

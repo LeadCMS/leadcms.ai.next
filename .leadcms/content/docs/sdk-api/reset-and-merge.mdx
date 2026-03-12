@@ -97,6 +97,15 @@ This clears local state for supported pull entities and downloads fresh data.
 
 Each command resets only its own entity scope.
 
+In multi‑remote mode, reset applies to the active remote's sync state. For example:
+
+```bash
+npx leadcms pull --reset -r dev
+npx leadcms pull-email-templates --reset -r prod
+```
+
+This clears the selected remote's token and rebuilds its state from a fresh pull.
+
 ## Three-way content merge
 
 During incremental content pulls, the SDK can merge:
@@ -147,6 +156,8 @@ If you want remote to always replace local content during pull:
 </CodeTabs>
 
 Use this when you intentionally do not want merge/conflict handling.
+
+When pulling content or email templates from a non-default remote, local files still keep the default remote's `id`, `createdAt`, and `updatedAt`. The pulled remote's own values are stored in that remote's state files under `.leadcms/remotes/<name>/`.
 
 ## Conflict markers
 

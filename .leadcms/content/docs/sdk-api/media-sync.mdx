@@ -56,6 +56,16 @@ Options:
 
 - `--reset` – Clear local media state and perform a fresh pull.
 
+## Targeting a specific remote
+
+Media commands also support `--remote` / `-r` in multi‑remote setups:
+
+```bash
+npx leadcms pull-media -r dev
+npx leadcms status-media -r prod
+npx leadcms push-media -r dev
+```
+
 ## Check media status
 
 Inspect local vs remote media differences:

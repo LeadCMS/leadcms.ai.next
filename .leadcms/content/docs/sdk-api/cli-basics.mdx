@@ -27,7 +27,7 @@ The `leadcms` command‑line interface provides a set of tools to initialise you
 ## Core commands
 
 - **`init`** – Interactive setup wizard.  Connects to your LeadCMS instance, detects languages, configures directories and creates a `.env` file.  See **SDK Setup** for details.
-- **`login`** – Authenticates the CLI for write access.  Opens a browser for device authentication (v1.2.88+) or guides you through manual token extraction on older versions.  Stores the API key in your `.env` file.
+- **`login`** – Authenticates the CLI for write access.  Opens a browser for device authentication (v1.2.88+) or guides you through manual token extraction on older versions.  In multi‑remote setups use `-r` / `--remote` to authenticate a specific CMS instance.
 - **`pull`** – Runs a full pull for all supported entities (settings, content, media, comments, email templates).  Uses incremental sync for fast updates on subsequent runs.
 - **`pull-content`** – Downloads content files (MDX/JSON).
 - **`pull-media`** – Downloads only media files into your configured media directory.  Run this after updating images in the CMS.
@@ -38,6 +38,7 @@ The `leadcms` command‑line interface provides a set of tools to initialise you
 - **`push`** – Runs a full push flow (settings, content, email templates, media).
 - **`push-content`**, **`push-media`**, **`push-email-templates`**, **`push-settings`** – Push only one entity type.
 - **`watch`** – Watches your local files and pulls remote updates on the fly.  Use this to develop a live preview server that reflects changes in both directions.  See the [Preview Setup](/docs/preview/setup/) and [Deploy](/docs/deploy/static-export/) guides for configuration.
+- **`remote`** – Manage named remotes (CMS instances).  Subcommands: `list`, `add`, `remove`, `show`, `set-default`, `reset`.  See [Multi‑Remote Environments](/docs/sdk-api/multi-remote/) for details.
 - **`docker`** – Generates Docker files and templates for deploying your static site and preview environment.  Produces production and preview Dockerfiles, nginx configuration and helper scripts.
 - **`generate-env`** – Generates `public/__env.js` from `NEXT_PUBLIC_*` variables.
 - **`version`**/`-v`/`--version` – Displays the installed SDK version.
@@ -70,6 +71,26 @@ Run any command with `--help` to see its options.  For example:
 
 Outputs detailed descriptions of parameters such as `--dry-run`, `--force`, `--reset`, `--delete`, `--slug`, and `--id`.
 
+## Working with remotes
+
+In multi‑remote setups, most auth and sync commands accept `--remote` / `-r`:
+
+```bash
+# Authenticate against a specific remote
+npx leadcms login -r dev
+
+# Pull from a non-default remote
+npx leadcms pull -r prod
+
+# Compare local files against one remote
+npx leadcms status -r dev
+
+# Push to a chosen remote
+npx leadcms push -r prod
+```
+
+When you omit `-r`, the SDK uses the configured `defaultRemote`.
+
 ## Workflow overview
 
 In most projects your CLI workflow follows this pattern:
@@ -79,7 +100,7 @@ In most projects your CLI workflow follows this pattern:
 3. **Pull** – Use `leadcms pull` for a full sync, or scoped pull commands (`pull-content`, `pull-media`, `pull-comments`, `pull-email-templates`, `pull-settings`) when needed.
 4. **Work offline** – Edit MDX/JSON files, add new content, update slugs and structure using your editor.
 5. **Check status** – Run `leadcms status` for a unified view, or `leadcms status-content --preview` for a detailed content diff.
-6. **Push** – Run `leadcms push` to apply all local updates, or a scoped push command for a single entity type.  Use `--dry-run`, `--delete`, or `--force` as needed.
+6. **Push** – Run `leadcms push` to apply all local updates, or a scoped push command for a single entity type.  Use `--dry-run`, `--delete`, `--force`, and `-r` as needed.
 
 **Common CLI Commands:**
 
@@ -199,5 +220,10 @@ Now that you understand the CLI basics, dive deeper into specific operations:
     title="Generate Env"
     description="Create runtime __env.js from NEXT_PUBLIC_ variables"
     href="/docs/sdk-api/generate-env/"
+  />
+  <FeatureCard
+    title="Multi‑Remote"
+    description="Work with multiple CMS instances from a single workspace"
+    href="/docs/sdk-api/multi-remote/"
   />
 </FeatureGrid>

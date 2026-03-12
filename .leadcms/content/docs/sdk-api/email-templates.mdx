@@ -64,6 +64,20 @@ Useful options:
 - `--id <template-id>` – Pull only one template by ID.
 - `--reset` – Clear local email template state and perform a fresh pull.
 
+In multi‑remote mode, local email template files keep the **default remote's** `id`, `createdAt`, and `updatedAt`. When you pull from another remote, that remote's own values are stored in `.leadcms/remotes/<name>/metadata.json`.
+
+## Targeting a specific remote
+
+All email template sync commands support `--remote` / `-r`:
+
+```bash
+npx leadcms pull-email-templates -r dev
+npx leadcms status-email-templates -r prod
+npx leadcms push-email-templates -r dev
+```
+
+When omitted, the SDK uses the configured `defaultRemote`.
+
 <Callout type="info" title="Authentication">
 Email template sync requires authentication for write operations. For pull/status, behavior depends on your instance permissions and API key setup.
 </Callout>
@@ -135,6 +149,8 @@ Options:
 - `--delete` – Delete remote templates that no longer exist locally.
 - `--id <template-id>` – Push only one template by ID.
 - `--name <name>` – Push only one template by name.
+
+When pushing in multi‑remote mode, the SDK matches and updates templates using the selected remote's own metadata state, not whichever ID or timestamp happens to be present in the local file.
 
 ## Recommended workflow
 

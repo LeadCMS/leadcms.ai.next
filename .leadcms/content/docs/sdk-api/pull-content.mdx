@@ -58,6 +58,19 @@ npx leadcms pull-media
 
 These commands also use incremental sync tokens, so they will only download changed items.
 
+## Targeting a specific remote
+
+If you have multiple CMS instances configured (see [Multi‑Remote Environments](/docs/sdk-api/multi-remote/)), use the `--remote` / `-r` flag to target a specific one:
+
+```bash
+npx leadcms pull -r dev
+npx leadcms pull-content -r prod
+```
+
+When omitted, the SDK uses the default remote from your config.  The active remote is always shown at the start of the output.
+
+In multi‑remote mode, each remote also keeps its own sync tokens and `metadata.json` state under `.leadcms/remotes/<name>/`.
+
 ## Merge and reset behavior
 
 - **Three-way merge (default)** – During incremental content pulls, the SDK merges remote changes with local edits where possible.
@@ -69,6 +82,8 @@ These commands also use incremental sync tokens, so they will only download chan
 Under the hood the SDK stores sync tokens per entity (content, media, comments, email templates).  When you run a pull command it sends the token and requests items changed since the last sync.  The server returns only the delta, and the SDK updates your local store accordingly.
 
 After the files are downloaded, the SDK merges remote metadata into your local files.  For content this means updating frontmatter fields like `id`, `createdAt` and `updatedAt`, and rewriting media URLs from `/api/media/...` to local `/media/...` paths (see the [Media](/docs/modeling/media/) article for details).  The reverse transformation happens when you push changes back to LeadCMS.
+
+In multi‑remote mode there is one important rule: local content files always keep the **default remote's** `id`, `createdAt`, and `updatedAt`. If you pull from a non-default remote, that remote's own IDs and timestamps are stored in `.leadcms/remotes/<name>/metadata.json` instead of replacing the local default-remote values.
 
 ## Best practices
 

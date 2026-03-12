@@ -64,9 +64,22 @@ If you define a new `type` in a local file that does not exist in LeadCMS, the S
 
 After you answer these questions the SDK calls the `/api/content-types` endpoint to create the new type.  You can also run the push command in **dry‑run** mode to see what would be posted without executing it.  If you prefer to create content types manually, choose “no” when prompted and create the type via the LeadCMS Admin UI instead.
 
+## Targeting a specific remote
+
+In a multi‑remote setup, use `--remote` / `-r` to push to a specific CMS instance:
+
+```bash
+npx leadcms push -r dev
+npx leadcms push-content -r prod
+```
+
+Without the flag, the default remote is used.  See [Multi‑Remote Environments](/docs/sdk-api/multi-remote/) for configuration details.
+
+In multi‑remote mode, push uses the selected remote's own `metadata.json` to match content and establish conflict baselines. This avoids false conflicts when local files still contain the default remote's `id`, `createdAt`, and `updatedAt` values.
+
 ## Handling conflicts
 
-Conflicts occur when the remote content was updated after your last pull.  The push command detects this by comparing `updatedAt` timestamps.  When a conflict is detected the CLI shows the conflicting file in the **Conflict** section of the status output and recommends pulling to merge remote changes before pushing.  You have three options:
+Conflicts occur when the remote content was updated after your last pull.  The push command detects this by comparing `updatedAt` timestamps.  In multi‑remote mode the comparison uses the selected remote's metadata map rather than blindly trusting the local frontmatter timestamp.  When a conflict is detected the CLI shows the conflicting file in the **Conflict** section of the status output and recommends pulling to merge remote changes before pushing.  You have three options:
 
 1. **Pull and merge** – Run `npx leadcms pull` to fetch the latest version, merge any conflicting changes in your local file and then push again.
 2. **Use `--force`** – If you are sure your local changes should overwrite the remote version, run `npx leadcms push --force`.  This will apply your changes regardless of the remote timestamp.

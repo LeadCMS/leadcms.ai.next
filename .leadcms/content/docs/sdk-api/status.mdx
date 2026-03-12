@@ -51,6 +51,18 @@ Use scoped commands when you want status for one entity type:
 - `npx leadcms status-email-templates`
 - `npx leadcms status-settings`
 
+## Targeting a specific remote
+
+In multi‑remote setups, status commands accept `--remote` / `-r`:
+
+```bash
+npx leadcms status -r prod
+npx leadcms status-content -r dev
+npx leadcms status-email-templates -r prod
+```
+
+Status compares your local files against the selected remote using that remote's own sync state and metadata baseline.
+
 ## Filtering the status
 
 You can check status for a single content item by specifying an ID or slug on `status-content`:

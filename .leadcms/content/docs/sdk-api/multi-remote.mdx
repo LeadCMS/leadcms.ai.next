@@ -1,0 +1,351 @@
+---
+title: Multi‑Remote Environments
+description: >-
+  Configure and operate multiple CMS instances from a single workspace.
+  Manage remotes, authenticate per‑instance, and target pull/push/status
+  commands at specific environments.
+coverImageUrl: ''
+coverImageAlt: ''
+slug: docs/sdk-api/multi-remote
+type: doc
+author: LeadCMS Team
+language: en
+category: Docs
+allowComments: false
+publishedAt: '2026-03-12T12:00:00Z'
+group: SDK & API
+order: 11
+---
+
+# Multi‑Remote Environments
+
+Most projects interact with a single LeadCMS instance.  As your workflow grows you may need to maintain several environments — for example a **production** CMS and a **development** CMS, or a **local** instance for offline work.  The SDK supports this through **named remotes**, modelled after Git remotes.  Each remote has its own URL, API key, sync tokens, and metadata state so that operations against one environment never interfere with another.
+
+## When to use multi‑remote
+
+Multi‑remote is useful when:
+
+- You have **staging/production** environments and want to pull content from production while pushing experimental changes to staging.
+- A **local** LeadCMS instance runs on your machine for development, but you also sync with a shared server.
+- Multiple teams share one codebase but deploy to **different CMS instances** (e.g. per‑region).
+
+If you only work with a single CMS instance, the default single‑remote mode works out of the box and no additional configuration is needed.
+
+## Setting up remotes
+
+### During initialisation
+
+When you run `leadcms init`, the wizard asks whether you want a **single** or **multi‑remote** setup.  If you choose multi‑remote, the wizard prompts for a remote name (e.g. `prod`) and its URL, then offers to add more remotes.  The first remote becomes the default.
+
+### By editing the config file
+
+You can also add a `remotes` block and `defaultRemote` field directly in `leadcms.config.json`:
+
+```json
+{
+  "defaultLanguage": "en",
+  "contentDir": ".leadcms/content",
+  "mediaDir": "public/media",
+  "remotes": {
+    "prod": {
+      "url": "https://cms.example.com"
+    },
+    "dev": {
+      "url": "https://dev-cms.example.com"
+    },
+    "local": {
+      "url": "http://localhost:45437"
+    }
+  },
+  "defaultRemote": "prod"
+}
+```
+
+<Callout type="info" title="Single‑remote configs still work">
+If your config has a top‑level `url` field instead of a `remotes` block, the SDK operates in single‑remote mode.  You don't need to change anything — single‑remote and multi‑remote configs are fully compatible.
+</Callout>
+
+### With the remote CLI
+
+The `leadcms remote` command lets you manage remotes without editing JSON manually:
+
+```bash
+# Add a remote
+leadcms remote add staging https://staging-cms.example.com
+
+# List all remotes
+leadcms remote list
+
+# Change the default remote
+leadcms remote set-default staging
+
+# Show details for a remote (URL, API key status, sync state)
+leadcms remote show staging
+
+# Remove a remote
+leadcms remote remove staging
+```
+
+Remote names must be lowercase alphanumeric with optional hyphens (e.g. `prod`, `dev-server`, `us-east`).
+
+## Authenticating per remote
+
+Each remote has its own API key stored in an environment variable.  The naming convention is:
+
+```
+LEADCMS_REMOTE_<NAME>_API_KEY=<token>
+```
+
+For example, if your remotes are `prod` and `dev`:
+
+```bash
+# .env
+LEADCMS_REMOTE_PROD_API_KEY=eyJhbGci...
+LEADCMS_REMOTE_DEV_API_KEY=eyJhbGci...
+```
+
+The `login` command supports the `--remote` / `-r` flag and saves the token under the correct environment variable automatically:
+
+```bash
+# Authenticate to the dev remote
+leadcms login -r dev
+
+# Authenticate to the default remote
+leadcms login
+```
+
+<Callout type="warning" title="Remote names with hyphens">
+If a remote name contains hyphens (e.g. `us-east`), the environment variable replaces hyphens with underscores: `LEADCMS_REMOTE_US_EAST_API_KEY`.
+</Callout>
+
+## Targeting commands at a remote
+
+Every pull, push and status command supports the `--remote` / `-r` flag:
+
+```bash
+# Pull from the dev remote
+leadcms pull -r dev
+
+# Push to production
+leadcms push -r prod
+
+# Check status against a local instance
+leadcms status -r local
+```
+
+When you omit `-r`, the SDK uses the **default remote** defined by `defaultRemote` in your config.  The active remote is always printed at the start of command output so you can confirm which instance you're interacting with:
+
+```
+🌐 Remote: prod (default) → https://cms.example.com
+🔑 Authenticated as Jane Doe (jane@example.com)
+```
+
+All scoped commands also accept the flag:
+
+```bash
+leadcms pull-content -r dev
+leadcms push-media -r prod
+leadcms status-content -r local
+leadcms pull-settings -r dev
+```
+
+## How sync state is isolated
+
+In multi‑remote mode the SDK stores sync tokens and `metadata.json` in separate directories per remote:
+
+```
+.leadcms/
+  remotes/
+    prod/
+      content-sync-token
+      media-sync-token
+      comments-sync-token
+      email-templates-sync-token
+      metadata.json
+    dev/
+      content-sync-token
+      media-sync-token
+      email-templates-sync-token
+      ...
+```
+
+This means pulling from production and then pulling from dev will not overwrite each other's sync tokens.  Each remote tracks its own position in the sync stream independently.
+
+Content files themselves are shared — they live in the same `contentDir`.  When you switch remotes, only the sync state changes.  If the two instances have different content, a pull from one may create, update or delete files that were created by the other.
+
+## Metadata state
+
+Each remote stores its own `metadata.json`. This file tracks both content and email template state, including remote-specific IDs and timestamps.
+
+Current `metadata.json` shape:
+
+```json
+{
+  "content": {
+    "en": {
+      "docs/sdk-api/cli-basics": {
+        "id": 77,
+        "createdAt": "2025-11-10T15:50:54.14426Z",
+        "updatedAt": "2026-03-05T11:58:32.343095Z"
+      },
+      "docs/sdk-api/pull-content": {
+        "id": 78,
+        "createdAt": "2025-11-10T15:50:54.358849Z",
+        "updatedAt": "2026-03-05T11:58:32.640953Z"
+      }
+    }
+  },
+  "emailTemplates": {
+    "en": {
+      "WelcomeEmail": {
+        "id": 42,
+        "createdAt": "2026-03-05T11:57:10.58541Z",
+        "updatedAt": "2026-03-05T11:57:10.58541Z"
+      }
+    }
+  }
+}
+```
+
+Language blocks and entries inside them are written alphabetically, which keeps state files stable across regenerations.
+
+## Default remote values in local files
+
+In multi‑remote mode, local content files and local email template files keep the **default remote's** `id`, `createdAt`, and `updatedAt` values.
+
+Because of that, the default remote should be your stable canonical environment, typically `prod`.  Do not set a developer-specific local instance as the default remote, or local file metadata will be rewritten to instance-specific IDs that may differ between machines.
+
+When you pull from a non-default remote:
+
+- the active remote's IDs and timestamps are stored in that remote's `metadata.json`
+- local content frontmatter still reflects the default remote
+- local email template frontmatter/comment metadata still reflects the default remote
+
+This keeps framework-facing local files stable while still allowing accurate per-remote push matching and conflict detection.
+
+In practice, this means your team should treat the default remote much like the canonical Git branch: keep `prod` as the default, do day-to-day work against `dev` or `local`, and periodically pull from `prod` to bring the latest published changes into your local files.
+
+<Callout type="warning" title="Content files are not isolated">
+Sync tokens and metadata state are per‑remote, but the actual content, media and comment files are shared across remotes.  Switching between remotes with very different content can overwrite local files.  Use `--reset` when switching to get a clean baseline.
+</Callout>
+
+## Resetting sync state
+
+To clear all sync tokens and cached state for a particular remote (e.g. before a fresh pull), use:
+
+```bash
+leadcms remote reset dev
+```
+
+This removes sync tokens and `metadata.json` for that remote only.  Other remotes are unaffected.
+
+You can also use the `--reset` flag on pull commands, which clears local content files *and* the active remote's sync state:
+
+```bash
+leadcms pull --reset -r dev
+```
+
+## Typical workflows
+
+### Development → production promotion
+
+The safest workflow is to keep `prod` as the default remote, do active development against `dev`, and treat production pulls the same way you would pull changes from the main Git branch.
+
+Editors may continue making changes directly in production while developers are updating the same content in development. Because the SDK tracks metadata per remote, a pull from `prod` can still use the normal three-way merge flow to combine:
+
+- your local work in progress
+- the latest production changes
+- the stored base state from the last sync
+
+If the same parts of a file changed in both places, the SDK surfaces a conflict so you can resolve it locally before pushing again.
+
+Typical flow:
+
+```bash
+# Keep production as the canonical default remote
+leadcms remote set-default prod
+
+# Start from the latest production state
+leadcms pull -r prod
+
+# Do active development against dev
+leadcms status -r dev
+
+# Edit files locally and push to dev for review/testing
+leadcms push -r dev
+
+# Periodically pull the latest production changes
+leadcms pull -r prod
+
+# If conflicts appear, resolve them locally and verify again
+leadcms status -r dev
+
+# Before final promotion, pull production one more time
+leadcms pull -r prod
+
+# After approval and conflict resolution, promote to production
+leadcms push -r prod
+```
+
+This is intentionally similar to a Git branch workflow: keep working in `dev`, regularly pull from `prod`, resolve conflicts when they appear, and only push to `prod` after you have re-synced and verified that nothing will be lost.
+
+### Local development with a local CMS
+
+Run a local LeadCMS instance during development, but keep production as the default remote so local files retain stable canonical metadata:
+
+```bash
+# Keep production as the default remote
+leadcms remote set-default prod
+
+# Work against your local instance explicitly
+leadcms pull -r local
+leadcms status -r local
+leadcms push -r local
+
+# When ready, push to production
+leadcms push -r prod
+```
+
+### Fresh sync from a different remote
+
+When switching your working remote, reset to avoid stale sync tokens:
+
+```bash
+leadcms pull --reset -r dev
+```
+
+## Remote management commands reference
+
+| Command | Description |
+|---------|-------------|
+| `leadcms remote list` | List all configured remotes with URLs |
+| `leadcms remote add <name> <url>` | Add a new remote to the config |
+| `leadcms remote remove <name>` | Remove a remote from the config |
+| `leadcms remote show <name>` | Display remote details (URL, API key status, sync state) |
+| `leadcms remote set-default <name>` | Change which remote is used by default |
+| `leadcms remote reset <name>` | Clear sync tokens and cached state for a remote |
+
+## Next steps
+
+<FeatureGrid columns={2}>
+  <FeatureCard
+    title="CLI Basics"
+    description="Overview of all available CLI commands"
+    href="/docs/sdk-api/cli-basics/"
+  />
+  <FeatureCard
+    title="Pull Content"
+    description="Learn how incremental sync and merge work"
+    href="/docs/sdk-api/pull-content/"
+  />
+  <FeatureCard
+    title="Push Content"
+    description="Push changes to any remote with conflict detection"
+    href="/docs/sdk-api/push-content/"
+  />
+  <FeatureCard
+    title="Reset & Merge"
+    description="Clean pull and force‑overwrite strategies"
+    href="/docs/sdk-api/reset-and-merge/"
+  />
+</FeatureGrid>

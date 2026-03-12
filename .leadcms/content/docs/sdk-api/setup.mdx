@@ -113,6 +113,17 @@ LEADCMS_PREVIEW=false
 
 You can place these variables in a `.env` file at the root of your project.  The SDK will load them automatically using `dotenv`.  For security reasons we recommend storing credentials (such as the API key) only in environment variables, not in source‑controlled files.
 
+### Multi‑remote credentials
+
+If you configure named remotes, keep API keys in remote-specific variables:
+
+```bash
+LEADCMS_REMOTE_PROD_API_KEY=your-production-key
+LEADCMS_REMOTE_DEV_API_KEY=your-development-key
+```
+
+The generic `LEADCMS_API_KEY` remains a fallback for the default remote only.
+
 ### Configuration file (optional)
 
 If you need to override directory settings or the default language, you can create a `leadcms.config.json` file.  Running the init wizard (described below) will create this file for you only when you choose non‑default directories.  The configuration file should contain only non‑sensitive values:
@@ -128,6 +139,27 @@ If you need to override directory settings or the default language, you can crea
 ```
 
 For most projects the environment variables are sufficient and you do not need a config file.
+
+For multi‑remote projects, use a `remotes` block and `defaultRemote`:
+
+```json
+{
+  "contentDir": ".leadcms/content",
+  "mediaDir": "public/media",
+  "commentsDir": ".leadcms/comments",
+  "emailTemplatesDir": ".leadcms/email-templates",
+  "settingsDir": ".leadcms/settings",
+  "remotes": {
+    "prod": {
+      "url": "https://cms.example.com"
+    },
+    "dev": {
+      "url": "https://dev-cms.example.com"
+    }
+  },
+  "defaultRemote": "prod"
+}
+```
 
 ## Initialise your project
 
@@ -165,6 +197,8 @@ During the wizard you will be prompted for:
 
 At the end of the process the wizard writes a `.env` file populated with your URL, default language and API key (if provided).  If you selected custom directories, it also creates a `leadcms.config.json` file.
 
+If you choose a multi‑remote setup, the wizard can also create the initial `remotes` block and default remote for you.
+
 <Callout type="info" title="Anonymous mode">
 You can run the init wizard without providing an API key.  In anonymous mode you can pull published content from your instance but you will not be able to push changes.  You can authenticate later at any time by running `npx leadcms login`.
 </Callout>
@@ -199,6 +233,10 @@ Some CLI commands (such as **push**) require write access.  To enable these feat
 On LeadCMS v1.2.88 and later the login command uses device authentication: it opens a browser window for you to approve the CLI.  On older versions you will be guided through manually obtaining a token.  The resulting API key is saved to your `.env` file.
 
 You only need to log in once per machine unless your token expires or you switch instances.  For read‑only operations (pulling content) you can skip authentication.
+
+<Callout type="info" title="Multiple CMS instances">
+If you work with more than one CMS instance (e.g. production and development), configure named remotes and authenticate each one separately with `leadcms login -r <name>`.  See [Multi‑Remote Environments](/docs/sdk-api/multi-remote/) for the full setup guide.
+</Callout>
 
 ## Download your content
 
@@ -253,5 +291,10 @@ With the SDK installed and configured, you're ready to explore its capabilities:
     title="Settings Sync"
     description="Manage tracked settings through CLI"
     href="/docs/sdk-api/settings-sync/"
+  />
+  <FeatureCard
+    title="Multi‑Remote"
+    description="Work with multiple CMS instances from one project"
+    href="/docs/sdk-api/multi-remote/"
   />
 </FeatureGrid>

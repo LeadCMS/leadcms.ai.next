@@ -6,6 +6,7 @@ import {
 } from "@leadcms/sdk"
 import { getTemplate } from "@/components/templates"
 import { LocaleAwareLayout } from "@/components/locale-aware-layout"
+import { TrackingCapture } from "@/components/tracking-capture"
 import { DEFAULT_LANGUAGE } from "./locale-utils"
 import { generatePageMetadata } from "./metadata"
 import { PageProps } from "./types"
@@ -56,7 +57,12 @@ export function createLocaleHomePage(locale?: string) {
       throw new Error(`No template found for content type: ${content.type}`)
     }
 
-    return <TemplateComponent content={content} userUid={userUid} />
+    return (
+      <>
+        <TemplateComponent content={content} userUid={userUid} />
+        <TrackingCapture contentTags={content.tags} />
+      </>
+    )
   }
 
   return {
@@ -84,7 +90,12 @@ export function createLocaleContentPage(locale?: string) {
     if (!TemplateComponent) {
       throw new Error(`No template found for content type: ${content.type}`)
     }
-    return <TemplateComponent content={content} userUid={userUid} />
+    return (
+      <>
+        <TemplateComponent content={content} userUid={userUid} />
+        <TrackingCapture contentTags={content.tags} />
+      </>
+    )
   }
 
   async function generateMetadata({ params }: PageProps) {

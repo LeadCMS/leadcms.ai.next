@@ -8,6 +8,8 @@ import { AlertCircle, CheckCircle } from "lucide-react"
 import { getEnvVar } from "@/lib/env"
 import { useLocale } from "@/lib/locale-context"
 import { getPreferredLocale } from "@/lib/locale-utils"
+import { appendUtmDataToFormData } from "@/lib/utm-tracking"
+import { appendTrackedTagsToFormData } from "@/lib/tag-tracking"
 
 interface ContactFormData {
   name: string
@@ -131,6 +133,8 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
       formDataToSubmit.append("language", language)
       formDataToSubmit.append("timeZoneOffset", timeZoneOffset)
       formDataToSubmit.append("pageUrl", pageUrl)
+      appendUtmDataToFormData(formDataToSubmit)
+      appendTrackedTagsToFormData(formDataToSubmit)
 
       const response = await fetch(`${apiUrl}/api/contact-us`, {
         method: "POST",

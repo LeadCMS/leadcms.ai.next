@@ -1,5 +1,6 @@
 import { MDXRemote, type MDXRemoteOptions } from "next-mdx-remote-client/rsc"
 import type { CMSContentTemplateProps } from "@leadcms/sdk"
+import remarkGfm from "remark-gfm"
 import { useMDXComponents } from "@/components/mdx-components"
 import { DocNavigation, getDocsData } from "@/components/doc-navigation"
 import { DocTableOfContents } from "@/components/doc-table-of-contents"
@@ -8,9 +9,15 @@ import { DocTableOfContents } from "@/components/doc-table-of-contents"
 import { DocMobileNavProvider } from "@/components/doc-mobile-nav-provider"
 import { LocaleAwareLink } from "@/components/locale-aware-link"
 
-export default function DocTemplate({ content, userUid }: CMSContentTemplateProps & { userUid?: string | null }) {
+export default function DocTemplate({
+  content,
+  userUid,
+}: CMSContentTemplateProps & { userUid?: string | null }) {
   const options: MDXRemoteOptions = {
     parseFrontmatter: true,
+    mdxOptions: {
+      remarkPlugins: [remarkGfm],
+    },
     scope: {
       // Add any additional scope variables here
     },
@@ -52,14 +59,19 @@ export default function DocTemplate({ content, userUid }: CMSContentTemplateProp
             <div className="w-full px-4 sm:px-6 lg:px-8 py-8">
               {/* Breadcrumbs and Meta */}
               <div className="mb-8">
-                <nav className="flex items-center gap-2 text-sm text-muted-foreground mb-4" aria-label="Breadcrumb">
+                <nav
+                  className="flex items-center gap-2 text-sm text-muted-foreground mb-4"
+                  aria-label="Breadcrumb"
+                >
                   <LocaleAwareLink
                     href="/docs"
                     className="hover:text-foreground transition-colors hover:underline underline-offset-4"
                   >
                     Documentation
                   </LocaleAwareLink>
-                  <span className="text-muted-foreground/50" aria-hidden="true">/</span>
+                  <span className="text-muted-foreground/50" aria-hidden="true">
+                    /
+                  </span>
                   <span className="text-foreground/70 bg-muted/50 px-2 py-1 rounded-md text-xs font-medium">
                     {group}
                   </span>

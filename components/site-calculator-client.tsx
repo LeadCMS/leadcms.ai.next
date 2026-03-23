@@ -23,6 +23,8 @@ import {
 import { getEnvVar } from "@/lib/env"
 import { useLocale } from "@/lib/locale-context"
 import { getPreferredLocale } from "@/lib/locale-utils"
+import { appendUtmDataToFormData } from "@/lib/utm-tracking"
+import { appendTrackedTagsToFormData } from "@/lib/tag-tracking"
 import { cn } from "@/lib/utils"
 import type { SiteCalculatorPricing, SiteCalculatorLabels } from "@/lib/site-calculator-config"
 
@@ -459,6 +461,9 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
       if (phone?.trim()) {
         formData.append("phone", phone.trim())
       }
+
+      appendUtmDataToFormData(formData)
+      appendTrackedTagsToFormData(formData)
 
       const response = await fetch(`${apiUrl}/api/contact-us`, {
         method: "POST",

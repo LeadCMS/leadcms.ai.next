@@ -80,6 +80,7 @@
     "react-resizable-panels": "^2.1.9",
     "recharts": "2.15.0",
     "remark-frontmatter": "^5.0.0",
+    "remark-gfm": "^4.0.1",
     "remark-mdx-frontmatter": "^5.2.0",
     "sonner": "^1.7.4",
     "tailwind-merge": "^2.6.0",

@@ -1,0 +1,1 @@
+LeadCMS is an AI‑first, open source headless CMS and CRM platform that helps developers build fast, modern websites, automate content creation, and manage customer journeys in one unified system.

@@ -445,7 +445,7 @@ export function SiteCalculatorClient({ pricing, labels }: SiteCalculatorClientPr
       formData.append("ExtraData[RequestQuote]", requestQuote ? "yes" : "no")
 
       if (name?.trim()) {
-        formData.append("Name", name.trim())
+        formData.append("name", name.trim())
       }
 
       if (company?.trim()) {

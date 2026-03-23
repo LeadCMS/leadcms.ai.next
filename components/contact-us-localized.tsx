@@ -123,7 +123,7 @@ export function ContactUsLocalized({ text }: ContactUsLocalizedProps) {
       const language = getPreferredLocale(locale)
 
       const formDataToSubmit = new FormData()
-      appendIfPresent(formDataToSubmit, "Name", formData.name)
+      appendIfPresent(formDataToSubmit, "name", formData.name)
       appendIfPresent(formDataToSubmit, "company", formData.company)
       formDataToSubmit.append("subject", formData.subject || "Contact Form Submission")
       formDataToSubmit.append("message", formData.message)
